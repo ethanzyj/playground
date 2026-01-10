@@ -1,0 +1,11 @@
+# LeetCode Practice Environment Requirements
+
+# Core dependencies - usually available in standard Python installation
+# No external dependencies required for basic functionality
+
+# Optional dependencies for enhanced features:
+# pytest>=7.0.0          # For advanced testing features
+# colorama>=0.4.4        # For colored terminal output
+# tabulate>=0.9.0        # For formatted table output
+# matplotlib>=3.5.0      # For performance visualization
+# pandas>=1.4.0          # For data analysis of test results
