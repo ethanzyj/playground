@@ -80,6 +80,23 @@ python analyze.py --all --report --output performance_report.json
 python create_problem.py --list
 ```
 
+### Generate Top 50 Mapping
+```bash
+# Generate an Excel + CSV mapping between questions/top50.xlsx and problems/
+python map_top50.py
+
+# Skip remote LeetCode metadata lookup if needed
+python map_top50.py --skip-remote
+```
+
+This generates:
+- `questions/top50_mapping.xlsx`
+- `questions/top50_mapping.csv`
+
+The mapping includes current local file matches, expected file names, remote
+problem number/difficulty, and status values such as `done`, `missing`, and
+`needs_review`.
+
 ## Features
 
 ✅ **Quick Setup**: Templates for common problem types  

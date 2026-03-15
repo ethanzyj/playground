@@ -1,4 +1,51 @@
 .vscode/
 *.exe
-*.o
-*.out
+settings.json
+launch.json
+tasks.json
+*.exe
+settings.json
+launch.json
+tasks.json
+
+# Python bytecode and cache
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Python virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Packaging and build outputs
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Type checker and linter caches
+.mypy_cache/
+.ruff_cache/
+.pytype/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs and local env files
+*.log
+.env
+.env.*
+
+# Ignore the .vscode directory, which contains user-specific settings and configurations
+.vscode/
+
