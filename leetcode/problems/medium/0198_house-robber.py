@@ -41,6 +41,28 @@ class Solution:
 
         return prev_one
 
+    def rob_1(self, nums: List[int]) -> int:
+        # dp stores previous n-2 best result, then dp[n] = dp[n-2] + nums[n]
+        # the final answer should be dp[len(nums) - 2] or dp[len(nums) - 1]
+
+        # dp[0] = nums[0]
+        # dp[1] = nums[1]
+        # dp[2] = dp[0] + nums[2]
+        # dp[3] = max(nums[3] + dp[1], nums[3]  + dp[0])
+        # dp[n] = max(nums[n] + dp[n-2], nums[n] + dp[n-3])
+
+        if len(nums) == 1:
+            return nums[0]
+
+        if len(nums) == 2:
+            return max(nums[0], nums[1])
+
+        dp = [nums[0], nums[1], nums[0] + nums[2]]
+
+        for index in range(3, len(nums)):
+            dp.append(max(nums[index] + dp[index - 2], nums[index] + dp[index - 3]))
+
+        return max(dp[len(nums) - 1], dp[len(nums) - 2])
 
 # Test cases
 

@@ -137,27 +137,53 @@ class LeetCodeTestRunner:
             result = TestResult(problem_num, problem_name)
             solution_instance = solution_class()
 
-            # Find the main solution method (usually the first public method)
-            solution_methods = [method for method in dir(solution_instance) 
-                             if not method.startswith('_') and callable(getattr(solution_instance, method))]
+            # Find public solution methods.
+            # Support multiple implementations in one class, such as:
+            #   rob, rob_1, rob2
+            method_names = [
+                name
+                for name, value in solution_class.__dict__.items()
+                if not name.startswith('_') and callable(value)
+            ]
+
+            solution_methods = method_names[:]
             
             if not solution_methods:
                 print("❌ No solution method found")
                 return None
 
-            main_method = getattr(solution_instance, solution_methods[0])
+            # The first method is treated as primary. If methods with suffixes
+            # are present (e.g. xxx_1, xxx2), run them as additional implementations.
+            primary_method_name = solution_methods[0]
+            candidate_methods = [primary_method_name]
+            for method_name in solution_methods[1:]:
+                if method_name.startswith(primary_method_name + "_"):
+                    candidate_methods.append(method_name)
+                    continue
+                suffix = method_name[len(primary_method_name):]
+                if method_name.startswith(primary_method_name) and suffix.isdigit():
+                    candidate_methods.append(method_name)
 
-            # Run each test case
-            for i, test_case in enumerate(test_cases, 1):
-                passed, exec_time, error = self.run_single_test(main_method, test_case)
-                result.add_test_result(passed, exec_time, error)
-                
-                status = "✅" if passed else "❌"
-                time_str = f"({exec_time*1000:.2f}ms)" if show_performance else ""
-                
-                print(f"  Test {i}: {status} {time_str}")
-                if not passed and error:
-                    print(f"    Error: {error}")
+            # Run each implementation against all test cases.
+            for method_name in candidate_methods:
+                main_method = getattr(solution_instance, method_name)
+
+                if len(candidate_methods) > 1:
+                    print(f"\n  🔧 Implementation: {method_name}")
+
+                for i, test_case in enumerate(test_cases, 1):
+                    passed, exec_time, error = self.run_single_test(main_method, test_case)
+                    result.add_test_result(passed, exec_time, error)
+
+                    status = "✅" if passed else "❌"
+                    time_str = f"({exec_time*1000:.2f}ms)" if show_performance else ""
+
+                    print(f"  Test {i}: {status} {time_str}")
+                    if not passed and error:
+                        if len(candidate_methods) > 1:
+                            print(f"    Error ({method_name}): {error}")
+                        else:
+                            print(f"    Error: {error}")
 
             # Print summary
             print(f"\n📊 Results: {result.passed}/{result.passed + result.failed} passed " +
