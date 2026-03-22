@@ -1,6 +1,6 @@
 # Traversals
 
-Source: https://www.hiredintech.com/algorithms/graph-theory/traversals/
+Source: [https://www.hiredintech.com/algorithms/graph-theory/traversals/](https://www.hiredintech.com/algorithms/graph-theory/traversals/)
 
 Two popular algorithms for traversing graphs: DFS and BFS. Both have time complexity O(N+M).
 
@@ -52,7 +52,7 @@ BFS is safer regarding stack issues than recursive DFS.
 
 # 遍历
 
-来源：https://www.hiredintech.com/algorithms/graph-theory/traversals/
+来源：[https://www.hiredintech.com/algorithms/graph-theory/traversals/](https://www.hiredintech.com/algorithms/graph-theory/traversals/)
 
 两种流行的图遍历算法：DFS 和 BFS。两者时间复杂度都是 O(N+M)。
 

@@ -1,6 +1,6 @@
 # Digit Sum
 
-Source: https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/digit-sum/
+Source: [https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/digit-sum/](https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/digit-sum/)
 
 ## Task Statement
 
@@ -29,7 +29,7 @@ int digit_sum(long long number) {
 
 # 数字求和
 
-来源：https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/digit-sum/
+来源：[https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/digit-sum/](https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/digit-sum/)
 
 ## 题目描述
 

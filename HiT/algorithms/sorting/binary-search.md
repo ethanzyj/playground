@@ -1,6 +1,6 @@
 # Binary Search
 
-Source: https://www.hiredintech.com/algorithms/sorting/binary-search/
+Source: [https://www.hiredintech.com/algorithms/sorting/binary-search/](https://www.hiredintech.com/algorithms/sorting/binary-search/)
 
 One very important benefit of having sorted elements is the ability to quickly search through them. Binary search finds an element or its proper position in O(logN). For big sequences this is much better than linear search.
 
@@ -14,7 +14,7 @@ One very important benefit of having sorted elements is the ability to quickly s
 
 # 二分查找
 
-来源：https://www.hiredintech.com/algorithms/sorting/binary-search/
+来源：[https://www.hiredintech.com/algorithms/sorting/binary-search/](https://www.hiredintech.com/algorithms/sorting/binary-search/)
 
 排序元素的一个非常重要的好处是能够快速搜索。二分查找可以在 O(logN) 内找到元素或其在排序序列中的正确位置。对于大型序列，这比线性搜索好得多。
 

@@ -1,6 +1,6 @@
 # Multiple Dimensions - 0-1 Knapsack
 
-Source: https://www.hiredintech.com/algorithms/dynamic-programming/multiple-dimensions/
+Source: [https://www.hiredintech.com/algorithms/dynamic-programming/multiple-dimensions/](https://www.hiredintech.com/algorithms/dynamic-programming/multiple-dimensions/)
 
 DP can be applied to problems defined by more than one parameter. The 0-1 Knapsack problem: N items each with weight W[i] and value V[i], knapsack with max capacity C. Select items to maximize value without exceeding capacity.
 
@@ -30,7 +30,7 @@ F(N, C) = max(F(N-1, C-W[N]) + V[N], F(N-1, C))
 
 # 多维问题 - 0-1 背包
 
-来源：https://www.hiredintech.com/algorithms/dynamic-programming/multiple-dimensions/
+来源：[https://www.hiredintech.com/algorithms/dynamic-programming/multiple-dimensions/](https://www.hiredintech.com/algorithms/dynamic-programming/multiple-dimensions/)
 
 动态规划可以应用于由多个参数定义的问题。0-1 背包问题：N 个物品，每个有重量 W[i] 和价值 V[i]，背包最大容量为 C。选择物品以在不超过容量的情况下最大化价值。
 

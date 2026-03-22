@@ -1,6 +1,6 @@
 # Low-level Issues
 
-Source: https://www.hiredintech.com/system-design/the-summarization-problem/low-level-issues/
+Source: [https://www.hiredintech.com/system-design/the-summarization-problem/low-level-issues/](https://www.hiredintech.com/system-design/the-summarization-problem/low-level-issues/)
 
 The simple approach of a RESTful API has two issues: scalability and robustness.
 
@@ -42,7 +42,7 @@ The final architecture:
 
 # 底层问题
 
-来源：https://www.hiredintech.com/system-design/the-summarization-problem/low-level-issues/
+来源：[https://www.hiredintech.com/system-design/the-summarization-problem/low-level-issues/](https://www.hiredintech.com/system-design/the-summarization-problem/low-level-issues/)
 
 简单的RESTful API方法存在两个问题：可扩展性和鲁棒性。
 

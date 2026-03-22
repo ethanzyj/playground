@@ -1,6 +1,6 @@
 # Longest Increasing Subsequence
 
-Source: https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/longest-increasing-subsequence/
+Source: [https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/longest-increasing-subsequence/](https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/longest-increasing-subsequence/)
 
 ## Task Statement
 
@@ -33,7 +33,7 @@ For each new number from S, find its position in M using binary search (O(logN))
 
 # 最长递增子序列
 
-来源：https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/longest-increasing-subsequence/
+来源：[https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/longest-increasing-subsequence/](https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/longest-increasing-subsequence/)
 
 ## 题目描述
 

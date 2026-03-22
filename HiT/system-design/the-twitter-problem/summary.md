@@ -1,6 +1,6 @@
 # Summary
 
-Source: https://www.hiredintech.com/system-design/the-twitter-problem/summary/
+Source: [https://www.hiredintech.com/system-design/the-twitter-problem/summary/](https://www.hiredintech.com/system-design/the-twitter-problem/summary/)
 
 We started from a seemingly simple problem statement and went through a lot of things. And still we haven't covered all the possible angles. But to do this we would need weeks or months rather than 30-40 minutes during an interview.
 
@@ -16,7 +16,7 @@ The important goal was to illustrate a few key points:
 
 # 总结
 
-来源：https://www.hiredintech.com/system-design/the-twitter-problem/summary/
+来源：[https://www.hiredintech.com/system-design/the-twitter-problem/summary/](https://www.hiredintech.com/system-design/the-twitter-problem/summary/)
 
 我们从一个看似简单的题目描述开始，经历了很多内容。我们仍然没有涵盖所有可能的角度。但要做到这一点，我们需要数周或数月，而不是面试中的30-40分钟。
 

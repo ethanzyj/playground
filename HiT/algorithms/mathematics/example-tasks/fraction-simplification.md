@@ -1,6 +1,6 @@
 # Fraction Simplification
 
-Source: https://www.hiredintech.com/algorithms/mathematics/example-tasks/fraction-simplification/
+Source: [https://www.hiredintech.com/algorithms/mathematics/example-tasks/fraction-simplification/](https://www.hiredintech.com/algorithms/mathematics/example-tasks/fraction-simplification/)
 
 ## Task Statement
 
@@ -30,7 +30,7 @@ The Euclidean algorithm is much faster than the naive approach of trying all num
 
 # 分数化简
 
-来源：https://www.hiredintech.com/algorithms/mathematics/example-tasks/fraction-simplification/
+来源：[https://www.hiredintech.com/algorithms/mathematics/example-tasks/fraction-simplification/](https://www.hiredintech.com/algorithms/mathematics/example-tasks/fraction-simplification/)
 
 ## 题目描述
 

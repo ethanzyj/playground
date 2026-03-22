@@ -1,6 +1,6 @@
 # Pattern Matching
 
-Source: https://www.hiredintech.com/algorithms/string-problems/pattern-matching/
+Source: [https://www.hiredintech.com/algorithms/string-problems/pattern-matching/](https://www.hiredintech.com/algorithms/string-problems/pattern-matching/)
 
 A very popular string problem: find all occurrences of pattern P (length Lp) within text T (length Lt).
 
@@ -19,7 +19,7 @@ More efficient algorithms exist for better worst-case performance.
 
 # 模式匹配
 
-来源：https://www.hiredintech.com/algorithms/string-problems/pattern-matching/
+来源：[https://www.hiredintech.com/algorithms/string-problems/pattern-matching/](https://www.hiredintech.com/algorithms/string-problems/pattern-matching/)
 
 一个非常流行的字符串问题：在文本 T（长度 Lt）中找到模式 P（长度 Lp）的所有出现位置。
 

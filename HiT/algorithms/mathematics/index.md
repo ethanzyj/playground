@@ -1,6 +1,6 @@
 # Mathematics
 
-Source: https://www.hiredintech.com/algorithms/mathematics/
+Source: [https://www.hiredintech.com/algorithms/mathematics/](https://www.hiredintech.com/algorithms/mathematics/)
 
 Mathematics is a very wide topic. Here we outline some popular ideas helpful at tech interviews.
 
@@ -31,7 +31,7 @@ Huge topic. Finding area of shapes, intersections of rectangles, convex hull, et
 
 # 数学
 
-来源：https://www.hiredintech.com/algorithms/mathematics/
+来源：[https://www.hiredintech.com/algorithms/mathematics/](https://www.hiredintech.com/algorithms/mathematics/)
 
 数学是一个非常广泛的主题。这里我们概述一些在技术面试中有用的常见概念。
 

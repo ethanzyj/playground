@@ -1,6 +1,6 @@
 # Words with Typos
 
-Source: https://www.hiredintech.com/algorithms/string-problems/example-tasks/words-with-typos/
+Source: [https://www.hiredintech.com/algorithms/string-problems/example-tasks/words-with-typos/](https://www.hiredintech.com/algorithms/string-problems/example-tasks/words-with-typos/)
 
 ## Task Statement
 
@@ -44,7 +44,7 @@ Time complexity: linear in the length of T.
 
 # 含拼写错误的单词
 
-来源：https://www.hiredintech.com/algorithms/string-problems/example-tasks/words-with-typos/
+来源：[https://www.hiredintech.com/algorithms/string-problems/example-tasks/words-with-typos/](https://www.hiredintech.com/algorithms/string-problems/example-tasks/words-with-typos/)
 
 ## 题目描述
 

@@ -1,6 +1,6 @@
 # Tasks Optimization
 
-Source: https://www.hiredintech.com/algorithms/sorting/example-tasks/tasks-optimization/
+Source: [https://www.hiredintech.com/algorithms/sorting/example-tasks/tasks-optimization/](https://www.hiredintech.com/algorithms/sorting/example-tasks/tasks-optimization/)
 
 ## Task Statement
 
@@ -27,7 +27,7 @@ Optimization: Move left boundary only left-to-right and right boundary only left
 
 # 任务优化
 
-来源：https://www.hiredintech.com/algorithms/sorting/example-tasks/tasks-optimization/
+来源：[https://www.hiredintech.com/algorithms/sorting/example-tasks/tasks-optimization/](https://www.hiredintech.com/algorithms/sorting/example-tasks/tasks-optimization/)
 
 ## 题目描述
 

@@ -1,6 +1,6 @@
 # Jump over Numbers
 
-Source: https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/jump-over-numbers/
+Source: [https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/jump-over-numbers/](https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/jump-over-numbers/)
 
 ## Task Statement
 
@@ -46,7 +46,7 @@ int jump_over_numbers(const vector<int>& list) {
 
 # 跳过数字
 
-来源：https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/jump-over-numbers/
+来源：[https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/jump-over-numbers/](https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/jump-over-numbers/)
 
 ## 题目描述
 

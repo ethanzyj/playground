@@ -1,6 +1,6 @@
 # Related Words
 
-Source: https://www.hiredintech.com/algorithms/string-problems/example-tasks/related-words/
+Source: [https://www.hiredintech.com/algorithms/string-problems/example-tasks/related-words/](https://www.hiredintech.com/algorithms/string-problems/example-tasks/related-words/)
 
 ## Task Statement
 
@@ -22,7 +22,7 @@ Time complexity: linear in the length of T.
 
 # 相关词
 
-来源：https://www.hiredintech.com/algorithms/string-problems/example-tasks/related-words/
+来源：[https://www.hiredintech.com/algorithms/string-problems/example-tasks/related-words/](https://www.hiredintech.com/algorithms/string-problems/example-tasks/related-words/)
 
 ## 题目描述
 

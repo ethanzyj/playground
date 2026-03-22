@@ -1,6 +1,6 @@
 # 5 Don'ts
 
-Source: https://www.hiredintech.com/soft-skills/interview-strategies/5-donts/
+Source: [https://www.hiredintech.com/soft-skills/interview-strategies/5-donts/](https://www.hiredintech.com/soft-skills/interview-strategies/5-donts/)
 
 Here's a list of the top five mistakes candidates make during an interview (other than, of course, being unprepared - which you won't be). Of course, not every candidate makes all five mistakes, but what we've observed is that everyone makes at least one or two of those.
 
@@ -39,7 +39,7 @@ Sometimes the interviewer could be wrong - after all, all of us make mistakes. A
 
 # 五个不应该做的事
 
-来源：https://www.hiredintech.com/soft-skills/interview-strategies/5-donts/
+来源：[https://www.hiredintech.com/soft-skills/interview-strategies/5-donts/](https://www.hiredintech.com/soft-skills/interview-strategies/5-donts/)
 
 以下是候选人在面试中最常犯的五个错误（当然，除了准备不充分之外——而你不会犯这个错误）。当然，不是每个候选人都会犯所有五个错误，但我们观察到的是，每个人至少会犯其中一两个。
 

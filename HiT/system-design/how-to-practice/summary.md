@@ -1,6 +1,6 @@
 # Summary
 
-Source: https://www.hiredintech.com/system-design/how-to-practice/summary/
+Source: [https://www.hiredintech.com/system-design/how-to-practice/summary/](https://www.hiredintech.com/system-design/how-to-practice/summary/)
 
 In this section we discussed several strategies for practicing system design questions. By combining discussing solutions with friends or coworkers with reading about scalable real-world systems and doing mock interviews, you'd be able to develop strong system design chops.
 
@@ -15,7 +15,7 @@ Good luck and enjoy!
 
 # 总结
 
-来源：https://www.hiredintech.com/system-design/how-to-practice/summary/
+来源：[https://www.hiredintech.com/system-design/how-to-practice/summary/](https://www.hiredintech.com/system-design/how-to-practice/summary/)
 
 在本节中，我们讨论了练习系统设计问题的几种策略。通过将与朋友或同事讨论解决方案、阅读可扩展的真实系统和进行模拟面试结合起来，你将能够培养强大的系统设计能力。
 

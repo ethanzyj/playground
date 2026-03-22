@@ -1,6 +1,6 @@
 # Writing the Code
 
-Source: https://www.hiredintech.com/algorithms/algorithm-design-canvas/writing-the-code/
+Source: [https://www.hiredintech.com/algorithms/algorithm-design-canvas/writing-the-code/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/writing-the-code/)
 
 At this point, you've already nailed the constraints of a problem, iterated on a few ideas, evaluated their complexities and picked the one to implement. Never, ever jump straight into coding before having thought about and discussed constraints, ideas and complexities with your interviewer.
 
@@ -56,7 +56,7 @@ int longestZigZagSequence(int N, std::vector<int> a) {
 
 # 编写代码
 
-来源：https://www.hiredintech.com/algorithms/algorithm-design-canvas/writing-the-code/
+来源：[https://www.hiredintech.com/algorithms/algorithm-design-canvas/writing-the-code/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/writing-the-code/)
 
 到这一步，你已经确定了问题的约束，迭代了几个想法，评估了它们的复杂度，并选择了要实现的方案。永远不要在与面试官讨论约束、想法和复杂度之前就直接开始编码。
 

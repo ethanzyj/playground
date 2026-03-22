@@ -1,6 +1,6 @@
 # Blitz Rounds
 
-Source: https://www.hiredintech.com/algorithms/practice-ideas/blitz-rounds/
+Source: [https://www.hiredintech.com/algorithms/practice-ideas/blitz-rounds/](https://www.hiredintech.com/algorithms/practice-ideas/blitz-rounds/)
 
 ## Topical Practice vs Blitz Rounds
 
@@ -33,7 +33,7 @@ Blitz rounds involve picking 3-5 problems, setting a time limit per problem (20-
 
 # 闪电轮
 
-来源：https://www.hiredintech.com/algorithms/practice-ideas/blitz-rounds/
+来源：[https://www.hiredintech.com/algorithms/practice-ideas/blitz-rounds/](https://www.hiredintech.com/algorithms/practice-ideas/blitz-rounds/)
 
 ## 主题练习 vs 闪电轮
 

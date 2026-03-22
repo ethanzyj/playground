@@ -1,6 +1,6 @@
 # Fundamentals
 
-Source: https://www.hiredintech.com/system-design/scalability/fundamentals/
+Source: [https://www.hiredintech.com/system-design/scalability/fundamentals/](https://www.hiredintech.com/system-design/scalability/fundamentals/)
 
 Now that you've designed a solid abstract architecture, the next step is to take it to scale. If you've never built a large-scale system, this task may seem a little daunting.
 
@@ -34,7 +34,7 @@ Finally, you may want to read a tutorial on Database sharding. It's a very commo
 
 # 基础知识
 
-来源：https://www.hiredintech.com/system-design/scalability/fundamentals/
+来源：[https://www.hiredintech.com/system-design/scalability/fundamentals/](https://www.hiredintech.com/system-design/scalability/fundamentals/)
 
 现在你已经设计了一个可靠的抽象架构，下一步是让它具备扩展能力。如果你从未构建过大规模系统，这项任务可能看起来有点令人生畏。
 

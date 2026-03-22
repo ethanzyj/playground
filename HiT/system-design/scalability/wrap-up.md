@@ -1,6 +1,6 @@
 # Wrap-up
 
-Source: https://www.hiredintech.com/system-design/scalability/wrap_up/
+Source: [https://www.hiredintech.com/system-design/scalability/wrap_up/](https://www.hiredintech.com/system-design/scalability/wrap_up/)
 
 Alright, at this point you already have solid theoretical and practical understanding of system design. In this section, we'll wrap things up and put them in the context of technical interviews.
 
@@ -47,7 +47,7 @@ You now know how to approach any system design question. You first build a high-
 
 # 总结与建议
 
-来源：https://www.hiredintech.com/system-design/scalability/wrap_up/
+来源：[https://www.hiredintech.com/system-design/scalability/wrap_up/](https://www.hiredintech.com/system-design/scalability/wrap_up/)
 
 好了，到目前为止你已经对系统设计有了坚实的理论和实践理解。在本节中，我们将总结一切并将其放在技术面试的背景下。
 

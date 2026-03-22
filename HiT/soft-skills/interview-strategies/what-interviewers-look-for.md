@@ -1,6 +1,6 @@
 # What Interviewers Look For
 
-Source: https://www.hiredintech.com/soft-skills/interview-strategies/what-interviewers-look-for/
+Source: [https://www.hiredintech.com/soft-skills/interview-strategies/what-interviewers-look-for/](https://www.hiredintech.com/soft-skills/interview-strategies/what-interviewers-look-for/)
 
 This section reflects our philosophy for hiring people. It shows the way we as interviewers think, so that you can put yourself in our shoes and understand where we're coming from. We know for a fact that all smart companies in the tech space think and act similarly. As you may expect, different companies focus on different things, but ultimately they all pay attention to the same basic set of characteristics. We will look at what they are below.
 
@@ -60,7 +60,7 @@ Instead, it's a friendly conversation by two (or more) people who're trying to f
 
 # 面试官看重什么
 
-来源：https://www.hiredintech.com/soft-skills/interview-strategies/what-interviewers-look-for/
+来源：[https://www.hiredintech.com/soft-skills/interview-strategies/what-interviewers-look-for/](https://www.hiredintech.com/soft-skills/interview-strategies/what-interviewers-look-for/)
 
 本节反映了我们的招聘理念。它展示了我们作为面试官的思维方式，以便你能站在我们的角度理解我们的出发点。我们确信，所有在技术领域的优秀公司都有类似的思维和行为方式。正如你所预料的，不同的公司关注不同的东西，但最终它们都会注意相同的基本特征。我们将在下面看看这些特征是什么。
 

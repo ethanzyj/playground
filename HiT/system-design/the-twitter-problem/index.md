@@ -1,6 +1,6 @@
 # The Twitter Problem
 
-Source: https://www.hiredintech.com/system-design/the-twitter-problem/
+Source: [https://www.hiredintech.com/system-design/the-twitter-problem/](https://www.hiredintech.com/system-design/the-twitter-problem/)
 
 Are you ready? Let's begin with a very short statement that your interviewer gave you at the start of the interview.
 
@@ -27,7 +27,7 @@ Even though Twitter changed its name, let's stick with this name as this problem
 
 # Twitter问题
 
-来源：https://www.hiredintech.com/system-design/the-twitter-problem/
+来源：[https://www.hiredintech.com/system-design/the-twitter-problem/](https://www.hiredintech.com/system-design/the-twitter-problem/)
 
 你准备好了吗？让我们从面试官在面试开始时给你的一个非常简短的陈述开始。
 

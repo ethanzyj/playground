@@ -1,6 +1,6 @@
 # Algorithm Design Canvas
 
-Source: https://www.hiredintech.com/algorithms/algorithm-design-canvas/
+Source: [https://www.hiredintech.com/algorithms/algorithm-design-canvas/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/)
 
 Algorithm design questions are among the most common kind of questions given at interviews, and no doubt the ones people struggle with the most.
 
@@ -31,7 +31,7 @@ A lot of the people we've worked with at HiredInTech have eventually discovered 
 
 # 算法设计画布
 
-来源：https://www.hiredintech.com/algorithms/algorithm-design-canvas/
+来源：[https://www.hiredintech.com/algorithms/algorithm-design-canvas/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/)
 
 算法设计问题是面试中最常见的问题类型之一，毫无疑问也是人们最头疼的问题。
 

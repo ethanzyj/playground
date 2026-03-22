@@ -1,6 +1,6 @@
 # Practice Ideas
 
-Source: https://www.hiredintech.com/algorithms/practice-ideas/
+Source: [https://www.hiredintech.com/algorithms/practice-ideas/](https://www.hiredintech.com/algorithms/practice-ideas/)
 
 Practice is so important to being successful at algorithmic interviews. Practice should reflect the actual format of your upcoming interviews as closely as possible.
 
@@ -15,7 +15,7 @@ The most popular preparation approach: practice using websites like LeetCode wit
 
 # 练习思路
 
-来源：https://www.hiredintech.com/algorithms/practice-ideas/
+来源：[https://www.hiredintech.com/algorithms/practice-ideas/](https://www.hiredintech.com/algorithms/practice-ideas/)
 
 练习对于在算法面试中取得成功非常重要。练习应尽可能贴近你即将参加的面试的实际形式。
 

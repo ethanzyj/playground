@@ -1,6 +1,6 @@
 # Trivial Example - Fibonacci
 
-Source: https://www.hiredintech.com/algorithms/dynamic-programming/trivial-example/
+Source: [https://www.hiredintech.com/algorithms/dynamic-programming/trivial-example/](https://www.hiredintech.com/algorithms/dynamic-programming/trivial-example/)
 
 The Fibonacci numbers illustrate DP perfectly. To compute the 100th: take sum of 98th and 99th. Base cases: F(1) = 1, F(2) = 1.
 
@@ -45,7 +45,7 @@ Both memoized approaches compute each sub-problem only once, achieving linear co
 
 # 简单示例 - 斐波那契
 
-来源：https://www.hiredintech.com/algorithms/dynamic-programming/trivial-example/
+来源：[https://www.hiredintech.com/algorithms/dynamic-programming/trivial-example/](https://www.hiredintech.com/algorithms/dynamic-programming/trivial-example/)
 
 斐波那契数列完美地说明了动态规划。计算第 100 个：取第 98 个和第 99 个的和。基础情况：F(1) = 1，F(2) = 1。
 

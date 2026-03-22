@@ -1,6 +1,6 @@
 # Summary
 
-Source: https://www.hiredintech.com/system-design/the-system-design-process/summary/
+Source: [https://www.hiredintech.com/system-design/the-system-design-process/summary/](https://www.hiredintech.com/system-design/the-system-design-process/summary/)
 
 A strong process is crucial to successfully solving system design questions. We broke it down into four steps:
 
@@ -14,7 +14,7 @@ A strong process is crucial to successfully solving system design questions. We 
 
 # 总结
 
-来源：https://www.hiredintech.com/system-design/the-system-design-process/summary/
+来源：[https://www.hiredintech.com/system-design/the-system-design-process/summary/](https://www.hiredintech.com/system-design/the-system-design-process/summary/)
 
 强大的流程对于成功解决系统设计问题至关重要。我们将其分解为四个步骤：
 

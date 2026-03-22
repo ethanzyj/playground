@@ -1,6 +1,6 @@
 # Lists
 
-Source: https://www.hiredintech.com/algorithms/data-structures/lists/
+Source: [https://www.hiredintech.com/algorithms/data-structures/lists/](https://www.hiredintech.com/algorithms/data-structures/lists/)
 
 Very often as programmers we need to work with ordered sequences of items. This could involve many different operations like traversing, searching, computing statistics and modifying. Tech interviews are very likely to include some of these techniques.
 
@@ -15,7 +15,7 @@ A sequence of items is usually represented with a structure called array or list
 
 # 列表
 
-来源：https://www.hiredintech.com/algorithms/data-structures/lists/
+来源：[https://www.hiredintech.com/algorithms/data-structures/lists/](https://www.hiredintech.com/algorithms/data-structures/lists/)
 
 作为程序员，我们经常需要处理有序的项目序列。这可能涉及许多不同的操作，如遍历、搜索、计算统计和修改。技术面试很可能包含其中一些技术。
 

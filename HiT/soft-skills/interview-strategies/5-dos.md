@@ -1,6 +1,6 @@
 # 5 Do's
 
-Source: https://www.hiredintech.com/soft-skills/interview-strategies/5-dos/
+Source: [https://www.hiredintech.com/soft-skills/interview-strategies/5-dos/](https://www.hiredintech.com/soft-skills/interview-strategies/5-dos/)
 
 
 ## Tip 1: Diligently follow a process
@@ -41,7 +41,7 @@ Sometimes candidates say negative things about themselves or their ideas in case
 
 # 五个应该做的事
 
-来源：https://www.hiredintech.com/soft-skills/interview-strategies/5-dos/
+来源：[https://www.hiredintech.com/soft-skills/interview-strategies/5-dos/](https://www.hiredintech.com/soft-skills/interview-strategies/5-dos/)
 
 
 ## 建议一：认真遵循一个流程

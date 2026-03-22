@@ -1,6 +1,6 @@
 # String Problems
 
-Source: https://www.hiredintech.com/algorithms/string-problems/
+Source: [https://www.hiredintech.com/algorithms/string-problems/](https://www.hiredintech.com/algorithms/string-problems/)
 
 Engineers need to work with strings all the time. Such problems are popular at interviews. The best approach is to practice solving as many string problems as possible (e.g., LeetCode strings tag).
 
@@ -16,7 +16,7 @@ Engineers need to work with strings all the time. Such problems are popular at i
 
 # 字符串问题
 
-来源：https://www.hiredintech.com/algorithms/string-problems/
+来源：[https://www.hiredintech.com/algorithms/string-problems/](https://www.hiredintech.com/algorithms/string-problems/)
 
 工程师需要一直处理字符串。此类问题在面试中很常见。最好的方法是尽可能多地练习解决字符串问题（例如 LeetCode 字符串标签）。
 

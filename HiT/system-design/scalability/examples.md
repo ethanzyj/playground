@@ -1,6 +1,6 @@
 # Examples
 
-Source: https://www.hiredintech.com/system-design/scalability/examples/
+Source: [https://www.hiredintech.com/system-design/scalability/examples/](https://www.hiredintech.com/system-design/scalability/examples/)
 
 The awesome thing about scalability is that it's all around us. If you want to work on an exciting and successful product or service, by definition it's going to have to operate at scale.
 
@@ -44,7 +44,7 @@ When it comes to system design, it's incredibly useful to review real-life archi
 
 # 实例
 
-来源：https://www.hiredintech.com/system-design/scalability/examples/
+来源：[https://www.hiredintech.com/system-design/scalability/examples/](https://www.hiredintech.com/system-design/scalability/examples/)
 
 可扩展性的美妙之处在于它无处不在。如果你想从事一个令人兴奋且成功的产品或服务，那么它几乎一定需要在大规模下运行。
 

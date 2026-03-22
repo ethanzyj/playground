@@ -1,6 +1,6 @@
 # Low-level Issues
 
-Source: https://www.hiredintech.com/system-design/the-twitter-problem/low-level-issues/
+Source: [https://www.hiredintech.com/system-design/the-twitter-problem/low-level-issues/](https://www.hiredintech.com/system-design/the-twitter-problem/low-level-issues/)
 
 Let's assume we've shaped the main parts of our Twitter-like application. In a real interview this would have been a discussion with the interviewer. It is ok to have to clarify things. It is also normal to not get everything right the first time. Be prepared to accept suggestions from the interviewer.
 
@@ -53,7 +53,7 @@ DELETE /api/tweets/<tweet_id>/likes           - unlike tweet
 
 # 底层问题
 
-来源：https://www.hiredintech.com/system-design/the-twitter-problem/low-level-issues/
+来源：[https://www.hiredintech.com/system-design/the-twitter-problem/low-level-issues/](https://www.hiredintech.com/system-design/the-twitter-problem/low-level-issues/)
 
 假设我们已经塑造了类Twitter应用的主要部分。在真实面试中，这将是与面试官的讨论。需要澄清事情是正常的。第一次不可能把所有事情都做对也是正常的。准备好接受面试官的建议。
 

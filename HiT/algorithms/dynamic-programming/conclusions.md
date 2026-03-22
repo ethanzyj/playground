@@ -1,6 +1,6 @@
 # Conclusions
 
-Source: https://www.hiredintech.com/algorithms/dynamic-programming/conclusions/
+Source: [https://www.hiredintech.com/algorithms/dynamic-programming/conclusions/](https://www.hiredintech.com/algorithms/dynamic-programming/conclusions/)
 
 This is a brief introduction to dynamic programming. We showed through examples what we mean by breaking down a problem into sub-problems.
 
@@ -16,7 +16,7 @@ Sometimes, especially for bottom-up implementations, it is possible to store onl
 
 # 总结
 
-来源：https://www.hiredintech.com/algorithms/dynamic-programming/conclusions/
+来源：[https://www.hiredintech.com/algorithms/dynamic-programming/conclusions/](https://www.hiredintech.com/algorithms/dynamic-programming/conclusions/)
 
 这是对动态规划的简要介绍。我们通过示例展示了将问题分解为子问题的含义。
 

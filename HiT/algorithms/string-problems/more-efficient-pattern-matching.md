@@ -1,6 +1,6 @@
 # More Efficient Pattern Matching
 
-Source: https://www.hiredintech.com/algorithms/string-problems/more-efficient-pattern-matching/
+Source: [https://www.hiredintech.com/algorithms/string-problems/more-efficient-pattern-matching/](https://www.hiredintech.com/algorithms/string-problems/more-efficient-pattern-matching/)
 
 ## Rabin-Karp Algorithm
 
@@ -29,7 +29,7 @@ These are worst-case running times.
 
 # 更高效的模式匹配
 
-来源：https://www.hiredintech.com/algorithms/string-problems/more-efficient-pattern-matching/
+来源：[https://www.hiredintech.com/algorithms/string-problems/more-efficient-pattern-matching/](https://www.hiredintech.com/algorithms/string-problems/more-efficient-pattern-matching/)
 
 ## Rabin-Karp 算法
 

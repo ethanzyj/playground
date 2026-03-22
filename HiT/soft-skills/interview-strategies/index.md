@@ -1,6 +1,6 @@
 # Interview Strategies
 
-Source: https://www.hiredintech.com/soft-skills/interview-strategies/
+Source: [https://www.hiredintech.com/soft-skills/interview-strategies/](https://www.hiredintech.com/soft-skills/interview-strategies/)
 
 Being successful at an interview is not just about practicing algorithm design or system design questions. There's a whole other dimension to it, which is related to how you conduct yourself at an interview, how you think about the interview process, and how you behave.
 
@@ -23,7 +23,7 @@ Finally, we want to once and for all define what an interview is all about. We'v
 
 # 面试策略
 
-来源：https://www.hiredintech.com/soft-skills/interview-strategies/
+来源：[https://www.hiredintech.com/soft-skills/interview-strategies/](https://www.hiredintech.com/soft-skills/interview-strategies/)
 
 在面试中取得成功，不仅仅是练习算法设计或系统设计题目。还有另一个维度，与你在面试中的表现方式、你对面试流程的思考以及你的行为举止有关。
 

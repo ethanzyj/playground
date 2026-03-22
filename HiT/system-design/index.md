@@ -1,6 +1,6 @@
 # System Design
 
-Source: https://www.hiredintech.com/system-design/
+Source: [https://www.hiredintech.com/system-design/](https://www.hiredintech.com/system-design/)
 
 Tech interviewers will often ask you to design on the whiteboard a complicated software system in 15 minutes. How is that even possible? Sometimes you would get asked to design a major feature from a system like Twitter or Facebook from scratch, for example. But these systems were built over a long period of time by big teams of engineers, you would say.
 
@@ -46,7 +46,7 @@ We'll teach you more about designing scalable software systems through examples.
 
 # 系统设计
 
-来源：https://www.hiredintech.com/system-design/
+来源：[https://www.hiredintech.com/system-design/](https://www.hiredintech.com/system-design/)
 
 技术面试官经常会要求你在白板上用15分钟设计一个复杂的软件系统。这怎么可能呢？有时你会被要求从零开始设计一个像Twitter或Facebook那样的系统的主要功能。但你会说，这些系统是由大型工程团队在很长时间内构建的。
 

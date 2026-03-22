@@ -1,6 +1,6 @@
 # Common Questions
 
-Source: https://www.hiredintech.com/soft-skills/common-questions/
+Source: [https://www.hiredintech.com/soft-skills/common-questions/](https://www.hiredintech.com/soft-skills/common-questions/)
 
 Over time we've noticed that there is a set of ever repeating questions that interview candidates have. These are about various things like getting an interview, writing the best CV, behaving during an interview or what to do after the interview is over. The list goes on. The questions are grouped into three groups based on the period of time they are related to: before the interview, at the interview itself, and after the interview.
 
@@ -17,7 +17,7 @@ Hopefully this section provides the answers you are looking for. Naturally, we w
 
 # 常见问题
 
-来源：https://www.hiredintech.com/soft-skills/common-questions/
+来源：[https://www.hiredintech.com/soft-skills/common-questions/](https://www.hiredintech.com/soft-skills/common-questions/)
 
 随着时间推移，我们注意到面试候选人有一组反复出现的问题。这些问题涉及各种事项，如获得面试机会、撰写最佳简历、面试中的行为表现或面试结束后该做什么等。这些问题根据相关的时间段分为三组：面试前、面试中和面试后。
 

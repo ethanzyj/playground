@@ -1,6 +1,6 @@
 # Step 2: Abstract Design
 
-Source: https://www.hiredintech.com/system-design/the-system-design-process/step2/
+Source: [https://www.hiredintech.com/system-design/the-system-design-process/step2/](https://www.hiredintech.com/system-design/the-system-design-process/step2/)
 
 Once you've scoped the system you're about to design, you should continue by outlining a high-level abstract design. The goal of this is to outline all the important components that your architecture will need.
 
@@ -22,7 +22,7 @@ Here's an example of a simple abstract architecture for the URL shortening servi
 
 # 第二步：抽象设计
 
-来源：https://www.hiredintech.com/system-design/the-system-design-process/step2/
+来源：[https://www.hiredintech.com/system-design/the-system-design-process/step2/](https://www.hiredintech.com/system-design/the-system-design-process/step2/)
 
 一旦你确定了要设计的系统范围，就应该继续勾勒高层抽象设计。其目标是概述你的架构需要的所有重要组件。
 

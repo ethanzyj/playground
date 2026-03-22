@@ -1,6 +1,6 @@
 # Numeric Palindromes
 
-Source: https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/numeric-palindromes/
+Source: [https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/numeric-palindromes/](https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/numeric-palindromes/)
 
 ## Task Statement
 
@@ -34,7 +34,7 @@ At an interview, describe both solutions and their trade-offs, then ask the inte
 
 # 数字回文
 
-来源：https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/numeric-palindromes/
+来源：[https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/numeric-palindromes/](https://www.hiredintech.com/algorithms/data-structures/example-tasks-lists/numeric-palindromes/)
 
 ## 题目描述
 

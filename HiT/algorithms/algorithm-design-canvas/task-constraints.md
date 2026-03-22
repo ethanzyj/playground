@@ -1,6 +1,6 @@
 # Task Constraints
 
-Source: https://www.hiredintech.com/algorithms/algorithm-design-canvas/task-constraints/
+Source: [https://www.hiredintech.com/algorithms/algorithm-design-canvas/task-constraints/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/task-constraints/)
 
 You never want to solve a problem that's ill-defined. That's why the very first thing you should turn your head to when it comes to algorithm design problems is the problem's constraints.
 
@@ -25,7 +25,7 @@ NOTE: In the example video, around 4:40, the author types in the canvas that 2-e
 
 # 任务约束
 
-来源：https://www.hiredintech.com/algorithms/algorithm-design-canvas/task-constraints/
+来源：[https://www.hiredintech.com/algorithms/algorithm-design-canvas/task-constraints/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/task-constraints/)
 
 你永远不想解决一个定义不清的问题。这就是为什么面对算法设计问题时，你首先应该关注的是问题的约束条件。
 

@@ -1,6 +1,6 @@
 # High-level Design
 
-Source: https://www.hiredintech.com/system-design/the-twitter-problem/high-level-design/
+Source: [https://www.hiredintech.com/system-design/the-twitter-problem/high-level-design/](https://www.hiredintech.com/system-design/the-twitter-problem/high-level-design/)
 
 It's a good idea to start from the top and define the main parts of our application. We can divide our architecture in two logical parts: 1) the logic handling all incoming requests and 2) the data storage.
 
@@ -45,7 +45,7 @@ Total storage estimate: ~2.6-2.7 TB
 
 # 高层设计
 
-来源：https://www.hiredintech.com/system-design/the-twitter-problem/high-level-design/
+来源：[https://www.hiredintech.com/system-design/the-twitter-problem/high-level-design/](https://www.hiredintech.com/system-design/the-twitter-problem/high-level-design/)
 
 最好从顶层开始，定义应用程序的主要部分。我们可以将架构分为两个逻辑部分：1）处理所有传入请求的逻辑，2）数据存储。
 

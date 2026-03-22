@@ -1,6 +1,6 @@
 # After the Interview
 
-Source: https://www.hiredintech.com/soft-skills/common-questions/after-the-interview/
+Source: [https://www.hiredintech.com/soft-skills/common-questions/after-the-interview/](https://www.hiredintech.com/soft-skills/common-questions/after-the-interview/)
 
 
 ## Q1: I got an offer. How do I deal with it?
@@ -29,7 +29,7 @@ So, if rejected once don't feel sad at all. There will be new opportunities in t
 
 # 面试后
 
-来源：https://www.hiredintech.com/soft-skills/common-questions/after-the-interview/
+来源：[https://www.hiredintech.com/soft-skills/common-questions/after-the-interview/](https://www.hiredintech.com/soft-skills/common-questions/after-the-interview/)
 
 
 ## 问题一：我收到了offer，该如何处理？

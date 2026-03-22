@@ -1,6 +1,6 @@
 # String Hashing
 
-Source: https://www.hiredintech.com/algorithms/string-problems/string-hashing/
+Source: [https://www.hiredintech.com/algorithms/string-problems/string-hashing/](https://www.hiredintech.com/algorithms/string-problems/string-hashing/)
 
 A good hashing function computes a polynomial from the symbols of the input string modulo a prime number:
 
@@ -21,7 +21,7 @@ This property is used in pattern matching algorithms like Rabin-Karp.
 
 # 字符串哈希
 
-来源：https://www.hiredintech.com/algorithms/string-problems/string-hashing/
+来源：[https://www.hiredintech.com/algorithms/string-problems/string-hashing/](https://www.hiredintech.com/algorithms/string-problems/string-hashing/)
 
 一个好的哈希函数根据输入字符串的字符计算一个多项式，对质数取模：
 

@@ -1,6 +1,6 @@
 # How to Practice?
 
-Source: https://www.hiredintech.com/system-design/how-to-practice/
+Source: [https://www.hiredintech.com/system-design/how-to-practice/](https://www.hiredintech.com/system-design/how-to-practice/)
 
 Practicing system design questions is more difficult than practicing algorithm design questions, period. For algorithm design there are online judges like LeetCode that contain problem banks with sample solutions and automated graders that can tell you exactly how good your solution is. This is simply priceless. There is no such thing for system design.
 
@@ -24,7 +24,7 @@ Also, there are some more useful resources online that you can take a look at:
 
 # 如何练习？
 
-来源：https://www.hiredintech.com/system-design/how-to-practice/
+来源：[https://www.hiredintech.com/system-design/how-to-practice/](https://www.hiredintech.com/system-design/how-to-practice/)
 
 练习系统设计问题比练习算法设计问题要困难得多。对于算法设计，有像LeetCode这样的在线评测平台，包含题库、示例解答和自动评分器，能准确告诉你你的解答有多好。这简直无价。但对于系统设计来说，没有这样的东西。
 

@@ -1,6 +1,6 @@
 # Testing Your Code
 
-Source: https://www.hiredintech.com/algorithms/algorithm-design-canvas/testing-your-code/
+Source: [https://www.hiredintech.com/algorithms/algorithm-design-canvas/testing-your-code/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/testing-your-code/)
 
 Once your code is written, you don't just lift your pen, say "I'm ready" and leave. A great next step is to verify it with several small test cases.
 
@@ -41,7 +41,7 @@ Best combination: non-trivial functional + edge + no solution. This gives the hi
 
 # 测试代码
 
-来源：https://www.hiredintech.com/algorithms/algorithm-design-canvas/testing-your-code/
+来源：[https://www.hiredintech.com/algorithms/algorithm-design-canvas/testing-your-code/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/testing-your-code/)
 
 代码写完后，你不能只是放下笔说"我完成了"就走。一个很好的下一步是用几个小测试用例来验证它。
 

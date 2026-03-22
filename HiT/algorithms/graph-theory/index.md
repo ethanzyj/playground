@@ -1,6 +1,6 @@
 # Graph Theory
 
-Source: https://www.hiredintech.com/algorithms/graph-theory/
+Source: [https://www.hiredintech.com/algorithms/graph-theory/](https://www.hiredintech.com/algorithms/graph-theory/)
 
 In this section we look at graph theory - things you need to recognize and solve such problems at interviews and at work.
 
@@ -24,7 +24,7 @@ It may not be immediately obvious that a task requires a graph representation. P
 
 # 图论
 
-来源：https://www.hiredintech.com/algorithms/graph-theory/
+来源：[https://www.hiredintech.com/algorithms/graph-theory/](https://www.hiredintech.com/algorithms/graph-theory/)
 
 在本节中，我们学习图论——你需要在面试和工作中识别和解决此类问题。
 

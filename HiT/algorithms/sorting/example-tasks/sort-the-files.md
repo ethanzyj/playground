@@ -1,6 +1,6 @@
 # Sort the Files
 
-Source: https://www.hiredintech.com/algorithms/sorting/example-tasks/sort-the-files/
+Source: [https://www.hiredintech.com/algorithms/sorting/example-tasks/sort-the-files/](https://www.hiredintech.com/algorithms/sorting/example-tasks/sort-the-files/)
 
 ## Task Statement
 
@@ -23,7 +23,7 @@ This demonstrates that "sorting" doesn't always mean applying a standard sorting
 
 # 文件排序
 
-来源：https://www.hiredintech.com/algorithms/sorting/example-tasks/sort-the-files/
+来源：[https://www.hiredintech.com/algorithms/sorting/example-tasks/sort-the-files/](https://www.hiredintech.com/algorithms/sorting/example-tasks/sort-the-files/)
 
 ## 题目描述
 

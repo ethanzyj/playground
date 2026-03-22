@@ -1,6 +1,6 @@
 # Mock Interviews
 
-Source: https://www.hiredintech.com/system-design/how-to-practice/mock_interviews/
+Source: [https://www.hiredintech.com/system-design/how-to-practice/mock_interviews/](https://www.hiredintech.com/system-design/how-to-practice/mock_interviews/)
 
 While practicing in isolation with a friend is very useful up to a point, at some stage in your preparation process it'd be time to face the music. You need to get actual real-life interview experience under your belt.
 
@@ -19,7 +19,7 @@ No matter if you choose paid services or interviewing with friends, mock intervi
 
 # 模拟面试
 
-来源：https://www.hiredintech.com/system-design/how-to-practice/mock_interviews/
+来源：[https://www.hiredintech.com/system-design/how-to-practice/mock_interviews/](https://www.hiredintech.com/system-design/how-to-practice/mock_interviews/)
 
 虽然与朋友单独练习在一定程度上非常有用，但在你准备过程的某个阶段，是时候面对现实了。你需要获得真正的面试经验。
 

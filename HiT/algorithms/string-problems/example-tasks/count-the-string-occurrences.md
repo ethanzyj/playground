@@ -1,6 +1,6 @@
 # Count the String Occurrences
 
-Source: https://www.hiredintech.com/algorithms/string-problems/example-tasks/count-the-string-occurrences/
+Source: [https://www.hiredintech.com/algorithms/string-problems/example-tasks/count-the-string-occurrences/](https://www.hiredintech.com/algorithms/string-problems/example-tasks/count-the-string-occurrences/)
 
 ## Task Statement
 
@@ -19,7 +19,7 @@ This is a great opportunity to implement the Knuth-Morris-Pratt algorithm, which
 
 # 字符串出现次数
 
-来源：https://www.hiredintech.com/algorithms/string-problems/example-tasks/count-the-string-occurrences/
+来源：[https://www.hiredintech.com/algorithms/string-problems/example-tasks/count-the-string-occurrences/](https://www.hiredintech.com/algorithms/string-problems/example-tasks/count-the-string-occurrences/)
 
 ## 题目描述
 

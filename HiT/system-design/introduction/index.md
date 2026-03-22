@@ -1,6 +1,6 @@
 # Course Introduction
 
-Source: https://www.hiredintech.com/system-design/introduction/
+Source: [https://www.hiredintech.com/system-design/introduction/](https://www.hiredintech.com/system-design/introduction/)
 
 Over time, we've identified two major challenges most candidates face when it comes to system design questions. Candidates either:
 
@@ -34,7 +34,7 @@ To beef up your scalability knowledge, we've selected some of the best readings 
 
 # 课程简介
 
-来源：https://www.hiredintech.com/system-design/introduction/
+来源：[https://www.hiredintech.com/system-design/introduction/](https://www.hiredintech.com/system-design/introduction/)
 
 随着时间推移，我们发现大多数候选人在系统设计问题上面临两大挑战：
 

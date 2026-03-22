@@ -1,6 +1,6 @@
 # Additional Considerations
 
-Source: https://www.hiredintech.com/system-design/the-twitter-problem/additional-considerations/
+Source: [https://www.hiredintech.com/system-design/the-twitter-problem/additional-considerations/](https://www.hiredintech.com/system-design/the-twitter-problem/additional-considerations/)
 
 
 ## Increased number of read requests
@@ -38,7 +38,7 @@ The interviewer warned about outliers: some users will have many more followers 
 
 # 额外考虑
 
-来源：https://www.hiredintech.com/system-design/the-twitter-problem/additional-considerations/
+来源：[https://www.hiredintech.com/system-design/the-twitter-problem/additional-considerations/](https://www.hiredintech.com/system-design/the-twitter-problem/additional-considerations/)
 
 
 ## 读取请求增加

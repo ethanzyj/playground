@@ -1,6 +1,6 @@
 # Count Number's Factors
 
-Source: https://www.hiredintech.com/algorithms/mathematics/example-tasks/count-numbers-factors/
+Source: [https://www.hiredintech.com/algorithms/mathematics/example-tasks/count-numbers-factors/](https://www.hiredintech.com/algorithms/mathematics/example-tasks/count-numbers-factors/)
 
 ## Task Statement
 
@@ -45,7 +45,7 @@ ans *= 2 if n > 1
 
 # 因子计数
 
-来源：https://www.hiredintech.com/algorithms/mathematics/example-tasks/count-numbers-factors/
+来源：[https://www.hiredintech.com/algorithms/mathematics/example-tasks/count-numbers-factors/](https://www.hiredintech.com/algorithms/mathematics/example-tasks/count-numbers-factors/)
 
 ## 题目描述
 

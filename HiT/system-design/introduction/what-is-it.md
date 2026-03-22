@@ -1,6 +1,6 @@
 # What Are System Design Questions?
 
-Source: https://www.hiredintech.com/system-design/introduction/what-is-it/
+Source: [https://www.hiredintech.com/system-design/introduction/what-is-it/](https://www.hiredintech.com/system-design/introduction/what-is-it/)
 
 In this section we'll talk about the questions which require the interviewee to design a high-level architecture for some sort of a software system. This can be a web facing service, a RESTful API, a peer-to-peer desktop app, and so on. The exact type of question will most likely vary depending on the specifics of the company you interview at.
 
@@ -39,7 +39,7 @@ Because of that, in the next few sections, we will present our strategy for appr
 
 # 什么是系统设计题？
 
-来源：https://www.hiredintech.com/system-design/introduction/what-is-it/
+来源：[https://www.hiredintech.com/system-design/introduction/what-is-it/](https://www.hiredintech.com/system-design/introduction/what-is-it/)
 
 在本节中，我们将讨论要求面试者为某种软件系统设计高层架构的问题。这可以是面向网络的服务、RESTful API、点对点桌面应用程序等。具体的问题类型很可能会根据你面试的公司的具体情况而有所不同。
 

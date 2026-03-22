@@ -1,6 +1,6 @@
 # Network Connectivity
 
-Source: https://www.hiredintech.com/algorithms/graph-theory/example-tasks/network-connectivity/
+Source: [https://www.hiredintech.com/algorithms/graph-theory/example-tasks/network-connectivity/](https://www.hiredintech.com/algorithms/graph-theory/example-tasks/network-connectivity/)
 
 ## Task Statement
 
@@ -49,7 +49,7 @@ end
 
 # 网络连通性
 
-来源：https://www.hiredintech.com/algorithms/graph-theory/example-tasks/network-connectivity/
+来源：[https://www.hiredintech.com/algorithms/graph-theory/example-tasks/network-connectivity/](https://www.hiredintech.com/algorithms/graph-theory/example-tasks/network-connectivity/)
 
 ## 题目描述
 

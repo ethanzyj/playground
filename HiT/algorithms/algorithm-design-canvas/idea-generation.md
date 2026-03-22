@@ -1,6 +1,6 @@
 # Idea Generation
 
-Source: https://www.hiredintech.com/algorithms/algorithm-design-canvas/idea-generation/
+Source: [https://www.hiredintech.com/algorithms/algorithm-design-canvas/idea-generation/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/idea-generation/)
 
 One of the goals of this course is to teach you how to solve new problems. We believe that it is much better to learn how to design solutions instead of trying to cover all interview questions that exist. New interview questions get created all the time - it is virtually impossible to know all of them by heart.
 
@@ -45,7 +45,7 @@ If nothing else helps, try to remember a similar problem you've seen. Think if i
 
 # 想法生成
 
-来源：https://www.hiredintech.com/algorithms/algorithm-design-canvas/idea-generation/
+来源：[https://www.hiredintech.com/algorithms/algorithm-design-canvas/idea-generation/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/idea-generation/)
 
 本课程的目标之一是教你如何解决新问题。我们认为学习如何设计解决方案比试图覆盖所有面试题要好得多。新的面试题不断被创造出来——几乎不可能全部记住。
 

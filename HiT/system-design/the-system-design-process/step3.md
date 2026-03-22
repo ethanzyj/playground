@@ -1,6 +1,6 @@
 # Step 3: Understanding Bottlenecks
 
-Source: https://www.hiredintech.com/system-design/the-system-design-process/step3/
+Source: [https://www.hiredintech.com/system-design/the-system-design-process/step3/](https://www.hiredintech.com/system-design/the-system-design-process/step3/)
 
 Most likely your high-level design will have one or more bottlenecks given the constraints of the problem. This is perfectly ok. You are not expected to design a system from the ground up, which immediately handles all the load in the world. It just needs to be scalable, in order for you to be able to improve it using some standard tools and techniques.
 
@@ -22,7 +22,7 @@ Here's an example of how we'd think about the bottlenecks for the URL shortening
 
 # 第三步：理解瓶颈
 
-来源：https://www.hiredintech.com/system-design/the-system-design-process/step3/
+来源：[https://www.hiredintech.com/system-design/the-system-design-process/step3/](https://www.hiredintech.com/system-design/the-system-design-process/step3/)
 
 在给定问题的约束条件下，你的高层设计很可能会有一个或多个瓶颈。这完全没问题。没有人期望你从零开始设计一个能立即处理世界上所有负载的系统。它只需要是可扩展的，以便你能够使用一些标准工具和技术来改进它。
 

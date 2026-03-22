@@ -1,6 +1,6 @@
 # Data Structures
 
-Source: https://www.hiredintech.com/algorithms/data-structures/
+Source: [https://www.hiredintech.com/algorithms/data-structures/](https://www.hiredintech.com/algorithms/data-structures/)
 
 Data structures play a major role in many algorithmic tasks. Very often at coding interviews you will need to use one or more data structures to build a correct and efficient solution. The most frequently used ones are:
 
@@ -25,7 +25,7 @@ This is not an extensive list but covers the most essential ones you need to kno
 
 # 数据结构
 
-来源：https://www.hiredintech.com/algorithms/data-structures/
+来源：[https://www.hiredintech.com/algorithms/data-structures/](https://www.hiredintech.com/algorithms/data-structures/)
 
 数据结构在许多算法任务中起着重要作用。在编程面试中，你经常需要使用一个或多个数据结构来构建正确且高效的解决方案。最常用的有：
 

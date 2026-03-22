@@ -1,6 +1,6 @@
 # The Summarization Problem
 
-Source: https://www.hiredintech.com/system-design/the-summarization-problem/
+Source: [https://www.hiredintech.com/system-design/the-summarization-problem/](https://www.hiredintech.com/system-design/the-summarization-problem/)
 
 Here is another example problem from a system design interview. Like with The Twitter Problem, we will start with a statement and then go through clarifying questions, designing the software architecture and resolving any issues.
 
@@ -26,7 +26,7 @@ Imagine you are at a tech interview and you are asked the following:
 
 # 文本摘要问题
 
-来源：https://www.hiredintech.com/system-design/the-summarization-problem/
+来源：[https://www.hiredintech.com/system-design/the-summarization-problem/](https://www.hiredintech.com/system-design/the-summarization-problem/)
 
 这是系统设计面试中的另一个示例问题。和Twitter问题一样，我们将从题目描述开始，然后经历澄清性问题、设计软件架构和解决可能的问题。
 

@@ -1,6 +1,6 @@
 # Clarifying Questions
 
-Source: https://www.hiredintech.com/system-design/the-twitter-problem/clarifying-questions/
+Source: [https://www.hiredintech.com/system-design/the-twitter-problem/clarifying-questions/](https://www.hiredintech.com/system-design/the-twitter-problem/clarifying-questions/)
 
 The way it is given, this problem is very unclear. At first, it may seem that you don't need more than this one sentence. But think about it - being the architect and developer you need to know much more in order to make the proper decisions.
 
@@ -44,7 +44,7 @@ The question-asking session should probably not last more than a few minutes in 
 
 # 澄清性问题
 
-来源：https://www.hiredintech.com/system-design/the-twitter-problem/clarifying-questions/
+来源：[https://www.hiredintech.com/system-design/the-twitter-problem/clarifying-questions/](https://www.hiredintech.com/system-design/the-twitter-problem/clarifying-questions/)
 
 按照给出的方式，这个问题是非常不明确的。起初，似乎你只需要这一句话。但仔细想想——作为架构师和开发者，你需要了解更多信息才能做出正确的决策。
 

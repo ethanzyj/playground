@@ -1,6 +1,6 @@
 # Sorting
 
-Source: https://www.hiredintech.com/algorithms/sorting/
+Source: [https://www.hiredintech.com/algorithms/sorting/](https://www.hiredintech.com/algorithms/sorting/)
 
 Sorting is one of the fundamental topics. Nowadays most programming languages have utilities for efficient sorting. However, it's helpful to know how these algorithms work. Questions related to them can be expected at interviews.
 
@@ -17,7 +17,7 @@ In practice tasks you will see that sometimes sorting is needed in non-standard 
 
 # 排序
 
-来源：https://www.hiredintech.com/algorithms/sorting/
+来源：[https://www.hiredintech.com/algorithms/sorting/](https://www.hiredintech.com/algorithms/sorting/)
 
 排序是基础主题之一。如今大多数编程语言都有高效排序的工具。然而，了解这些算法如何工作是有帮助的。面试中可以预期会遇到相关问题。
 

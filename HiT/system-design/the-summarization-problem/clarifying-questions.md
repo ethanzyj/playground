@@ -1,6 +1,6 @@
 # Clarifying Questions
 
-Source: https://www.hiredintech.com/system-design/the-summarization-problem/clarifying-questions/
+Source: [https://www.hiredintech.com/system-design/the-summarization-problem/clarifying-questions/](https://www.hiredintech.com/system-design/the-summarization-problem/clarifying-questions/)
 
 We already have useful information: expected requests per month and expected latency. Given the library takes up to 5 seconds, we have at most 5 more seconds of additional latency. Processing must be done in real-time.
 
@@ -28,7 +28,7 @@ Key questions asked:
 
 # 澄清性问题
 
-来源：https://www.hiredintech.com/system-design/the-summarization-problem/clarifying-questions/
+来源：[https://www.hiredintech.com/system-design/the-summarization-problem/clarifying-questions/](https://www.hiredintech.com/system-design/the-summarization-problem/clarifying-questions/)
 
 我们已经有了一些有用的信息：预期的每月请求量和预期延迟。鉴于库最多需要5秒，我们最多还有5秒的额外延迟。处理必须实时完成。
 

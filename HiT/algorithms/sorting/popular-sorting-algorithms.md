@@ -1,6 +1,6 @@
 # Popular Sorting Algorithms
 
-Source: https://www.hiredintech.com/algorithms/sorting/popular-sorting-algorithms/
+Source: [https://www.hiredintech.com/algorithms/sorting/popular-sorting-algorithms/](https://www.hiredintech.com/algorithms/sorting/popular-sorting-algorithms/)
 
 Simplest: selection sort and bubble sort. Both O(N^2).
 
@@ -24,7 +24,7 @@ These differences between seemingly similar algorithms matter. Interviewers may 
 
 # 常见排序算法
 
-来源：https://www.hiredintech.com/algorithms/sorting/popular-sorting-algorithms/
+来源：[https://www.hiredintech.com/algorithms/sorting/popular-sorting-algorithms/](https://www.hiredintech.com/algorithms/sorting/popular-sorting-algorithms/)
 
 最简单的：选择排序和冒泡排序。都是 O(N^2)。
 

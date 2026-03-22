@@ -1,6 +1,6 @@
 # High-level Design
 
-Source: https://www.hiredintech.com/system-design/the-summarization-problem/high-level-design/
+Source: [https://www.hiredintech.com/system-design/the-summarization-problem/high-level-design/](https://www.hiredintech.com/system-design/the-summarization-problem/high-level-design/)
 
 We will try to scope out a high-level design proposal before going into details.
 
@@ -35,7 +35,7 @@ The high-level design shows: Front-end clients → Backend service → Summariza
 
 # 高层设计
 
-来源：https://www.hiredintech.com/system-design/the-summarization-problem/high-level-design/
+来源：[https://www.hiredintech.com/system-design/the-summarization-problem/high-level-design/](https://www.hiredintech.com/system-design/the-summarization-problem/high-level-design/)
 
 我们将尝试在深入细节之前先勾勒出一个高层设计方案。
 

@@ -1,6 +1,6 @@
 # Dynamic Programming
 
-Source: https://www.hiredintech.com/algorithms/dynamic-programming/
+Source: [https://www.hiredintech.com/algorithms/dynamic-programming/](https://www.hiredintech.com/algorithms/dynamic-programming/)
 
 Dynamic programming is a very widely used technique. It is likely that you would get a problem requiring DP at interviews. It is useful knowledge for many software engineers.
 
@@ -27,7 +27,7 @@ The technique of storing answers for smaller versions and reusing them is called
 
 # 动态规划
 
-来源：https://www.hiredintech.com/algorithms/dynamic-programming/
+来源：[https://www.hiredintech.com/algorithms/dynamic-programming/](https://www.hiredintech.com/algorithms/dynamic-programming/)
 
 动态规划是一种非常广泛使用的技术。你很可能在面试中遇到需要动态规划的问题。这对许多软件工程师来说都是有用的知识。
 

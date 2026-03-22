@@ -1,6 +1,6 @@
 # Solve with Friends
 
-Source: https://www.hiredintech.com/system-design/how-to-practice/solve_with_friends/
+Source: [https://www.hiredintech.com/system-design/how-to-practice/solve_with_friends/](https://www.hiredintech.com/system-design/how-to-practice/solve_with_friends/)
 
 Look at the massive systems you use every day developed by the companies you are interviewing for. What systems did these companies have to design? Create a list of the fundamental system design questions that bubble up in your brain. Here are a few to get you started:
 
@@ -21,7 +21,7 @@ If you can't find a friend/coworker, go to a site like HighScalability that cont
 
 # 与朋友一起练习
 
-来源：https://www.hiredintech.com/system-design/how-to-practice/solve_with_friends/
+来源：[https://www.hiredintech.com/system-design/how-to-practice/solve_with_friends/](https://www.hiredintech.com/system-design/how-to-practice/solve_with_friends/)
 
 看看你每天使用的那些由你要面试的公司开发的大型系统。这些公司需要设计什么系统？列出你脑海中冒出的基本系统设计问题。以下是一些入门问题：
 

@@ -1,6 +1,6 @@
 # Count the Paths
 
-Source: https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/count-the-paths/
+Source: [https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/count-the-paths/](https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/count-the-paths/)
 
 ## Task Statement
 
@@ -29,7 +29,7 @@ Time complexity: O(N*M).
 
 # 路径计数
 
-来源：https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/count-the-paths/
+来源：[https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/count-the-paths/](https://www.hiredintech.com/algorithms/dynamic-programming/example-tasks/count-the-paths/)
 
 ## 题目描述
 

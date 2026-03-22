@@ -1,6 +1,6 @@
 # What is the Canvas?
 
-Source: https://www.hiredintech.com/algorithms/algorithm-design-canvas/what-is-the-canvas/
+Source: [https://www.hiredintech.com/algorithms/algorithm-design-canvas/what-is-the-canvas/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/what-is-the-canvas/)
 
 The Algorithm Design Canvas captures our process for tackling algorithm design problems. It is a convenient way to represent algorithmic thinking. Every algorithmic problem, big or small, easy or hard, should eventually end up as a completed canvas.
 
@@ -47,7 +47,7 @@ Throughout the next sections we will be using the Zig-Zag problem from TopCoder 
 
 # 什么是画布？
 
-来源：https://www.hiredintech.com/algorithms/algorithm-design-canvas/what-is-the-canvas/
+来源：[https://www.hiredintech.com/algorithms/algorithm-design-canvas/what-is-the-canvas/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/what-is-the-canvas/)
 
 算法设计画布（Algorithm Design Canvas）捕捉了我们处理算法设计问题的过程。它是表达算法思维的便捷方式。每一个算法问题，无论大小、难易，最终都应该变成一个完成的画布。
 

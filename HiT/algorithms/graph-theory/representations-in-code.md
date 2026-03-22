@@ -1,6 +1,6 @@
 # Representations in Code
 
-Source: https://www.hiredintech.com/algorithms/graph-theory/representations-in-code/
+Source: [https://www.hiredintech.com/algorithms/graph-theory/representations-in-code/](https://www.hiredintech.com/algorithms/graph-theory/representations-in-code/)
 
 ## Adjacency Matrix
 
@@ -21,7 +21,7 @@ Choose representation based on graph density and the algorithms you need to impl
 
 # 代码中的表示
 
-来源：https://www.hiredintech.com/algorithms/graph-theory/representations-in-code/
+来源：[https://www.hiredintech.com/algorithms/graph-theory/representations-in-code/](https://www.hiredintech.com/algorithms/graph-theory/representations-in-code/)
 
 ## 邻接矩阵
 

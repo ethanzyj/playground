@@ -1,6 +1,6 @@
 # Before the Interview
 
-Source: https://www.hiredintech.com/soft-skills/common-questions/before-the-interview/
+Source: [https://www.hiredintech.com/soft-skills/common-questions/before-the-interview/](https://www.hiredintech.com/soft-skills/common-questions/before-the-interview/)
 
 
 ## Q1: How to postpone an interview if something major pops up?
@@ -62,7 +62,7 @@ So, in summary, your CV will be looked at pretty quickly and this makes it even 
 
 # 面试前
 
-来源：https://www.hiredintech.com/soft-skills/common-questions/before-the-interview/
+来源：[https://www.hiredintech.com/soft-skills/common-questions/before-the-interview/](https://www.hiredintech.com/soft-skills/common-questions/before-the-interview/)
 
 
 ## 问题一：如果突然有重要事情，如何推迟面试？

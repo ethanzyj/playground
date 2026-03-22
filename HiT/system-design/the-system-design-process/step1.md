@@ -1,6 +1,6 @@
 # Step 1: Constraints and Use Cases
 
-Source: https://www.hiredintech.com/system-design/the-system-design-process/step1/
+Source: [https://www.hiredintech.com/system-design/the-system-design-process/step1/](https://www.hiredintech.com/system-design/the-system-design-process/step1/)
 
 Just like algorithm design, system design questions will also most likely be weakly defined. Consider the question about the URL-shortening service ("Design a URL shortening service like bit.ly"). There are so many things that are unclear about it! Without knowing more, it will be impossible to design an appropriate solution. Actually, many candidates forget about this and start designing a solution immediately.
 
@@ -26,7 +26,7 @@ Here's an example of how we'd approach defining the use cases and the constraint
 
 # 第一步：约束条件和用例
 
-来源：https://www.hiredintech.com/system-design/the-system-design-process/step1/
+来源：[https://www.hiredintech.com/system-design/the-system-design-process/step1/](https://www.hiredintech.com/system-design/the-system-design-process/step1/)
 
 就像算法设计一样，系统设计问题很可能也是定义不明确的。想想关于URL缩短服务的问题（"设计一个像bit.ly那样的URL缩短服务"）。有太多不清楚的地方！如果不了解更多信息，就不可能设计出合适的解决方案。实际上，许多候选人忘记了这一点，立刻开始设计解决方案。
 

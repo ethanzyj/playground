@@ -1,6 +1,6 @@
 # Summary
 
-Source: https://www.hiredintech.com/system-design/the-summarization-problem/summary/
+Source: [https://www.hiredintech.com/system-design/the-summarization-problem/summary/](https://www.hiredintech.com/system-design/the-summarization-problem/summary/)
 
 Given a quite vague initial problem statement we managed to design a system that should work well in production under the expected constraints. The system will probably have some flaws in its current form but the important thing is that it already is quite robust and able to scale.
 
@@ -21,7 +21,7 @@ Sometimes the interviewer may not tell you all that you need. They may want to s
 
 # 总结
 
-来源：https://www.hiredintech.com/system-design/the-summarization-problem/summary/
+来源：[https://www.hiredintech.com/system-design/the-summarization-problem/summary/](https://www.hiredintech.com/system-design/the-summarization-problem/summary/)
 
 从一个相当模糊的初始问题描述出发，我们成功设计了一个在预期约束条件下应该能在生产环境中良好运行的系统。系统目前的形式可能还有一些缺陷，但重要的是它已经相当健壮且能够扩展。
 

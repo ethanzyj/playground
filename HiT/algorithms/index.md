@@ -1,6 +1,6 @@
 # Algorithm Design
 
-Source: https://www.hiredintech.com/algorithms/
+Source: [https://www.hiredintech.com/algorithms/](https://www.hiredintech.com/algorithms/)
 
 Welcome to the first lesson of this course offered by HiredInTech!
 
@@ -67,7 +67,7 @@ For real practice we always recommend to use a lot some of the existing online p
 
 # 算法设计
 
-来源：https://www.hiredintech.com/algorithms/
+来源：[https://www.hiredintech.com/algorithms/](https://www.hiredintech.com/algorithms/)
 
 欢迎来到 HiredInTech 提供的本课程的第一课！
 

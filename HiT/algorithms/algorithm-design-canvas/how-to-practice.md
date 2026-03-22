@@ -1,6 +1,6 @@
 # How to Practice?
 
-Source: https://www.hiredintech.com/algorithms/algorithm-design-canvas/how-to-practice/
+Source: [https://www.hiredintech.com/algorithms/algorithm-design-canvas/how-to-practice/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/how-to-practice/)
 
 At this point, you've mastered the theoretical underpinnings of the Algorithm Design Canvas. The next fundamental question is how to most efficiently apply it in practice.
 
@@ -36,7 +36,7 @@ Don't immediately try to run code. Spend time reviewing it. Be 100% confident it
 
 # 如何练习？
 
-来源：https://www.hiredintech.com/algorithms/algorithm-design-canvas/how-to-practice/
+来源：[https://www.hiredintech.com/algorithms/algorithm-design-canvas/how-to-practice/](https://www.hiredintech.com/algorithms/algorithm-design-canvas/how-to-practice/)
 
 到目前为止，你已经掌握了算法设计画布的理论基础。接下来的根本问题是如何最有效地将其应用于实践。
 
