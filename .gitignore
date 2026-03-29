@@ -1,5 +1,6 @@
 .vscode/
 *.exe
+*.o
 settings.json
 launch.json
 tasks.json
