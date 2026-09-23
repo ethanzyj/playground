@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AMC 10 Bilingual Prep Guide | AMC 10 中英双语备考指南</title>
+    <meta
+      name="description"
+      content="Interactive bilingual AMC 10 prep guide organized from a Chinese topic map with concept explanations and past AMC 10 references."
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["\\(", "\\)"]]
+        },
+        chtml: {
+          scale: 1.05
+        }
+      };
+    </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"
+    ></script>
+  </head>
+  <body>
+    <header class="hero">
+      <label class="global-language hero-language">
+        <span data-i18n="languageLabel">Language / 语言</span>
+        <select id="languageMode">
+          <option value="both">Bilingual / 双语</option>
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+      <div>
+        <p class="eyebrow" data-i18n="heroEyebrow">AMC 10 prep / 中英双语备考</p>
+        <h1 data-i18n="heroTitle">AMC 10 Bilingual Prep Guide<br /><span>AMC 10 中英双语备考指南</span></h1>
+        <p class="hero-copy" data-i18n="heroCopy">
+          A data-driven study guide based on the Chinese curriculum map, aligned to the
+          official AMC 10 content areas: algebra, geometry, number theory, counting, and probability.
+        </p>
+      </div>
+      <div class="hero-card" aria-label="AMC 10 exam facts" data-i18n-aria-label="examFacts">
+        <strong data-i18n="examFacts">Exam facts / 考试信息</strong>
+        <span data-i18n="questionCount">25 questions / 25 题</span>
+        <span data-i18n="timeLimit">75 minutes / 75 分钟</span>
+        <span data-i18n="calculatorRule">No calculator / 不可使用计算器</span>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <div class="workspace-bar">
+        <nav class="section-tabs" role="tablist" aria-label="Guide sections" data-i18n-aria-label="guideSections">
+          <button id="studyTab" class="section-tab active" type="button" role="tab" aria-selected="true" aria-controls="studyPanel" data-view="study" data-i18n="studyGuide">
+            Study Guide <span>学习指南</span>
+          </button>
+          <button id="problemsTab" class="section-tab" type="button" role="tab" aria-selected="false" aria-controls="problemsPanel" data-view="problems" data-i18n="problemExplorer">
+            Problem Explorer <span>真题索引</span>
+          </button>
+          <button id="glossaryTab" class="section-tab" type="button" role="tab" aria-selected="false" aria-controls="glossaryPanel" data-view="glossary" data-i18n="glossary">
+            Glossary <span>词汇表</span>
+          </button>
+        </nav>
+      </div>
+
+      <aside id="studySidebar" class="sidebar" aria-label="Topic navigation" data-i18n-aria-label="topicNavigation">
+        <div class="toolbar">
+          <label>
+            <span data-i18n="searchTopics">Search topics / 搜索知识点</span>
+            <input id="searchInput" type="search" placeholder="topic, formula, keyword..." data-i18n-placeholder="topicSearchPlaceholder" />
+          </label>
+        </div>
+        <nav id="topicNav"></nav>
+      </aside>
+
+      <section class="content-panel">
+        <section id="studyPanel" class="view-panel" role="tabpanel" aria-labelledby="studyTab">
+          <section class="notice">
+            <strong data-i18n="copyrightHeading">Copyright-safe problem references.</strong>
+            <span data-i18n="copyrightCopy">
+              This guide does not reproduce AMC problem text. It stores year/version/problem metadata,
+              concept tags, and source links so licensed or official text can be consulted separately.
+            </span>
+          </section>
+
+          <article id="conceptView" class="concept-view" aria-live="polite"></article>
+        </section>
+
+        <section id="problemsPanel" class="problem-explorer view-panel" role="tabpanel" aria-labelledby="problemsTab" hidden>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="problemEyebrow">Past AMC 10 references / 历年真题索引</p>
+              <h2 id="problemHeading" data-i18n="problemExplorer">Problem Explorer</h2>
+            </div>
+            <div class="filters">
+              <select id="conceptFilter" aria-label="Filter by concept" data-i18n-aria-label="filterByConcept"></select>
+              <select id="yearFilter" aria-label="Filter by year" data-i18n-aria-label="filterByYear"></select>
+              <select id="examFilter" aria-label="Filter by exam" data-i18n-aria-label="filterByExam"></select>
+              <select id="difficultyFilter" aria-label="Filter by difficulty" data-i18n-aria-label="filterByDifficulty"></select>
+            </div>
+          </div>
+          <div id="problemList" class="problem-grid"></div>
+        </section>
+
+        <section id="glossaryPanel" class="glossary view-panel" role="tabpanel" aria-labelledby="glossaryTab" hidden>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="glossaryEyebrow">Vocabulary / 词汇表</p>
+              <h2 id="glossaryHeading" data-i18n="bilingualGlossary">Bilingual Glossary</h2>
+            </div>
+            <label class="glossary-search">
+              <span data-i18n="searchGlossary">Search glossary / 搜索词汇</span>
+              <input id="glossarySearch" type="search" placeholder="term or definition..." data-i18n-placeholder="glossarySearchPlaceholder" />
+            </label>
+          </div>
+          <div id="glossaryList" class="glossary-grid"></div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="assets/app.mjs?v=20260923-6"></script>
+  </body>
+</html>
