@@ -13,6 +13,7 @@ const conceptIds = new Set(concepts.map((concept) => concept.id));
 assert(TOPICS.length === 5, "Expected the five top-level Chinese curriculum modules.");
 assert(concepts.length >= 18, "Expected detailed concept coverage from the Chinese topic map.");
 assert(conceptIds.size === concepts.length, "Concept IDs must be unique.");
+assert(PROBLEM_REFERENCES.length === 500, "Expected all 500 AMC 10A/10B problems from 2016-2025.");
 
 for (const concept of concepts) {
   assert(concept.zh && concept.en, `Concept ${concept.id} is missing bilingual names.`);
@@ -54,6 +55,19 @@ for (const problem of PROBLEM_REFERENCES) {
   for (const id of problem.conceptIds) {
     assert(conceptIds.has(id), `Problem ${problem.year} ${problem.exam} #${problem.problemNumber} references unknown concept ${id}.`);
   }
+
+  const problemKeys = new Set(PROBLEM_REFERENCES.map((problem) => `${problem.year}-${problem.exam}-${problem.problemNumber}`));
+  assert(problemKeys.size === 500, "Every AMC 10 problem reference must be unique.");
+  for (let year = 2016; year <= 2025; year += 1) {
+    for (const exam of ["AMC 10A", "AMC 10B"]) {
+      const examProblems = PROBLEM_REFERENCES.filter((problem) => problem.year === year && problem.exam === exam);
+      assert(examProblems.length === 25, `${year} ${exam} must contain all 25 problems.`);
+    }
+  }
+  for (const concept of concepts) {
+    const count = PROBLEM_REFERENCES.filter((problem) => problem.conceptIds.includes(concept.id)).length;
+    assert(count >= 3, `Concept ${concept.id} needs at least three linked AMC 10 problems.`);
+  }
 }
 
 const verifiedProblemConcepts = new Map([
@@ -78,10 +92,11 @@ const verifiedProblemConcepts = new Map([
   ["2025-AMC 10A-6", ["triangles", "diagram-skills"]],
   ["2025-AMC 10B-25", ["coordinate-geometry", "diagram-skills"]]
 ]);
-for (const problem of PROBLEM_REFERENCES) {
-  const key = `${problem.year}-${problem.exam}-${problem.problemNumber}`;
+for (const [key, expectedConceptIds] of verifiedProblemConcepts) {
+  const problem = PROBLEM_REFERENCES.find((candidate) => `${candidate.year}-${candidate.exam}-${candidate.problemNumber}` === key);
+  assert(problem, `Verified problem ${key} is missing.`);
   assert(
-    JSON.stringify(problem.conceptIds) === JSON.stringify(verifiedProblemConcepts.get(key)),
+    JSON.stringify(problem.conceptIds) === JSON.stringify(expectedConceptIds),
     `Problem ${key} must retain its verified concept mapping.`
   );
 }
@@ -91,17 +106,25 @@ for (let year = 2016; year <= 2025; year += 1) {
   assert(years.has(year), `Missing a problem reference for ${year}.`);
 }
 
-assert(GLOSSARY.length >= 35, "Expected broad bilingual glossary coverage across AMC 10 content areas.");
+assert(GLOSSARY.length >= 70, "Expected broad bilingual glossary coverage across AMC 10 content areas.");
 for (const term of GLOSSARY) {
   assert(term.categoryZh && term.categoryEn, "Every glossary term needs a bilingual category.");
   assert(term.zh && term.en && term.noteZh && term.noteEn, "Every glossary term needs bilingual names and notes.");
   assert(term.noteZh.length >= 12 && term.noteEn.length >= 25, `Glossary term ${term.en} needs a useful bilingual explanation.`);
+  assert(term.conceptIds?.length >= 1, `Glossary term ${term.en} needs at least one linked concept.`);
+  for (const id of term.conceptIds) {
+    assert(conceptIds.has(id), `Glossary term ${term.en} references unknown concept ${id}.`);
+  }
+}
+for (const concept of concepts) {
+  assert(GLOSSARY.some((term) => term.conceptIds.includes(concept.id)), `Concept ${concept.id} needs linked glossary terms.`);
 }
 
 const html = readFileSync(new URL("../index.html", import.meta.url), "utf8");
 assert(html.includes('id="topicNav"'), "HTML must include the topic navigation mount.");
 assert(html.includes('id="conceptView"'), "HTML must include the concept viewer mount.");
 assert(html.includes('id="problemList"'), "HTML must include the problem explorer mount.");
+assert(html.includes('id="problemCount"'), "Problem Explorer must show filtered and total counts.");
 assert(html.includes('role="tablist"'), "HTML must include accessible top-level navigation tabs.");
 assert(html.includes('class="global-language hero-language"'), "Language selection must be available at the top of the page.");
 assert(html.includes('id="studyPanel"'), "HTML must include the study guide panel.");
@@ -109,6 +132,8 @@ assert(html.includes('id="problemsPanel"'), "HTML must include the problem explo
 assert(html.includes('id="glossaryPanel"'), "HTML must include the glossary panel.");
 assert(html.includes('id="conceptFilter"'), "Problem Explorer must include a concept filter.");
 assert(html.includes('id="glossarySearch"'), "Glossary must include search.");
+assert(html.includes('id="glossaryCount"'), "Glossary must show filtered and total counts.");
+assert(html.includes('id="glossaryConceptFilter"'), "Glossary must include a concept filter.");
 assert(html.includes('type="module" src="assets/app.mjs?v='), "HTML must load a cache-versioned module app.");
 assert(html.includes("mathjax@3.2.2"), "HTML must load the pinned MathJax renderer.");
 
@@ -131,5 +156,6 @@ assert(app.includes("renderStaticInterface();"), "Language changes must update t
 assert(app.includes("document.title ="), "Language changes must update the browser page title.");
 assert(app.includes('setActiveView("study")'), "Problem concept tags must navigate to the Study Guide.");
 assert(app.includes('state.problemConcept === "current"'), "Problem Explorer must support filtering by the current concept.");
+assert(app.includes("wireProblemAndGlossaryLinks"), "Study, problem, and glossary views must cross-link.");
 
 console.log(`Validated ${TOPICS.length} modules, ${concepts.length} concepts, ${PROBLEM_REFERENCES.length} AMC 10 references, and ${GLOSSARY.length} glossary terms.`);
