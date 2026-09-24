@@ -1,4 +1,4 @@
-import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-7";
+import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-12";
 
 const state = {
   language: localStorage.getItem("amc10-language") || "both",
@@ -11,12 +11,158 @@ const state = {
   difficulty: "all",
   glossarySearch: "",
   glossaryConcept: "all",
-  mastered: new Set(JSON.parse(localStorage.getItem("amc10-mastered") || "[]"))
+  conceptMastery: "all",
+  glossaryMastery: "all",
+  mastered: new Set(JSON.parse(localStorage.getItem("amc10-mastered") || "[]")),
+  masteredGlossary: new Set(JSON.parse(localStorage.getItem("amc10-mastered-glossary") || "[]"))
 };
 
 const conceptById = new Map(allConcepts().map((concept) => [concept.id, concept]));
 
 const $ = (selector) => document.querySelector(selector);
+
+// --- Inline glossary term linking -------------------------------------------------
+// Wraps recognized English glossary terms (e.g. "quadratic", "difference of squares")
+// inside explanations, methods, and examples with hoverable spans that reveal a small
+// tooltip with the bilingual definition. TeX segments delimited by \( ... \) are left
+// untouched so MathJax rendering is never disturbed.
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+export function slugifyTerm(text) {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+const glossaryByLowerName = new Map(GLOSSARY.map((term) => [term.en.toLowerCase(), term]));
+const glossaryBySlug = new Map(GLOSSARY.map((term) => [slugifyTerm(term.en), term]));
+const sortedGlossaryTerms = [...GLOSSARY].sort((a, b) => b.en.length - a.en.length);
+const glossaryTermPattern = sortedGlossaryTerms.length
+  ? new RegExp(`\\b(${sortedGlossaryTerms.map((term) => `${escapeRegExp(term.en)}(?:'s|s)?`).join("|")})\\b`, "gi")
+  : null;
+
+function resolveGlossaryTerm(matchText) {
+  const lower = matchText.toLowerCase();
+  if (glossaryByLowerName.has(lower)) return glossaryByLowerName.get(lower);
+  if (lower.endsWith("'s") && glossaryByLowerName.has(lower.slice(0, -2))) return glossaryByLowerName.get(lower.slice(0, -2));
+  if (lower.endsWith("s") && glossaryByLowerName.has(lower.slice(0, -1))) return glossaryByLowerName.get(lower.slice(0, -1));
+  return null;
+}
+
+export function linkGlossaryTerms(text) {
+  if (!text || !glossaryTermPattern) return text;
+  return text
+    .split(/(\\\([^]*?\\\))/g)
+    .map((segment, index) => {
+      if (index % 2 === 1) return segment; // Preserve raw TeX untouched.
+      return segment.replace(glossaryTermPattern, (match) => {
+        const term = resolveGlossaryTerm(match);
+        if (!term) return match;
+        const slug = slugifyTerm(term.en);
+        return `<span class="glossary-term-link" tabindex="0" role="button" aria-describedby="glossary-tooltip" data-glossary-term-slug="${slug}">${match}</span>`;
+      });
+    })
+    .join("");
+}
+
+function linkGlossaryList(items) {
+  return items.map(linkGlossaryTerms);
+}
+
+// --- Hover/focus tooltip for inline glossary terms --------------------------------
+// A single shared tooltip element is created once and repositioned/populated on
+// hover or keyboard focus of any .glossary-term-link span. It never navigates the
+// user away from where they are reading.
+
+let glossaryTooltipEl = null;
+let glossaryHideTimer = null;
+
+function ensureGlossaryTooltip() {
+  if (glossaryTooltipEl) return glossaryTooltipEl;
+  glossaryTooltipEl = document.createElement("div");
+  glossaryTooltipEl.id = "glossary-tooltip";
+  glossaryTooltipEl.className = "glossary-tooltip";
+  glossaryTooltipEl.setAttribute("role", "tooltip");
+  glossaryTooltipEl.hidden = true;
+  // Keep the tooltip open while the pointer travels from the term onto the
+  // tooltip itself (e.g. to click "Open in glossary"), and only schedule a
+  // hide once the pointer actually leaves the tooltip.
+  glossaryTooltipEl.addEventListener("mouseenter", cancelGlossaryTooltipHide);
+  glossaryTooltipEl.addEventListener("mouseleave", () => scheduleGlossaryTooltipHide());
+  document.body.appendChild(glossaryTooltipEl);
+  return glossaryTooltipEl;
+}
+
+function cancelGlossaryTooltipHide() {
+  if (glossaryHideTimer) {
+    clearTimeout(glossaryHideTimer);
+    glossaryHideTimer = null;
+  }
+}
+
+function scheduleGlossaryTooltipHide(delay = 180) {
+  cancelGlossaryTooltipHide();
+  glossaryHideTimer = setTimeout(() => {
+    if (glossaryTooltipEl) glossaryTooltipEl.hidden = true;
+    glossaryHideTimer = null;
+  }, delay);
+}
+
+function showGlossaryTooltip(anchorEl, term) {
+  cancelGlossaryTooltipHide();
+  const tooltip = ensureGlossaryTooltip();
+  tooltip.innerHTML = `
+    <p class="glossary-tooltip-category">${textPair(term.categoryZh, term.categoryEn)}</p>
+    <p class="glossary-tooltip-term">${textPair(term.zh, term.en)}</p>
+    <p class="glossary-tooltip-note">${textPair(term.noteZh, term.noteEn)}</p>
+    <button type="button" class="text-button glossary-tooltip-jump" data-glossary-term-slug="${slugifyTerm(term.en)}">${uiText("openInGlossary")}</button>
+  `;
+  tooltip.hidden = false;
+  const anchorRect = anchorEl.getBoundingClientRect();
+  const tooltipRect = tooltip.getBoundingClientRect();
+  const margin = 10;
+  let left = anchorRect.left + window.scrollX;
+  let top = anchorRect.bottom + window.scrollY + margin;
+  const maxLeft = window.scrollX + document.documentElement.clientWidth - tooltipRect.width - margin;
+  left = Math.max(window.scrollX + margin, Math.min(left, maxLeft));
+  if (anchorRect.bottom + tooltipRect.height + margin > window.innerHeight) {
+    top = anchorRect.top + window.scrollY - tooltipRect.height - margin;
+  }
+  tooltip.style.left = `${left}px`;
+  tooltip.style.top = `${top}px`;
+  typesetMath(tooltip);
+  tooltip.querySelector(".glossary-tooltip-jump").addEventListener("click", () => {
+    hideGlossaryTooltip();
+    jumpToGlossaryTerm(slugifyTerm(term.en));
+  });
+}
+
+function hideGlossaryTooltip() {
+  cancelGlossaryTooltipHide();
+  if (glossaryTooltipEl) glossaryTooltipEl.hidden = true;
+}
+
+function wireGlossaryTooltips(container) {
+  container.querySelectorAll(".glossary-term-link").forEach((el) => {
+    const term = glossaryBySlug.get(el.dataset.glossaryTermSlug);
+    if (!term) return;
+    el.addEventListener("mouseenter", () => showGlossaryTooltip(el, term));
+    el.addEventListener("mouseleave", () => scheduleGlossaryTooltipHide());
+    el.addEventListener("focus", () => showGlossaryTooltip(el, term));
+    el.addEventListener("blur", () => scheduleGlossaryTooltipHide());
+    el.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (!glossaryTooltipEl || glossaryTooltipEl.hidden) showGlossaryTooltip(el, term);
+      else hideGlossaryTooltip();
+    });
+  });
+}
+
+document.addEventListener("scroll", hideGlossaryTooltip, true);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") hideGlossaryTooltip();
+});
 
 const UI_TEXT = {
   languageLabel: { en: "Language", zh: "语言" },
@@ -71,6 +217,16 @@ const UI_TEXT = {
   filterByExam: { en: "Filter by exam", zh: "按试卷筛选" },
   filterByDifficulty: { en: "Filter by difficulty", zh: "按难度筛选" },
   filterGlossaryByConcept: { en: "Filter vocabulary by concept", zh: "按概念筛选词汇" },
+  filterMastery: { en: "Mastery", zh: "掌握状态" },
+  filterConceptMastery: { en: "Filter concepts by mastery", zh: "按知识点掌握状态筛选" },
+  filterGlossaryMastery: { en: "Filter vocabulary by mastery", zh: "按词汇掌握状态筛选" },
+  allMastery: { en: "All mastery states", zh: "全部掌握状态" },
+  masteredOnly: { en: "Mastered", zh: "已掌握" },
+  unmasteredOnly: { en: "Not mastered", zh: "未掌握" },
+  markGlossaryMastered: { en: "Mark vocabulary mastered", zh: "标记词汇已掌握" },
+  masteryStatus: { en: "Learning status", zh: "学习状态" },
+  relatedConcepts: { en: "Related concepts", zh: "相关知识点" },
+  openInGlossary: { en: "Open in glossary →", zh: "打开词汇表 →" },
   noProblems: { en: "No problems match these filters.", zh: "没有符合筛选条件的题目。" },
   noRelatedReferences: { en: "No verified reference is currently linked to this concept.", zh: "此知识点目前尚未关联已核验的真题索引。" },
   noGlossaryTerms: { en: "No glossary terms match your search.", zh: "没有符合搜索条件的词汇。" }
@@ -132,7 +288,10 @@ function renderTopicNav() {
   nav.innerHTML = TOPICS.map((topic) => {
     const concepts = topic.concepts.filter((concept) => {
       const haystack = [topic.zh, topic.en, concept.zh, concept.en, concept.detailZh, concept.detailEn, concept.explanationZh, concept.explanationEn].join(" ").toLowerCase();
-      return !query || haystack.includes(query);
+      return (!query || haystack.includes(query))
+        && (state.conceptMastery === "all"
+          || (state.conceptMastery === "mastered" && state.mastered.has(concept.id))
+          || (state.conceptMastery === "unmastered" && !state.mastered.has(concept.id)));
     });
     if (!concepts.length) return "";
     return `
@@ -163,9 +322,10 @@ function listItems(items) {
 }
 
 function bilingualListItems(itemsZh, itemsEn) {
+  const linkedEn = linkGlossaryList(itemsEn);
   if (state.language === "zh") return listItems(itemsZh);
-  if (state.language === "en") return listItems(itemsEn);
-  return `<ul>${itemsEn.map((item, index) => `<li>${textPair(itemsZh[index], item)}</li>`).join("")}</ul>`;
+  if (state.language === "en") return listItems(linkedEn);
+  return `<ul>${linkedEn.map((item, index) => `<li>${textPair(itemsZh[index], item)}</li>`).join("")}</ul>`;
 }
 
 function formulaItems(concept) {
@@ -174,30 +334,32 @@ function formulaItems(concept) {
     return `
       <li class="formula-item">
         <div class="formula-expression"><span class="math-formula">\\(${formula}\\)</span></div>
-        <p class="formula-explanation">${textPair(note.explanationZh, note.explanationEn)}</p>
+        <p class="formula-explanation">${textPair(note.explanationZh, linkGlossaryTerms(note.explanationEn))}</p>
         ${note.stepsEn ? `
           <div class="formula-steps">
             <strong>${uiText("stepByStep")}</strong>
             <ol>
-              ${note.stepsEn.map((step, stepIndex) => `<li>${textPair(note.stepsZh[stepIndex], step)}</li>`).join("")}
+              ${note.stepsEn.map((step, stepIndex) => `<li>${textPair(note.stepsZh[stepIndex], linkGlossaryTerms(step))}</li>`).join("")}
             </ol>
           </div>
         ` : ""}
         <div class="formula-example">
           <strong>${uiText("workedExample")}</strong>
-          <div>${textPair(note.exampleZh, note.exampleEn)}</div>
+          <div>${textPair(note.exampleZh, linkGlossaryTerms(note.exampleEn))}</div>
         </div>
       </li>
     `;
   }).join("")}</ol>`;
 }
 
-function typesetMath() {
+function typesetMath(target) {
   if (!window.MathJax?.startup?.promise) return;
+  const el = target || $("#conceptView");
+  if (!el) return;
   window.MathJax.startup.promise
     .then(() => {
-      window.MathJax.typesetClear?.([$("#conceptView")]);
-      return window.MathJax.typesetPromise([$("#conceptView")]);
+      window.MathJax.typesetClear?.([el]);
+      return window.MathJax.typesetPromise([el]);
     })
     .catch((error) => {
       console.error("Unable to render formulas with MathJax.", error);
@@ -222,7 +384,7 @@ function renderConcept() {
     <div class="card-grid">
       <section class="card wide">
         <h3>${uiText("conceptExplanation")}</h3>
-        <p>${textPair(concept.explanationZh, concept.explanationEn)}</p>
+        <p>${textPair(concept.explanationZh, linkGlossaryTerms(concept.explanationEn))}</p>
       </section>
       <section class="card wide formula-card">
         <h3>${uiText("coreFormulas")}</h3>
@@ -234,7 +396,7 @@ function renderConcept() {
       </section>
       <section class="card wide example">
         <h3>${uiText("miniExample")}</h3>
-        <p>${textPair(concept.exampleZh, concept.exampleEn)}</p>
+        <p>${textPair(concept.exampleZh, linkGlossaryTerms(concept.exampleEn))}</p>
       </section>
       <section class="card wide">
         <h3>${uiText("readinessChecklist")}</h3>
@@ -272,7 +434,7 @@ function problemCard(problem) {
         <strong>${problem.year} ${problem.exam} #${problem.problemNumber}</strong>
         <span>${difficultyText(problem.difficulty)}</span>
       </div>
-      <p>${textPair(problem.noteZh, problem.noteEn)}</p>
+      <p>${textPair(problem.noteZh, linkGlossaryTerms(problem.noteEn))}</p>
       <div class="tags">${tags.map((tag) => `<button data-concept="${tag.id}">${textPair(tag.zh, tag.en)}</button>`).join("")}</div>
       <div class="card-actions">
         <a href="${problem.sourceUrl}" target="_blank" rel="noreferrer">${uiText("openReference")}</a>
@@ -288,6 +450,8 @@ function populateFilters() {
   const examFilter = $("#examFilter");
   const difficultyFilter = $("#difficultyFilter");
   const glossaryConceptFilter = $("#glossaryConceptFilter");
+  const conceptMasteryFilter = $("#conceptMasteryFilter");
+  const glossaryMasteryFilter = $("#glossaryMasteryFilter");
   const years = [...new Set(PROBLEM_REFERENCES.map((problem) => problem.year))].sort((a, b) => b - a);
   const exams = [...new Set(PROBLEM_REFERENCES.map((problem) => problem.exam))].sort();
   const difficulties = [...new Set(PROBLEM_REFERENCES.map((problem) => problem.difficulty))].sort();
@@ -303,6 +467,18 @@ function populateFilters() {
     ${allConcepts().map((concept) => `<option value="${concept.id}">${plainTextPair(concept.zh, concept.en)}</option>`).join("")}
   `;
   glossaryConceptFilter.value = state.glossaryConcept;
+  conceptMasteryFilter.innerHTML = `
+    <option value="all">${uiText("allMastery")}</option>
+    <option value="mastered">${uiText("masteredOnly")}</option>
+    <option value="unmastered">${uiText("unmasteredOnly")}</option>
+  `;
+  conceptMasteryFilter.value = state.conceptMastery;
+  glossaryMasteryFilter.innerHTML = `
+    <option value="all">${uiText("allMastery")}</option>
+    <option value="mastered">${uiText("masteredOnly")}</option>
+    <option value="unmastered">${uiText("unmasteredOnly")}</option>
+  `;
+  glossaryMasteryFilter.value = state.glossaryMastery;
   yearFilter.innerHTML = `<option value="all">${uiText("allYears")}</option>${years.map((year) => `<option value="${year}">${year}</option>`).join("")}`;
   examFilter.innerHTML = `<option value="all">${uiText("allExams")}</option>${exams.map((exam) => `<option value="${exam}">${exam}</option>`).join("")}`;
   difficultyFilter.innerHTML = `<option value="all">${uiText("allDifficulties")}</option>${difficulties.map((difficulty) => `<option value="${difficulty}">${difficultyText(difficulty)}</option>`).join("")}`;
@@ -324,6 +500,7 @@ function renderProblems() {
     : `<p class="empty-state">${uiText("noProblems")}</p>`;
   $("#problemCount").textContent = `${problems.length} / ${PROBLEM_REFERENCES.length}`;
   wireProblemAndGlossaryLinks($("#problemList"));
+  typesetMath($("#problemList"));
 }
 
 function glossaryCard(term) {
@@ -332,12 +509,21 @@ function glossaryCard(term) {
     problem.conceptIds.some((id) => term.conceptIds.includes(id))
   ).length;
   return `
-    <article class="glossary-card">
+    <article class="glossary-card" id="glossary-${slugifyTerm(term.en)}">
       <p class="glossary-category">${textPair(term.categoryZh, term.categoryEn)}</p>
       <h3>${textPair(term.zh, term.en)}</h3>
-      <p>${textPair(term.noteZh, term.noteEn)}</p>
-      <div class="tags">${concepts.map((concept) => `<button data-concept="${concept.id}">${textPair(concept.zh, concept.en)}</button>`).join("")}</div>
-      <button class="text-button" data-problems-concept="${term.conceptIds[0]}">${uiText("relatedProblems")} (${relatedProblemCount})</button>
+      <p>${textPair(term.noteZh, linkGlossaryTerms(term.noteEn))}</p>
+      <div class="glossary-mastery-action">
+        <span class="glossary-action-label">${uiText("masteryStatus")}</span>
+        <button class="mastery glossary-mastery ${state.masteredGlossary.has(term.en) ? "complete" : ""}" data-glossary-mastery="${term.en}">
+          ${state.masteredGlossary.has(term.en) ? `✓ ${uiText("mastered")}` : uiText("markGlossaryMastered")}
+        </button>
+      </div>
+      <div class="glossary-related">
+        <span class="glossary-action-label">${uiText("relatedConcepts")}</span>
+        <div class="tags">${concepts.map((concept) => `<button data-concept="${concept.id}">${textPair(concept.zh, concept.en)}</button>`).join("")}</div>
+        <button class="text-button" data-problems-concept="${term.conceptIds[0]}">${uiText("relatedProblems")} (${relatedProblemCount})</button>
+      </div>
     </article>
   `;
 }
@@ -351,13 +537,17 @@ function renderGlossary() {
     });
     const haystack = [term.categoryZh, term.categoryEn, term.zh, term.en, term.noteZh, term.noteEn, ...conceptNames].join(" ").toLowerCase();
     return (!query || haystack.includes(query))
-      && (state.glossaryConcept === "all" || term.conceptIds.includes(state.glossaryConcept));
+      && (state.glossaryConcept === "all" || term.conceptIds.includes(state.glossaryConcept))
+      && (state.glossaryMastery === "all"
+        || (state.glossaryMastery === "mastered" && state.masteredGlossary.has(term.en))
+        || (state.glossaryMastery === "unmastered" && !state.masteredGlossary.has(term.en)));
   });
   $("#glossaryList").innerHTML = terms.length
     ? terms.map(glossaryCard).join("")
     : `<p class="empty-state">${uiText("noGlossaryTerms")}</p>`;
   $("#glossaryCount").textContent = `${terms.length} / ${GLOSSARY.length}`;
   wireProblemAndGlossaryLinks($("#glossaryList"));
+  typesetMath($("#glossaryList"));
 }
 
 function wireProblemAndGlossaryLinks(container) {
@@ -385,6 +575,33 @@ function wireProblemAndGlossaryLinks(container) {
       setActiveView("study");
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
+  });
+  container.querySelectorAll("[data-glossary-mastery]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const termId = button.dataset.glossaryMastery;
+      if (state.masteredGlossary.has(termId)) state.masteredGlossary.delete(termId);
+      else state.masteredGlossary.add(termId);
+      localStorage.setItem("amc10-mastered-glossary", JSON.stringify([...state.masteredGlossary]));
+      render();
+    });
+  });
+  wireGlossaryTooltips(container);
+}
+
+function jumpToGlossaryTerm(slug) {
+  state.glossarySearch = "";
+  state.glossaryConcept = "all";
+  state.glossaryMastery = "all";
+  const searchInput = $("#glossarySearch");
+  if (searchInput) searchInput.value = "";
+  render();
+  setActiveView("glossary");
+  requestAnimationFrame(() => {
+    const target = document.getElementById(`glossary-${slug}`);
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    target.classList.add("glossary-highlight");
+    setTimeout(() => target.classList.remove("glossary-highlight"), 1600);
   });
 }
 
@@ -415,6 +632,10 @@ function wireControls() {
     state.search = event.target.value;
     renderTopicNav();
   });
+  $("#conceptMasteryFilter").addEventListener("change", (event) => {
+    state.conceptMastery = event.target.value;
+    renderTopicNav();
+  });
   $("#conceptFilter").addEventListener("change", (event) => {
     state.problemConcept = event.target.value;
     renderProblems();
@@ -437,6 +658,10 @@ function wireControls() {
   });
   $("#glossaryConceptFilter").addEventListener("change", (event) => {
     state.glossaryConcept = event.target.value;
+    renderGlossary();
+  });
+  $("#glossaryMasteryFilter").addEventListener("change", (event) => {
+    state.glossaryMastery = event.target.value;
     renderGlossary();
   });
 }
