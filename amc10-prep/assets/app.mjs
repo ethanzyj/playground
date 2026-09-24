@@ -1,4 +1,4 @@
-import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-6";
+import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-7";
 
 const state = {
   language: localStorage.getItem("amc10-language") || "both",
@@ -10,6 +10,7 @@ const state = {
   exam: "all",
   difficulty: "all",
   glossarySearch: "",
+  glossaryConcept: "all",
   mastered: new Set(JSON.parse(localStorage.getItem("amc10-mastered") || "[]"))
 };
 
@@ -54,6 +55,9 @@ const UI_TEXT = {
   miniExample: { en: "Original mini-example", zh: "原创例题" },
   readinessChecklist: { en: "Readiness checklist", zh: "学习检查表" },
   relatedReferences: { en: "Related AMC 10 references", zh: "相关 AMC 10 真题索引" },
+  relatedGlossary: { en: "Related vocabulary", zh: "相关词汇" },
+  relatedVocabulary: { en: "Related vocabulary", zh: "相关词汇" },
+  relatedProblems: { en: "Related problems", zh: "相关真题" },
   markMastered: { en: "Mark mastered", zh: "标记掌握" },
   mastered: { en: "Mastered", zh: "已掌握" },
   openReference: { en: "View problem reference", zh: "查看题目索引" },
@@ -66,6 +70,7 @@ const UI_TEXT = {
   filterByYear: { en: "Filter by year", zh: "按年份筛选" },
   filterByExam: { en: "Filter by exam", zh: "按试卷筛选" },
   filterByDifficulty: { en: "Filter by difficulty", zh: "按难度筛选" },
+  filterGlossaryByConcept: { en: "Filter vocabulary by concept", zh: "按概念筛选词汇" },
   noProblems: { en: "No problems match these filters.", zh: "没有符合筛选条件的题目。" },
   noRelatedReferences: { en: "No verified reference is currently linked to this concept.", zh: "此知识点目前尚未关联已核验的真题索引。" },
   noGlossaryTerms: { en: "No glossary terms match your search.", zh: "没有符合搜索条件的词汇。" }
@@ -202,6 +207,7 @@ function typesetMath() {
 function renderConcept() {
   const concept = conceptById.get(state.activeConceptId) || allConcepts()[0];
   const related = PROBLEM_REFERENCES.filter((problem) => problem.conceptIds.includes(concept.id));
+  const relatedTerms = GLOSSARY.filter((term) => term.conceptIds.includes(concept.id));
   $("#conceptView").innerHTML = `
     <div class="concept-header">
       <div>
@@ -235,9 +241,15 @@ function renderConcept() {
         ${bilingualListItems(concept.checklistZh, concept.checklistEn)}
       </section>
       <section class="card wide">
-        <h3>${uiText("relatedReferences")}</h3>
+        <h3>${uiText("relatedReferences")} (${related.length})</h3>
         <div class="inline-problems">
           ${related.length ? related.map(problemCard).join("") : `<p class="empty-state">${uiText("noRelatedReferences")}</p>`}
+        </div>
+      </section>
+      <section class="card wide">
+        <h3>${uiText("relatedGlossary")} (${relatedTerms.length})</h3>
+        <div class="glossary-grid">
+          ${relatedTerms.map(glossaryCard).join("")}
         </div>
       </section>
     </div>
@@ -249,13 +261,7 @@ function renderConcept() {
     localStorage.setItem("amc10-mastered", JSON.stringify([...state.mastered]));
     render();
   });
-  $("#conceptView").querySelectorAll("[data-concept]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.activeConceptId = button.dataset.concept;
-      render();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  });
+  wireProblemAndGlossaryLinks($("#conceptView"));
 }
 
 function problemCard(problem) {
@@ -268,7 +274,10 @@ function problemCard(problem) {
       </div>
       <p>${textPair(problem.noteZh, problem.noteEn)}</p>
       <div class="tags">${tags.map((tag) => `<button data-concept="${tag.id}">${textPair(tag.zh, tag.en)}</button>`).join("")}</div>
-      <a href="${problem.sourceUrl}" target="_blank" rel="noreferrer">${uiText("openReference")}</a>
+      <div class="card-actions">
+        <a href="${problem.sourceUrl}" target="_blank" rel="noreferrer">${uiText("openReference")}</a>
+        <button class="text-button" data-glossary-concept="${problem.conceptIds[0]}">${uiText("relatedVocabulary")}</button>
+      </div>
     </article>
   `;
 }
@@ -278,6 +287,7 @@ function populateFilters() {
   const yearFilter = $("#yearFilter");
   const examFilter = $("#examFilter");
   const difficultyFilter = $("#difficultyFilter");
+  const glossaryConceptFilter = $("#glossaryConceptFilter");
   const years = [...new Set(PROBLEM_REFERENCES.map((problem) => problem.year))].sort((a, b) => b - a);
   const exams = [...new Set(PROBLEM_REFERENCES.map((problem) => problem.exam))].sort();
   const difficulties = [...new Set(PROBLEM_REFERENCES.map((problem) => problem.difficulty))].sort();
@@ -288,6 +298,11 @@ function populateFilters() {
     ${allConcepts().map((concept) => `<option value="${concept.id}">${plainTextPair(concept.zh, concept.en)}</option>`).join("")}
   `;
   conceptFilter.value = state.problemConcept;
+  glossaryConceptFilter.innerHTML = `
+    <option value="all">${uiText("allConcepts")}</option>
+    ${allConcepts().map((concept) => `<option value="${concept.id}">${plainTextPair(concept.zh, concept.en)}</option>`).join("")}
+  `;
+  glossaryConceptFilter.value = state.glossaryConcept;
   yearFilter.innerHTML = `<option value="all">${uiText("allYears")}</option>${years.map((year) => `<option value="${year}">${year}</option>`).join("")}`;
   examFilter.innerHTML = `<option value="all">${uiText("allExams")}</option>${exams.map((exam) => `<option value="${exam}">${exam}</option>`).join("")}`;
   difficultyFilter.innerHTML = `<option value="all">${uiText("allDifficulties")}</option>${difficulties.map((difficulty) => `<option value="${difficulty}">${difficultyText(difficulty)}</option>`).join("")}`;
@@ -307,7 +322,63 @@ function renderProblems() {
   $("#problemList").innerHTML = problems.length
     ? problems.map(problemCard).join("")
     : `<p class="empty-state">${uiText("noProblems")}</p>`;
-  $("#problemList").querySelectorAll("[data-concept]").forEach((button) => {
+  $("#problemCount").textContent = `${problems.length} / ${PROBLEM_REFERENCES.length}`;
+  wireProblemAndGlossaryLinks($("#problemList"));
+}
+
+function glossaryCard(term) {
+  const concepts = term.conceptIds.map((id) => conceptById.get(id)).filter(Boolean);
+  const relatedProblemCount = PROBLEM_REFERENCES.filter((problem) =>
+    problem.conceptIds.some((id) => term.conceptIds.includes(id))
+  ).length;
+  return `
+    <article class="glossary-card">
+      <p class="glossary-category">${textPair(term.categoryZh, term.categoryEn)}</p>
+      <h3>${textPair(term.zh, term.en)}</h3>
+      <p>${textPair(term.noteZh, term.noteEn)}</p>
+      <div class="tags">${concepts.map((concept) => `<button data-concept="${concept.id}">${textPair(concept.zh, concept.en)}</button>`).join("")}</div>
+      <button class="text-button" data-problems-concept="${term.conceptIds[0]}">${uiText("relatedProblems")} (${relatedProblemCount})</button>
+    </article>
+  `;
+}
+
+function renderGlossary() {
+  const query = state.glossarySearch.trim().toLowerCase();
+  const terms = GLOSSARY.filter((term) => {
+    const conceptNames = term.conceptIds.flatMap((id) => {
+      const concept = conceptById.get(id);
+      return concept ? [concept.zh, concept.en] : [];
+    });
+    const haystack = [term.categoryZh, term.categoryEn, term.zh, term.en, term.noteZh, term.noteEn, ...conceptNames].join(" ").toLowerCase();
+    return (!query || haystack.includes(query))
+      && (state.glossaryConcept === "all" || term.conceptIds.includes(state.glossaryConcept));
+  });
+  $("#glossaryList").innerHTML = terms.length
+    ? terms.map(glossaryCard).join("")
+    : `<p class="empty-state">${uiText("noGlossaryTerms")}</p>`;
+  $("#glossaryCount").textContent = `${terms.length} / ${GLOSSARY.length}`;
+  wireProblemAndGlossaryLinks($("#glossaryList"));
+}
+
+function wireProblemAndGlossaryLinks(container) {
+  container.querySelectorAll("[data-glossary-concept]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.glossaryConcept = button.dataset.glossaryConcept;
+      render();
+      setActiveView("glossary");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+  container.querySelectorAll("[data-problems-concept]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeConceptId = button.dataset.problemsConcept;
+      state.problemConcept = "current";
+      render();
+      setActiveView("problems");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+  container.querySelectorAll("[data-concept]").forEach((button) => {
     button.addEventListener("click", () => {
       state.activeConceptId = button.dataset.concept;
       render();
@@ -315,21 +386,6 @@ function renderProblems() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
-}
-
-function renderGlossary() {
-  const query = state.glossarySearch.trim().toLowerCase();
-  const terms = GLOSSARY.filter((term) => {
-    const haystack = [term.categoryZh, term.categoryEn, term.zh, term.en, term.noteZh, term.noteEn].join(" ").toLowerCase();
-    return !query || haystack.includes(query);
-  });
-  $("#glossaryList").innerHTML = terms.length ? terms.map((term) => `
-    <article class="glossary-card">
-      <p class="glossary-category">${textPair(term.categoryZh, term.categoryEn)}</p>
-      <h3>${textPair(term.zh, term.en)}</h3>
-      <p>${textPair(term.noteZh, term.noteEn)}</p>
-    </article>
-  `).join("") : `<p class="empty-state">${uiText("noGlossaryTerms")}</p>`;
 }
 
 function setActiveView(view) {
@@ -377,6 +433,10 @@ function wireControls() {
   });
   $("#glossarySearch").addEventListener("input", (event) => {
     state.glossarySearch = event.target.value;
+    renderGlossary();
+  });
+  $("#glossaryConceptFilter").addEventListener("change", (event) => {
+    state.glossaryConcept = event.target.value;
     renderGlossary();
   });
 }
