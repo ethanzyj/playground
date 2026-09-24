@@ -1,4 +1,4 @@
-import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-7";
+import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-8";
 
 const state = {
   language: localStorage.getItem("amc10-language") || "both",
@@ -6,6 +6,7 @@ const state = {
   activeConceptId: allConcepts()[0].id,
   search: "",
   problemConcept: "all",
+  problemGlossaryIndex: null,
   year: "all",
   exam: "all",
   difficulty: "all",
@@ -58,6 +59,8 @@ const UI_TEXT = {
   relatedGlossary: { en: "Related vocabulary", zh: "相关词汇" },
   relatedVocabulary: { en: "Related vocabulary", zh: "相关词汇" },
   relatedProblems: { en: "Related problems", zh: "相关真题" },
+  problemId: { en: "Problem ID", zh: "题目标识" },
+  glossaryProblemFilter: { en: "Showing problems related to", zh: "正在显示相关真题" },
   markMastered: { en: "Mark mastered", zh: "标记掌握" },
   mastered: { en: "Mastered", zh: "已掌握" },
   openReference: { en: "View problem reference", zh: "查看题目索引" },
@@ -266,12 +269,14 @@ function renderConcept() {
 
 function problemCard(problem) {
   const tags = problem.conceptIds.map((id) => conceptById.get(id)).filter(Boolean);
+  const problemId = `AMC10-${problem.year}${problem.exam.at(-1)}-${String(problem.problemNumber).padStart(2, "0")}`;
   return `
-    <article class="problem-card">
+    <article id="${problemId}" class="problem-card" data-problem-id="${problemId}">
       <div class="problem-topline">
         <strong>${problem.year} ${problem.exam} #${problem.problemNumber}</strong>
         <span>${difficultyText(problem.difficulty)}</span>
       </div>
+      <p class="problem-id">${uiText("problemId")}: <code>${problemId}</code></p>
       <p>${textPair(problem.noteZh, problem.noteEn)}</p>
       <div class="tags">${tags.map((tag) => `<button data-concept="${tag.id}">${textPair(tag.zh, tag.en)}</button>`).join("")}</div>
       <div class="card-actions">
@@ -313,8 +318,10 @@ function populateFilters() {
 
 function renderProblems() {
   const selectedConceptId = state.problemConcept === "current" ? state.activeConceptId : state.problemConcept;
+  const glossaryTerm = state.problemGlossaryIndex === null ? null : GLOSSARY[state.problemGlossaryIndex];
   const problems = PROBLEM_REFERENCES.filter((problem) => {
     return (selectedConceptId === "all" || problem.conceptIds.includes(selectedConceptId))
+      && (!glossaryTerm || problem.conceptIds.some((id) => glossaryTerm.conceptIds.includes(id)))
       && (state.year === "all" || String(problem.year) === state.year)
       && (state.exam === "all" || problem.exam === state.exam)
       && (state.difficulty === "all" || problem.difficulty === state.difficulty);
@@ -323,11 +330,16 @@ function renderProblems() {
     ? problems.map(problemCard).join("")
     : `<p class="empty-state">${uiText("noProblems")}</p>`;
   $("#problemCount").textContent = `${problems.length} / ${PROBLEM_REFERENCES.length}`;
+  $("#problemContext").innerHTML = glossaryTerm
+    ? `${uiText("glossaryProblemFilter")}: <strong>${textPair(glossaryTerm.zh, glossaryTerm.en)}</strong>`
+    : "";
+  $("#problemContext").hidden = !glossaryTerm;
   wireProblemAndGlossaryLinks($("#problemList"));
 }
 
 function glossaryCard(term) {
   const concepts = term.conceptIds.map((id) => conceptById.get(id)).filter(Boolean);
+  const glossaryIndex = GLOSSARY.indexOf(term);
   const relatedProblemCount = PROBLEM_REFERENCES.filter((problem) =>
     problem.conceptIds.some((id) => term.conceptIds.includes(id))
   ).length;
@@ -337,7 +349,9 @@ function glossaryCard(term) {
       <h3>${textPair(term.zh, term.en)}</h3>
       <p>${textPair(term.noteZh, term.noteEn)}</p>
       <div class="tags">${concepts.map((concept) => `<button data-concept="${concept.id}">${textPair(concept.zh, concept.en)}</button>`).join("")}</div>
-      <button class="text-button" data-problems-concept="${term.conceptIds[0]}">${uiText("relatedProblems")} (${relatedProblemCount})</button>
+      <button class="text-button" data-glossary-index="${glossaryIndex}">
+        ${plainTextPair(`查看 ${relatedProblemCount} 道相关真题`, `View ${relatedProblemCount} related problems`)}
+      </button>
     </article>
   `;
 }
@@ -369,10 +383,13 @@ function wireProblemAndGlossaryLinks(container) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
-  container.querySelectorAll("[data-problems-concept]").forEach((button) => {
+  container.querySelectorAll("[data-glossary-index]").forEach((button) => {
     button.addEventListener("click", () => {
-      state.activeConceptId = button.dataset.problemsConcept;
-      state.problemConcept = "current";
+      state.problemGlossaryIndex = Number(button.dataset.glossaryIndex);
+      state.problemConcept = "all";
+      state.year = "all";
+      state.exam = "all";
+      state.difficulty = "all";
       render();
       setActiveView("problems");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -416,18 +433,22 @@ function wireControls() {
     renderTopicNav();
   });
   $("#conceptFilter").addEventListener("change", (event) => {
+    state.problemGlossaryIndex = null;
     state.problemConcept = event.target.value;
     renderProblems();
   });
   $("#yearFilter").addEventListener("change", (event) => {
+    state.problemGlossaryIndex = null;
     state.year = event.target.value;
     renderProblems();
   });
   $("#examFilter").addEventListener("change", (event) => {
+    state.problemGlossaryIndex = null;
     state.exam = event.target.value;
     renderProblems();
   });
   $("#difficultyFilter").addEventListener("change", (event) => {
+    state.problemGlossaryIndex = null;
     state.difficulty = event.target.value;
     renderProblems();
   });

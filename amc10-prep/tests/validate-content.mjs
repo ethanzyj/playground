@@ -125,6 +125,7 @@ assert(html.includes('id="topicNav"'), "HTML must include the topic navigation m
 assert(html.includes('id="conceptView"'), "HTML must include the concept viewer mount.");
 assert(html.includes('id="problemList"'), "HTML must include the problem explorer mount.");
 assert(html.includes('id="problemCount"'), "Problem Explorer must show filtered and total counts.");
+assert(html.includes('id="problemContext"'), "Problem Explorer must explain glossary-driven filters.");
 assert(html.includes('role="tablist"'), "HTML must include accessible top-level navigation tabs.");
 assert(html.includes('class="global-language hero-language"'), "Language selection must be available at the top of the page.");
 assert(html.includes('id="studyPanel"'), "HTML must include the study guide panel.");
@@ -157,5 +158,7 @@ assert(app.includes("document.title ="), "Language changes must update the brows
 assert(app.includes('setActiveView("study")'), "Problem concept tags must navigate to the Study Guide.");
 assert(app.includes('state.problemConcept === "current"'), "Problem Explorer must support filtering by the current concept.");
 assert(app.includes("wireProblemAndGlossaryLinks"), "Study, problem, and glossary views must cross-link.");
+assert(app.includes("data-problem-id"), "Problem cards must expose a visible, searchable problem ID.");
+assert(app.includes("data-glossary-index"), "Glossary links must retain the selected vocabulary term.");
 
 console.log(`Validated ${TOPICS.length} modules, ${concepts.length} concepts, ${PROBLEM_REFERENCES.length} AMC 10 references, and ${GLOSSARY.length} glossary terms.`);

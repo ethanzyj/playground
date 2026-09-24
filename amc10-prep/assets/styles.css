@@ -477,6 +477,26 @@ input {
   font-weight: 700;
 }
 
+.filter-context {
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.8rem;
+  border-left: 3px solid var(--accent);
+  border-radius: 0.4rem;
+  background: var(--accent-soft);
+}
+
+.problem-id {
+  margin: 0.65rem 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.problem-id code {
+  color: var(--text);
+  font-weight: 800;
+  user-select: all;
+}
+
 .glossary-card > p:last-child {
   line-height: 1.55;
 }
