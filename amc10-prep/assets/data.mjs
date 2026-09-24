@@ -35,19 +35,19 @@ export const TOPICS = [
             exampleEn: String.raw`The monic quadratic with roots \(2,5\) is \((x-2)(x-5)=x^2-7x+10\).`
           },
           {
-            explanationZh: String.raw`多项式除以 \(x-a\) 时，商为 \(Q(x)\)，余数是常数 \(P(a)\)。因此只需代入 \(x=a\) 就能求余数。`,
-            explanationEn: String.raw`When \(P(x)\) is divided by \(x-a\), the quotient is \(Q(x)\) and the constant remainder is \(P(a)\). Evaluating at \(x=a\) therefore gives the remainder immediately.`,
+            explanationZh: String.raw`这个公式专门解决“多项式除以 \(x-a\) 后余数是多少”这个问题，而且不需要做完整的多项式长除法。\(P(x)\) 是被除式，\(Q(x)\) 是商，\(P(a)\) 是余数。因为把 \(x=a\) 代入后，因子 \(x-a\) 变成 0，商那一整项 \(Q(a)(a-a)\) 会消失，只剩下 \(P(a)\)。另外，如果 \(P(a)=0\)，还可以立刻判断 \(x-a\) 是 \(P(x)\) 的因式。`,
+            explanationEn: String.raw`This formula solves a specific problem: finding the remainder when a polynomial is divided by \(x-a\), without doing the full long division. \(P(x)\) is the dividend, \(Q(x)\) is the quotient, and \(P(a)\) is the remainder. Substituting \(x=a\) makes the factor \(x-a\) equal to 0, so the entire quotient term \(Q(a)(a-a)\) disappears and only \(P(a)\) remains. If \(P(a)=0\), it also tells us immediately that \(x-a\) is a factor of \(P(x)\).`,
             stepsZh: [
-              String.raw`先看除式 \(x-2\)。与 \(x-a\) 比较可知 \(a=2\)。`,
+              String.raw`先看除式 \(x-2\)。它符合 \(x-a\) 的形式，所以 \(a=2\)。这一步的目的只是找出稍后要代入的数。`,
               String.raw`多项式除法保证存在商 \(Q(x)\) 和常数余数 \(R\)，使 \(P(x)=Q(x)(x-2)+R\)。`,
-              String.raw`令 \(x=2\)。此时 \(Q(2)(2-2)=0\)，所以 \(P(2)=R\)。这就是代入能直接得到余数的原因。`,
+              String.raw`令 \(x=2\)。此时 \(Q(2)(2-2)=0\)，所以 \(P(2)=R\)。也就是说，代入的不是一个“神奇技巧”，而是在利用除式 \(x-2\) 变成 0。`,
               String.raw`计算 \(P(2)=2^2+1=5\)，因此余数 \(R=5\)。`,
               String.raw`若继续做除法，可得 \(Q(x)=x+2\)，完整等式为 \(x^2+1=(x+2)(x-2)+5\)。`
             ],
             stepsEn: [
-              String.raw`Start with the divisor \(x-2\). Comparing it with \(x-a\) gives \(a=2\).`,
+              String.raw`Start with the divisor \(x-2\). It has the form \(x-a\), so \(a=2\). This identifies the number we will substitute later.`,
               String.raw`Polynomial division guarantees a quotient \(Q(x)\) and constant remainder \(R\) such that \(P(x)=Q(x)(x-2)+R\).`,
-              String.raw`Set \(x=2\). Then \(Q(2)(2-2)=0\), so \(P(2)=R\). This is why substitution reveals the remainder.`,
+              String.raw`Set \(x=2\). Then \(Q(2)(2-2)=0\), so \(P(2)=R\). This is not a magic trick: the substitution makes the divisor factor \(x-2\) equal to 0.`,
               String.raw`Compute \(P(2)=2^2+1=5\), so the remainder is \(R=5\).`,
               String.raw`Continuing the division gives \(Q(x)=x+2\), and the full identity is \(x^2+1=(x+2)(x-2)+5\).`
             ],
