@@ -24,7 +24,7 @@ export const TOPICS = [
         formulaNotes: [
           {
             explanationZh: "平方差公式把两个平方之差分解成两个一次因式，常用于快速因式分解和约分。",
-            explanationEn: "The difference-of-squares identity factors a subtraction of two squares into two linear factors, which is useful for factoring and cancellation.",
+            explanationEn: "The difference of squares identity factors a subtraction of two squares into two linear factors, which is useful for factoring and cancellation.",
             exampleZh: String.raw`\(49x^2-16=(7x-4)(7x+4)\)。`,
             exampleEn: String.raw`\(49x^2-16=(7x-4)(7x+4)\).`
           },
@@ -825,6 +825,22 @@ const ADDITIONAL_GLOSSARY = [
   { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "不变量", en: "Invariant", noteZh: "在一系列操作中始终保持不变的量，可用于证明状态不可达或确定结果。", noteEn: "A quantity unchanged by a sequence of operations, useful for proving impossibility or determining outcomes." }
 ];
 
+const TERM_GLOSSARY = [
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "二次式（二次的）", en: "Quadratic", noteZh: String.raw`指含有变量二次方（例如 \(x^2\)）的表达式、函数或方程，其图像通常是抛物线。`, noteEn: String.raw`Describes an expression, function, or equation containing a variable raised to the second power, such as \(x^2\); its graph is typically a parabola.` },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "平方差", en: "Difference of Squares", noteZh: String.raw`形如 \(a^2-b^2\) 的表达式，可以直接分解为 \((a-b)(a+b)\)。`, noteEn: String.raw`An expression of the form \(a^2-b^2\), which factors immediately as \((a-b)(a+b)\).` },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "首一（首项系数为 1）", en: "Monic", noteZh: String.raw`指多项式最高次项的系数为 1，例如 \(x^2-7x+10\) 就是首一二次式。`, noteEn: String.raw`Describes a polynomial whose leading coefficient (the coefficient of its highest-degree term) equals 1, such as \(x^2-7x+10\).` },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "首项系数", en: "Leading Coefficient", noteZh: "多项式中次数最高一项前面的系数，决定整体端点趋势。", noteEn: "The coefficient of a polynomial's highest-degree term; it controls the expression's overall end behavior." },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "判别式", en: "Discriminant", noteZh: String.raw`二次方程 \(ax^2+bx+c=0\) 中的 \(b^2-4ac\)，用来判断根的个数与类型。`, noteEn: String.raw`The quantity \(b^2-4ac\) for a quadratic \(ax^2+bx+c=0\), used to determine the number and type of its roots.` },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "对称性", en: "Symmetry", noteZh: "表达式或图形在交换变量、旋转或翻折后保持不变的性质，常用于简化计算。", noteEn: "The property that an expression or figure stays unchanged under swapping variables, rotation, or reflection; frequently used to simplify computation." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "特殊直角三角形", en: "Special Right Triangle", noteZh: "指 30-60-90 或 45-45-90 等边长比固定的直角三角形，可直接套用比例求边长。", noteEn: "A right triangle such as the 30-60-90 or 45-45-90 triangle with fixed side-length ratios that can be applied directly." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "海伦公式", en: "Heron's Formula", noteZh: "利用三角形三边长直接求面积的公式，无需先求出高。", noteEn: "A formula that computes a triangle's area directly from its three side lengths, without first finding an altitude." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "中点", en: "Midpoint", noteZh: "线段上到两端点距离相等的点，其坐标是两端点坐标的平均值。", noteEn: "The point on a segment equidistant from both endpoints; its coordinates are the average of the endpoint coordinates." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "外角", en: "Exterior Angle", noteZh: "多边形一边与相邻边延长线所夹的角；凸多边形的外角和恒为 360 度。", noteEn: "The angle between a polygon's side and the extension of an adjacent side; the exterior angles of any convex polygon sum to 360 degrees." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "圆心角", en: "Central Angle", noteZh: "顶点在圆心、两边为半径的角，正多边形相邻顶点间的圆心角相等。", noteEn: "An angle with its vertex at the center of a circle and sides along two radii; consecutive vertices of a regular polygon subtend equal central angles." },
+  { categoryZh: "立体几何", categoryEn: "Solid Geometry", zh: "截面", en: "Cross-Section", noteZh: "用一个平面切割立体图形后得到的二维图形。", noteEn: "The two-dimensional figure obtained when a solid is intersected by a plane." },
+  { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "二项式定理", en: "Binomial Theorem", noteZh: String.raw`给出 \((x+y)^n\) 展开式中每一项系数的公式，系数为组合数。`, noteEn: String.raw`Gives the coefficients in the expansion of \((x+y)^n\), each equal to a binomial coefficient.` }
+];
+
 const GLOSSARY_CONCEPT_MAP = {
   "Polynomial": ["polynomials"],
   "Coefficient": ["polynomials", "algebraic-techniques"],
@@ -898,10 +914,23 @@ const GLOSSARY_CONCEPT_MAP = {
   "Conditional Probability": ["permutations-combinations-probability"],
   "Binomial Coefficient": ["permutations-combinations-probability"],
   "Recursive Counting": ["combinatorics-methods", "sequences"],
-  "Invariant": ["principles-theorems", "combinatorics-methods"]
+  "Invariant": ["principles-theorems", "combinatorics-methods"],
+  "Quadratic": ["polynomials", "functions", "algebraic-techniques"],
+  "Difference of Squares": ["polynomials", "algebraic-techniques"],
+  "Monic": ["polynomials"],
+  "Leading Coefficient": ["polynomials"],
+  "Discriminant": ["polynomials", "functions"],
+  "Symmetry": ["algebraic-techniques", "polynomials", "regular-polygons", "triangles"],
+  "Special Right Triangle": ["triangles"],
+  "Heron's Formula": ["triangles"],
+  "Midpoint": ["coordinate-geometry"],
+  "Exterior Angle": ["regular-polygons", "triangles"],
+  "Central Angle": ["regular-polygons"],
+  "Cross-Section": ["solids-polyhedra", "special-solids"],
+  "Binomial Theorem": ["principles-theorems"]
 };
 
-export const GLOSSARY = [...BASE_GLOSSARY, ...ADDITIONAL_GLOSSARY].map((term) => ({
+export const GLOSSARY = [...BASE_GLOSSARY, ...ADDITIONAL_GLOSSARY, ...TERM_GLOSSARY].map((term) => ({
   ...term,
   conceptIds: GLOSSARY_CONCEPT_MAP[term.en] || []
 }));

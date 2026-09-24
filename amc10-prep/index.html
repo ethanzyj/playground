@@ -71,6 +71,10 @@
             <span data-i18n="searchTopics">Search topics / 搜索知识点</span>
             <input id="searchInput" type="search" placeholder="topic, formula, keyword..." data-i18n-placeholder="topicSearchPlaceholder" />
           </label>
+          <label>
+            <span data-i18n="filterMastery">Mastery / 掌握状态</span>
+            <select id="conceptMasteryFilter" aria-label="Filter concepts by mastery" data-i18n-aria-label="filterConceptMastery"></select>
+          </label>
         </div>
         <nav id="topicNav"></nav>
       </aside>
@@ -117,12 +121,13 @@
               <input id="glossarySearch" type="search" placeholder="term or definition..." data-i18n-placeholder="glossarySearchPlaceholder" />
             </label>
             <select id="glossaryConceptFilter" aria-label="Filter vocabulary by concept" data-i18n-aria-label="filterGlossaryByConcept"></select>
+            <select id="glossaryMasteryFilter" aria-label="Filter vocabulary by mastery" data-i18n-aria-label="filterGlossaryMastery"></select>
           </div>
           <div id="glossaryList" class="glossary-grid"></div>
         </section>
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20260923-7"></script>
+    <script type="module" src="assets/app.mjs?v=20260923-12"></script>
   </body>
 </html>

@@ -257,6 +257,122 @@ input {
   border-color: var(--accent);
 }
 
+.mastery:hover {
+  border-color: var(--accent);
+}
+
+.glossary-mastery {
+  font-size: 0.82rem;
+}
+
+.glossary-mastery-action,
+.glossary-related {
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.75rem;
+}
+
+.glossary-mastery-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+}
+
+.glossary-related {
+  margin-top: 0.75rem;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 88%, var(--bg));
+}
+
+.glossary-action-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.glossary-mastery-action .glossary-action-label {
+  margin-bottom: 0;
+  color: var(--accent);
+}
+
+.glossary-related .tags {
+  margin-top: 0.35rem;
+}
+
+.glossary-related > .text-button {
+  margin-top: 0.2rem;
+}
+
+.glossary-term-link {
+  cursor: help;
+  border-bottom: 1px dotted var(--accent);
+  outline: none;
+}
+
+.glossary-term-link:hover,
+.glossary-term-link:focus-visible {
+  color: var(--accent);
+  border-bottom-style: solid;
+  background: var(--accent-soft);
+  border-radius: 0.2rem;
+}
+
+.glossary-tooltip {
+  position: absolute;
+  z-index: 60;
+  max-width: 22rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.glossary-tooltip-category {
+  margin: 0 0 0.2rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.glossary-tooltip-term {
+  margin: 0 0 0.35rem;
+  font-weight: 700;
+}
+
+.glossary-tooltip-note {
+  margin: 0 0 0.5rem;
+  color: var(--text);
+}
+
+.glossary-tooltip-jump {
+  font-size: 0.8rem;
+  padding: 0;
+}
+
+.glossary-card.glossary-highlight {
+  animation: glossary-flash 1.6s ease-out;
+}
+
+@keyframes glossary-flash {
+  0% {
+    box-shadow: 0 0 0 3px var(--accent);
+    background: var(--accent-soft);
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
 .status-dot {
   color: var(--success);
   font-weight: 900;
@@ -296,6 +412,7 @@ input {
 .concept-header,
 .section-heading {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
   align-items: start;
@@ -531,6 +648,7 @@ input {
 
 .filters select {
   min-width: 9rem;
+  flex: 0 1 auto;
 }
 
 .filters #conceptFilter {
@@ -538,7 +656,22 @@ input {
 }
 
 .glossary-search {
-  width: min(22rem, 100%);
+  flex: 1 1 16rem;
+  min-width: 16rem;
+  max-width: 22rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.glossary-search input {
+  min-width: 0;
+}
+
+#glossaryConceptFilter,
+#glossaryMasteryFilter {
+  flex: 0 1 auto;
+  min-width: 9rem;
+  align-self: end;
 }
 
 .empty-state {
