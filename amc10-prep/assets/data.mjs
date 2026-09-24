@@ -1,3 +1,5 @@
+import { buildProblemReferences } from "./problem-index.mjs";
+
 export const TOPICS = [
   {
     id: "advanced-algebra",
@@ -713,7 +715,7 @@ export const TOPICS = [
   }
 ];
 
-export const PROBLEM_REFERENCES = [
+const CURATED_PROBLEM_REFERENCES = [
   { year: 2016, exam: "AMC 10A", problemNumber: 9, difficulty: "medium", conceptIds: ["sequences", "algebraic-techniques"], sourceUrl: "https://artofproblemsolving.com/wiki/index.php/2016_AMC_10A_Problems/Problem_9", noteZh: "用作三角数求和、数列公式和二次方程变形训练。", noteEn: "Reference for triangular-number sums, sequence formulas, and quadratic equation manipulation." },
   { year: 2016, exam: "AMC 10B", problemNumber: 18, difficulty: "hard", conceptIds: ["integer-equations", "numbers-operations"], sourceUrl: "https://artofproblemsolving.com/wiki/index.php/2016_AMC_10B_Problems/Problem_18", noteZh: "用作连续整数和、整数方程与因数约束训练。", noteEn: "Reference for sums of consecutive integers, integer equations, and divisor constraints." },
   { year: 2017, exam: "AMC 10A", problemNumber: 12, difficulty: "medium", conceptIds: ["functions", "coordinate-geometry"], sourceUrl: "https://artofproblemsolving.com/wiki/index.php/2017_AMC_10A_Problems/Problem_12", noteZh: "用作最大值函数、分类讨论和坐标轨迹训练。", noteEn: "Reference for maximum functions, case analysis, and coordinate loci." },
@@ -736,7 +738,9 @@ export const PROBLEM_REFERENCES = [
   { year: 2025, exam: "AMC 10B", problemNumber: 25, difficulty: "challenge", conceptIds: ["coordinate-geometry", "diagram-skills"], sourceUrl: "https://artofproblemsolving.com/wiki/index.php/2025_AMC_10B_Problems/Problem_25", noteZh: "用作正方形内反射路径、展开法和坐标斜率追踪训练。", noteEn: "Reference for reflected paths in a square, the unfolding method, and coordinate-slope tracking." }
 ];
 
-export const GLOSSARY = [
+export const PROBLEM_REFERENCES = buildProblemReferences(CURATED_PROBLEM_REFERENCES);
+
+const BASE_GLOSSARY = [
   { categoryZh: "代数", categoryEn: "Algebra", zh: "多项式", en: "Polynomial", noteZh: "由若干项相加组成，每项是常数与变量非负整数次幂的乘积。", noteEn: "A sum of terms, each formed from constants and variables raised to nonnegative integer powers." },
   { categoryZh: "代数", categoryEn: "Algebra", zh: "系数", en: "Coefficient", noteZh: "与变量或变量幂相乘的数值因子。", noteEn: "A numerical factor multiplying a variable or a power of a variable." },
   { categoryZh: "代数", categoryEn: "Algebra", zh: "零点（根）", en: "Zero (Root)", noteZh: "使多项式或函数值等于零的输入值。", noteEn: "An input value that makes a polynomial or function equal to zero." },
@@ -779,6 +783,128 @@ export const GLOSSARY = [
   { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "独立事件", en: "Independent Events", noteZh: "一个事件是否发生不会改变另一个事件概率的事件。", noteEn: "Events for which the occurrence of one does not change the probability of the other." },
   { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "期望值", en: "Expected Value", noteZh: "随机变量在大量重复试验中的长期加权平均值。", noteEn: "The long-run weighted average value of a random variable over repeated trials." }
 ];
+
+const ADDITIONAL_GLOSSARY = [
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "韦达定理", en: "Vieta's Formulas", noteZh: "用多项式系数表示根的对称和与积，常可避免直接求根。", noteEn: "Relates polynomial coefficients to symmetric sums and products of roots, often avoiding explicit root calculation." },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "因式定理", en: "Factor Theorem", noteZh: "当且仅当 P(a)=0 时，x-a 是多项式 P(x) 的因式。", noteEn: "The expression x-a is a factor of P(x) exactly when P(a)=0." },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "算术平均—几何平均不等式", en: "AM-GM Inequality", noteZh: "非负数的算术平均不小于几何平均，等号在各数相等时成立。", noteEn: "The arithmetic mean of nonnegative numbers is at least their geometric mean, with equality when the numbers are equal." },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "复合函数", en: "Function Composition", noteZh: "把一个函数的输出作为另一个函数的输入，计算时从内向外。", noteEn: "Uses the output of one function as the input of another and is evaluated from the inside out." },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "二次函数顶点", en: "Quadratic Vertex", noteZh: "抛物线的最高点或最低点，其对称轴可由系数直接确定。", noteEn: "The maximum or minimum point of a parabola, whose axis of symmetry can be determined from its coefficients." },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "等差数列", en: "Arithmetic Sequence", noteZh: "相邻两项之差保持不变的数列。", noteEn: "A sequence in which the difference between consecutive terms is constant." },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "等比数列", en: "Geometric Sequence", noteZh: "相邻非零项之比保持不变的数列。", noteEn: "A sequence in which the ratio of consecutive nonzero terms is constant." },
+  { categoryZh: "代数", categoryEn: "Algebra", zh: "配方法", en: "Completing the Square", noteZh: "把二次式改写为一个平方与常数之和，用于求顶点、最值或解方程。", noteEn: "Rewrites a quadratic as a square plus a constant to find vertices, extrema, or solutions." },
+
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "勾股定理", en: "Pythagorean Theorem", noteZh: "直角三角形两直角边平方和等于斜边平方。", noteEn: "In a right triangle, the sum of the squares of the legs equals the square of the hypotenuse." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "内切圆", en: "Incircle", noteZh: "与三角形或多边形各边都相切的圆，其圆心到各边距离相等。", noteEn: "A circle tangent to every side of a triangle or polygon; its center is equidistant from all sides." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "外接圆", en: "Circumcircle", noteZh: "经过多边形全部顶点的圆；三角形外心到三个顶点距离相等。", noteEn: "A circle through every vertex of a polygon; a triangle's circumcenter is equidistant from its vertices." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "圆周角", en: "Inscribed Angle", noteZh: "顶点在圆上、两边为弦的角，其度数等于所对弧度数的一半。", noteEn: "An angle with vertex on a circle and chord sides; its measure is half that of its intercepted arc." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "点幂", en: "Power of a Point", noteZh: "从同一点引出的割线和切线满足固定乘积关系。", noteEn: "A fixed product relation satisfied by secants and tangents drawn from the same point." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "正多边形", en: "Regular Polygon", noteZh: "所有边等长且所有内角相等的多边形。", noteEn: "A polygon whose sides all have equal length and whose interior angles are all equal." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "斜率", en: "Slope", noteZh: "直线上纵坐标变化量与横坐标变化量之比，用于描述方向和陡峭程度。", noteEn: "The ratio of vertical change to horizontal change on a line, describing its direction and steepness." },
+  { categoryZh: "几何", categoryEn: "Geometry", zh: "距离公式", en: "Distance Formula", noteZh: "由勾股定理得到的两坐标点间距离计算公式。", noteEn: "The coordinate formula for distance between two points, derived from the Pythagorean theorem." },
+  { categoryZh: "空间关系", categoryEn: "Spatial Relations", zh: "共面", en: "Coplanar", noteZh: "若若干点或直线都位于同一个平面内，则称它们共面。", noteEn: "Points or lines are coplanar when they all lie in the same plane." },
+  { categoryZh: "立体几何", categoryEn: "Solid Geometry", zh: "欧拉多面体公式", en: "Euler's Polyhedron Formula", noteZh: "对凸多面体，顶点数减边数加面数等于 2。", noteEn: "For a convex polyhedron, the number of vertices minus edges plus faces equals 2." },
+  { categoryZh: "立体几何", categoryEn: "Solid Geometry", zh: "棱柱", en: "Prism", noteZh: "有两个平行全等底面且侧面为平行四边形的多面体。", noteEn: "A polyhedron with two parallel congruent bases and parallelogram lateral faces." },
+  { categoryZh: "立体几何", categoryEn: "Solid Geometry", zh: "棱锥", en: "Pyramid", noteZh: "一个多边形底面与若干汇聚到同一顶点的三角形侧面组成的立体。", noteEn: "A solid with a polygonal base and triangular lateral faces meeting at one apex." },
+  { categoryZh: "立体几何", categoryEn: "Solid Geometry", zh: "相似立体", en: "Similar Solids", noteZh: "对应长度按同一比例缩放，表面积按平方缩放，体积按立方缩放。", noteEn: "Solids whose corresponding lengths scale linearly, surface areas quadratically, and volumes cubically." },
+
+  { categoryZh: "数论", categoryEn: "Number Theory", zh: "算术基本定理", en: "Fundamental Theorem of Arithmetic", noteZh: "每个大于 1 的整数都能唯一分解为质数幂的乘积（忽略顺序）。", noteEn: "Every integer greater than 1 has a unique prime-power factorization, apart from the order of factors." },
+  { categoryZh: "数论", categoryEn: "Number Theory", zh: "欧几里得算法", en: "Euclidean Algorithm", noteZh: "反复利用除法余数快速求两个整数的最大公因数。", noteEn: "Repeatedly uses division with remainder to compute the greatest common divisor efficiently." },
+  { categoryZh: "数论", categoryEn: "Number Theory", zh: "中国剩余定理", en: "Chinese Remainder Theorem", noteZh: "在模数两两互质时，多个同余条件可合并为一个模乘积的唯一解类。", noteEn: "Combines congruences with pairwise coprime moduli into a unique residue class modulo their product." },
+  { categoryZh: "数论", categoryEn: "Number Theory", zh: "进制", en: "Number Base", noteZh: "用固定基数的幂表示数的记数系统，AMC 10 常考进制转换和数位关系。", noteEn: "A numeral system based on powers of a fixed base; AMC 10 often tests conversions and digit relations." },
+  { categoryZh: "数论", categoryEn: "Number Theory", zh: "数位和", en: "Digit Sum", noteZh: "一个整数各位数字的总和，可用于 3 和 9 的整除性判断。", noteEn: "The sum of an integer's digits, useful for divisibility tests by 3 and 9." },
+  { categoryZh: "数论", categoryEn: "Number Theory", zh: "完全平方数", en: "Perfect Square", noteZh: "可写成某个整数平方的整数，其质因数分解中各指数均为偶数。", noteEn: "An integer equal to an integer square; every exponent in its prime factorization is even." },
+
+  { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "加法原理", en: "Addition Principle", noteZh: "若若干情况互不重叠，总方案数等于各情况方案数之和。", noteEn: "When cases are disjoint, the total number of outcomes is the sum of the counts for each case." },
+  { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "分类讨论", en: "Casework", noteZh: "把所有可能性拆成互斥且完备的情况分别处理。", noteEn: "Splits all possibilities into mutually exclusive and collectively exhaustive cases." },
+  { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "双射", en: "Bijection", noteZh: "在两个集合之间建立一一对应，从而证明它们的元素个数相同。", noteEn: "A one-to-one correspondence between two sets, proving that they have the same number of elements." },
+  { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "几何概率", en: "Geometric Probability", noteZh: "用长度、面积或体积之比表示连续样本空间中的概率。", noteEn: "Computes probability in a continuous sample space using ratios of lengths, areas, or volumes." },
+  { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "条件概率", en: "Conditional Probability", noteZh: "在已知另一个事件发生的条件下计算某事件发生的概率。", noteEn: "The probability of an event computed under the condition that another event has occurred." },
+  { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "二项式系数", en: "Binomial Coefficient", noteZh: "从 n 个对象中不计顺序选出 k 个对象的方案数。", noteEn: "The number of ways to choose k objects from n objects without regard to order." },
+  { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "递推计数", en: "Recursive Counting", noteZh: "按最后一步或首个选择拆分，使规模 n 的计数由较小规模计数表示。", noteEn: "Splits by a first or last choice so a count of size n is expressed using smaller counts." },
+  { categoryZh: "组合与概率", categoryEn: "Counting & Probability", zh: "不变量", en: "Invariant", noteZh: "在一系列操作中始终保持不变的量，可用于证明状态不可达或确定结果。", noteEn: "A quantity unchanged by a sequence of operations, useful for proving impossibility or determining outcomes." }
+];
+
+const GLOSSARY_CONCEPT_MAP = {
+  "Polynomial": ["polynomials"],
+  "Coefficient": ["polynomials", "algebraic-techniques"],
+  "Zero (Root)": ["polynomials", "functions"],
+  "Factor": ["polynomials", "numbers-operations"],
+  "Remainder Theorem": ["polynomials"],
+  "Inequality": ["inequalities"],
+  "Absolute Value": ["inequalities", "functions"],
+  "Domain": ["functions"],
+  "Range": ["functions"],
+  "Sequence": ["sequences"],
+  "Recurrence Relation": ["sequences", "combinatorics-methods"],
+  "Congruence": ["triangles", "regular-polygons"],
+  "Similarity": ["triangles", "circles-quadrilaterals"],
+  "Supplementary Angles": ["triangles", "circles-quadrilaterals"],
+  "Perpendicular Bisector": ["diagram-skills", "coordinate-geometry"],
+  "Angle Bisector": ["triangles", "diagram-skills"],
+  "Cyclic Quadrilateral": ["circles-quadrilaterals"],
+  "Tangent": ["circles-quadrilaterals", "diagram-skills"],
+  "Secant": ["circles-quadrilaterals"],
+  "Chord": ["circles-quadrilaterals"],
+  "Locus": ["coordinate-geometry"],
+  "Coordinate Plane": ["coordinate-geometry"],
+  "Prime Number": ["numbers-operations", "principles-theorems"],
+  "Divisor": ["numbers-operations"],
+  "Greatest Common Divisor": ["numbers-operations"],
+  "Least Common Multiple": ["numbers-operations"],
+  "Congruence Modulo n": ["numbers-operations", "principles-theorems"],
+  "Parity": ["numbers-operations"],
+  "Diophantine Equation": ["integer-equations"],
+  "Multiplication Principle": ["combinatorics-methods"],
+  "Inclusion-Exclusion": ["combinatorics-methods"],
+  "Pigeonhole Principle": ["principles-theorems", "combinatorics-methods"],
+  "Permutation": ["permutations-combinations-probability"],
+  "Combination": ["permutations-combinations-probability"],
+  "Complementary Event": ["permutations-combinations-probability"],
+  "Sample Space": ["permutations-combinations-probability"],
+  "Independent Events": ["permutations-combinations-probability"],
+  "Expected Value": ["permutations-combinations-probability"],
+  "Vieta's Formulas": ["polynomials"],
+  "Factor Theorem": ["polynomials"],
+  "AM-GM Inequality": ["inequalities"],
+  "Function Composition": ["functions"],
+  "Quadratic Vertex": ["functions", "algebraic-techniques"],
+  "Arithmetic Sequence": ["sequences"],
+  "Geometric Sequence": ["sequences"],
+  "Completing the Square": ["algebraic-techniques", "polynomials"],
+  "Pythagorean Theorem": ["triangles"],
+  "Incircle": ["triangles", "circles-quadrilaterals"],
+  "Circumcircle": ["triangles", "circles-quadrilaterals"],
+  "Inscribed Angle": ["circles-quadrilaterals"],
+  "Power of a Point": ["circles-quadrilaterals"],
+  "Regular Polygon": ["regular-polygons"],
+  "Slope": ["coordinate-geometry"],
+  "Distance Formula": ["coordinate-geometry"],
+  "Coplanar": ["points-lines-planes"],
+  "Euler's Polyhedron Formula": ["solids-polyhedra"],
+  "Prism": ["special-solids"],
+  "Pyramid": ["special-solids"],
+  "Similar Solids": ["special-solids", "solids-polyhedra"],
+  "Fundamental Theorem of Arithmetic": ["principles-theorems", "numbers-operations"],
+  "Euclidean Algorithm": ["principles-theorems", "numbers-operations"],
+  "Chinese Remainder Theorem": ["principles-theorems", "integer-equations"],
+  "Number Base": ["numbers-operations"],
+  "Digit Sum": ["numbers-operations"],
+  "Perfect Square": ["numbers-operations", "integer-equations"],
+  "Addition Principle": ["combinatorics-methods"],
+  "Casework": ["combinatorics-methods"],
+  "Bijection": ["combinatorics-methods"],
+  "Geometric Probability": ["permutations-combinations-probability", "coordinate-geometry"],
+  "Conditional Probability": ["permutations-combinations-probability"],
+  "Binomial Coefficient": ["permutations-combinations-probability"],
+  "Recursive Counting": ["combinatorics-methods", "sequences"],
+  "Invariant": ["principles-theorems", "combinatorics-methods"]
+};
+
+export const GLOSSARY = [...BASE_GLOSSARY, ...ADDITIONAL_GLOSSARY].map((term) => ({
+  ...term,
+  conceptIds: GLOSSARY_CONCEPT_MAP[term.en] || []
+}));
 
 export function allConcepts() {
   return TOPICS.flatMap((topic) => topic.concepts.map((concept) => ({ ...concept, topicId: topic.id, topicZh: topic.zh, topicEn: topic.en })));
