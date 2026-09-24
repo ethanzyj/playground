@@ -134,11 +134,14 @@ assert(html.includes('id="conceptFilter"'), "Problem Explorer must include a con
 assert(html.includes('id="glossarySearch"'), "Glossary must include search.");
 assert(html.includes('id="glossaryCount"'), "Glossary must show filtered and total counts.");
 assert(html.includes('id="glossaryConceptFilter"'), "Glossary must include a concept filter.");
+assert(html.includes('id="conceptMasteryFilter"'), "Study Guide must include a concept mastery filter.");
+assert(html.includes('id="glossaryMasteryFilter"'), "Glossary must include a vocabulary mastery filter.");
 assert(html.includes('type="module" src="assets/app.mjs?v='), "HTML must load a cache-versioned module app.");
 assert(html.includes("mathjax@3.2.2"), "HTML must load the pinned MathJax renderer.");
 
 const app = readFileSync(new URL("../assets/app.mjs", import.meta.url), "utf8");
 const data = readFileSync(new URL("../assets/data.mjs", import.meta.url), "utf8");
+const css = readFileSync(new URL("../assets/styles.css", import.meta.url), "utf8");
 assert(!data.includes("书达定理"), "The misspelling 书达定理 must not appear; use 韦达定理.");
 assert(!data.includes("外切圆"), "Triangle terminology must use 外接圆 for circumcircle.");
 assert(!data.includes("模意义下的小数"), "Modular arithmetic must refer to remainders, not decimals.");
@@ -157,5 +160,32 @@ assert(app.includes("document.title ="), "Language changes must update the brows
 assert(app.includes('setActiveView("study")'), "Problem concept tags must navigate to the Study Guide.");
 assert(app.includes('state.problemConcept === "current"'), "Problem Explorer must support filtering by the current concept.");
 assert(app.includes("wireProblemAndGlossaryLinks"), "Study, problem, and glossary views must cross-link.");
+assert(app.includes("amc10-mastered-glossary"), "Vocabulary mastery must persist independently from concept mastery.");
+assert(app.includes("data-glossary-mastery"), "Glossary cards must include mastery controls.");
+assert(app.includes("glossary-mastery-action"), "Glossary mastery controls must have a dedicated action region.");
+assert(app.includes("glossary-related"), "Glossary related concepts must have a separate action region.");
+assert(app.includes("state.conceptMastery ==="), "Study Guide must filter concepts by mastery.");
+assert(app.includes("state.glossaryMastery ==="), "Glossary must filter terms by mastery.");
+assert(!app.includes("container.querySelectorAll(\"[data-glossary-mastery]\")") || app.indexOf("container.querySelectorAll(\"[data-glossary-mastery]\")") > app.indexOf("function wireProblemAndGlossaryLinks"), "Glossary mastery buttons must be wired only after their cards are rendered.");
+
+const inlineTerms = ["Quadratic", "Difference of Squares", "Monic", "Heron's Formula", "Special Right Triangle", "Binomial Theorem"];
+for (const term of inlineTerms) {
+  assert(GLOSSARY.some((entry) => entry.en === term), `Expected glossary term "${term}" to exist for inline linking.`);
+}
+assert(app.includes("function linkGlossaryTerms"), "App must define an inline glossary auto-linking helper.");
+assert(app.includes("function slugifyTerm") || app.includes("export function slugifyTerm"), "App must define a slug helper for glossary anchors.");
+assert(app.includes("glossary-term-link"), "Inline glossary terms must use a dedicated class for styling.");
+assert(app.includes("data-glossary-term-slug"), "Inline glossary terms must carry a slug reference to their glossary entry.");
+assert(app.includes('id="glossary-${slugifyTerm(term.en)}"'), "Glossary cards must expose a stable id for tooltip navigation.");
+assert(app.includes("function showGlossaryTooltip"), "App must define a hover/focus tooltip renderer for inline glossary terms.");
+assert(app.includes("function wireGlossaryTooltips"), "App must wire hover/focus listeners for inline glossary terms.");
+assert(app.includes('el.addEventListener("mouseenter"'), "Inline glossary terms must reveal details on hover.");
+assert(app.includes('el.addEventListener("focus"'), "Inline glossary terms must reveal details on keyboard focus for accessibility.");
+assert(app.includes("jumpToGlossaryTerm"), "Tooltip must still offer a way to jump to and highlight the full glossary card.");
+assert(css.includes(".glossary-term-link"), "Stylesheet must style inline glossary terms.");
+assert(css.includes(".glossary-tooltip"), "Stylesheet must style the hover/focus glossary tooltip.");
+assert(css.includes(".glossary-mastery-action"), "Glossary mastery controls must have distinct styling.");
+assert(css.includes(".glossary-related"), "Related glossary actions must have distinct styling.");
+assert(css.includes("glossary-highlight"), "Stylesheet must include a highlight effect for jumped-to glossary cards.");
 
 console.log(`Validated ${TOPICS.length} modules, ${concepts.length} concepts, ${PROBLEM_REFERENCES.length} AMC 10 references, and ${GLOSSARY.length} glossary terms.`);
