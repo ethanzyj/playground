@@ -18,8 +18,11 @@ Use **Full exam page** with the same year and exam selectors to read all 25
 original English statements and A-E choices in one scrollable page, including
 local diagrams. Answers and solutions are not imported or displayed.
 Concept tags open the Study Guide; vocabulary links open the Glossary.
-Problem cards use an external-link icon for the source problem and a book icon
-for related vocabulary, with localized hover tooltips and accessible labels.
+Problem cards use an external-link icon for the source problem. Under the
+concept tags, **Vocabulary in this problem** lists the glossary terms that
+problem actually uses (from `assets/problem-vocab.mjs`, reviewed per problem);
+hover a term for its definition or select it to open it in the Glossary in a new
+tab. Pure-computation problems with no glossary terms omit the row.
 Shared topic-classification guidance appears once in the explorer header;
 cards only show notes specific to that problem.
 

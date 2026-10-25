@@ -1,6 +1,6 @@
 import { CLOUD_CONFIG } from "./cloud-config.mjs?v=20261024-13";
 import { CloudProgress } from "./cloud-progress.mjs?v=20261024-12";
-import { CloudMastery } from "./cloud-mastery.mjs?v=20261025-22";
+import { CloudMastery } from "./cloud-mastery.mjs?v=20261025-23";
 
 const TEXT = {
   heading: ["Account & cloud sync", "账户与云端同步"],
