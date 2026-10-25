@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "node tests/validate-content.mjs && node tests/validate-statements.mjs",
+    "test": "node tests/validate-content.mjs && node tests/validate-statements.mjs && node --test tests/progress.test.mjs",
     "import:statements": "python3 scripts/import-statements.py"
   }
 }

@@ -16,7 +16,7 @@
         console.error("Unable to read the saved theme.", error);
       }
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20261024-9" />
+    <link rel="stylesheet" href="assets/styles.css?v=20261024-10" />
     <script>
       window.MathJax = {
         tex: {
@@ -126,6 +126,15 @@
               <select id="difficultyFilter" aria-label="Filter by difficulty" data-i18n-aria-label="filterByDifficulty"></select>
             </div>
           </div>
+          <section class="progress-overview" aria-labelledby="progressOverviewHeading">
+            <h3 id="progressOverviewHeading" data-i18n="progressOverview"></h3>
+            <p class="muted" data-i18n="progressOverviewHelp"></p>
+            <p id="progressTotals" aria-live="polite"></p>
+            <div id="progressBreakdown"></div>
+            <button id="exportProgress" class="mastery" type="button" data-i18n="exportProgress"></button>
+            <p class="muted" data-i18n="exportProgressHelp"></p>
+            <p id="progressExportError" role="alert" hidden></p>
+          </section>
           <div class="problem-modes" role="group" aria-label="Browse problems" data-i18n-aria-label="browseProblems">
             <button type="button" data-problem-mode="filters" aria-pressed="true" data-i18n="byConcept">By concept &amp; filters / 按知识点筛选</button>
             <button type="button" data-problem-mode="exam" aria-pressed="false" data-i18n="byExam">By year &amp; exam / 按年份与试卷</button>
@@ -171,6 +180,6 @@
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261024-9"></script>
+    <script type="module" src="assets/app.mjs?v=20261024-10"></script>
   </body>
 </html>
