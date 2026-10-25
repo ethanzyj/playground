@@ -27,7 +27,9 @@ In the Study Guide, each concept's **Related AMC 10 references** appear as a
 compact year × exam table of problem-number chips, color-coded by difficulty,
 with a green dot on problems you have marked. Selecting a chip opens that
 problem on its **Full exam page** in the Problem Explorer; **View all in Problem
-Explorer** shows the concept's full reference list there.
+Explorer** shows the concept's full reference list there. **Related vocabulary**
+appears as compact bilingual term chips (✓ marks mastered terms); hover a chip
+for its definition, or select it to jump to that term in the Glossary.
 
 Each problem has a **My progress** panel, expanded by default and kept open
 after selecting an option: **Need help understanding**,

@@ -410,3 +410,22 @@ test("study guide shows related problems as a year/exam table of links that open
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
+
+test("study guide shows related vocabulary as chips that preview and open glossary terms", async () => {
+  const p = await page(false);
+  try {
+    assert.equal(p.$("#conceptView .glossary-card"), null);
+    const chip = p.$("#conceptView [data-vocab-term]");
+    assert.ok(chip);
+    const slug = chip.dataset.vocabTerm;
+    chip.dispatchEvent(new p.window.MouseEvent("mouseenter"));
+    assert.equal(p.$("#glossary-tooltip").hidden, false);
+    assert.ok(p.$("#glossary-tooltip .glossary-tooltip-note").textContent.trim());
+    chip.click();
+    assert.equal(p.$("#glossary-tooltip").hidden, true);
+    assert.equal(p.$("#glossaryPanel").hidden, false);
+    assert.ok(p.$(`#glossary-${slug}`));
+    assert.ok(p.$("#conceptView [data-glossary-concept]"));
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});

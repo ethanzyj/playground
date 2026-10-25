@@ -1,6 +1,6 @@
 import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-12";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
-import { AccountPanel } from "./account.mjs?v=20261025-19";
+import { AccountPanel } from "./account.mjs?v=20261025-20";
 
 let problemProgressStorageError = false;
 
@@ -254,6 +254,8 @@ const UI_TEXT = {
   relatedVocabulary: { en: "Related vocabulary", zh: "相关词汇" },
   relatedProblems: { en: "Related problems", zh: "相关真题" },
   marked: { en: "Marked", zh: "已标记" },
+  terms: { en: "terms", zh: "个词汇" },
+  viewAllInGlossary: { en: "View all in Glossary →", zh: "在词汇表中查看全部 →" },
   year: { en: "Year", zh: "年份" },
   difficultyLegend: { en: "Difficulty legend", zh: "难度图例" },
   viewAllInExplorer: { en: "View all in Problem Explorer →", zh: "在真题索引中查看全部 →" },
@@ -481,9 +483,7 @@ function renderConcept() {
       </section>
       <section class="card wide">
         <h3>${uiText("relatedGlossary")} (${relatedTerms.length})</h3>
-        <div class="glossary-grid">
-          ${relatedTerms.map(glossaryCard).join("")}
-        </div>
+        ${relatedVocabularyList(relatedTerms, concept.id)}
       </section>
     </div>
   `;
@@ -834,6 +834,28 @@ function renderProblems() {
   typesetMath($("#problemList"));
 }
 
+function relatedVocabularyList(terms, conceptId) {
+  if (!terms.length) return "";
+  const mastered = terms.filter((term) => state.masteredGlossary.has(term.en)).length;
+  return `
+    <p class="related-summary">${terms.length} ${uiText("terms")} · ${uiText("mastered")}: ${mastered}</p>
+    <ul class="vocab-chips">
+      ${terms.map((term) => {
+        const isMastered = state.masteredGlossary.has(term.en);
+        return `
+          <li>
+            <button type="button" class="vocab-chip${isMastered ? " mastered" : ""}" data-vocab-term="${slugifyTerm(term.en)}" aria-describedby="glossary-tooltip">
+              ${isMastered ? `<span class="vocab-check" aria-label="${uiText("mastered")}">✓</span>` : ""}
+              ${textPair(term.zh, term.en)}
+            </button>
+          </li>
+        `;
+      }).join("")}
+    </ul>
+    <button type="button" class="text-button" data-glossary-concept="${conceptId}">${uiText("viewAllInGlossary")}</button>
+  `;
+}
+
 function glossaryCard(term) {
   const concepts = term.conceptIds.map((id) => conceptById.get(id)).filter(Boolean);
   const relatedProblemCount = PROBLEM_REFERENCES.filter((problem) =>
@@ -933,6 +955,18 @@ function wireProblemAndGlossaryLinks(container) {
       render();
       setActiveView("problems");
       window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+  container.querySelectorAll("[data-vocab-term]").forEach((button) => {
+    const term = glossaryBySlug.get(button.dataset.vocabTerm);
+    if (!term) return;
+    button.addEventListener("mouseenter", () => showGlossaryTooltip(button, term));
+    button.addEventListener("mouseleave", () => scheduleGlossaryTooltipHide());
+    button.addEventListener("focus", () => showGlossaryTooltip(button, term));
+    button.addEventListener("blur", () => scheduleGlossaryTooltipHide());
+    button.addEventListener("click", () => {
+      hideGlossaryTooltip();
+      jumpToGlossaryTerm(button.dataset.vocabTerm);
     });
   });
   container.querySelectorAll("[data-open-problem]").forEach((button) => {
