@@ -1,4 +1,4 @@
-import { CLOUD_CONFIG } from "./cloud-config.mjs?v=20261024-12";
+import { CLOUD_CONFIG } from "./cloud-config.mjs?v=20261024-13";
 import { CloudProgress } from "./cloud-progress.mjs?v=20261024-12";
 
 const TEXT = {
