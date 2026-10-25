@@ -1,6 +1,15 @@
 {
   "scripts": {
-    "test": "node tests/validate-content.mjs && node tests/validate-statements.mjs && node --test tests/progress.test.mjs",
+    "test": "node tests/validate-content.mjs && node tests/validate-statements.mjs && node --test tests/*.test.mjs",
+    "build": "node scripts/build-sdk.mjs",
     "import:statements": "python3 scripts/import-statements.py"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.80.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.3.14",
+    "esbuild": "0.25.12",
+    "jsdom": "26.1.0"
   }
 }

@@ -1,5 +1,6 @@
 import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-12";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
+import { AccountPanel } from "./account.mjs?v=20261024-12";
 
 let problemProgressStorageError = false;
 
@@ -45,6 +46,7 @@ const state = {
 const conceptById = new Map(allConcepts().map((concept) => [concept.id, concept]));
 
 const $ = (selector) => document.querySelector(selector);
+let accountPanel;
 
 // --- Inline glossary term linking -------------------------------------------------
 // Wraps recognized English glossary terms (e.g. "quadratic", "difference of squares")
@@ -327,6 +329,7 @@ function textPair(zh, en) {
 
 function renderStaticInterface() {
   renderThemeControl();
+  accountPanel?.render();
   document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
   document.title = state.language === "zh"
     ? "AMC 10 中英双语备考指南"
@@ -786,9 +789,14 @@ function renderGlossary() {
 
 function wireProblemAndGlossaryLinks(container) {
   container.querySelectorAll(".problem-progress input").forEach((input) => {
+    input.disabled = accountPanel?.editingPaused || false;
     input.addEventListener("change", () => {
       const control = input.closest("[data-progress-key]");
       const key = control.dataset.progressKey;
+      if (accountPanel?.signedIn) {
+        accountPanel.mark(key, input.value);
+        return;
+      }
       const updated = { ...state.problemProgress, [key]: input.value };
       try {
         localStorage.setItem("amc10-problem-progress", JSON.stringify(updated));
@@ -985,8 +993,30 @@ function render() {
   populateFilters();
   renderProblems();
   renderGlossary();
+  accountPanel?.render();
 }
 
 wireControls();
+accountPanel = new AccountPanel({
+  getLanguage: () => state.language,
+  validKeys: PROBLEM_REFERENCES.map(problemKey),
+  onProgress: (selections) => {
+    const changed = Object.keys(state.problemProgress).length !== Object.keys(selections).length
+      || Object.entries(selections).some(([key, value]) => state.problemProgress[key] !== value);
+    state.problemProgress = selections;
+    if (!changed) return;
+    document.querySelectorAll("[data-progress-key]").forEach((control) => {
+      const selected = selections[control.dataset.progressKey];
+      control.querySelector("summary").textContent = `${uiText("problemProgress")}: ${uiText(selected || "setProblemProgress")}`;
+      control.querySelectorAll("input").forEach((input) => {
+        input.checked = input.value === selected;
+      });
+    });
+    renderProgressOverview();
+    if (state.problemProgressFilter !== "all") renderProblems();
+  }
+});
+accountPanel.wire();
 render();
 setActiveView(state.activeView);
+accountPanel.start();

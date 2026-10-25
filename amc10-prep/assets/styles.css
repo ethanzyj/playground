@@ -779,6 +779,49 @@ input {
   border-radius: 0.75rem;
 }
 
+.account-panel {
+  margin: 0 clamp(1rem, 4vw, 4rem) 1.25rem;
+  padding: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.account-panel summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.account-panel form:not([hidden]),
+.account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.75rem;
+  margin-block: 0.75rem;
+}
+
+.account-panel label {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 100%;
+}
+
+.account-conflict {
+  padding: 0.75rem;
+  margin-block: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+
+.account-conflict button {
+  margin: 0.25rem;
+}
+
+.account-panel [hidden] {
+  display: none;
+}
+
 .text-button {
   border: 0;
   padding: 0;

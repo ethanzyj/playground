@@ -16,7 +16,7 @@
         console.error("Unable to read the saved theme.", error);
       }
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20261024-11" />
+    <link rel="stylesheet" href="assets/styles.css?v=20261024-12" />
     <script>
       window.MathJax = {
         tex: {
@@ -69,6 +69,31 @@
     </header>
 
     <p id="problemProgressError" class="progress-error" role="alert" hidden></p>
+    <section class="account-panel" aria-labelledby="accountHeading">
+      <details>
+        <summary id="accountHeading">Account &amp; cloud sync / 账户与云端同步</summary>
+        <p id="accountIdentity"></p>
+        <p id="accountSyncStatus" role="status" aria-live="polite"></p>
+        <p id="accountMessage" role="status" aria-live="polite"></p>
+        <form id="accountForm" hidden>
+          <label>
+            <span id="accountEmailLabel">Email / 电子邮箱</span>
+            <input id="accountEmail" type="email" autocomplete="email" required maxlength="254" />
+          </label>
+          <button id="accountSendLink" class="mastery" type="submit">Send sign-in link</button>
+        </form>
+        <div class="account-actions">
+          <button id="accountRetry" class="mastery" type="button" hidden>Sync now / retry</button>
+          <button id="accountSignOut" class="mastery" type="button" hidden>Sign out</button>
+        </div>
+        <div id="accountImportPanel" hidden>
+          <p id="accountImportHelp"></p>
+          <button id="accountImport" class="mastery" type="button">Import unmarked problems</button>
+          <button id="accountKeepSeparate" class="mastery" type="button">Keep separate</button>
+        </div>
+        <div id="accountConflicts"></div>
+      </details>
+    </section>
     <main class="app-shell">
       <div class="workspace-bar">
         <nav class="section-tabs" role="tablist" aria-label="Guide sections" data-i18n-aria-label="guideSections">
@@ -180,6 +205,6 @@
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261024-11"></script>
+    <script type="module" src="assets/app.mjs?v=20261024-12"></script>
   </body>
 </html>
