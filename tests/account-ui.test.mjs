@@ -172,7 +172,8 @@ test("email login, guest import, cloud save, localization, and logout work throu
     assert.equal(p.$(`#conceptView [data-progress-key="${key}"]`).open, true);
     p.$("#languageMode").value = "zh";
     p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
-    assert.equal(p.$("#accountHeading").textContent, "账户与云端同步");
+    assert.equal(p.$("#accountHeading").title, "账户与云端同步");
+    assert.equal(p.$("#accountHeading").textContent, user.email);
     assert.equal(p.$(`#conceptView [data-progress-key="${key}"] input:checked`).value, "haveApproach");
     p.$("#languageMode").value = "en";
     p.$("#languageMode").dispatchEvent(new p.window.Event("change"));

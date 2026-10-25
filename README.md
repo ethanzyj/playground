@@ -118,6 +118,8 @@ landing page; the study guide, problem explorer, and glossary are hidden and
 inert until an account is signed in. If the sign-in service cannot be checked,
 the page stays locked. Signing out returns to the landing page. Leaving both
 connection settings empty disables the gate and restores browser-only guest use.
+After sign-in, the account appears as a username chip in the top-right corner;
+hover over it (or tap/click it) to see sync status, **Sync now**, and **Sign out**.
 **Username & password** is the default sign-in method. Usernames are case-insensitive, with 3–32 letters,
 numbers, or underscores. Supabase validates the password; the frontend contains
 no account passwords and does not store them in its progress cache. The SDK
