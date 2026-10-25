@@ -1,6 +1,7 @@
-import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20261025-22";
+import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20261025-23";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
-import { AccountPanel } from "./account.mjs?v=20261025-22";
+import { AccountPanel } from "./account.mjs?v=20261025-23";
+import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261025-23";
 
 let problemProgressStorageError = false;
 
@@ -64,6 +65,7 @@ export function slugifyTerm(text) {
 
 const glossaryByLowerName = new Map(GLOSSARY.map((term) => [term.en.toLowerCase(), term]));
 const glossaryBySlug = new Map(GLOSSARY.map((term) => [slugifyTerm(term.en), term]));
+const glossaryByName = new Map(GLOSSARY.map((term) => [term.en, term]));
 const sortedGlossaryTerms = [...GLOSSARY].sort((a, b) => b.en.length - a.en.length);
 const glossaryTermPattern = sortedGlossaryTerms.length
   ? new RegExp(`\\b(${sortedGlossaryTerms.map((term) => `${escapeRegExp(term.en)}(?:'s|s)?`).join("|")})\\b`, "gi")
@@ -252,6 +254,7 @@ const UI_TEXT = {
   relatedReferences: { en: "Related AMC 10 references", zh: "相关 AMC 10 真题索引" },
   relatedGlossary: { en: "Related vocabulary", zh: "相关词汇" },
   relatedVocabulary: { en: "Related vocabulary", zh: "相关词汇" },
+  problemVocabulary: { en: "Vocabulary in this problem", zh: "本题词汇" },
   relatedProblems: { en: "Related problems", zh: "相关真题" },
   marked: { en: "Marked", zh: "已标记" },
   terms: { en: "terms", zh: "个词汇" },
@@ -631,17 +634,13 @@ function problemCard(problem, statement = null) {
         </ol>
       ` : problem.noteEn && problem.noteZh ? `<p>${textPair(problem.noteZh, linkGlossaryTerms(problem.noteEn))}</p>` : ""}
       <div class="tags">${tags.map((tag) => `<button data-concept="${tag.id}">${textPair(tag.zh, tag.en)}</button>`).join("")}</div>
+      ${problemVocabulary(problem)}
       <div class="card-actions">
         <a class="icon-action" href="${problem.sourceUrl}" target="_blank" rel="noreferrer" aria-label="${uiText("openReference")}" title="${uiText("openReference")}">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5" />
           </svg>
         </a>
-        <button type="button" class="icon-action" data-glossary-concept="${problem.conceptIds[0]}" aria-label="${uiText("relatedVocabulary")}" title="${uiText("relatedVocabulary")}">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <path d="M12 5C9 3 5 3 2 4v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Zm0 0v15" />
-          </svg>
-        </button>
       </div>
     </article>
   `;
@@ -838,6 +837,23 @@ function renderProblems() {
 
 function deepLink(name, value) {
   return `?${new URLSearchParams({ [name]: value })}`;
+}
+
+function problemVocabulary(problem) {
+  const terms = (PROBLEM_VOCABULARY[problemKey(problem)] || []).map((name) => glossaryByName.get(name)).filter(Boolean);
+  if (!terms.length) return "";
+  return `
+    <div class="problem-vocab">
+      <span class="problem-vocab-label">${uiText("problemVocabulary")}</span>
+      <ul class="vocab-chips compact" aria-label="${uiText("problemVocabulary")}">
+        ${terms.map((term) => {
+          const slug = slugifyTerm(term.en);
+          const isMastered = state.masteredGlossary.has(term.en);
+          return `<li><a class="vocab-chip${isMastered ? " mastered" : ""}" href="${deepLink("term", slug)}" target="_blank" rel="noopener" data-vocab-term="${slug}" aria-describedby="glossary-tooltip">${isMastered ? `<span class="vocab-check" aria-label="${uiText("mastered")}">✓</span>` : ""}${textPair(term.zh, term.en)}</a></li>`;
+        }).join("")}
+      </ul>
+    </div>
+  `;
 }
 
 function relatedVocabularyList(terms, conceptId) {

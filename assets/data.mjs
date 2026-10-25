@@ -1,4 +1,4 @@
-import { buildProblemReferences } from "./problem-index.mjs?v=20261025-22";
+import { buildProblemReferences } from "./problem-index.mjs?v=20261025-23";
 
 export const TOPICS = [
   {

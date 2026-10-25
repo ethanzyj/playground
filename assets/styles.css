@@ -1400,3 +1400,27 @@ a.problem-chip {
 .related-table-wrap ~ a.text-button {
   display: inline-block;
 }
+
+.problem-vocab {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.problem-vocab-label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.vocab-chips.compact {
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.vocab-chips.compact .vocab-chip {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.82rem;
+}

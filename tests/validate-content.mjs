@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "../assets/data.mjs";
+import { PROBLEM_VOCABULARY } from "../assets/problem-vocab.mjs";
 
 function assert(condition, message) {
   if (!condition) {
@@ -160,7 +161,16 @@ assert(progress.includes('PROBLEM_PROGRESS_OPTIONS = ["needUnderstanding", "need
 assert(html.includes('id="progressBreakdown"') && html.includes('id="exportProgress"'), "Problem Explorer must include progress counts, problem numbers, and an export.");
 assert(app.includes("problemProgressControl(problemKey(problem))"), "All problem cards must include progress controls.");
 assert(app.includes('aria-label="${uiText("openReference")}" title="${uiText("openReference")}"'), "Problem reference icons must have localized accessible labels and tooltips.");
-assert(app.includes('aria-label="${uiText("relatedVocabulary")}" title="${uiText("relatedVocabulary")}"'), "Vocabulary icons must have localized accessible labels and tooltips.");
+{
+  const glossaryNames = new Set(GLOSSARY.map((term) => term.en));
+  for (const problem of PROBLEM_REFERENCES) {
+    const key = `${problem.year}-${problem.exam.replace(" ", "")}-${problem.problemNumber}`;
+    assert(Array.isArray(PROBLEM_VOCABULARY[key]), `Problem vocabulary must cover ${key}.`);
+    for (const name of PROBLEM_VOCABULARY[key]) assert(glossaryNames.has(name), `${key} vocabulary term ${name} must exist in the glossary.`);
+  }
+}
+assert(app.includes("${problemVocabulary(problem)}"), "Problem cards must list the glossary terms used in that problem.");
+assert(!app.includes('data-glossary-concept="${problem.conceptIds[0]}"'), "Problem cards must not use a concept-wide vocabulary icon.");
 assert(app.includes('data-progress-key="${key}" open>'), "Problem progress panels must be expanded by default.");
 assert(!data.includes("书达定理"), "The misspelling 书达定理 must not appear; use 韦达定理.");
 assert(!data.includes("外切圆"), "Triangle terminology must use 外接圆 for circumcircle.");
