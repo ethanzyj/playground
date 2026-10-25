@@ -29,7 +29,17 @@ with a green dot on problems you have marked. Selecting a chip opens that
 problem on its **Full exam page** in the Problem Explorer; **View all in Problem
 Explorer** shows the concept's full reference list there. **Related vocabulary**
 appears as compact bilingual term chips (✓ marks mastered terms); hover a chip
-for its definition, or select it to jump to that term in the Glossary.
+for its definition, or select it to open that term in the Glossary. These Study
+Guide links open in a new tab using deep links: `?problem=2024-AMC10A-7`,
+`?problems-concept=<concept id>`, `?term=<term slug>`, and
+`?glossary-concept=<concept id>`. Deep links apply after sign-in.
+
+Concept tags and glossary vocabulary were reviewed problem by problem for all
+500 AMC 10A/10B problems from 2016-2025. Every problem links to at least one
+concept with glossary terms; the review corrected 154 problem tags and added 57
+common terms (for example Median, Units Digit, Lattice Point, Hypotenuse,
+Sector, and Surface Area). Very problem-specific phrases are intentionally not
+glossary entries.
 
 Each problem has a **My progress** panel, expanded by default and kept open
 after selecting an option: **Need help understanding**,
@@ -187,8 +197,13 @@ next login. **Signing out does not erase cached account data from this browser**
 people sharing a browser profile should use separate profiles or a private
 session, and ensure changes are synced before clearing site data.
 
-Only the three **problem readiness statuses** sync in this version. Concept and
-glossary mastery, language, and theme remain browser-local. The database keeps
+Problem readiness statuses and Study Guide/Glossary **mastery** marks sync.
+Mastery is stored in the `user_mastery` table (owner-only row-level security),
+with the same local-first queue (`amc10-mastery-cache:<user id>`), retry on
+focus, connectivity return, and **Sync now**. On an account's first sync with
+no server mastery, this browser's mastery marks are uploaded. Existing projects
+must run `supabase/add-user-mastery.sql` once in the SQL Editor; until then,
+mastery stays browser-local. Language and theme remain browser-local. The database keeps
 the latest status, a server timestamp, and a version, not a complete event
 history. JSON exports reflect the currently visible guest/account data across
 all papers. Change-history analysis and Google login are not included yet.

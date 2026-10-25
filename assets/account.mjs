@@ -1,5 +1,6 @@
 import { CLOUD_CONFIG } from "./cloud-config.mjs?v=20261024-13";
 import { CloudProgress } from "./cloud-progress.mjs?v=20261024-12";
+import { CloudMastery } from "./cloud-mastery.mjs?v=20261025-22";
 
 const TEXT = {
   heading: ["Account & cloud sync", "账户与云端同步"],
@@ -72,11 +73,14 @@ function accountIdentity(user) {
 }
 
 export class AccountPanel {
-  constructor({ getLanguage, validKeys, onProgress }) {
+  constructor({ getLanguage, validKeys, onProgress, readMastery, onMastery }) {
     this.getLanguage = getLanguage;
     this.validKeys = validKeys;
     this.onProgress = onProgress;
+    this.readMastery = readMastery;
+    this.onMastery = onMastery;
     this.controller = null;
+    this.mastery = null;
     this.client = null;
     this.snapshot = null;
     this.message = "";
@@ -119,6 +123,14 @@ export class AccountPanel {
           this.render();
         }
       });
+      this.mastery = new CloudMastery({
+        client: this.client, storage: localStorage, readLocal: this.readMastery,
+        onError: (error) => console.warn("Mastery sync is waiting to retry.", error),
+        onChange: (sets) => {
+          this.onMastery?.(sets);
+          this.render();
+        }
+      });
       this.guestCount = Object.keys(this.controller.readGuest()).length;
       this.ready = true;
       this.client.auth.onAuthStateChange((_event, session) => {
@@ -126,14 +138,16 @@ export class AccountPanel {
         setTimeout(() => this.run(async () => {
           this.guestCount = Object.keys(this.controller.readGuest()).length;
           await this.controller.activate(session?.user || null);
+          await this.mastery.activate(session?.user || null);
         }), 0);
       });
       const { data, error } = await this.client.auth.getSession();
       if (error) throw error;
       await this.controller.activate(data.session?.user || null);
-      window.addEventListener("online", () => this.run(() => this.controller.sync()));
+      await this.mastery.activate(data.session?.user || null);
+      window.addEventListener("online", () => this.run(() => this.syncAll()));
       window.addEventListener("focus", () => {
-        if (this.controller.user) this.run(() => this.controller.sync());
+        if (this.controller.user) this.run(() => this.syncAll());
       });
       this.render();
     } catch (error) {
@@ -183,6 +197,17 @@ export class AccountPanel {
 
   async mark(key, status) {
     await this.run(() => this.controller.mark(key, status));
+  }
+
+  async syncAll() {
+    await this.controller.sync();
+    await this.mastery?.flush();
+  }
+
+  async setMastery(kind, id, mastered) {
+    if (!this.signedIn || !this.mastery) return;
+    await this.mastery.set(kind, id, mastered);
+    this.render();
   }
 
   async signIn(email) {
@@ -236,7 +261,7 @@ export class AccountPanel {
   }
 
   async signOut() {
-    if (this.snapshot?.pendingCount && !this.signoutPending) {
+    if ((this.snapshot?.pendingCount || this.mastery?.pendingCount) && !this.signoutPending) {
       this.signoutPending = true;
       this.message = "unsafeSignout";
       this.render();
@@ -246,6 +271,7 @@ export class AccountPanel {
       const { error } = await this.client.auth.signOut({ scope: "local" });
       if (error) throw error;
       await this.controller.activate(null);
+      await this.mastery?.activate(null);
       this.signoutPending = false;
     });
   }
@@ -295,7 +321,7 @@ export class AccountPanel {
     });
     document.querySelector("#accountSignOut").addEventListener("click", () => this.signOut());
     document.querySelector("#accountRetry").addEventListener("click", () =>
-      this.run(() => this.controller.sync()));
+      this.run(() => this.syncAll()));
     document.querySelector("#accountImport").addEventListener("click", () =>
       this.run(() => this.controller.importGuest()));
     document.querySelector("#accountKeepSeparate").addEventListener("click", () =>
@@ -350,7 +376,7 @@ export class AccountPanel {
     $("#accountIdentity").textContent = identity;
     $("#accountIdentity").dataset.label = this.text("heading");
     $("#accountSyncStatus").textContent = this.signedIn
-      ? `${this.text(this.snapshot?.phase || "syncing")} · ${this.text("pending")}: ${this.snapshot?.pendingCount || 0}`
+      ? `${this.text(this.snapshot?.phase || "syncing")} · ${this.text("pending")}: ${(this.snapshot?.pendingCount || 0) + (this.mastery?.pendingCount || 0)}`
       : this.text("guest");
     const importing = this.signedIn && this.guestCount > 0 && this.snapshot?.loaded && !this.snapshot.importDismissed;
     $("#accountImportPanel").hidden = !importing;

@@ -8,12 +8,12 @@ import { JSDOM, VirtualConsole } from "jsdom";
 const root = new URL("../", import.meta.url);
 const html = readFileSync(new URL("index.html", root), "utf8");
 
-async function page(configured, client, method = "password") {
+async function page(configured, client, method = "password", search = "", fetchImpl = null) {
   const errors = [];
   const virtualConsole = new VirtualConsole();
   virtualConsole.on("jsdomError", (error) => errors.push(error));
   const dom = new JSDOM(html, {
-    url: "https://example.test/playground/", runScripts: "outside-only",
+    url: `https://example.test/playground/${search}`, runScripts: "outside-only",
     pretendToBeVisual: true, virtualConsole
   });
   const window = dom.window;
@@ -22,7 +22,7 @@ async function page(configured, client, method = "password") {
   window.HTMLElement.prototype.scrollIntoView = () => {};
   window.__testClient = client;
   window.document.querySelector("#accountLoginMethod").value = method;
-  window.fetch = async () => { throw new Error("Unexpected network request"); };
+  window.fetch = fetchImpl || (async () => { throw new Error("Unexpected network request"); });
   const bundle = await build({
     entryPoints: [fileURLToPath(new URL("assets/app.mjs", root))],
     bundle: true, write: false, format: "iife", platform: "browser",
@@ -43,6 +43,7 @@ async function page(configured, client, method = "password") {
   });
   window.eval(bundle.outputFiles[0].text);
   const $ = (selector) => window.document.querySelector(selector);
+  const $$ = (selector) => window.document.querySelectorAll(selector);
   const waitFor = async (condition) => {
     const deadline = Date.now() + 10000;
     while (!condition()) {
@@ -50,7 +51,7 @@ async function page(configured, client, method = "password") {
       await new Promise((resolve) => setTimeout(resolve, 10));
     }
   };
-  return { window, $, waitFor, errors, close: () => window.close() };
+  return { window, $, $$, waitFor, errors, close: () => window.close() };
 }
 
 test("unconfigured cloud panel preserves guest progress and keeps login disabled", async () => {
@@ -381,7 +382,7 @@ test("the landing page stays locked when the sign-in service cannot be checked",
 });
 
 test("study guide shows related problems as a year/exam table of links that open the full exam page", async () => {
-  const p = await page(false);
+  let p = await page(false);
   try {
     assert.equal(p.$("#conceptView .problem-card"), null);
     assert.equal(p.$("#conceptView .problem-progress"), null);
@@ -398,21 +399,33 @@ test("study guide shows related problems as a year/exam table of links that open
     assert.match(link.getAttribute("aria-label"), /have a solution approach/);
     assert.equal(link.dataset.progress, "haveApproach");
     assert.equal(link.closest("tr").querySelector("th").textContent, year);
-    link.click();
+    assert.equal(link.getAttribute("target"), "_blank");
+    assert.equal(link.getAttribute("href"), `?problem=${key}`);
+    const viewAll = p.$("#conceptView a.text-button");
+    assert.equal(viewAll.getAttribute("target"), "_blank");
+    assert.match(viewAll.getAttribute("href"), /^\?problems-concept=/);
+    assert.equal(p.errors.length, 0);
+    const label = link.getAttribute("aria-label");
+    p.close();
+    p = await page(false, undefined, "password", link.getAttribute("href"), async (url) => {
+      assert.equal(url, `assets/exams/${year}${exam.slice(-1)}.json`);
+      const body = readFileSync(new URL(url, root), "utf8");
+      return { ok: true, json: async () => JSON.parse(body) };
+    });
     await p.waitFor(() => p.$(`#problemList [data-problem-key="${key}"] .problem-statement`));
     assert.equal(p.$("#problemsPanel").hidden, false);
     assert.equal(p.$('[data-problem-mode="full"]').getAttribute("aria-pressed"), "true");
     assert.equal(p.$("#examYear").value, year);
     assert.equal(p.$("#examPaper").value.replace(" ", ""), exam);
-    assert.equal(link.textContent, number);
     assert.equal(p.$(`#problemList [data-problem-key="${key}"] .problem-topline strong`).textContent,
-      link.getAttribute("aria-label").split(" · ")[0]);
+      label.split(" · ")[0]);
+    assert.match(label, new RegExp(`#${number}\\b`));
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
 
 test("study guide shows related vocabulary as chips that preview and open glossary terms", async () => {
-  const p = await page(false);
+  let p = await page(false);
   try {
     assert.equal(p.$("#conceptView .glossary-card"), null);
     const chip = p.$("#conceptView [data-vocab-term]");
@@ -421,11 +434,21 @@ test("study guide shows related vocabulary as chips that preview and open glossa
     chip.dispatchEvent(new p.window.MouseEvent("mouseenter"));
     assert.equal(p.$("#glossary-tooltip").hidden, false);
     assert.ok(p.$("#glossary-tooltip .glossary-tooltip-note").textContent.trim());
-    chip.click();
-    assert.equal(p.$("#glossary-tooltip").hidden, true);
+    assert.equal(chip.getAttribute("target"), "_blank");
+    assert.equal(chip.getAttribute("href"), `?term=${slug}`);
+    const viewAll = [...p.$$("#conceptView a.text-button")].at(-1);
+    assert.equal(viewAll.getAttribute("target"), "_blank");
+    const conceptHref = viewAll.getAttribute("href");
+    assert.match(conceptHref, /^\?glossary-concept=/);
+    assert.equal(p.errors.length, 0);
+    p.close();
+    p = await page(false, undefined, "password", chip.getAttribute("href"));
     assert.equal(p.$("#glossaryPanel").hidden, false);
     assert.ok(p.$(`#glossary-${slug}`));
-    assert.ok(p.$("#conceptView [data-glossary-concept]"));
+    p.close();
+    p = await page(false, undefined, "password", conceptHref);
+    assert.equal(p.$("#glossaryPanel").hidden, false);
+    assert.equal(p.$("#glossaryConcept")?.value ?? conceptHref.split("=")[1], conceptHref.split("=")[1]);
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });

@@ -1384,3 +1384,19 @@ body[data-auth-gate="open"] .account-actions {
   font-size: 0.7rem;
   font-weight: 800;
 }
+
+a.problem-chip,
+a.vocab-chip {
+  text-decoration: none;
+}
+
+a.problem-chip {
+  display: inline-block;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.related-summary + .vocab-chips ~ a.text-button,
+.related-table-wrap ~ a.text-button {
+  display: inline-block;
+}
