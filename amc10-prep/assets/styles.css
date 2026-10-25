@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --bg: #f5f7fb;
   --panel: #ffffff;
   --text: #152238;
@@ -12,7 +12,8 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #0d1424;
     --panel: #151f33;
     --text: #edf3ff;
@@ -23,6 +24,19 @@
     --success: #6bd596;
     --shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
   }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0d1424;
+  --panel: #151f33;
+  --text: #edf3ff;
+  --muted: #aab6cc;
+  --line: #2c3a55;
+  --accent: #8fb2ff;
+  --accent-soft: #1f3157;
+  --success: #6bd596;
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
 }
 
 * {
@@ -45,7 +59,7 @@ a {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 18rem;
   gap: 2rem;
-  padding: 6rem clamp(1rem, 4vw, 4rem) 3rem;
+  padding: 10rem clamp(1rem, 4vw, 4rem) 3rem;
   align-items: end;
 }
 
@@ -139,6 +153,60 @@ a {
 
 .global-language select {
   padding: 0.45rem 0.6rem;
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  top: 1.25rem;
+  left: clamp(1rem, 4vw, 4rem);
+  max-width: calc(100% - 20rem);
+  padding: 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--panel);
+  color: var(--text);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.theme-toggle[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.theme-toggle .theme-sun,
+.theme-toggle[aria-pressed="true"] .theme-moon {
+  display: none;
+}
+
+.theme-toggle[aria-pressed="true"] .theme-sun {
+  display: inline;
+}
+
+.theme-error {
+  grid-column: 1 / -1;
+  color: var(--text);
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding-top: 15rem;
+  }
+
+  .theme-toggle {
+    top: 8rem;
+    max-width: calc(100% - 2rem);
+  }
 }
 
 .section-tab {
@@ -637,6 +705,29 @@ input {
   flex-wrap: wrap;
   gap: 0.75rem;
   align-items: center;
+}
+
+.icon-action {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--panel);
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.icon-action:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.icon-action:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .problem-progress {

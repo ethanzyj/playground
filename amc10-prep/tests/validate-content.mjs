@@ -147,12 +147,18 @@ assert(html.includes("mathjax@3.2.2"), "HTML must load the pinned MathJax render
 const app = readFileSync(new URL("../assets/app.mjs", import.meta.url), "utf8");
 const data = readFileSync(new URL("../assets/data.mjs", import.meta.url), "utf8");
 const css = readFileSync(new URL("../assets/styles.css", import.meta.url), "utf8");
+assert(html.includes('id="themeToggle"'), "The page must include a theme toggle.");
+assert(app.includes('$("#themeToggle").setAttribute("aria-label", uiText("darkTheme"))'), "The icon-only theme toggle must retain a localized accessible label.");
+assert(app.includes('localStorage.setItem("amc10-theme", theme)'), "Theme choices must persist.");
+assert(css.includes(':root[data-theme="dark"]') && css.includes(':root:not([data-theme="light"])'), "Explicit theme choices must override the system theme.");
 assert(html.includes('id="problemProgressError"'), "Problem progress storage failures must have a visible alert.");
 assert(html.includes('id="problemProgressFilter"'), "Problem Explorer must include a progress filter shared by all modes.");
 assert(app.includes('state.problemProgressFilter === "unmarked"'), "Progress filtering must include unmarked problems.");
 assert(app.includes('localStorage.setItem("amc10-problem-progress"'), "Problem progress must persist in browser storage.");
 assert(app.includes('const PROBLEM_PROGRESS_OPTIONS = ["needUnderstanding", "needStartingPoint", "haveApproach"]'), "Problem progress must offer the three agreed stages.");
 assert(app.includes("problemProgressControl(problemKey(problem))"), "All problem cards must include progress controls.");
+assert(app.includes('aria-label="${uiText("openReference")}" title="${uiText("openReference")}"'), "Problem reference icons must have localized accessible labels and tooltips.");
+assert(app.includes('aria-label="${uiText("relatedVocabulary")}" title="${uiText("relatedVocabulary")}"'), "Vocabulary icons must have localized accessible labels and tooltips.");
 assert(app.includes('data-progress-key="${key}" open>'), "Problem progress panels must be expanded by default.");
 assert(!data.includes("书达定理"), "The misspelling 书达定理 must not appear; use 韦达定理.");
 assert(!data.includes("外切圆"), "Triangle terminology must use 外接圆 for circumcircle.");

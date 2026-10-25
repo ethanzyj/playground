@@ -8,7 +8,15 @@
       name="description"
       content="Interactive bilingual AMC 10 prep guide organized from a Chinese topic map with concept explanations and past AMC 10 references."
     />
-    <link rel="stylesheet" href="assets/styles.css" />
+    <script>
+      try {
+        const theme = localStorage.getItem("amc10-theme");
+        if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+      } catch (error) {
+        console.error("Unable to read the saved theme.", error);
+      }
+    </script>
+    <link rel="stylesheet" href="assets/styles.css?v=20261024-9" />
     <script>
       window.MathJax = {
         tex: {
@@ -34,6 +42,16 @@
           <option value="en">English</option>
         </select>
       </label>
+      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path class="theme-moon" d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z" />
+          <g class="theme-sun">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+          </g>
+        </svg>
+      </button>
+      <p id="themeError" class="theme-error" role="alert" hidden></p>
       <div>
         <p class="eyebrow" data-i18n="heroEyebrow">AMC 10 prep / 中英双语备考</p>
         <h1 data-i18n="heroTitle">AMC 10 Bilingual Prep Guide<br /><span>AMC 10 中英双语备考指南</span></h1>
@@ -153,6 +171,6 @@
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261024-5"></script>
+    <script type="module" src="assets/app.mjs?v=20261024-9"></script>
   </body>
 </html>
