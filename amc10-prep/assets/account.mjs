@@ -23,7 +23,11 @@ const TEXT = {
   cloud: ["Use cloud choice", "保留云端选择"],
   sent: ["Check your email for a sign-in link. Open it in this browser/profile to finish signing in.", "请检查邮箱中的登录链接，并在此浏览器及用户配置中打开链接完成登录。"],
   sending: ["Sending sign-in link…", "正在发送登录链接……"],
-  authError: ["Account action failed. Please retry. Details are in the browser console.", "账户操作失败，请重试。详情见浏览器控制台。"],
+  authError: ["Account action failed.", "账户操作失败。"],
+  emailRateLimit: ["Too many sign-in email requests. Wait before requesting another link; a project-wide email limit may require a longer wait. The project owner can review Supabase Auth logs, email limits, and SMTP settings.", "登录邮件请求过多。请稍后再请求链接；项目邮件总量限制可能需要等待更长时间。项目所有者可检查 Supabase 身份验证日志、邮件限额和 SMTP 设置。"],
+  emailNotAuthorized: ["Supabase cannot send email to this address with the current mail settings. The project owner must configure a custom SMTP provider or authorize this recipient for testing.", "当前邮件设置不允许 Supabase 向此地址发信。项目所有者需配置自定义 SMTP 服务，或授权此收件人用于测试。"],
+  invalidEmail: ["Check the email address and try again.", "请检查电子邮箱地址后重试。"],
+  signupDisabled: ["New account registration is disabled in Supabase. The project owner must enable signups to allow new accounts.", "Supabase 已禁用新账户注册。项目所有者需启用注册才能创建新账户。"],
   unsafeSignout: ["There are unsynced changes. They will remain in this account's local cache when you sign out, but are not yet backed up online.", "仍有未同步更改。退出后将保留在此账户的本地缓存中，但尚未备份至云端。"],
   confirmSignout: ["Sign out with unsynced changes", "仍然退出（有未同步更改）"],
   needUnderstanding: ["Need help understanding", "需要帮助理解题意"],
@@ -54,6 +58,7 @@ export class AccountPanel {
     this.client = null;
     this.snapshot = null;
     this.message = "";
+    this.errorDetails = "";
     this.signoutPending = false;
     this.authBusy = false;
     this.ready = false;
@@ -108,7 +113,7 @@ export class AccountPanel {
       this.render();
     } catch (error) {
       console.error("Unable to initialize cloud login.", error);
-      this.message = "authError";
+      this.setAuthError(error);
       this.render();
     } finally {
       this.restoring = false;
@@ -119,12 +124,26 @@ export class AccountPanel {
   async run(action) {
     try {
       this.message = "";
+      this.errorDetails = "";
       await action();
     } catch (error) {
       console.error("Account action failed.", error);
-      this.message = "authError";
+      this.setAuthError(error);
     }
     this.render();
+  }
+
+  setAuthError(error) {
+    const messages = {
+      over_email_send_rate_limit: "emailRateLimit",
+      over_request_rate_limit: "emailRateLimit",
+      email_address_not_authorized: "emailNotAuthorized",
+      email_address_invalid: "invalidEmail",
+      signup_disabled: "signupDisabled"
+    };
+    this.message = Object.hasOwn(messages, error?.code) ? messages[error.code]
+      : error?.status === 429 ? "emailRateLimit" : "authError";
+    this.errorDetails = typeof error?.message === "string" ? error.message : "";
   }
 
   get signedIn() {
@@ -143,6 +162,7 @@ export class AccountPanel {
     if (!this.client || this.authBusy) return;
     this.authBusy = true;
     this.message = "sending";
+    this.errorDetails = "";
     this.render();
     try {
       const redirect = new URL(location.pathname, location.origin).href;
@@ -153,7 +173,7 @@ export class AccountPanel {
       this.message = "sent";
     } catch (error) {
       console.error("Unable to send sign-in link.", error);
-      this.message = "authError";
+      this.setAuthError(error);
     } finally {
       this.authBusy = false;
       this.render();
@@ -199,7 +219,8 @@ export class AccountPanel {
     $("#accountImportHelp").textContent = this.text("importHelp");
     $("#accountImport").textContent = this.text("import");
     $("#accountKeepSeparate").textContent = this.text("dismiss");
-    $("#accountMessage").textContent = this.message ? this.text(this.message) : "";
+    $("#accountMessage").textContent = this.message
+      ? [this.text(this.message), this.errorDetails].filter(Boolean).join(" ") : "";
     $("#accountForm").hidden = !this.ready || this.signedIn;
     $("#accountSendLink").disabled = this.authBusy;
     $("#accountSignOut").hidden = !this.signedIn;
@@ -235,7 +256,7 @@ export class AccountPanel {
     document.querySelectorAll(".problem-progress input").forEach((input) => {
       input.disabled = this.editingPaused;
     });
-    if (["authError", "unsafeSignout"].includes(this.message)
+    if (this.errorDetails || ["authError", "emailRateLimit", "emailNotAuthorized", "invalidEmail", "signupDisabled", "unsafeSignout"].includes(this.message)
       || ["syncError", "storageError", "cacheError", "conflict"].includes(this.snapshot?.phase)) {
       $("#accountHeading").parentElement.open = true;
     }
