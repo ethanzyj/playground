@@ -69,10 +69,14 @@ the root of the `gh-pages` branch, containing the contents of `amc10-prep`.
 
 ## Optional accounts and server-side progress
 
-Accounts are **disabled by default**. `assets/cloud-config.mjs` contains empty
-connection settings. Guest mode and existing `amc10-problem-progress` selections
-continue to work without a backend. No Supabase project has been provisioned by
-this change.
+`assets/cloud-config.mjs` now points to the user-provided Supabase project
+`gballcikrgzqbshwzizn`, using its public publishable key. Email authentication is
+enabled. The remote `public.problem_progress` table and `save_problem_progress`
+function are present and reject anonymous access. The public connection
+configuration is enabled for publication; real email delivery, auth redirect
+settings, and authenticated cross-device syncing still need an account check.
+Guest mode and existing `amc10-problem-progress` selections remain available.
+To disable accounts, leave both connection settings empty.
 
 To enable:
 
