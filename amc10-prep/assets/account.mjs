@@ -251,6 +251,31 @@ export class AccountPanel {
   }
 
   wire() {
+    const menu = document.querySelector("#accountHeading").parentElement;
+    let hoverClose = null;
+    const hoverMenu = () => document.body.dataset.authGate === "open";
+    menu.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "mouse" || !hoverMenu()) return;
+      clearTimeout(hoverClose);
+      menu.open = true;
+    });
+    menu.addEventListener("pointerleave", (event) => {
+      if (event.pointerType !== "mouse" || !hoverMenu()) return;
+      hoverClose = setTimeout(() => {
+        if (!menu.matches(":focus-within")) menu.open = false;
+      }, 200);
+    });
+    menu.addEventListener("focusout", () => {
+      if (hoverMenu() && !menu.matches(":hover")) setTimeout(() => {
+        if (!menu.contains(document.activeElement)) menu.open = false;
+      });
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && hoverMenu() && menu.open) {
+        menu.open = false;
+        menu.querySelector("summary").focus();
+      }
+    });
     document.querySelector("#accountLoginMethod").addEventListener("change", () => {
       document.querySelector("#accountPassword").value = "";
       this.message = "";
@@ -287,8 +312,13 @@ export class AccountPanel {
     $("#accountLandingCopy").textContent = this.text(
       this.restoring || (this.cloudEnabled === null && !this.message) ? "checkingSession" : "landingCopy");
     if (locked) $("#accountHeading").parentElement.open = true;
+    else if (this.wasLocked !== false) $("#accountHeading").parentElement.open = false;
+    this.wasLocked = locked;
     $("#accountSyncStatus").hidden = locked;
-    $("#accountHeading").textContent = this.text("heading");
+    const identity = this.signedIn ? accountIdentity(this.controller.user) : "";
+    $("#accountHeading").textContent = identity || this.text("heading");
+    $("#accountHeading").dataset.initial = (identity || "?").slice(0, 1).toUpperCase();
+    $("#accountHeading").title = this.text("heading");
     $("#accountEmailLabel").textContent = this.text("email");
     $("#accountLoginMethodLabel").textContent = this.text("loginMethod");
     $("#accountLoginMethod option[value='password']").textContent = this.text("passwordMethod");
@@ -317,7 +347,8 @@ export class AccountPanel {
     $("#accountSignOut").hidden = !this.signedIn;
     $("#accountRetry").hidden = !this.signedIn;
     $("#accountRetry").disabled = this.snapshot?.busy || this.snapshot?.phase === "cacheError";
-    $("#accountIdentity").textContent = this.signedIn ? accountIdentity(this.controller.user) : "";
+    $("#accountIdentity").textContent = identity;
+    $("#accountIdentity").dataset.label = this.text("heading");
     $("#accountSyncStatus").textContent = this.signedIn
       ? `${this.text(this.snapshot?.phase || "syncing")} · ${this.text("pending")}: ${this.snapshot?.pendingCount || 0}`
       : this.text("guest");

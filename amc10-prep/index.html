@@ -16,7 +16,7 @@
         console.error("Unable to read the saved theme.", error);
       }
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20261025-16" />
+    <link rel="stylesheet" href="assets/styles.css?v=20261025-17" />
     <script>
       window.MathJax = {
         tex: {
@@ -72,50 +72,52 @@
     <section class="account-panel" aria-labelledby="accountHeading">
       <details>
         <summary id="accountHeading">Account &amp; cloud sync / 账户与云端同步</summary>
-        <div id="accountLanding" class="account-landing" hidden>
-          <h2 id="accountLandingTitle">Sign in to continue / 请先登录</h2>
-          <p id="accountLandingCopy"></p>
+        <div class="account-menu">
+          <div id="accountLanding" class="account-landing" hidden>
+            <h2 id="accountLandingTitle">Sign in to continue / 请先登录</h2>
+            <p id="accountLandingCopy"></p>
+          </div>
+          <p id="accountIdentity"></p>
+          <p id="accountSyncStatus" role="status" aria-live="polite"></p>
+          <p id="accountMessage" role="status" aria-live="polite"></p>
+          <div id="accountLoginMethods" hidden>
+            <label>
+              <span id="accountLoginMethodLabel">Sign-in method / 登录方式</span>
+              <select id="accountLoginMethod">
+                <option value="password">Username &amp; password / 用户名和密码</option>
+                <option value="email">Email link / 邮件链接</option>
+              </select>
+            </label>
+          </div>
+          <form id="accountPasswordForm" hidden>
+            <label>
+              <span id="accountUsernameLabel">Username / 用户名</span>
+              <input id="accountUsername" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_]{3,32}" />
+            </label>
+            <label>
+              <span id="accountPasswordLabel">Password / 密码</span>
+              <input id="accountPassword" name="password" type="password" autocomplete="current-password" required />
+            </label>
+            <button id="accountPasswordSignIn" class="mastery" type="submit">Sign in / 登录</button>
+          </form>
+          <form id="accountForm" hidden>
+            <label>
+              <span id="accountEmailLabel">Email / 电子邮箱</span>
+              <input id="accountEmail" type="email" autocomplete="email" required maxlength="254" />
+            </label>
+            <button id="accountSendLink" class="mastery" type="submit">Send sign-in link</button>
+          </form>
+          <div class="account-actions">
+            <button id="accountRetry" class="mastery" type="button" hidden>Sync now / retry</button>
+            <button id="accountSignOut" class="mastery" type="button" hidden>Sign out</button>
+          </div>
+          <div id="accountImportPanel" hidden>
+            <p id="accountImportHelp"></p>
+            <button id="accountImport" class="mastery" type="button">Import unmarked problems</button>
+            <button id="accountKeepSeparate" class="mastery" type="button">Keep separate</button>
+          </div>
+          <div id="accountConflicts"></div>
         </div>
-        <p id="accountIdentity"></p>
-        <p id="accountSyncStatus" role="status" aria-live="polite"></p>
-        <p id="accountMessage" role="status" aria-live="polite"></p>
-        <div id="accountLoginMethods" hidden>
-          <label>
-            <span id="accountLoginMethodLabel">Sign-in method / 登录方式</span>
-            <select id="accountLoginMethod">
-              <option value="password">Username &amp; password / 用户名和密码</option>
-              <option value="email">Email link / 邮件链接</option>
-            </select>
-          </label>
-        </div>
-        <form id="accountPasswordForm" hidden>
-          <label>
-            <span id="accountUsernameLabel">Username / 用户名</span>
-            <input id="accountUsername" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_]{3,32}" />
-          </label>
-          <label>
-            <span id="accountPasswordLabel">Password / 密码</span>
-            <input id="accountPassword" name="password" type="password" autocomplete="current-password" required />
-          </label>
-          <button id="accountPasswordSignIn" class="mastery" type="submit">Sign in / 登录</button>
-        </form>
-        <form id="accountForm" hidden>
-          <label>
-            <span id="accountEmailLabel">Email / 电子邮箱</span>
-            <input id="accountEmail" type="email" autocomplete="email" required maxlength="254" />
-          </label>
-          <button id="accountSendLink" class="mastery" type="submit">Send sign-in link</button>
-        </form>
-        <div class="account-actions">
-          <button id="accountRetry" class="mastery" type="button" hidden>Sync now / retry</button>
-          <button id="accountSignOut" class="mastery" type="button" hidden>Sign out</button>
-        </div>
-        <div id="accountImportPanel" hidden>
-          <p id="accountImportHelp"></p>
-          <button id="accountImport" class="mastery" type="button">Import unmarked problems</button>
-          <button id="accountKeepSeparate" class="mastery" type="button">Keep separate</button>
-        </div>
-        <div id="accountConflicts"></div>
       </details>
     </section>
     <main class="app-shell">
@@ -229,6 +231,6 @@
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261025-16"></script>
+    <script type="module" src="assets/app.mjs?v=20261025-17"></script>
   </body>
 </html>
