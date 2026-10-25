@@ -113,12 +113,16 @@ To enable:
 
 ### Account behavior
 
-Open **Account & cloud sync** near the top. **Username & password** is the
-default sign-in method. Usernames are case-insensitive, with 3–32 letters,
+When cloud login is configured, the site opens on a **Sign in to continue**
+landing page; the study guide, problem explorer, and glossary are hidden and
+inert until an account is signed in. If the sign-in service cannot be checked,
+the page stays locked. Signing out returns to the landing page. Leaving both
+connection settings empty disables the gate and restores browser-only guest use.
+**Username & password** is the default sign-in method. Usernames are case-insensitive, with 3–32 letters,
 numbers, or underscores. Supabase validates the password; the frontend contains
 no account passwords and does not store them in its progress cache. The SDK
 persists the authenticated session, not the password. Guest use remains
-available without an account.
+available only when cloud login is not configured.
 
 Supabase email/password authentication requires an email-shaped identifier
 internally. A username maps to `<username>@users.amc10-prep.invalid`; these

@@ -1,6 +1,6 @@
 import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-12";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
-import { AccountPanel } from "./account.mjs?v=20261025-15";
+import { AccountPanel } from "./account.mjs?v=20261025-16";
 
 let problemProgressStorageError = false;
 

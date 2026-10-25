@@ -1027,3 +1027,35 @@ input {
     display: grid;
   }
 }
+
+body[data-auth-gate="locked"] .hero-card,
+body[data-auth-gate="locked"] #problemProgressError,
+body[data-auth-gate="locked"] main.app-shell {
+  display: none;
+}
+
+body[data-auth-gate="locked"] .account-panel {
+  max-width: 34rem;
+  margin: 2rem auto 4rem;
+  padding: 1.5rem;
+  box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 12%);
+}
+
+body[data-auth-gate="locked"] .account-panel summary {
+  display: none;
+}
+
+body[data-auth-gate="locked"] .account-panel form:not([hidden]) {
+  display: grid;
+  align-items: stretch;
+}
+
+body[data-auth-gate="locked"] .account-panel input,
+body[data-auth-gate="locked"] .account-panel select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.account-landing h2 {
+  margin: 0 0 0.5rem;
+}

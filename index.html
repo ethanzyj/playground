@@ -16,7 +16,7 @@
         console.error("Unable to read the saved theme.", error);
       }
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20261024-12" />
+    <link rel="stylesheet" href="assets/styles.css?v=20261025-16" />
     <script>
       window.MathJax = {
         tex: {
@@ -32,7 +32,7 @@
       src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"
     ></script>
   </head>
-  <body>
+  <body data-auth-gate="locked">
     <header class="hero">
       <label class="global-language hero-language">
         <span data-i18n="languageLabel">Language / 语言</span>
@@ -72,6 +72,10 @@
     <section class="account-panel" aria-labelledby="accountHeading">
       <details>
         <summary id="accountHeading">Account &amp; cloud sync / 账户与云端同步</summary>
+        <div id="accountLanding" class="account-landing" hidden>
+          <h2 id="accountLandingTitle">Sign in to continue / 请先登录</h2>
+          <p id="accountLandingCopy"></p>
+        </div>
         <p id="accountIdentity"></p>
         <p id="accountSyncStatus" role="status" aria-live="polite"></p>
         <p id="accountMessage" role="status" aria-live="polite"></p>
@@ -225,6 +229,6 @@
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261025-15"></script>
+    <script type="module" src="assets/app.mjs?v=20261025-16"></script>
   </body>
 </html>

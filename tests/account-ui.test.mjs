@@ -59,6 +59,9 @@ test("unconfigured cloud panel preserves guest progress and keeps login disabled
     assert.equal(p.$("#accountForm").hidden, true);
     assert.equal(p.$("#accountPasswordForm").hidden, true);
     assert.match(p.$("#accountMessage").textContent, /not configured/);
+    assert.equal(p.window.document.body.dataset.authGate, "open");
+    assert.equal(p.$("main.app-shell").hasAttribute("inert"), false);
+    assert.equal(p.$("#accountLanding").hidden, true);
     const input = p.$('#conceptView .problem-progress input[value="needUnderstanding"]');
     const key = input.closest("[data-progress-key]").dataset.progressKey;
     input.click();
@@ -224,6 +227,13 @@ test("username password sign-in isolates both accounts and preserves guest progr
   const p = await page(true, client);
   try {
     await p.waitFor(() => !p.$("#accountPasswordForm").hidden);
+    const gate = () => p.window.document.body.dataset.authGate;
+    assert.equal(gate(), "locked");
+    assert.equal(p.$("main.app-shell").hasAttribute("inert"), true);
+    assert.equal(p.$("#accountLanding").hidden, false);
+    assert.match(p.$("#accountLandingTitle").textContent, /Sign in to continue/);
+    assert.equal(p.$("#accountHeading").parentElement.open, true);
+    assert.equal(p.$("#accountSyncStatus").hidden, true);
     assert.equal(p.$("#accountForm").hidden, true);
     assert.equal(p.$("#accountPassword").type, "password");
     assert.equal(p.$("#accountPassword").autocomplete, "current-password");
@@ -238,6 +248,10 @@ test("username password sign-in isolates both accounts and preserves guest progr
       assert.equal(requests[index].email, `${name}@users.amc10-prep.invalid`);
       assert.equal(requests[index].password, "test-only-password");
       assert.equal(p.$("#accountIdentity").textContent, name);
+      assert.equal(gate(), "open");
+      assert.equal(p.$("#accountSyncStatus").hidden, false);
+      assert.equal(p.$("main.app-shell").hasAttribute("inert"), false);
+      assert.equal(p.$("#accountLanding").hidden, true);
       assert.equal(p.$("#accountPassword").value, "");
       assert.equal(p.$("#accountPasswordForm").hidden, true);
       assert.equal(p.$("#accountLoginMethods").hidden, true);
@@ -251,6 +265,8 @@ test("username password sign-in isolates both accounts and preserves guest progr
       }
       p.$("#accountSignOut").click();
       await p.waitFor(() => !p.$("#accountPasswordForm").hidden);
+      assert.equal(gate(), "locked");
+      assert.equal(p.$("main.app-shell").hasAttribute("inert"), true);
       assert.equal(selected(), "needUnderstanding");
     }
     assert.equal(records.get("ethanzyj@users.amc10-prep.invalid")[key].status, "haveApproach");
@@ -334,8 +350,31 @@ test("a restored username account uses the existing authenticated session", asyn
   try {
     await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
     assert.equal(p.$("#accountIdentity").textContent, "ethanzyj");
+    assert.equal(p.window.document.body.dataset.authGate, "open");
+    assert.equal(p.$("#accountLanding").hidden, true);
     assert.equal(p.$("#accountPasswordForm").hidden, true);
     assert.equal(p.$('#conceptView [data-progress-key="2016-AMC10A-4"] input:checked').value, "haveApproach");
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("the landing page stays locked when the sign-in service cannot be checked", async () => {
+  const client = {
+    auth: {
+      onAuthStateChange() {},
+      async getSession() { return { error: { message: "Service unavailable" } }; }
+    }
+  };
+  const p = await page(true, client);
+  try {
+    assert.equal(p.window.document.body.dataset.authGate, "locked");
+    await p.waitFor(() => /Service unavailable/.test(p.$("#accountMessage").textContent));
+    assert.equal(p.window.document.body.dataset.authGate, "locked");
+    assert.equal(p.$("main.app-shell").hasAttribute("inert"), true);
+    assert.equal(p.$("#accountLanding").hidden, false);
+    p.$("#languageMode").value = "zh";
+    p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$("#accountLandingTitle").textContent, "请先登录");
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
