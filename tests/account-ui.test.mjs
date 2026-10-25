@@ -62,7 +62,7 @@ test("unconfigured cloud panel preserves guest progress and keeps login disabled
     assert.equal(p.window.document.body.dataset.authGate, "open");
     assert.equal(p.$("main.app-shell").hasAttribute("inert"), false);
     assert.equal(p.$("#accountLanding").hidden, true);
-    const input = p.$('#conceptView .problem-progress input[value="needUnderstanding"]');
+    const input = p.$('#problemList .problem-progress input[value="needUnderstanding"]');
     const key = input.closest("[data-progress-key]").dataset.progressKey;
     input.click();
     assert.equal(JSON.parse(p.window.localStorage.getItem("amc10-problem-progress"))[key], "needUnderstanding");
@@ -150,7 +150,7 @@ test("email login, guest import, cloud save, localization, and logout work throu
   try {
     await p.waitFor(() => !p.$("#accountForm").hidden);
     const key = "2016-AMC10A-4";
-    p.$(`#conceptView [data-progress-key="${key}"] input[value="needUnderstanding"]`).click();
+    p.$(`#problemList [data-progress-key="${key}"] input[value="needUnderstanding"]`).click();
     const guest = p.window.localStorage.getItem("amc10-problem-progress");
     p.$("#accountEmail").value = user.email;
     p.$("#accountForm").dispatchEvent(new p.window.Event("submit", { cancelable: true }));
@@ -161,25 +161,25 @@ test("email login, guest import, cloud save, localization, and logout work throu
     await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
     assert.equal(p.$("#accountForm").hidden, true);
     assert.equal(p.$("#accountIdentity").textContent, user.email);
-    assert.equal(p.$(`#conceptView [data-progress-key="${key}"] input:checked`), null);
+    assert.equal(p.$(`#problemList [data-progress-key="${key}"] input:checked`), null);
     assert.equal(p.$("#accountImportPanel").hidden, false);
     p.$("#accountImport").click();
     await p.waitFor(() => records[key]?.status === "needUnderstanding");
     assert.equal(p.window.localStorage.getItem("amc10-problem-progress"), guest);
     await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
-    p.$(`#conceptView [data-progress-key="${key}"] input[value="haveApproach"]`).click();
+    p.$(`#problemList [data-progress-key="${key}"] input[value="haveApproach"]`).click();
     await p.waitFor(() => records[key]?.status === "haveApproach");
-    assert.equal(p.$(`#conceptView [data-progress-key="${key}"]`).open, true);
+    assert.equal(p.$(`#problemList [data-progress-key="${key}"]`).open, true);
     p.$("#languageMode").value = "zh";
     p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
     assert.equal(p.$("#accountHeading").title, "账户与云端同步");
     assert.equal(p.$("#accountHeading").textContent, user.email);
-    assert.equal(p.$(`#conceptView [data-progress-key="${key}"] input:checked`).value, "haveApproach");
+    assert.equal(p.$(`#problemList [data-progress-key="${key}"] input:checked`).value, "haveApproach");
     p.$("#languageMode").value = "en";
     p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
     await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
     offline = true;
-    p.$(`#conceptView [data-progress-key="${key}"] input[value="needStartingPoint"]`).click();
+    p.$(`#problemList [data-progress-key="${key}"] input[value="needStartingPoint"]`).click();
     await p.waitFor(() => /Sync failed/.test(p.$("#accountSyncStatus").textContent));
     p.$("#accountSignOut").click();
     assert.equal(signouts, 0);
@@ -187,7 +187,7 @@ test("email login, guest import, cloud save, localization, and logout work throu
     p.$("#accountSignOut").click();
     await p.waitFor(() => !p.$("#accountForm").hidden);
     assert.equal(signouts, 1);
-    assert.equal(p.$(`#conceptView [data-progress-key="${key}"] input:checked`).value, "needUnderstanding");
+    assert.equal(p.$(`#problemList [data-progress-key="${key}"] input:checked`).value, "needUnderstanding");
     assert.equal(records[key].status, "haveApproach");
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
@@ -239,8 +239,8 @@ test("username password sign-in isolates both accounts and preserves guest progr
     assert.equal(p.$("#accountPassword").type, "password");
     assert.equal(p.$("#accountPassword").autocomplete, "current-password");
     const key = "2016-AMC10A-4";
-    const selected = () => p.$(`#conceptView [data-progress-key="${key}"] input:checked`)?.value;
-    p.$(`#conceptView [data-progress-key="${key}"] input[value="needUnderstanding"]`).click();
+    const selected = () => p.$(`#problemList [data-progress-key="${key}"] input:checked`)?.value;
+    p.$(`#problemList [data-progress-key="${key}"] input[value="needUnderstanding"]`).click();
     for (const [index, name] of ["ethanzyj", "evanz"].entries()) {
       p.$("#accountUsername").value = ` ${name.toUpperCase()} `;
       p.$("#accountPassword").value = "test-only-password";
@@ -258,7 +258,7 @@ test("username password sign-in isolates both accounts and preserves guest progr
       assert.equal(p.$("#accountLoginMethods").hidden, true);
       assert.equal(selected(), undefined);
       const status = index === 0 ? "haveApproach" : "needStartingPoint";
-      p.$(`#conceptView [data-progress-key="${key}"] input[value="${status}"]`).click();
+      p.$(`#problemList [data-progress-key="${key}"] input[value="${status}"]`).click();
       await p.waitFor(() => records.get(`${name}@users.amc10-prep.invalid`)?.[key]?.status === status);
       await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
       for (let i = 0; i < p.window.localStorage.length; i += 1) {
@@ -354,7 +354,7 @@ test("a restored username account uses the existing authenticated session", asyn
     assert.equal(p.window.document.body.dataset.authGate, "open");
     assert.equal(p.$("#accountLanding").hidden, true);
     assert.equal(p.$("#accountPasswordForm").hidden, true);
-    assert.equal(p.$('#conceptView [data-progress-key="2016-AMC10A-4"] input:checked').value, "haveApproach");
+    assert.equal(p.$('#problemList [data-progress-key="2016-AMC10A-4"] input:checked').value, "haveApproach");
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
@@ -376,6 +376,37 @@ test("the landing page stays locked when the sign-in service cannot be checked",
     p.$("#languageMode").value = "zh";
     p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
     assert.equal(p.$("#accountLandingTitle").textContent, "请先登录");
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("study guide shows related problems as a year/exam table of links that open the full exam page", async () => {
+  const p = await page(false);
+  try {
+    assert.equal(p.$("#conceptView .problem-card"), null);
+    assert.equal(p.$("#conceptView .problem-progress"), null);
+    const link = p.$("#conceptView [data-open-problem]");
+    assert.ok(link);
+    const key = link.dataset.openProblem;
+    const [year, exam, number] = key.split("-");
+    p.window.fetch = async (url) => {
+      assert.equal(url, `assets/exams/${year}${exam.slice(-1)}.json`);
+      const body = readFileSync(new URL(url, root), "utf8");
+      return { ok: true, json: async () => JSON.parse(body) };
+    };
+    p.$(`#problemList [data-progress-key="${key}"] input[value="haveApproach"]`).click();
+    assert.match(link.getAttribute("aria-label"), /have a solution approach/);
+    assert.equal(link.dataset.progress, "haveApproach");
+    assert.equal(link.closest("tr").querySelector("th").textContent, year);
+    link.click();
+    await p.waitFor(() => p.$(`#problemList [data-problem-key="${key}"] .problem-statement`));
+    assert.equal(p.$("#problemsPanel").hidden, false);
+    assert.equal(p.$('[data-problem-mode="full"]').getAttribute("aria-pressed"), "true");
+    assert.equal(p.$("#examYear").value, year);
+    assert.equal(p.$("#examPaper").value.replace(" ", ""), exam);
+    assert.equal(link.textContent, number);
+    assert.equal(p.$(`#problemList [data-problem-key="${key}"] .problem-topline strong`).textContent,
+      link.getAttribute("aria-label").split(" · ")[0]);
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });

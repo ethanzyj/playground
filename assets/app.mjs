@@ -1,6 +1,6 @@
 import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-12";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
-import { AccountPanel } from "./account.mjs?v=20261025-17";
+import { AccountPanel } from "./account.mjs?v=20261025-19";
 
 let problemProgressStorageError = false;
 
@@ -253,6 +253,10 @@ const UI_TEXT = {
   relatedGlossary: { en: "Related vocabulary", zh: "相关词汇" },
   relatedVocabulary: { en: "Related vocabulary", zh: "相关词汇" },
   relatedProblems: { en: "Related problems", zh: "相关真题" },
+  marked: { en: "Marked", zh: "已标记" },
+  year: { en: "Year", zh: "年份" },
+  difficultyLegend: { en: "Difficulty legend", zh: "难度图例" },
+  viewAllInExplorer: { en: "View all in Problem Explorer →", zh: "在真题索引中查看全部 →" },
   markMastered: { en: "Mark mastered", zh: "标记掌握" },
   mastered: { en: "Mastered", zh: "已掌握" },
   openReference: { en: "View problem reference", zh: "查看题目索引" },
@@ -470,9 +474,10 @@ function renderConcept() {
       </section>
       <section class="card wide">
         <h3>${uiText("relatedReferences")} (${related.length})</h3>
-        <div class="inline-problems">
-          ${related.length ? related.map((problem) => problemCard(problem)).join("") : `<p class="empty-state">${uiText("noRelatedReferences")}</p>`}
-        </div>
+        ${related.length ? `
+          ${relatedProblemTable(related)}
+          <button type="button" class="text-button" data-problems-concept="${concept.id}">${uiText("viewAllInExplorer")}</button>
+        ` : `<p class="empty-state">${uiText("noRelatedReferences")}</p>`}
       </section>
       <section class="card wide">
         <h3>${uiText("relatedGlossary")} (${relatedTerms.length})</h3>
@@ -518,10 +523,100 @@ function renderProblemProgressError() {
   $("#problemProgressError").textContent = uiText("problemProgressError");
 }
 
+const DIFFICULTY_ORDER = ["early", "medium", "medium-hard", "hard", "challenge"];
+
+function problemLinkLabel(problem) {
+  const progress = state.problemProgress[problemKey(problem)];
+  return [`${problem.year} ${problem.exam} #${problem.problemNumber}`, difficultyText(problem.difficulty),
+    progress ? uiText(progress) : ""].filter(Boolean).join(" · ");
+}
+
+function refreshProblemLinks() {
+  document.querySelectorAll("[data-open-problem]").forEach((button) => {
+    const problem = PROBLEM_REFERENCES.find((item) => problemKey(item) === button.dataset.openProblem);
+    if (!problem) return;
+    const label = problemLinkLabel(problem);
+    button.setAttribute("aria-label", label);
+    button.title = label;
+    const progress = state.problemProgress[problemKey(problem)];
+    if (progress) button.dataset.progress = progress;
+    else delete button.dataset.progress;
+  });
+  document.querySelectorAll("[data-related-marked]").forEach((count) => {
+    const keys = count.dataset.relatedMarked.split(" ");
+    count.textContent = keys.filter((key) => state.problemProgress[key]).length;
+  });
+}
+
+function problemLink(problem) {
+  const key = problemKey(problem);
+  const progress = state.problemProgress[key];
+  const label = problemLinkLabel(problem);
+  return `<button type="button" class="problem-chip" data-open-problem="${key}" data-difficulty="${problem.difficulty}"${progress ? ` data-progress="${progress}"` : ""} aria-label="${label}" title="${label}">${problem.problemNumber}</button>`;
+}
+
+function relatedProblemTable(problems) {
+  const exams = [...new Set(problems.map((problem) => problem.exam))].sort();
+  const years = [...new Set(problems.map((problem) => problem.year))].sort((a, b) => a - b);
+  const keys = problems.map(problemKey);
+  const difficulties = DIFFICULTY_ORDER.filter((level) => problems.some((problem) => problem.difficulty === level));
+  return `
+    <p class="related-summary">
+      ${problems.length} ${uiText("problems")} · ${uiText("marked")}: <span data-related-marked="${keys.join(" ")}">${keys.filter((key) => state.problemProgress[key]).length}</span>
+    </p>
+    <div class="related-table-wrap">
+      <table class="related-table">
+        <thead>
+          <tr><th scope="col">${uiText("year")}</th>${exams.map((exam) => `<th scope="col">${exam}</th>`).join("")}</tr>
+        </thead>
+        <tbody>
+          ${years.map((year) => `
+            <tr>
+              <th scope="row">${year}</th>
+              ${exams.map((exam) => {
+                const cell = problems.filter((problem) => problem.year === year && problem.exam === exam)
+                  .sort((a, b) => a.problemNumber - b.problemNumber);
+                return `<td>${cell.length ? cell.map(problemLink).join("") : `<span class="related-empty" aria-hidden="true">–</span>`}</td>`;
+              }).join("")}
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+    <ul class="difficulty-legend" aria-label="${uiText("difficultyLegend")}">
+      ${difficulties.map((level) => `<li><span class="legend-swatch" data-difficulty="${level}" aria-hidden="true"></span>${difficultyText(level)}</li>`).join("")}
+      <li><span class="legend-swatch legend-marked" aria-hidden="true"></span>${uiText("marked")}</li>
+    </ul>
+  `;
+}
+
+async function openProblemInExplorer(key) {
+  const problem = PROBLEM_REFERENCES.find((item) => problemKey(item) === key);
+  if (!problem) return;
+  state.problemMode = "full";
+  state.examYear = String(problem.year);
+  $("#examYear").value = state.examYear;
+  populateExamPapers();
+  state.examPaper = problem.exam;
+  $("#examPaper").value = problem.exam;
+  if (state.problemProgressFilter !== "all") {
+    state.problemProgressFilter = "all";
+    $("#problemProgressFilter").value = "all";
+  }
+  setActiveView("problems");
+  await renderProblems();
+  const target = $(`#problemList [data-problem-key="${key}"]`);
+  if (!target) return;
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  target.classList.add("problem-highlight");
+  target.focus({ preventScroll: true });
+  setTimeout(() => target.classList.remove("problem-highlight"), 1600);
+}
+
 function problemCard(problem, statement = null) {
   const tags = problem.conceptIds.map((id) => conceptById.get(id)).filter(Boolean);
   return `
-    <article class="problem-card">
+    <article class="problem-card" data-problem-key="${problemKey(problem)}" tabindex="-1">
       <h3 class="problem-topline">
         <strong>${problem.year} ${problem.exam} #${problem.problemNumber}</strong>
         <span>${difficultyText(problem.difficulty)}</span>
@@ -730,8 +825,7 @@ function renderProblems() {
     : `${problems.length} / ${PROBLEM_REFERENCES.length}`;
   $("#examSummary").textContent = uiText(isFullExam ? "fullExamSummary" : "examOrder");
   if (isFullExam && problems.length) {
-    renderExamStatements(problems, version);
-    return;
+    return renderExamStatements(problems, version);
   }
   $("#problemList").innerHTML = problems.length
     ? problems.map((problem) => problemCard(problem)).join("")
@@ -816,6 +910,7 @@ function wireProblemAndGlossaryLinks(container) {
       control.querySelector("summary").focus();
       renderProblemProgressError();
       renderProgressOverview();
+      refreshProblemLinks();
       if (state.problemProgressFilter !== "all") {
         renderProblems();
         $("#problemProgressFilter").focus();
@@ -839,6 +934,9 @@ function wireProblemAndGlossaryLinks(container) {
       setActiveView("problems");
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
+  });
+  container.querySelectorAll("[data-open-problem]").forEach((button) => {
+    button.addEventListener("click", () => openProblemInExplorer(button.dataset.openProblem));
   });
   container.querySelectorAll("[data-concept]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -1013,6 +1111,7 @@ accountPanel = new AccountPanel({
       });
     });
     renderProgressOverview();
+    refreshProblemLinks();
     if (state.problemProgressFilter !== "all") renderProblems();
   }
 });
