@@ -113,12 +113,36 @@ To enable:
 
 ### Account behavior
 
-Open **Account & cloud sync** near the top. Sign in using an email link opened in
-the **same browser/profile and site** that requested it (PKCE). The Supabase SDK
-stores the session locally, refreshes tokens, and returns to the page. Passwords
-are not handled by this app. Guest use remains available without an account.
+Open **Account & cloud sync** near the top. **Username & password** is the
+default sign-in method. Usernames are case-insensitive, with 3–32 letters,
+numbers, or underscores. Supabase validates the password; the frontend contains
+no account passwords and does not store them in its progress cache. The SDK
+persists the authenticated session, not the password. Guest use remains
+available without an account.
 
-The same email sign-in form works for both new and existing accounts; there is
+Supabase email/password authentication requires an email-shaped identifier
+internally. A username maps to `<username>@users.amc10-prep.invalid`; these
+reserved `.invalid` addresses are identifiers only, not real mailboxes. To
+provision the requested accounts, a project administrator must open Supabase
+**Authentication → Users → Add user → Create new user** and create
+`ethanzyj@users.amc10-prep.invalid` and `evanz@users.amc10-prep.invalid`, set each
+password privately, and enable **Auto Confirm User**. Do not use **Invite user**:
+no email should be sent. Keep the Email auth provider enabled for password
+authentication. There is no public username-registration form. Do not disable
+email confirmation project-wide just to provision these accounts. No progress
+schema change is needed.
+
+Confirmed username accounts cannot receive email password-reset links.
+An administrator must reset a forgotten password through Supabase. Use unique,
+strong passwords for production, and never commit passwords or admin keys.
+Username accounts have distinct Supabase user IDs from previously created real
+email accounts; existing cloud progress is not automatically transferred.
+
+**Email link** remains available for existing email accounts. Open its link in
+the **same browser/profile and site** that requested it (PKCE). The Supabase SDK
+stores the session locally, refreshes tokens, and returns to the page.
+
+The email sign-in form works for both new and existing email accounts; there is
 no separate registration step. Failed account actions display the service's
 error as plain text, with localized guidance for email limits, unauthorized
 recipients, invalid addresses, and disabled signups. Repeated link requests can

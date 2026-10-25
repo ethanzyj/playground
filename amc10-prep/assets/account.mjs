@@ -6,6 +6,18 @@ const TEXT = {
   disabled: ["Cloud login is not configured yet. Progress is still saved only in this browser.", "尚未配置云端登录，进度仍仅保存在本浏览器中。"],
   guest: ["Guest mode — progress is saved only in this browser.", "访客模式 — 进度仅保存在本浏览器中。"],
   email: ["Email", "电子邮箱"],
+  loginMethod: ["Sign-in method", "登录方式"],
+  passwordMethod: ["Username & password", "用户名和密码"],
+  emailMethod: ["Email link", "邮件链接"],
+  username: ["Username", "用户名"],
+  password: ["Password", "密码"],
+  passwordSignIn: ["Sign in", "登录"],
+  signingIn: ["Signing in…", "正在登录……"],
+  invalidUsername: ["Use a username with 3–32 letters, numbers, or underscores.", "用户名需为 3–32 位字母、数字或下划线。"],
+  missingPassword: ["Enter your password.", "请输入密码。"],
+  invalidCredentials: ["Incorrect username or password, or the account has not been created yet.", "用户名或密码错误，或账户尚未创建。"],
+  unconfirmedAccount: ["This account has not been confirmed. Ask the project owner to create a confirmed account in Supabase Authentication → Users.", "此账户尚未确认。请让项目所有者在 Supabase Authentication → Users 中创建已确认的账户。"],
+  requestRateLimit: ["Too many sign-in attempts. Wait before trying again.", "登录尝试过多，请稍后重试。"],
   signIn: ["Send sign-in link", "发送登录链接"],
   signOut: ["Sign out", "退出登录"],
   retry: ["Sync now / retry", "立即同步 / 重试"],
@@ -47,6 +59,13 @@ export function validateCloudConfig(config) {
     if (payload.role !== "anon") throw new Error("Only publishable or legacy anon keys are safe in browser configuration.");
   }
   return true;
+}
+
+const USERNAME_DOMAIN = "@users.amc10-prep.invalid";
+
+function accountIdentity(user) {
+  return user.email?.endsWith(USERNAME_DOMAIN)
+    ? user.email.slice(0, -USERNAME_DOMAIN.length) : user.email || user.id;
 }
 
 export class AccountPanel {
@@ -136,13 +155,15 @@ export class AccountPanel {
   setAuthError(error) {
     const messages = {
       over_email_send_rate_limit: "emailRateLimit",
-      over_request_rate_limit: "emailRateLimit",
+      over_request_rate_limit: "requestRateLimit",
       email_address_not_authorized: "emailNotAuthorized",
       email_address_invalid: "invalidEmail",
-      signup_disabled: "signupDisabled"
+      signup_disabled: "signupDisabled",
+      invalid_credentials: "invalidCredentials",
+      email_not_confirmed: "unconfirmedAccount"
     };
     this.message = Object.hasOwn(messages, error?.code) ? messages[error.code]
-      : error?.status === 429 ? "emailRateLimit" : "authError";
+      : error?.status === 429 ? "requestRateLimit" : "authError";
     this.errorDetails = typeof error?.message === "string" ? error.message : "";
   }
 
@@ -180,6 +201,34 @@ export class AccountPanel {
     }
   }
 
+  async signInWithPassword(username, password) {
+    if (!this.client || this.authBusy) return;
+    const normalized = username.trim().toLowerCase();
+    this.errorDetails = "";
+    if (!/^[a-z0-9_]{3,32}$/.test(normalized) || !password) {
+      this.message = password ? "invalidUsername" : "missingPassword";
+      this.render();
+      return;
+    }
+    this.authBusy = true;
+    this.message = "signingIn";
+    this.render();
+    try {
+      const { error } = await this.client.auth.signInWithPassword({
+        email: `${normalized}${USERNAME_DOMAIN}`, password
+      });
+      if (error) throw error;
+      this.message = "";
+    } catch (error) {
+      console.error("Unable to sign in with password.", error);
+      this.setAuthError(error);
+    } finally {
+      document.querySelector("#accountPassword").value = "";
+      this.authBusy = false;
+      this.render();
+    }
+  }
+
   async signOut() {
     if (this.snapshot?.pendingCount && !this.signoutPending) {
       this.signoutPending = true;
@@ -196,6 +245,19 @@ export class AccountPanel {
   }
 
   wire() {
+    document.querySelector("#accountLoginMethod").addEventListener("change", () => {
+      document.querySelector("#accountPassword").value = "";
+      this.message = "";
+      this.errorDetails = "";
+      this.render();
+    });
+    document.querySelector("#accountPasswordForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      this.signInWithPassword(
+        document.querySelector("#accountUsername").value,
+        document.querySelector("#accountPassword").value
+      );
+    });
     document.querySelector("#accountForm").addEventListener("submit", (event) => {
       event.preventDefault();
       this.signIn(document.querySelector("#accountEmail").value.trim());
@@ -213,6 +275,12 @@ export class AccountPanel {
     const $ = (selector) => document.querySelector(selector);
     $("#accountHeading").textContent = this.text("heading");
     $("#accountEmailLabel").textContent = this.text("email");
+    $("#accountLoginMethodLabel").textContent = this.text("loginMethod");
+    $("#accountLoginMethod option[value='password']").textContent = this.text("passwordMethod");
+    $("#accountLoginMethod option[value='email']").textContent = this.text("emailMethod");
+    $("#accountUsernameLabel").textContent = this.text("username");
+    $("#accountPasswordLabel").textContent = this.text("password");
+    $("#accountPasswordSignIn").textContent = this.text("passwordSignIn");
     $("#accountSendLink").textContent = this.text("signIn");
     $("#accountSignOut").textContent = this.text(this.signoutPending ? "confirmSignout" : "signOut");
     $("#accountRetry").textContent = this.text("retry");
@@ -221,12 +289,20 @@ export class AccountPanel {
     $("#accountKeepSeparate").textContent = this.text("dismiss");
     $("#accountMessage").textContent = this.message
       ? [this.text(this.message), this.errorDetails].filter(Boolean).join(" ") : "";
-    $("#accountForm").hidden = !this.ready || this.signedIn;
+    const hideLogin = !this.ready || this.signedIn;
+    const passwordLogin = $("#accountLoginMethod").value === "password";
+    $("#accountLoginMethods").hidden = hideLogin;
+    $("#accountPasswordForm").hidden = hideLogin || !passwordLogin;
+    $("#accountForm").hidden = hideLogin || passwordLogin;
+    $("#accountLoginMethod").disabled = this.authBusy;
+    $("#accountPasswordSignIn").disabled = this.authBusy;
+    $("#accountUsername").disabled = this.authBusy;
+    $("#accountPassword").disabled = this.authBusy;
     $("#accountSendLink").disabled = this.authBusy;
     $("#accountSignOut").hidden = !this.signedIn;
     $("#accountRetry").hidden = !this.signedIn;
     $("#accountRetry").disabled = this.snapshot?.busy || this.snapshot?.phase === "cacheError";
-    $("#accountIdentity").textContent = this.signedIn ? this.controller.user.email || this.controller.user.id : "";
+    $("#accountIdentity").textContent = this.signedIn ? accountIdentity(this.controller.user) : "";
     $("#accountSyncStatus").textContent = this.signedIn
       ? `${this.text(this.snapshot?.phase || "syncing")} · ${this.text("pending")}: ${this.snapshot?.pendingCount || 0}`
       : this.text("guest");
@@ -256,7 +332,7 @@ export class AccountPanel {
     document.querySelectorAll(".problem-progress input").forEach((input) => {
       input.disabled = this.editingPaused;
     });
-    if (this.errorDetails || ["authError", "emailRateLimit", "emailNotAuthorized", "invalidEmail", "signupDisabled", "unsafeSignout"].includes(this.message)
+    if (this.errorDetails || ["authError", "emailRateLimit", "requestRateLimit", "emailNotAuthorized", "invalidEmail", "signupDisabled", "invalidUsername", "missingPassword", "invalidCredentials", "unconfirmedAccount", "unsafeSignout"].includes(this.message)
       || ["syncError", "storageError", "cacheError", "conflict"].includes(this.snapshot?.phase)) {
       $("#accountHeading").parentElement.open = true;
     }
