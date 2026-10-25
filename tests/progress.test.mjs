@@ -3,7 +3,7 @@ import { test } from "node:test";
 import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
 import { PROBLEM_REFERENCES, allConcepts } from "../assets/data.mjs";
-import { problemKey, summarizeProgress, exportProgress } from "../assets/progress.mjs";
+import { problemKey, progressScope, summarizeProgress, exportProgress } from "../assets/progress.mjs";
 
 test("empty selections count all problems as unmarked", () => {
   const summary = summarizeProgress(PROBLEM_REFERENCES, {});
@@ -61,16 +61,17 @@ test("complete selections and invalid values produce consistent totals", () => {
 });
 
 test("overview refreshes counts and numbered lists without resetting the active filter", () => {
-  const elements = Object.fromEntries(["#progressTotals", "#progressBreakdown", "#problemProgressFilter"]
+  const elements = Object.fromEntries(["#progressTotals", "#progressBreakdown", "#problemProgressFilter", "#progressOverviewHeading"]
     .map((id) => [id, {}]));
   const state = {
     problemProgress: { "2025-AMC10A-3": "needUnderstanding" },
-    problemProgressFilter: "needUnderstanding"
+    problemProgressFilter: "needUnderstanding",
+    problemMode: "filters", year: "all", exam: "all"
   };
   const app = readFileSync(new URL("../assets/app.mjs", import.meta.url), "utf8");
   const render = app.slice(app.indexOf("function renderProgressOverview()"), app.indexOf("function downloadProgress()"));
   const context = {
-    state, PROBLEM_REFERENCES, summarizeProgress,
+    state, PROBLEM_REFERENCES, progressScope, summarizeProgress,
     $: (selector) => elements[selector],
     uiText: (key) => key,
     document: { querySelectorAll: () => [{ dataset: { summaryStatus: "needUnderstanding" } }] }
@@ -84,6 +85,27 @@ test("overview refreshes counts and numbered lists without resetting the active 
   runInNewContext("renderProgressOverview();", context);
   assert.match(elements["#problemProgressFilter"].innerHTML, /needUnderstanding \(0\)/);
   assert.match(elements["#problemProgressFilter"].innerHTML, /haveApproach \(1\)/);
+  for (const mode of ["filters", "exam", "full"]) {
+    state.problemMode = mode;
+    state.year = state.examYear = "2025";
+    state.exam = state.examPaper = "AMC 10A";
+    runInNewContext("renderProgressOverview();", context);
+    assert.match(elements["#progressTotals"].textContent, /1 \/ 25.*24/);
+    assert.match(elements["#progressOverviewHeading"].textContent, /2025 · AMC 10A/);
+    state.exam = state.examPaper = "AMC 10B";
+    runInNewContext("renderProgressOverview();", context);
+    assert.match(elements["#progressTotals"].textContent, /0 \/ 25.*25/);
+    assert.doesNotMatch(elements["#progressBreakdown"].innerHTML, /#3/);
+  }
+});
+
+test("scope supports all years, one year, one exam variant, and a single paper", () => {
+  assert.equal(progressScope(PROBLEM_REFERENCES).length, 500);
+  assert.equal(progressScope(PROBLEM_REFERENCES, "2025").length, 50);
+  assert.equal(progressScope(PROBLEM_REFERENCES, "all", "AMC 10B").length, 250);
+  const problems = progressScope(PROBLEM_REFERENCES, "2025", "AMC 10B");
+  assert.equal(problems.length, 25);
+  assert.ok(problems.every((problem) => problem.year === 2025 && problem.exam === "AMC 10B"));
 });
 
 test("download action creates a JSON snapshot and cleans up the temporary link", async () => {
