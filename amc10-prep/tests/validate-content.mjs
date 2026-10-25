@@ -155,7 +155,9 @@ assert(html.includes('id="problemProgressError"'), "Problem progress storage fai
 assert(html.includes('id="problemProgressFilter"'), "Problem Explorer must include a progress filter shared by all modes.");
 assert(app.includes('state.problemProgressFilter === "unmarked"'), "Progress filtering must include unmarked problems.");
 assert(app.includes('localStorage.setItem("amc10-problem-progress"'), "Problem progress must persist in browser storage.");
-assert(app.includes('const PROBLEM_PROGRESS_OPTIONS = ["needUnderstanding", "needStartingPoint", "haveApproach"]'), "Problem progress must offer the three agreed stages.");
+const progress = readFileSync(new URL("../assets/progress.mjs", import.meta.url), "utf8");
+assert(progress.includes('PROBLEM_PROGRESS_OPTIONS = ["needUnderstanding", "needStartingPoint", "haveApproach"]'), "Problem progress must offer the three agreed stages.");
+assert(html.includes('id="progressBreakdown"') && html.includes('id="exportProgress"'), "Problem Explorer must include progress counts, problem numbers, and an export.");
 assert(app.includes("problemProgressControl(problemKey(problem))"), "All problem cards must include progress controls.");
 assert(app.includes('aria-label="${uiText("openReference")}" title="${uiText("openReference")}"'), "Problem reference icons must have localized accessible labels and tooltips.");
 assert(app.includes('aria-label="${uiText("relatedVocabulary")}" title="${uiText("relatedVocabulary")}"'), "Vocabulary icons must have localized accessible labels and tooltips.");

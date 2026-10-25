@@ -1,6 +1,6 @@
 import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-12";
+import { PROBLEM_PROGRESS_OPTIONS, problemKey, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-10";
 
-const PROBLEM_PROGRESS_OPTIONS = ["needUnderstanding", "needStartingPoint", "haveApproach"];
 let problemProgressStorageError = false;
 
 function loadProblemProgress() {
@@ -18,10 +18,6 @@ function loadProblemProgress() {
     problemProgressStorageError = true;
     return {};
   }
-}
-
-function problemKey(problem) {
-  return `${problem.year}-${problem.exam.replace(" ", "")}-${problem.problemNumber}`;
 }
 
 const state = {
@@ -280,6 +276,13 @@ const UI_TEXT = {
   setProblemProgress: { en: "Set my progress", zh: "标记我的进度" },
   allProgress: { en: "All statuses", zh: "全部进度" },
   unmarkedProgress: { en: "Not marked yet", zh: "尚未标记" },
+  progressOverview: { en: "Progress overview — all years & exams", zh: "进度总览 — 全部年份与试卷" },
+  markedProblems: { en: "Marked problems", zh: "已标记题目" },
+  progressOverviewHelp: { en: "Counts cover all 500 problems, regardless of the filters below. Expand a status to see problem numbers by paper.", zh: "统计覆盖全部 500 道题，不受下方筛选影响。展开状态可查看各试卷的题号。" },
+  noMarkedStatus: { en: "No problems marked with this status yet.", zh: "尚无题目标记为此状态。" },
+  exportProgress: { en: "Export progress (JSON)", zh: "导出进度（JSON）" },
+  exportProgressHelp: { en: "Download a snapshot of your statuses and concept tags for later analysis. This does not include answers, problem text, or a history of changes.", zh: "下载包含当前状态与知识点标签的快照，以便日后分析。不包含答案、题干或变更历史。" },
+  exportProgressError: { en: "Unable to export progress. Please try again.", zh: "无法导出进度，请重试。" },
   needUnderstanding: { en: "Need help understanding", zh: "需要帮助理解题意" },
   needStartingPoint: { en: "Understand, but need a starting point", zh: "理解题意，但还没有解题思路" },
   haveApproach: { en: "Understand and have a solution approach", zh: "理解题意，并有解题思路" },
@@ -545,12 +548,7 @@ function problemCard(problem, statement = null) {
 }
 
 function populateFilters() {
-  $("#problemProgressFilter").innerHTML = `
-    <option value="all">${uiText("allProgress")}</option>
-    <option value="unmarked">${uiText("unmarkedProgress")}</option>
-    ${PROBLEM_PROGRESS_OPTIONS.map((option) => `<option value="${option}">${uiText(option)}</option>`).join("")}
-  `;
-  $("#problemProgressFilter").value = state.problemProgressFilter;
+  renderProgressOverview();
   const conceptFilter = $("#conceptFilter");
   const yearFilter = $("#yearFilter");
   const examFilter = $("#examFilter");
@@ -603,6 +601,48 @@ function populateExamPapers() {
   if (!exams.includes(state.examPaper)) state.examPaper = exams[0];
   $("#examPaper").innerHTML = exams.map((exam) => `<option value="${exam}">${exam}</option>`).join("");
   $("#examPaper").value = state.examPaper;
+}
+
+function renderProgressOverview() {
+  const summary = summarizeProgress(PROBLEM_REFERENCES, state.problemProgress);
+  const openStatuses = new Set([...document.querySelectorAll("[data-summary-status][open]")]
+    .map((element) => element.dataset.summaryStatus));
+  $("#progressTotals").textContent = `${uiText("markedProblems")}: ${summary.marked} / ${summary.total} · ${uiText("unmarkedProgress")}: ${summary.unmarked}`;
+  $("#progressBreakdown").innerHTML = summary.statuses.map((entry) => `
+    <details class="progress-status-card" data-summary-status="${entry.status}" ${openStatuses.has(entry.status) ? "open" : ""}>
+      <summary>${uiText(entry.status)} <strong>(${entry.count})</strong></summary>
+      ${entry.count ? `<ul>${entry.papers.map((paper) => `
+        <li><strong>${paper.year} ${paper.exam}</strong>: ${paper.problemNumbers.map((number) => `#${number}`).join(", ")}</li>
+      `).join("")}</ul>` : `<p class="muted">${uiText("noMarkedStatus")}</p>`}
+    </details>
+  `).join("");
+  $("#problemProgressFilter").innerHTML = `
+    <option value="all">${uiText("allProgress")} (${summary.total})</option>
+    <option value="unmarked">${uiText("unmarkedProgress")} (${summary.unmarked})</option>
+    ${summary.statuses.map((entry) => `<option value="${entry.status}">${uiText(entry.status)} (${entry.count})</option>`).join("")}
+  `;
+  $("#problemProgressFilter").value = state.problemProgressFilter;
+}
+
+function downloadProgress() {
+  let url;
+  const link = document.createElement("a");
+  $("#progressExportError").hidden = true;
+  try {
+    const snapshot = exportProgress(PROBLEM_REFERENCES, state.problemProgress, allConcepts());
+    url = URL.createObjectURL(new Blob([JSON.stringify(snapshot, null, 2)], { type: "application/json" }));
+    link.href = url;
+    link.download = `amc10-progress-${snapshot.exportedAt.slice(0, 10)}.json`;
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    console.error("Unable to export problem progress.", error);
+    $("#progressExportError").textContent = uiText("exportProgressError");
+    $("#progressExportError").hidden = false;
+  } finally {
+    link.remove();
+    if (url) setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
 }
 
 let problemRenderVersion = 0;
@@ -763,6 +803,7 @@ function wireProblemAndGlossaryLinks(container) {
       });
       control.querySelector("summary").focus();
       renderProblemProgressError();
+      renderProgressOverview();
       if (state.problemProgressFilter !== "all") {
         renderProblems();
         $("#problemProgressFilter").focus();
@@ -852,6 +893,7 @@ function renderThemeControl() {
 }
 
 function wireControls() {
+  $("#exportProgress").addEventListener("click", downloadProgress);
   systemTheme.addEventListener("change", renderThemeControl);
   $("#themeToggle").addEventListener("click", () => {
     const theme = $("#themeToggle").getAttribute("aria-pressed") === "true" ? "light" : "dark";

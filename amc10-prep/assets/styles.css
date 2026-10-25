@@ -809,6 +809,35 @@ input {
   margin-block: 1rem;
 }
 
+.progress-overview {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--panel);
+}
+
+.progress-overview h3 {
+  margin-top: 0;
+}
+
+.progress-status-card {
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+
+.progress-status-card summary {
+  cursor: pointer;
+  color: var(--text);
+}
+
+.progress-status-card li {
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
 .progress-filter label {
   display: grid;
   gap: 0.35rem;
