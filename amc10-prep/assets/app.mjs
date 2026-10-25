@@ -1,6 +1,6 @@
-import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-12";
+import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20261025-22";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
-import { AccountPanel } from "./account.mjs?v=20261025-20";
+import { AccountPanel } from "./account.mjs?v=20261025-22";
 
 let problemProgressStorageError = false;
 
@@ -478,7 +478,7 @@ function renderConcept() {
         <h3>${uiText("relatedReferences")} (${related.length})</h3>
         ${related.length ? `
           ${relatedProblemTable(related)}
-          <button type="button" class="text-button" data-problems-concept="${concept.id}">${uiText("viewAllInExplorer")}</button>
+          <a class="text-button" href="${deepLink("problems-concept", concept.id)}" target="_blank" rel="noopener">${uiText("viewAllInExplorer")}</a>
         ` : `<p class="empty-state">${uiText("noRelatedReferences")}</p>`}
       </section>
       <section class="card wide">
@@ -489,10 +489,12 @@ function renderConcept() {
   `;
   typesetMath();
   $("#masteryToggle").addEventListener("click", () => {
-    if (state.mastered.has(concept.id)) state.mastered.delete(concept.id);
-    else state.mastered.add(concept.id);
-    localStorage.setItem("amc10-mastered", JSON.stringify([...state.mastered]));
+    const mastered = !state.mastered.has(concept.id);
+    if (mastered) state.mastered.add(concept.id);
+    else state.mastered.delete(concept.id);
+    saveLocalMastery();
     render();
+    accountPanel?.setMastery("concept", concept.id, mastered);
   });
   wireProblemAndGlossaryLinks($("#conceptView"));
 }
@@ -552,7 +554,7 @@ function problemLink(problem) {
   const key = problemKey(problem);
   const progress = state.problemProgress[key];
   const label = problemLinkLabel(problem);
-  return `<button type="button" class="problem-chip" data-open-problem="${key}" data-difficulty="${problem.difficulty}"${progress ? ` data-progress="${progress}"` : ""} aria-label="${label}" title="${label}">${problem.problemNumber}</button>`;
+  return `<a class="problem-chip" href="${deepLink("problem", key)}" target="_blank" rel="noopener" data-open-problem="${key}" data-difficulty="${problem.difficulty}"${progress ? ` data-progress="${progress}"` : ""} aria-label="${label}" title="${label}">${problem.problemNumber}</a>`;
 }
 
 function relatedProblemTable(problems) {
@@ -834,6 +836,10 @@ function renderProblems() {
   typesetMath($("#problemList"));
 }
 
+function deepLink(name, value) {
+  return `?${new URLSearchParams({ [name]: value })}`;
+}
+
 function relatedVocabularyList(terms, conceptId) {
   if (!terms.length) return "";
   const mastered = terms.filter((term) => state.masteredGlossary.has(term.en)).length;
@@ -844,15 +850,15 @@ function relatedVocabularyList(terms, conceptId) {
         const isMastered = state.masteredGlossary.has(term.en);
         return `
           <li>
-            <button type="button" class="vocab-chip${isMastered ? " mastered" : ""}" data-vocab-term="${slugifyTerm(term.en)}" aria-describedby="glossary-tooltip">
+            <a class="vocab-chip${isMastered ? " mastered" : ""}" href="${deepLink("term", slugifyTerm(term.en))}" target="_blank" rel="noopener" data-vocab-term="${slugifyTerm(term.en)}" aria-describedby="glossary-tooltip">
               ${isMastered ? `<span class="vocab-check" aria-label="${uiText("mastered")}">✓</span>` : ""}
               ${textPair(term.zh, term.en)}
-            </button>
+            </a>
           </li>
         `;
       }).join("")}
     </ul>
-    <button type="button" class="text-button" data-glossary-concept="${conceptId}">${uiText("viewAllInGlossary")}</button>
+    <a class="text-button" href="${deepLink("glossary-concept", conceptId)}" target="_blank" rel="noopener">${uiText("viewAllInGlossary")}</a>
   `;
 }
 
@@ -940,22 +946,10 @@ function wireProblemAndGlossaryLinks(container) {
     });
   });
   container.querySelectorAll("[data-glossary-concept]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.glossaryConcept = button.dataset.glossaryConcept;
-      render();
-      setActiveView("glossary");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    button.addEventListener("click", () => showConceptGlossary(button.dataset.glossaryConcept));
   });
   container.querySelectorAll("[data-problems-concept]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.activeConceptId = button.dataset.problemsConcept;
-      state.problemMode = "filters";
-      state.problemConcept = "current";
-      render();
-      setActiveView("problems");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    button.addEventListener("click", () => showConceptProblems(button.dataset.problemsConcept));
   });
   container.querySelectorAll("[data-vocab-term]").forEach((button) => {
     const term = glossaryBySlug.get(button.dataset.vocabTerm);
@@ -964,13 +958,7 @@ function wireProblemAndGlossaryLinks(container) {
     button.addEventListener("mouseleave", () => scheduleGlossaryTooltipHide());
     button.addEventListener("focus", () => showGlossaryTooltip(button, term));
     button.addEventListener("blur", () => scheduleGlossaryTooltipHide());
-    button.addEventListener("click", () => {
-      hideGlossaryTooltip();
-      jumpToGlossaryTerm(button.dataset.vocabTerm);
-    });
-  });
-  container.querySelectorAll("[data-open-problem]").forEach((button) => {
-    button.addEventListener("click", () => openProblemInExplorer(button.dataset.openProblem));
+    button.addEventListener("click", () => hideGlossaryTooltip());
   });
   container.querySelectorAll("[data-concept]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -983,13 +971,67 @@ function wireProblemAndGlossaryLinks(container) {
   container.querySelectorAll("[data-glossary-mastery]").forEach((button) => {
     button.addEventListener("click", () => {
       const termId = button.dataset.glossaryMastery;
-      if (state.masteredGlossary.has(termId)) state.masteredGlossary.delete(termId);
-      else state.masteredGlossary.add(termId);
-      localStorage.setItem("amc10-mastered-glossary", JSON.stringify([...state.masteredGlossary]));
+      const mastered = !state.masteredGlossary.has(termId);
+      if (mastered) state.masteredGlossary.add(termId);
+      else state.masteredGlossary.delete(termId);
+      saveLocalMastery();
       render();
+      accountPanel?.setMastery("glossary", termId, mastered);
     });
   });
   wireGlossaryTooltips(container);
+}
+
+function showConceptGlossary(conceptId) {
+  state.glossaryConcept = conceptId;
+  render();
+  setActiveView("glossary");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showConceptProblems(conceptId) {
+  state.activeConceptId = conceptId;
+  state.problemMode = "filters";
+  state.problemConcept = "current";
+  render();
+  setActiveView("problems");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function applyDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const problem = params.get("problem");
+  const term = params.get("term");
+  const problemsConcept = params.get("problems-concept");
+  const glossaryConcept = params.get("glossary-concept");
+  if (problem && PROBLEM_REFERENCES.some((item) => problemKey(item) === problem)) openProblemInExplorer(problem);
+  else if (term && glossaryBySlug.has(term)) jumpToGlossaryTerm(term);
+  else if (problemsConcept && conceptById.has(problemsConcept)) showConceptProblems(problemsConcept);
+  else if (glossaryConcept && conceptById.has(glossaryConcept)) showConceptGlossary(glossaryConcept);
+  else return false;
+  return true;
+}
+
+function applyDeepLinkWhenVisible() {
+  if (document.body.dataset.authGate !== "locked") {
+    applyDeepLink();
+    return;
+  }
+  const observer = new MutationObserver(() => {
+    if (document.body.dataset.authGate === "locked") return;
+    observer.disconnect();
+    applyDeepLink();
+  });
+  observer.observe(document.body, { attributes: true, attributeFilter: ["data-auth-gate"] });
+}
+
+function saveLocalMastery() {
+  try {
+    localStorage.setItem("amc10-mastered", JSON.stringify([...state.mastered]));
+    localStorage.setItem("amc10-mastered-glossary", JSON.stringify([...state.masteredGlossary]));
+  } catch (error) {
+    console.error("Unable to save mastery in this browser.", error);
+  }
 }
 
 function jumpToGlossaryTerm(slug) {
@@ -1132,6 +1174,15 @@ wireControls();
 accountPanel = new AccountPanel({
   getLanguage: () => state.language,
   validKeys: PROBLEM_REFERENCES.map(problemKey),
+  readMastery: () => ({ concept: [...state.mastered], glossary: [...state.masteredGlossary] }),
+  onMastery: (sets) => {
+    const same = (a, b) => a.size === b.size && [...a].every((item) => b.has(item));
+    if (same(sets.concept, state.mastered) && same(sets.glossary, state.masteredGlossary)) return;
+    state.mastered = sets.concept;
+    state.masteredGlossary = sets.glossary;
+    saveLocalMastery();
+    render();
+  },
   onProgress: (selections) => {
     const changed = Object.keys(state.problemProgress).length !== Object.keys(selections).length
       || Object.entries(selections).some(([key, value]) => state.problemProgress[key] !== value);
@@ -1153,3 +1204,4 @@ accountPanel.wire();
 render();
 setActiveView(state.activeView);
 accountPanel.start();
+applyDeepLinkWhenVisible();

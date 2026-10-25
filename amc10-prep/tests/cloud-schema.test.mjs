@@ -54,9 +54,22 @@ test("PostgreSQL enforces owner isolation, version checks, and RPC-only writes",
     const own = (await db.query("select * from public.problem_progress")).rows;
     assert.equal(own.length, 1);
     assert.equal(own[0].status, "haveApproach");
+    await db.query("insert into public.user_mastery(kind,item_id) values ('concept','polynomials'),('glossary','Median')");
+    await assert.rejects(() => db.query(
+      "insert into public.user_mastery(user_id,kind,item_id) values ($1,'concept','sequences')", [b]
+    ), /row-level security/);
+    await assert.rejects(() => db.query("insert into public.user_mastery(kind,item_id) values ('topic','x')"), /check constraint/);
+    await asUser(b);
+    assert.equal((await db.query("select * from public.user_mastery")).rows.length, 0);
+    await db.query("delete from public.user_mastery");
+    await asUser(a);
+    assert.equal((await db.query("select * from public.user_mastery")).rows.length, 2);
+    await db.query("delete from public.user_mastery where kind='glossary'");
+    assert.deepEqual((await db.query("select kind,item_id from public.user_mastery")).rows, [{ kind: "concept", item_id: "polynomials" }]);
     await db.exec("reset role; set role anon;");
     await assert.rejects(() => db.query("select * from public.problem_progress"), /permission denied/);
     await assert.rejects(() => save(a, "haveApproach", 0), /permission denied/);
+    await assert.rejects(() => db.query("select * from public.user_mastery"), /permission denied/);
     await db.exec("reset role;");
     await db.query("select set_config('request.jwt.claim.sub', '', false)");
     await assert.rejects(() => save(a, "haveApproach", 0), /Authentication required/);
