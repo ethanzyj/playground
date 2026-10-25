@@ -4,6 +4,12 @@ export function problemKey(problem) {
   return `${problem.year}-${problem.exam.replace(" ", "")}-${problem.problemNumber}`;
 }
 
+export function progressScope(problems, year = "all", exam = "all") {
+  return problems.filter((problem) =>
+    (year === "all" || String(problem.year) === String(year))
+    && (exam === "all" || problem.exam === exam));
+}
+
 export function summarizeProgress(problems, selections) {
   const statuses = PROBLEM_PROGRESS_OPTIONS.map((status) => ({ status, count: 0, papers: [] }));
   let marked = 0;

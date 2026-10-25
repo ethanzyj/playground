@@ -33,12 +33,15 @@ and exam modes restrict results to the selected paper. To review a status across
 all years and papers, use **By concept & filters** with its other filters set to
 **All**. Changing a problem's status immediately updates the filtered list.
 
-The **Progress overview** counts marked and unmarked problems across all 500
-references, independent of active filters. Expand each status to see problem
-numbers grouped by year and exam. Counts also appear in the status filter.
+The **Progress overview** counts marked and unmarked problems within the selected
+year and exam (all 500 references when both are set to All). Year/exam and full
+exam modes use the selected paper. Concept, difficulty, and status filters do not
+change these totals. Expand each status to see problem numbers grouped by year
+and exam. The status filter shows counts for the same scope.
 **Export progress (JSON)** downloads a snapshot with each problem's status
 (`null` for unmarked), difficulty, and bilingual concept metadata for later
-analysis. Nothing is uploaded. Keep periodic exports to compare changes over
+analysis across all years and exams, regardless of current filters. Nothing is
+uploaded. Keep periodic exports to compare changes over
 time: the app stores current selections, not historical status changes.
 Concept tags are reference metadata; self-reported readiness is not a correctness
 score or proof of mastery.
