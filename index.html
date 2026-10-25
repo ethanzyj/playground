@@ -50,6 +50,7 @@
       </div>
     </header>
 
+    <p id="problemProgressError" class="progress-error" role="alert" hidden></p>
     <main class="app-shell">
       <div class="workspace-bar">
         <nav class="section-tabs" role="tablist" aria-label="Guide sections" data-i18n-aria-label="guideSections">
@@ -82,10 +83,10 @@
       <section class="content-panel">
         <section id="studyPanel" class="view-panel" role="tabpanel" aria-labelledby="studyTab">
           <section class="notice">
-            <strong data-i18n="copyrightHeading">Copyright-safe problem references.</strong>
+            <strong data-i18n="copyrightHeading">Problem sources and attribution.</strong>
             <span data-i18n="copyrightCopy">
-              This guide does not reproduce AMC problem text. It stores year/version/problem metadata,
-              concept tags, and source links so licensed or official text can be consulted separately.
+              Full exam pages include original English AMC 10 statements and diagrams, with source attribution.
+              Reference cards link to the source problems and related concepts.
             </span>
           </section>
 
@@ -97,15 +98,39 @@
             <div>
               <p class="eyebrow" data-i18n="problemEyebrow">Past AMC 10 references / 历年真题索引</p>
               <h2 id="problemHeading" data-i18n="problemExplorer">Problem Explorer</h2>
-              <p id="problemCount" class="result-count"></p>
+              <p class="problem-metadata-note" data-i18n="problemMetadataNote"></p>
+              <p id="problemCount" class="result-count" aria-live="polite"></p>
             </div>
-            <div class="filters">
+            <div id="problemFilters" class="filters">
               <select id="conceptFilter" aria-label="Filter by concept" data-i18n-aria-label="filterByConcept"></select>
               <select id="yearFilter" aria-label="Filter by year" data-i18n-aria-label="filterByYear"></select>
               <select id="examFilter" aria-label="Filter by exam" data-i18n-aria-label="filterByExam"></select>
               <select id="difficultyFilter" aria-label="Filter by difficulty" data-i18n-aria-label="filterByDifficulty"></select>
             </div>
           </div>
+          <div class="problem-modes" role="group" aria-label="Browse problems" data-i18n-aria-label="browseProblems">
+            <button type="button" data-problem-mode="filters" aria-pressed="true" data-i18n="byConcept">By concept &amp; filters / 按知识点筛选</button>
+            <button type="button" data-problem-mode="exam" aria-pressed="false" data-i18n="byExam">By year &amp; exam / 按年份与试卷</button>
+            <button type="button" data-problem-mode="full" aria-pressed="false" data-i18n="fullExam">Full exam page / 整卷阅读</button>
+          </div>
+          <div id="examControls" class="filters exam-controls" hidden>
+            <label>
+              <span data-i18n="selectYear">Year / 年份</span>
+              <select id="examYear"></select>
+            </label>
+            <label>
+              <span data-i18n="selectExam">Exam / 试卷</span>
+              <select id="examPaper"></select>
+            </label>
+          </div>
+          <div class="filters progress-filter">
+            <label>
+              <span data-i18n="problemProgress">My progress / 我的进度</span>
+              <select id="problemProgressFilter"></select>
+            </label>
+          </div>
+          <p id="examSummary" class="exam-summary" hidden></p>
+          <p id="examAttribution" class="problem-metadata-note" hidden></p>
           <div id="problemList" class="problem-grid"></div>
         </section>
 
@@ -128,6 +153,6 @@
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20260923-12"></script>
+    <script type="module" src="assets/app.mjs?v=20261024-5"></script>
   </body>
 </html>

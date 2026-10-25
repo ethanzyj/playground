@@ -78,9 +78,7 @@ export function buildProblemReferences(curatedProblems = []) {
         problemNumber,
         difficulty: difficultyFor(problemNumber),
         conceptIds,
-        sourceUrl: `https://artofproblemsolving.com/wiki/index.php/${year}_AMC_10${variant}_Problems/Problem_${problemNumber}`,
-        noteZh: "按题库主题标签归类；可用于练习下方列出的相关概念。",
-        noteEn: "Classified from problem-bank topic metadata; practice the linked concepts below."
+        sourceUrl: `https://artofproblemsolving.com/wiki/index.php/${year}_AMC_10${variant}_Problems/Problem_${problemNumber}`
       };
     });
   });

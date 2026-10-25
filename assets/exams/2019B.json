@@ -1,0 +1,283 @@
+{
+  "year": 2019,
+  "exam": "AMC 10B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2019B",
+  "sourceName": "LIVE by Po-Shen Loh",
+  "problems": [
+    {
+      "problemNumber": 1,
+      "statementHtml": "Alicia had two containers. The first was \\(\\frac{5}{6}\\) full of water and the second was empty. She poured all the water from the first container into the second container, at which point the second container was \\(\\frac{3}{4}\\) full of water. What is the ratio of the volume of the smaller container to the volume of the larger container?",
+      "choices": [
+        "\\( \\dfrac{5}{8} \\)",
+        "\\( \\dfrac{4}{5} \\)",
+        "\\( \\dfrac{7}{8} \\)",
+        "\\( \\dfrac{9}{10} \\)",
+        "\\( \\dfrac{11}{12} \\)"
+      ]
+    },
+    {
+      "problemNumber": 2,
+      "statementHtml": "Consider the statement, “If \\(n\\) is not prime, then \\(n-2\\) is prime.” Which of the following values of \\(n\\) is a counterexample to this statement?",
+      "choices": [
+        "\\( 11 \\)",
+        "\\( 15 \\)",
+        "\\( 19 \\)",
+        "\\( 21 \\)",
+        "\\( 27 \\)"
+      ]
+    },
+    {
+      "problemNumber": 3,
+      "statementHtml": "In a high school with \\(500\\) students, \\(40\\%\\) of the seniors play a musical instrument, while \\(30\\%\\) of the non-seniors do not play a musical instrument. In all, \\(46.8\\%\\) of the students do not play a musical instrument. How many non-seniors play a musical instrument?",
+      "choices": [
+        "\\( 66 \\)",
+        "\\( 154 \\)",
+        "\\( 186 \\)",
+        "\\( 220 \\)",
+        "\\( 266 \\)"
+      ]
+    },
+    {
+      "problemNumber": 4,
+      "statementHtml": "All lines with equation \\(ax+by=c\\) such that \\(a,\\) \\(b,\\) \\(c\\) form an arithmetic progression pass through a common point. What are the coordinates of that point?",
+      "choices": [
+        "\\( (-1,2) \\)",
+        "\\( (0,1) \\)",
+        "\\( (1,-2) \\)",
+        "\\( (1,0) \\)",
+        "\\( (1,2) \\)"
+      ]
+    },
+    {
+      "problemNumber": 5,
+      "statementHtml": "Triangle \\(ABC\\) lies in the first quadrant. Points \\(A,\\) \\(B,\\) and \\(C\\) are reflected across the line \\(y=x\\) to points \\(A',\\) \\(B',\\) and \\(C',\\) respectively. Assume that none of the vertices of the triangle lie on the line \\(y=x.\\) Which of the following statements is <i><u>not</u></i> always true?",
+      "choices": [
+        "Triangle \\(A'B'C'\\) lies in the first quadrant.",
+        "Triangles \\(ABC\\) and \\(A'B'C'\\) have the same area.",
+        "The slope of line \\(AA'\\) is \\(-1.\\)",
+        "The slopes of lines \\(AA'\\) and \\(CC'\\) are the same.",
+        "Lines \\(AB\\) and \\(A'B'\\) are perpendicular to\neach other."
+      ]
+    },
+    {
+      "problemNumber": 6,
+      "statementHtml": "A positive integer \\(n\\) satisfies the equation \\[(n+1)! + (n+2)! = n! \\cdot 440.\\] What is the sum of the digits of \\(n?\\)",
+      "choices": [
+        "\\( 2 \\)",
+        "\\( 5 \\)",
+        "\\( 10 \\)",
+        "\\( 12 \\)",
+        "\\( 15 \\)"
+      ]
+    },
+    {
+      "problemNumber": 7,
+      "statementHtml": "Each piece of candy in a shop costs a whole number of cents. Casper has exactly enough money to buy either \\(12\\) pieces of red candy, \\(14\\) pieces of green candy, \\(15\\) pieces of blue candy, or \\(n\\) pieces of purple candy. A piece of purple candy costs \\(20\\) cents. What is the least possible value of \\(n?\\)",
+      "choices": [
+        "\\( 18 \\)",
+        "\\( 21 \\)",
+        "\\( 24 \\)",
+        "\\( 25 \\)",
+        "\\( 28 \\)"
+      ]
+    },
+    {
+      "problemNumber": 8,
+      "statementHtml": "The figure below shows a square and four equilateral triangles, with each triangle having a side lying on a side of the square, such that each triangle has side length \\(2\\) and the third vertices of the triangles meet at the center of the square. The region inside the square but outside the triangles is shaded. What is the area of the shaded region?\n\n<img src=\"assets/exams/images/amc10/2019B/8.svg\" alt=\"Diagram for problem 8\" loading=\"lazy\">",
+      "choices": [
+        "\\( 4 \\)",
+        "\\( 12 - 4\\sqrt{3} \\)",
+        "\\( 3\\sqrt{3} \\)",
+        "\\( 4\\sqrt{3} \\)",
+        "\\( 16 - 4\\sqrt{3} \\)"
+      ]
+    },
+    {
+      "problemNumber": 9,
+      "statementHtml": "The function \\(f\\) is defined by \\[f(x) = \\lfloor|x|\\rfloor - |\\lfloor x \\rfloor|\\] for all real numbers \\(x,\\) where \\(\\lfloor r \\rfloor\\) denotes the greatest integer less than or equal to the real number \\(r.\\) What is the range of \\(f?\\)",
+      "choices": [
+        "\\( \\{-1, 0\\} \\)",
+        "The set of nonpositive integers",
+        "\\(\\{-1, 0, 1\\} \\)",
+        "\\( \\{0\\}\\)",
+        "The set of nonnegative integers"
+      ]
+    },
+    {
+      "problemNumber": 10,
+      "statementHtml": "In a given plane, points \\(A\\) and \\(B\\) are \\(10\\) units apart. How many points \\(C\\) are there in the plane such that the perimeter of \\(\\triangle ABC\\) is \\(50\\) units and the area of \\(\\triangle ABC\\) is \\(100\\) square units?",
+      "choices": [
+        "\\( 0 \\)",
+        "\\( 2 \\)",
+        "\\( 4 \\)",
+        "\\( 8 \\)",
+        "\\( \\text{infinitely many} \\)"
+      ]
+    },
+    {
+      "problemNumber": 11,
+      "statementHtml": "Two jars each contain the same number of marbles, and every marble is either blue or green. In Jar \\(1\\) the ratio of blue to green marbles is \\(9:1,\\) and the ratio of blue to green marbles in Jar \\(2\\) is \\(8:1.\\) There are \\(95\\) green marbles in all. How many more blue marbles are in Jar \\(1\\) than in Jar \\(2?\\)",
+      "choices": [
+        "\\( 5 \\)",
+        "\\( 10 \\)",
+        "\\( 25 \\)",
+        "\\( 45 \\)",
+        "\\( 50 \\)"
+      ]
+    },
+    {
+      "problemNumber": 12,
+      "statementHtml": "What is the greatest possible sum of the digits in the base-seven representation of a positive integer less than \\(2019?\\)",
+      "choices": [
+        "\\( 11 \\)",
+        "\\( 14 \\)",
+        "\\( 22 \\)",
+        "\\( 23 \\)",
+        "\\( 27 \\)"
+      ]
+    },
+    {
+      "problemNumber": 13,
+      "statementHtml": "What is the sum of all real numbers \\(x\\) for which the median of the numbers \\(4,\\) \\(6,\\) \\(8,\\) \\(17,\\) and \\(x\\) is equal to the mean of those five numbers?",
+      "choices": [
+        "\\( -5 \\)",
+        "\\( 0 \\)",
+        "\\( 5 \\)",
+        "\\( \\dfrac{15}{4} \\)",
+        "\\( \\dfrac{35}{4} \\)"
+      ]
+    },
+    {
+      "problemNumber": 14,
+      "statementHtml": "The base-ten representation for \\(19!\\) is \\(121,\\) \\(6T5,\\) \\(100,\\) \\(40M,\\) \\(832,\\) \\(H00,\\) where \\(T,\\) \\(M,\\) and \\(H\\) denote digits that are not given. What is \\(T+M+H?\\)",
+      "choices": [
+        "\\( 3 \\)",
+        "\\( 8 \\)",
+        "\\( 12 \\)",
+        "\\( 14 \\)",
+        "\\( 17 \\)"
+      ]
+    },
+    {
+      "problemNumber": 15,
+      "statementHtml": "Right triangles \\(T_1\\) and \\(T_2\\) have areas \\(1\\) and \\(2\\), respectively. A side of \\(T_1\\) is congruent to a side of \\(T_2,\\) and a different side of \\(T_1\\) is congruent to a different side of \\(T_2.\\) What is the square of the product of the lengths of the other (third) sides of \\(T_1\\) and \\(T_2?\\)",
+      "choices": [
+        "\\( \\dfrac{28}{3} \\)",
+        "\\( 10 \\)",
+        "\\( \\dfrac{21}{2} \\)",
+        "\\( \\dfrac{32}{3} \\)",
+        "\\( 12 \\)"
+      ]
+    },
+    {
+      "problemNumber": 16,
+      "statementHtml": "In \\(\\triangle ABC\\) with a right angle at \\(C,\\) point \\(D\\) lies in the interior of \\(\\overline{AB}\\) and point \\(E\\) lies in the interior of \\(\\overline{BC}\\) so that \\(AC=CD,\\) \\(DE=EB,\\) and the ratio \\(AC:DE=4:3.\\) What is the ratio \\(AD:DB?\\)",
+      "choices": [
+        "\\( 2:3 \\)",
+        "\\( 2:\\sqrt{5} \\)",
+        "\\( 1:1 \\)",
+        "\\( 3:\\sqrt{5} \\)",
+        "\\( 3:2 \\)"
+      ]
+    },
+    {
+      "problemNumber": 17,
+      "statementHtml": "A red ball and a green ball are randomly and independently tossed into bins numbered with the positive integers so that for each ball, the probability that it is tossed into bin \\(k\\) is \\(2^{-k}\\) for \\(k = 1,\\) \\(2,\\) \\(3,\\) \\(\\ldots.\\) What is the probability that the red ball is tossed into a higher-numbered bin than the green ball?",
+      "choices": [
+        "\\( \\dfrac{1}{4} \\)",
+        "\\( \\dfrac{2}{7} \\)",
+        "\\( \\dfrac{1}{3} \\)",
+        "\\( \\dfrac{3}{8} \\)",
+        "\\( \\dfrac{3}{7} \\)"
+      ]
+    },
+    {
+      "problemNumber": 18,
+      "statementHtml": "Henry decides one morning to do a workout, and he walks \\(\\tfrac{3}{4}\\) of the way from his home to his gym. The gym is \\(2\\) kilometers away from Henry’s home. At that point, he changes his mind and walks \\(\\tfrac{3}{4}\\) of the way from where he is back toward home. When he reaches that point, he changes his mind again and walks \\(\\tfrac{3}{4}\\) of the distance from there back toward the gym. If Henry keeps changing his mind when he has walked \\(\\tfrac{3}{4}\\) of the distance toward either the gym or home from the point where he last changed his mind, he will get very close to walking back and forth between a point \\(A\\) kilometers from home and a point \\(B\\) kilometers from home. What is \\(|A-B|?\\)",
+      "choices": [
+        "\\( \\frac{2}{3} \\)",
+        "\\( 1 \\)",
+        "\\( 1 \\frac{1}{5} \\)",
+        "\\( 1 \\frac{1}{4} \\)",
+        "\\( 1 \\frac{1}{2} \\)"
+      ]
+    },
+    {
+      "problemNumber": 19,
+      "statementHtml": "Let \\(S\\) be the set of all positive integer divisors of \\(100{,}000.\\) How many numbers are the product of two distinct elements of \\(S?\\)",
+      "choices": [
+        "\\( 98 \\)",
+        "\\( 100 \\)",
+        "\\( 117 \\)",
+        "\\( 119 \\)",
+        "\\( 121 \\)"
+      ]
+    },
+    {
+      "problemNumber": 20,
+      "statementHtml": "As shown in the figure, line segment \\(\\overline{AD}\\) is trisected by points \\(B\\) and \\(C\\) so that \\(AB=BC=CD=2.\\) Three semicircles of radius \\(1,\\) \\(\\widehat{AEB},\\) \\(\\widehat{BFC},\\) and \\(\\widehat{CGD},\\) have their diameters on \\(\\overline{AD}\\), lie in the same halfplane determined by line \\(AD\\), and are tangent to line \\(EG\\) at \\(E,\\) \\(F,\\) and \\(G,\\) respectively. A circle of radius \\(2\\) has its center at \\(F.\\) The area of the region inside the circle but outside the three semicircles, shaded in the figure, can be expressed in the form \\[\\frac{a}{b}\\cdot\\pi-\\sqrt{c}+d,\\] where \\(a,\\) \\(b,\\) \\(c,\\) and \\(d\\) are positive integers and \\(a\\) and \\(b\\) are relatively prime. What is \\(a+b+c+d?\\)\n\n<img src=\"assets/exams/images/amc10/2019B/20.svg\" alt=\"Diagram for problem 20\" loading=\"lazy\">",
+      "choices": [
+        "\\( 13 \\)",
+        "\\( 14 \\)",
+        "\\( 15 \\)",
+        "\\( 16 \\)",
+        "\\( 17 \\)"
+      ]
+    },
+    {
+      "problemNumber": 21,
+      "statementHtml": "Debra flips a fair coin repeatedly, keeping track of how many heads and how many tails she has seen in total, until she gets either two heads in a row or two tails in a row, at which point she stops flipping. What is the probability that she gets two heads in a row but she sees a second tail before she sees a second head?",
+      "choices": [
+        "\\( \\dfrac{1}{36} \\)",
+        "\\( \\dfrac{1}{24} \\)",
+        "\\( \\dfrac{1}{18} \\)",
+        "\\( \\dfrac{1}{12} \\)",
+        "\\( \\dfrac{1}{6} \\)"
+      ]
+    },
+    {
+      "problemNumber": 22,
+      "statementHtml": "Raashan, Sylvia, and Ted play the following game. Each starts with \\( \\$1.\\) A bell rings every \\(15\\) seconds, at which time each of the players who currently has money simultaneously chooses one of the other two players independently and at random and gives \\(\\$1\\) to that player. What is the probability that after the bell has rung \\(2019\\) times, each player will have \\(\\$1?\\)\n\n(For example, Raashan and Ted may each decide to give \\(\\$1\\) to Sylvia, and Sylvia may decide to give her dollar to Ted, at which point Raashan will have \\(\\$0,\\) Sylvia will have \\(\\$2,\\) and Ted will have \\(\\$1,\\) and that is the end of the first round of play. In the second round Raashan has no money to give, but Sylvia and Ted might choose each other to give their \\( \\$1\\) to, and the holdings will be the same at the end of the second round.)",
+      "choices": [
+        "\\( \\dfrac{1}{7} \\)",
+        "\\( \\dfrac{1}{4} \\)",
+        "\\( \\dfrac{1}{3} \\)",
+        "\\( \\dfrac{1}{2} \\)",
+        "\\( \\dfrac{2}{3} \\)"
+      ]
+    },
+    {
+      "problemNumber": 23,
+      "statementHtml": "Points \\(A=(6,13)\\) and \\(B=(12,11)\\) lie on a circle \\(\\omega\\) in the plane. Suppose that the tangent lines to \\(\\omega\\) at \\(A\\) and \\(B\\) intersect at a point on the \\(x\\)-axis. What is the area of \\(\\omega?\\)",
+      "choices": [
+        "\\( \\dfrac{83\\pi}{8} \\)",
+        "\\( \\dfrac{21\\pi}{2} \\)",
+        "\\( \\dfrac{85\\pi}{8} \\)",
+        "\\( \\dfrac{43\\pi}{4} \\)",
+        "\\( \\dfrac{87\\pi}{8} \\)"
+      ]
+    },
+    {
+      "problemNumber": 24,
+      "statementHtml": "Define a sequence recursively by \\(x_0=5\\) and \\[x_{n+1}=\\frac{x_n^2+5x_n+4}{x_n+6}\\] for all nonnegative integers \\(n.\\) Let \\(m\\) be the least positive integer such that \\[x_m\\leq 4+\\frac{1}{2^{20}}.\\] In which of the following intervals does \\(m\\) lie?",
+      "choices": [
+        "\\( [9,26] \\)",
+        "\\( [27,80] \\)",
+        "\\( [81,242] \\)",
+        "\\( [243,728] \\)",
+        "\\( [729,\\infty) \\)"
+      ]
+    },
+    {
+      "problemNumber": 25,
+      "statementHtml": "How many sequences of \\(0\\)s and \\(1\\)s of length \\(19\\) are there that begin with a \\(0,\\) end with a \\(0,\\) contain no two consecutive \\(0\\)s, and contain no three consecutive \\(1\\)s?",
+      "choices": [
+        "\\( 55 \\)",
+        "\\( 60 \\)",
+        "\\( 65 \\)",
+        "\\( 70 \\)",
+        "\\( 75 \\)"
+      ]
+    }
+  ]
+}

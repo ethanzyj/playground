@@ -394,7 +394,8 @@ input {
 }
 
 .view-panel[hidden],
-.sidebar[hidden] {
+.sidebar[hidden],
+.filters[hidden] {
   display: none;
 }
 
@@ -594,6 +595,13 @@ input {
   font-weight: 700;
 }
 
+.problem-metadata-note {
+  max-width: 36rem;
+  margin: 0.5rem 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 .glossary-card > p:last-child {
   line-height: 1.55;
 }
@@ -603,6 +611,8 @@ input {
   justify-content: space-between;
   gap: 1rem;
   align-items: center;
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
 }
 
 .problem-topline span {
@@ -629,6 +639,55 @@ input {
   align-items: center;
 }
 
+.problem-progress {
+  margin-block: 0.75rem;
+}
+
+.problem-progress summary {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--accent-soft);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.problem-progress fieldset {
+  margin: 0.5rem 0 0;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+
+.problem-progress label {
+  display: flex;
+  align-items: start;
+  gap: 0.5rem;
+  padding-block: 0.4rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.problem-progress input {
+  width: auto;
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+}
+
+.problem-progress summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.progress-error {
+  margin: 1rem clamp(1rem, 4vw, 4rem);
+  padding: 1rem;
+  border: 1px solid var(--text);
+  border-radius: 0.75rem;
+}
+
 .text-button {
   border: 0;
   padding: 0;
@@ -653,6 +712,99 @@ input {
 
 .filters #conceptFilter {
   min-width: 15rem;
+}
+
+.progress-filter {
+  margin-block: 1rem;
+}
+
+.progress-filter label {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 100%;
+}
+
+.progress-filter select {
+  min-width: 0;
+}
+
+.problem-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.problem-modes button {
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.problem-modes button[aria-pressed="true"] {
+  background: var(--accent);
+  color: white;
+}
+
+.exam-controls label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.exam-summary {
+  color: var(--muted);
+  margin: 1rem 0;
+}
+
+.problem-grid.full-exam {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 60rem;
+  margin-inline: auto;
+}
+
+.full-exam .problem-card {
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.problem-statement {
+  white-space: pre-line;
+  line-height: 1.7;
+}
+
+.problem-statement img,
+.problem-choices img {
+  display: block;
+  max-width: 100%;
+  max-height: 22rem;
+  margin: 1rem auto;
+  background: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.problem-choices {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 3rem;
+  row-gap: 1rem;
+  padding-left: 1.75rem;
+  margin-block: 1.5rem;
+}
+
+.problem-choices li {
+  white-space: pre-line;
+  padding-left: 0.25rem;
+}
+
+.full-exam mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .glossary-search {

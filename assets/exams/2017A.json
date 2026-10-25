@@ -1,0 +1,283 @@
+{
+  "year": 2017,
+  "exam": "AMC 10A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A",
+  "sourceName": "LIVE by Po-Shen Loh",
+  "problems": [
+    {
+      "problemNumber": 1,
+      "statementHtml": "What is the value of the following expression?\n\n\\[ \\begin{aligned} &amp;2(2(2(2(2(2+1)+1)\\\\ &amp;\\qquad{}+1)+1)+1)+1 \\end{aligned} \\]",
+      "choices": [
+        "\\(70\\)",
+        "\\(97\\)",
+        "\\(127\\)",
+        "\\(159\\)",
+        "\\(729\\)"
+      ]
+    },
+    {
+      "problemNumber": 2,
+      "statementHtml": "Pablo buys popsicles for his friends. The store sells single popsicles for \\(\\$1\\) each, \\(3\\)-popsicle boxes for \\(\\$2\\) each, and \\(5\\)-popsicle boxes for \\(\\$3.\\) What is the greatest number of popsicles that Pablo can buy with \\(\\$8?\\)",
+      "choices": [
+        "\\(8\\)",
+        "\\(11\\)",
+        "\\(12\\)",
+        "\\(13\\)",
+        "\\(15\\)"
+      ]
+    },
+    {
+      "problemNumber": 3,
+      "statementHtml": "Tamara has three rows of two \\(6\\)-feet by \\(2\\)-feet flower beds in her garden. The beds are separated and also surrounded by \\(1\\)-foot-wide walkways, as shown on the diagram. What is the total area of the walkways, in square feet?\n\n<img src=\"assets/exams/images/amc10/2017A/3.svg\" alt=\"Diagram for problem 3\" loading=\"lazy\">",
+      "choices": [
+        "\\(72\\)",
+        "\\(78\\)",
+        "\\(90\\)",
+        "\\(120\\)",
+        "\\(150\\)"
+      ]
+    },
+    {
+      "problemNumber": 4,
+      "statementHtml": "Mia is “helping” her mom pick up \\(30\\) toys that are strewn on the floor. Mia’s mom manages to put \\(3\\) toys into the toy box every \\(30\\) seconds, but each time immediately after those \\(30\\) seconds have elapsed, Mia takes \\(2\\) toys out of the box. How much time, in minutes, will it take Mia and her mom to put all \\(30\\) toys into the box for the first time?",
+      "choices": [
+        "\\(13.5\\)",
+        "\\(14\\)",
+        "\\(14.5\\)",
+        "\\(15\\)",
+        "\\(15.5\\)"
+      ]
+    },
+    {
+      "problemNumber": 5,
+      "statementHtml": "The sum of two nonzero real numbers is \\(4\\) times their product. What is the sum of the reciprocals of the two numbers?",
+      "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(4\\)",
+        "\\(8\\)",
+        "\\(12\\)"
+      ]
+    },
+    {
+      "problemNumber": 6,
+      "statementHtml": "Ms. Carroll promised that anyone who got all the multiple choice questions right on the upcoming exam would receive an A on the exam. Which one of these statements necessarily follows logically?",
+      "choices": [
+        "If Lewis did not receive an A, then he got all of the multiple\nchoice questions wrong.",
+        "If Lewis did not receive an A, then he got at\nleast one of the multiple choice questions wrong.",
+        "If Lewis got at least one of the multiple choice questions\nwrong, then he did not receive an A.",
+        "If Lewis received an A, then he got all of the multiple choice\nquestions right.",
+        "If Lewis received an A, then he got at least one of the\nmultiple choice questions right."
+      ]
+    },
+    {
+      "problemNumber": 7,
+      "statementHtml": "Jerry and Silvia wanted to go from the southwest corner of a square field to the northeast corner. Jerry walked due east and then due north to reach the goal, but Silvia headed northeast and reached the goal walking in a straight line. Which of the following is closest to how much shorter Silvia’s trip was, compared to Jerry’s trip?",
+      "choices": [
+        "\\(30\\%\\)",
+        "\\(40\\%\\)",
+        "\\(50\\%\\)",
+        "\\(60\\%\\)",
+        "\\(70\\%\\)"
+      ]
+    },
+    {
+      "problemNumber": 8,
+      "statementHtml": "At a gathering of \\(30\\) people, there are \\(20\\) people who all know each other and \\(10\\) people who know no one. People who know each other hug, and people who do not know each other shake hands. How many handshakes occur?",
+      "choices": [
+        "\\(240\\)",
+        "\\(245\\)",
+        "\\(290\\)",
+        "\\(480\\)",
+        "\\(490\\)"
+      ]
+    },
+    {
+      "problemNumber": 9,
+      "statementHtml": "Minnie rides on a flat road at \\(20\\) kilometers per hour (kph), downhill at \\(30\\) kph, and uphill at \\(5\\) kph. Penny rides on a flat road at \\(30\\) kph, downhill at \\(40\\) kph, and uphill at \\(10\\) kph. Minnie goes from town \\(A\\) to town \\(B,\\) a distance of \\(10\\) km all uphill, then from town \\(B\\) to town \\(C,\\) a distance of \\(15\\) km all downhill, and then back to town \\(A,\\) a distance of \\(20\\) km on the flat. Penny goes the other way around using the same route. How many more minutes does it take Minnie to complete the \\(45\\)-km ride than it takes Penny?",
+      "choices": [
+        "\\(45\\)",
+        "\\(60\\)",
+        "\\(65\\)",
+        "\\(90\\)",
+        "\\(95\\)"
+      ]
+    },
+    {
+      "problemNumber": 10,
+      "statementHtml": "Joy has \\(30\\) thin rods, one each of every integer length from \\(1\\) cm through \\(30\\) cm. She places the rods with lengths \\(3\\) cm, \\(7\\) cm, and \\(15\\) cm on a table. She then wants to choose a fourth rod that she can put with these three to form a quadrilateral with positive area. How many of the remaining rods can she choose as the fourth rod?",
+      "choices": [
+        "\\(16\\)",
+        "\\(17\\)",
+        "\\(18\\)",
+        "\\(19\\)",
+        "\\(20\\)"
+      ]
+    },
+    {
+      "problemNumber": 11,
+      "statementHtml": "The region consisting of all points in three-dimensional space within \\(3\\) units of line segment \\(\\overline{AB}\\) has volume \\(216\\pi.\\) What is the length \\(AB?\\)",
+      "choices": [
+        "\\(6\\)",
+        "\\(12\\)",
+        "\\(18\\)",
+        "\\(20\\)",
+        "\\(24\\)"
+      ]
+    },
+    {
+      "problemNumber": 12,
+      "statementHtml": "Let \\(S\\) be the set of points \\((x,y)\\) in the coordinate plane such that two of the three quantities \\(3,\\) \\(x+2,\\) and \\(y-4\\) are equal and the third of the three quantities is no greater than this common value. Which of the following is a correct description of \\(S?\\)",
+      "choices": [
+        "a single point",
+        "two intersecting lines",
+        "three lines whose pairwise intersections are three distinct\npoints",
+        "a triangle",
+        "three rays with a common endpoint"
+      ]
+    },
+    {
+      "problemNumber": 13,
+      "statementHtml": "Define a sequence recursively by \\(F_{0}=0,\\) \\(~F_{1}=1,\\) and \\(F_{n}=\\) the remainder when \\(F_{n-1}+F_{n-2}\\) is divided by \\(3,\\) for all \\(n\\geq 2.\\) Thus the sequence starts \\(0,\\) \\(1,\\) \\(1,\\) \\(2,\\) \\(0,\\) \\(2,\\) \\(\\ldots.\\) What is \\[F_{2017}+F_{2018}+F_{2019}+F_{2020}+\\]\\[F_{2021}+F_{2022}+F_{2023}+F_{2024}?\\]",
+      "choices": [
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)",
+        "\\(9\\)",
+        "\\(10\\)"
+      ]
+    },
+    {
+      "problemNumber": 14,
+      "statementHtml": "Every week Roger pays for a movie ticket and a soda out of his allowance. Last week, Roger’s allowance was \\(A\\) dollars. The cost of his movie ticket was \\(20\\%\\) of the difference between \\(A\\) and the cost of his soda, while the cost of his soda was \\(5\\%\\) of the difference between \\(A\\) and the cost of his movie ticket. To the nearest whole percent, what fraction of \\(A\\) did Roger pay for his movie ticket and soda?",
+      "choices": [
+        "\\(9\\%\\)",
+        "\\(19\\%\\)",
+        "\\(22\\%\\)",
+        "\\(23\\%\\)",
+        "\\(25\\%\\)"
+      ]
+    },
+    {
+      "problemNumber": 15,
+      "statementHtml": "Chloé chooses a real number uniformly at random from the interval \\([0, 2017].\\)\n\nIndependently, Laurent chooses a real number uniformly at random from the interval \\([0, 4034].\\)\n\nWhat is the probability that Laurent’s number is greater than Chloé’s number?",
+      "choices": [
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(\\dfrac{2}{3}\\)",
+        "\\(\\dfrac{3}{4}\\)",
+        "\\(\\dfrac{5}{6}\\)",
+        "\\(\\dfrac{7}{8}\\)"
+      ]
+    },
+    {
+      "problemNumber": 16,
+      "statementHtml": "There are \\(10\\) horses, named Horse \\(1,\\) Horse \\(2,\\) and so on through Horse \\(10.\\) They get their names from how many minutes it takes them to run one lap around a circular race track: Horse \\(k\\) runs one lap in exactly \\(k\\) minutes. At time \\(0\\) all the horses are together at the starting point on the track. The horses start running in the same direction, and they keep running around the circular track at their constant speeds.\n\nThe least time \\(S &gt; 0,\\) in minutes, at which all \\(10\\) horses will again simultaneously be at the starting point is \\(S=2520.\\) Let \\(T &gt; 0\\) be the least time, in minutes, such that at least \\(5\\) of the horses are again at the starting point. What is the sum of the digits of \\(T?\\)",
+      "choices": [
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)",
+        "\\(6\\)"
+      ]
+    },
+    {
+      "problemNumber": 17,
+      "statementHtml": "Distinct points \\(P,\\) \\(Q,\\) \\(R,\\) \\(S\\) lie on the circle \\(x^{2}+y^{2}=25\\) and have integer coordinates. The distances \\(PQ\\) and \\(RS\\) are irrational numbers.\n\nWhat is the greatest possible value of the ratio \\(\\dfrac{PQ}{RS}?\\)",
+      "choices": [
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(3\\sqrt{5}\\)",
+        "\\(7\\)",
+        "\\(5\\sqrt{2}\\)"
+      ]
+    },
+    {
+      "problemNumber": 18,
+      "statementHtml": "Amelia has a coin that lands heads with probability \\(\\frac{1}{3},\\) and Blaine has a coin that lands on heads with probability \\(\\frac{2}{5}.\\) Amelia and Blaine alternately toss their coins until someone gets a head; the first one to get a head wins. All coin tosses are independent. Amelia goes first. The probability that Amelia wins is \\(\\frac{p}{q},\\) where \\(p\\) and \\(q\\) are relatively prime positive integers. What is \\(q-p?\\)",
+      "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)"
+      ]
+    },
+    {
+      "problemNumber": 19,
+      "statementHtml": "Alice refuses to sit next to either Bob or Carla. Derek refuses to sit next to Eric. How many ways are there for the five of them to sit in a row of \\(5\\) chairs under these conditions?",
+      "choices": [
+        "\\(12\\)",
+        "\\(16\\)",
+        "\\(28\\)",
+        "\\(32\\)",
+        "\\(40\\)"
+      ]
+    },
+    {
+      "problemNumber": 20,
+      "statementHtml": "Let \\(S(n)\\) equal the sum of the digits of positive integer \\(n.\\) For example, \\(S(1507) = 13.\\) For a particular positive integer \\(n,\\) \\(S(n) = 1274.\\)\n\nWhich of the following could be the value of \\(S(n+1)?\\)",
+      "choices": [
+        "\\(1\\)",
+        "\\(3\\)",
+        "\\(12\\)",
+        "\\(1239\\)",
+        "\\(1265\\)"
+      ]
+    },
+    {
+      "problemNumber": 21,
+      "statementHtml": "A square with side length \\(x\\) is inscribed in a right triangle with sides of length \\(3,\\) \\(4,\\) and \\(5\\) so that one vertex of the square coincides with the right-angle vertex of the triangle. A square with side length \\(y\\) is inscribed in another right triangle with sides of length \\(3,\\) \\(4,\\) and \\(5\\) so that one side of the square lies on the hypotenuse of the triangle. What is \\(\\dfrac{x}{y}?\\)",
+      "choices": [
+        "\\(\\dfrac{12}{13}\\)",
+        "\\(\\dfrac{35}{37}\\)",
+        "\\(1\\)",
+        "\\(\\dfrac{37}{35}\\)",
+        "\\(\\dfrac{13}{12}\\)"
+      ]
+    },
+    {
+      "problemNumber": 22,
+      "statementHtml": "Sides \\(\\overline{AB}\\) and \\(\\overline{AC}\\) of equilateral triangle \\(ABC\\) are tangent to a circle at points \\(B\\) and \\(C\\) respectively. What fraction of the area of \\(\\triangle ABC\\) lies outside the circle?",
+      "choices": [
+        "\\(\\dfrac{4\\sqrt{3}\\pi}{27}-\\dfrac{1}{3}\\)",
+        "\\(\\dfrac{\\sqrt{3}}{2}-\\dfrac{\\pi}{8}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(\\sqrt{3}-\\dfrac{2\\sqrt{3}\\pi}{9}\\)",
+        "\\(\\dfrac{4}{3}-\\dfrac{4\\sqrt{3}\\pi}{27}\\)"
+      ]
+    },
+    {
+      "problemNumber": 23,
+      "statementHtml": "How many triangles with positive area have all their vertices at points \\((i,j)\\) in the coordinate plane, where \\(i\\) and \\(j\\) are integers between \\(1\\) and \\(5,\\) inclusive?",
+      "choices": [
+        "\\(2128\\)",
+        "\\(2148\\)",
+        "\\(2160\\)",
+        "\\(2200\\)",
+        "\\(2300\\)"
+      ]
+    },
+    {
+      "problemNumber": 24,
+      "statementHtml": "For certain real numbers \\(a,\\) \\(b,\\) and \\(c,\\) the polynomial \\[g(x) = x^3 + ax^2 + x + 10\\] has three distinct roots, and each root of \\(g(x)\\) is also a root of the polynomial \\[ \\begin{aligned} f(x) &amp;= x^4 + x^3 \\\\ &amp;\\quad {}+ bx^2 + 100x + c. \\end{aligned} \\] What is \\(f(1)?\\)",
+      "choices": [
+        "\\(-9009\\)",
+        "\\(-8008\\)",
+        "\\(-7007\\)",
+        "\\(-6006\\)",
+        "\\(-5005\\)"
+      ]
+    },
+    {
+      "problemNumber": 25,
+      "statementHtml": "How many integers between \\(100\\) and \\(999,\\) inclusive, have the property that some permutation of its digits is a multiple of \\(11\\) between \\(100\\) and \\(999?\\) For example, both \\(121\\) and \\(211\\) have this property.",
+      "choices": [
+        "\\(226\\)",
+        "\\(243\\)",
+        "\\(270\\)",
+        "\\(469\\)",
+        "\\(486\\)"
+      ]
+    }
+  ]
+}

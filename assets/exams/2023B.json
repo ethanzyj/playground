@@ -1,0 +1,283 @@
+{
+  "year": 2023,
+  "exam": "AMC 10B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2023B",
+  "sourceName": "LIVE by Po-Shen Loh",
+  "problems": [
+    {
+      "problemNumber": 1,
+      "statementHtml": "Mrs. Jones is pouring orange juice into four identical glasses for her four sons. She fills the first three glasses completely but runs out of juice when the fourth glass is only \\(\\frac{1}{3}\\) full. What fraction of a glass must Mrs. Jones pour from each of the first three glasses into the fourth glass so that all four glasses will have the same amount of juice?",
+      "choices": [
+        "\\(\\dfrac{1}{12}\\)",
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{1}{6}\\)",
+        "\\(\\dfrac{1}{8}\\)",
+        "\\(\\dfrac{2}{9}\\)"
+      ]
+    },
+    {
+      "problemNumber": 2,
+      "statementHtml": "Carlos went to a sports store to buy running shoes. Running shoes were on sale, with prices reduced by \\(20\\%\\) on every pair of shoes. Carlos also knew that he had to pay a \\(7.5\\%\\) sales tax on the discounted price. He had \\(43\\) dollars. What is the original (before discount) price of the most expensive shoes he could afford to buy?",
+      "choices": [
+        "\\(\\$46\\)",
+        "\\(\\$50\\)",
+        "\\(\\$48\\)",
+        "\\(\\$47\\)",
+        "\\(\\$49\\)"
+      ]
+    },
+    {
+      "problemNumber": 3,
+      "statementHtml": "A \\(3\\)-\\(4\\)-\\(5\\) right triangle is inscribed in circle \\(A,\\) and a \\(5\\)-\\(12\\)-\\(13\\) right triangle is inscribed in circle \\(B.\\) What is the ratio of the area of circle \\(A\\) to the area of circle \\(B?\\)",
+      "choices": [
+        "\\(\\dfrac{9}{25}\\)",
+        "\\(\\dfrac{1}{9}\\)",
+        "\\(\\dfrac{1}{5}\\)",
+        "\\(\\dfrac{25}{169}\\)",
+        "\\(\\dfrac{4}{25}\\)"
+      ]
+    },
+    {
+      "problemNumber": 4,
+      "statementHtml": "Jackson’s paintbrush makes a narrow strip with a width of \\(6.5\\) millimeters. Jackson has enough paint to make a strip \\(25\\) meters long. How many square centimeters of paper could Jackson cover with paint?",
+      "choices": [
+        "\\(162{,}500\\)",
+        "\\(162.5\\)",
+        "\\(1{,}625\\)",
+        "\\(1{,}625{,}000\\)",
+        "\\(16{,}250\\)"
+      ]
+    },
+    {
+      "problemNumber": 5,
+      "statementHtml": "Maddy and Lara see a list of numbers written on a blackboard. Maddy adds \\(3\\) to each number in the list and finds that the sum of her new numbers is \\(45.\\) Lara multiplies each number in the list by \\(3\\) and finds that the sum of her new numbers is also \\(45.\\) How many numbers are written on the blackboard?",
+      "choices": [
+        "\\(10\\)",
+        "\\(5\\)",
+        "\\(6\\)",
+        "\\(8\\)",
+        "\\(9\\)"
+      ]
+    },
+    {
+      "problemNumber": 6,
+      "statementHtml": "Let \\(L_1 = 1,\\) \\(L_2 = 3,\\) and \\(L_{n+2} = L_{n+1} + L_n\\) for \\(n \\ge 1.\\) How many terms in the sequence \\(L_1,\\) \\(L_2,\\) \\(L_3,\\) \\(\\ldots,\\) \\(L_{2023}\\) are even?",
+      "choices": [
+        "\\(673\\)",
+        "\\(1011\\)",
+        "\\(675\\)",
+        "\\(1010\\)",
+        "\\(674\\)"
+      ]
+    },
+    {
+      "problemNumber": 7,
+      "statementHtml": "Square \\(ABCD\\) is rotated \\(20^\\circ\\) clockwise about its center to obtain square \\(EFGH,\\) as shown below. What is the degree measure of \\(\\angle EAB?\\)\n\n<img src=\"assets/exams/images/amc10/2023B/7.svg\" alt=\"Diagram for problem 7\" loading=\"lazy\">",
+      "choices": [
+        "\\(24^\\circ\\)",
+        "\\(35^\\circ\\)",
+        "\\(30^\\circ\\)",
+        "\\(32^\\circ\\)",
+        "\\(20^\\circ\\)"
+      ]
+    },
+    {
+      "problemNumber": 8,
+      "statementHtml": "What is the units digit of \\[2022^{2023} + 2023^{2022}?\\]",
+      "choices": [
+        "\\(7\\)",
+        "\\(1\\)",
+        "\\(9\\)",
+        "\\(5\\)",
+        "\\(3\\)"
+      ]
+    },
+    {
+      "problemNumber": 9,
+      "statementHtml": "The numbers \\(16\\) and \\(25\\) are a pair of consecutive positive perfect squares whose difference is \\(9.\\) How many pairs of consecutive positive perfect squares have a difference of less than or equal to \\(2023?\\)",
+      "choices": [
+        "\\(674\\)",
+        "\\(1011\\)",
+        "\\(1010\\)",
+        "\\(2019\\)",
+        "\\(2017\\)"
+      ]
+    },
+    {
+      "problemNumber": 10,
+      "statementHtml": "You are playing a game. A \\(2 \\times 1\\) rectangle covers two adjacent squares (oriented either horizontally or vertically) of a \\(3 \\times 3\\) grid of squares, but you are not told which two squares are covered. Your goal is to find at least one square that is covered by the rectangle. A “turn” consists of you guessing a square, after which you are told whether that square is covered by the hidden rectangle. What is the minimum number of turns you need to ensure that at least one of your guessed squares is covered by the rectangle?",
+      "choices": [
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(4\\)",
+        "\\(8\\)",
+        "\\(6\\)"
+      ]
+    },
+    {
+      "problemNumber": 11,
+      "statementHtml": "Suzanne went to the bank and withdrew \\(\\$800.\\) The teller gave her this amount using \\(\\$20\\) bills, \\(\\$50\\) bills, and \\(\\$100\\) bills, with at least one of each denomination. How many different collections of bills could Suzanne have received?",
+      "choices": [
+        "\\(45\\)",
+        "\\(21\\)",
+        "\\(36\\)",
+        "\\(28\\)",
+        "\\(32\\)"
+      ]
+    },
+    {
+      "problemNumber": 12,
+      "statementHtml": "When the roots of the polynomial \\[P(x) = (x-1)^1(x-2)^2(x-3)^3 \\cdots (x-10)^{10}\\] are removed from the real number line, what remains is the union of \\(11\\) disjoint open intervals. On how many of those intervals is \\(P(x)\\) positive?",
+      "choices": [
+        "\\(3\\)",
+        "\\(7\\)",
+        "\\(6\\)",
+        "\\(4\\)",
+        "\\(5\\)"
+      ]
+    },
+    {
+      "problemNumber": 13,
+      "statementHtml": "What is the area of the region in the coordinate plane defined by the inequality \\[\\bigl||x| - 1\\bigr| + \\bigl||y| - 1\\bigr| \\le 1?\\]",
+      "choices": [
+        "\\(2\\)",
+        "\\(8\\)",
+        "\\(4\\)",
+        "\\(15\\)",
+        "\\(12\\)"
+      ]
+    },
+    {
+      "problemNumber": 14,
+      "statementHtml": "How many ordered pairs of integers \\((m, n)\\) satisfy the equation \\[m^2 + mn + n^2 = m^2 n^2?\\]",
+      "choices": [
+        "\\(7\\)",
+        "\\(1\\)",
+        "\\(3\\)",
+        "\\(6\\)",
+        "\\(5\\)"
+      ]
+    },
+    {
+      "problemNumber": 15,
+      "statementHtml": "What is the least positive integer \\(m\\) such that \\(m \\cdot 2! \\cdot 3! \\cdot 4! \\cdot 5! \\cdots 16!\\) is a perfect square?",
+      "choices": [
+        "\\(30\\)",
+        "\\(30030\\)",
+        "\\(70\\)",
+        "\\(1430\\)",
+        "\\(1001\\)"
+      ]
+    },
+    {
+      "problemNumber": 16,
+      "statementHtml": "Define an <em>upno</em> to be a positive integer of \\(2\\) or more digits where the digits are strictly increasing moving left to right. Similarly, define a <em>downno</em> to be a positive integer of \\(2\\) or more digits where the digits are strictly decreasing moving left to right. For instance, the number \\(258\\) is an upno and \\(8620\\) is a downno. Let \\(U\\) equal the total number of upnos and let \\(D\\) equal the total number of downnos. What is \\(|U - D|?\\)",
+      "choices": [
+        "\\(512\\)",
+        "\\(10\\)",
+        "\\(0\\)",
+        "\\(9\\)",
+        "\\(511\\)"
+      ]
+    },
+    {
+      "problemNumber": 17,
+      "statementHtml": "A rectangular box \\(\\mathcal{P}\\) has distinct edge lengths \\(a,\\) \\(b,\\) and \\(c.\\) The sum of the lengths of all \\(12\\) edges of \\(\\mathcal{P}\\) is \\(13,\\) the sum of the areas of all \\(6\\) faces of \\(\\mathcal{P}\\) is \\(\\frac{11}{2},\\) and the volume of \\(\\mathcal{P}\\) is \\(\\frac{1}{2}.\\) What is the length of the longest interior diagonal connecting two vertices of \\(\\mathcal{P}?\\)",
+      "choices": [
+        "\\(2\\)",
+        "\\(\\dfrac{3}{8}\\)",
+        "\\(\\dfrac{9}{8}\\)",
+        "\\(\\dfrac{9}{4}\\)",
+        "\\(\\dfrac{3}{2}\\)"
+      ]
+    },
+    {
+      "problemNumber": 18,
+      "statementHtml": "Suppose \\(a,\\) \\(b,\\) and \\(c\\) are positive integers such that \\[\\frac{a}{14} + \\frac{b}{15} = \\frac{c}{210}.\\] Which of the following statements are necessarily true?\n\nI. If \\(\\gcd(a, 14) = 1\\) or \\(\\gcd(b, 15) = 1\\) or both, then \\(\\gcd(c, 210) = 1.\\)\n\nII. If \\(\\gcd(c, 210) = 1,\\) then \\(\\gcd(a, 14) = 1\\) or \\(\\gcd(b, 15) = 1\\) or both.\n\nIII. \\(\\gcd(c, 210) = 1\\) if and only if \\(\\gcd(a, 14) = \\gcd(b, 15) = 1.\\)",
+      "choices": [
+        "\\(\\mathrm{I},\\) \\(\\mathrm{II},\\) and \\(\\mathrm{III}\\)",
+        "\\(\\mathrm{I}\\) only",
+        "\\(\\mathrm{I}\\) and \\(\\mathrm{II}\\) only",
+        "\\(\\mathrm{III}\\) only",
+        "\\(\\mathrm{II}\\) and \\(\\mathrm{III}\\) only"
+      ]
+    },
+    {
+      "problemNumber": 19,
+      "statementHtml": "Sonya the frog chooses a point uniformly at random lying within the square \\([0, 6] \\times [0, 6]\\) in the coordinate plane and hops to that point. She then chooses a distance uniformly at random from \\([0, 1]\\) and a direction uniformly at random from \\(\\{\\text{north}, \\text{south}, \\text{east}, \\text{west}\\}.\\) All her choices are independent. She now hops the distance in the chosen direction. What is the probability that she lands outside the square?",
+      "choices": [
+        "\\(\\dfrac{1}{6}\\)",
+        "\\(\\dfrac{1}{12}\\)",
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{1}{10}\\)",
+        "\\(\\dfrac{1}{9}\\)"
+      ]
+    },
+    {
+      "problemNumber": 20,
+      "statementHtml": "Four congruent semicircles are drawn on the surface of a sphere with radius \\(2,\\) as shown, creating a closed curve that divides the surface into two congruent regions. The length of the curve is \\(\\pi\\sqrt{n}.\\) What is \\(n?\\)\n\n<img src=\"assets/exams/images/amc10/2023B/20.svg\" alt=\"Diagram for problem 20\" loading=\"lazy\">",
+      "choices": [
+        "\\(32\\)",
+        "\\(12\\)",
+        "\\(48\\)",
+        "\\(36\\)",
+        "\\(27\\)"
+      ]
+    },
+    {
+      "problemNumber": 21,
+      "statementHtml": "Each of \\(2023\\) balls is randomly placed into one of \\(3\\) bins. Which of the following is closest to the probability that each of the bins will contain an odd number of balls?",
+      "choices": [
+        "\\(\\dfrac{2}{3}\\)",
+        "\\(\\dfrac{3}{10}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(\\dfrac{1}{3}\\)",
+        "\\(\\dfrac{1}{4}\\)"
+      ]
+    },
+    {
+      "problemNumber": 22,
+      "statementHtml": "How many distinct values of \\(x\\) satisfy \\[\\lfloor x \\rfloor^2 - 3x + 2 = 0,\\] where \\(\\lfloor x \\rfloor\\) denotes the largest integer less than or equal to \\(x?\\)",
+      "choices": [
+        "an infinite number",
+        "\\(4\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(0\\)"
+      ]
+    },
+    {
+      "problemNumber": 23,
+      "statementHtml": "An arithmetic sequence of positive integers has \\(n \\ge 3\\) terms, initial term \\(a,\\) and common difference \\(d \\gt 1.\\) Carl wrote down all the terms in this sequence correctly except for one term, which was off by \\(1.\\) The sum of the terms he wrote down was \\(222.\\) What is \\(a + d + n?\\)",
+      "choices": [
+        "\\(24\\)",
+        "\\(20\\)",
+        "\\(22\\)",
+        "\\(28\\)",
+        "\\(26\\)"
+      ]
+    },
+    {
+      "problemNumber": 24,
+      "statementHtml": "What is the perimeter of the boundary of the region consisting of all points which can be expressed as \\((2u - 3w,\\ v + 4w)\\) with \\(0 \\le u \\le 1,\\) \\(0 \\le v \\le 1,\\) and \\(0 \\le w \\le 1?\\)",
+      "choices": [
+        "\\(10\\sqrt{3}\\)",
+        "\\(13\\)",
+        "\\(12\\)",
+        "\\(18\\)",
+        "\\(16\\)"
+      ]
+    },
+    {
+      "problemNumber": 25,
+      "statementHtml": "A regular pentagon with area \\(1 + \\sqrt{5}\\) is printed on paper and cut out. All five vertices are folded to the center of the pentagon, creating a smaller pentagon. What is the area of the new pentagon?",
+      "choices": [
+        "\\(4 - \\sqrt{5}\\)",
+        "\\(\\sqrt{5} - 1\\)",
+        "\\(8 - 3\\sqrt{5}\\)",
+        "\\(\\dfrac{\\sqrt{5} + 1}{2}\\)",
+        "\\(\\dfrac{2 + \\sqrt{5}}{3}\\)"
+      ]
+    }
+  ]
+}

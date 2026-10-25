@@ -1,10 +1,39 @@
 import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20260923-12";
 
+const PROBLEM_PROGRESS_OPTIONS = ["needUnderstanding", "needStartingPoint", "haveApproach"];
+let problemProgressStorageError = false;
+
+function loadProblemProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("amc10-problem-progress") || "{}");
+    if (!saved || typeof saved !== "object" || Array.isArray(saved)
+      || !Object.entries(saved).every(([key, value]) =>
+        PROBLEM_REFERENCES.some((problem) => problemKey(problem) === key)
+        && PROBLEM_PROGRESS_OPTIONS.includes(value))) {
+      throw new Error("Invalid saved problem progress.");
+    }
+    return saved;
+  } catch (error) {
+    console.error("Unable to read saved problem progress.", error);
+    problemProgressStorageError = true;
+    return {};
+  }
+}
+
+function problemKey(problem) {
+  return `${problem.year}-${problem.exam.replace(" ", "")}-${problem.problemNumber}`;
+}
+
 const state = {
+  problemProgress: loadProblemProgress(),
+  problemProgressFilter: "all",
   language: localStorage.getItem("amc10-language") || "both",
   activeView: "study",
   activeConceptId: allConcepts()[0].id,
   search: "",
+  problemMode: "filters",
+  examYear: String(Math.max(...PROBLEM_REFERENCES.map((problem) => problem.year))),
+  examPaper: "AMC 10A",
   problemConcept: "all",
   year: "all",
   exam: "all",
@@ -183,12 +212,30 @@ const UI_TEXT = {
   glossary: { en: "Glossary", zh: "词汇表" },
   searchTopics: { en: "Search topics", zh: "搜索知识点" },
   topicSearchPlaceholder: { en: "topic, formula, keyword...", zh: "知识点、公式、关键词..." },
-  copyrightHeading: { en: "Copyright-safe problem references.", zh: "尊重版权的真题索引。" },
+  copyrightHeading: { en: "Problem sources and attribution.", zh: "题目来源与署名。" },
   copyrightCopy: {
-    en: "This guide does not reproduce AMC problem text. It stores year, version, problem metadata, concept tags, and source links so licensed or official text can be consulted separately.",
-    zh: "本指南不转载 AMC 题目正文，仅保存年份、版本、题号、知识点标签和来源链接，以便另行查阅获授权或官方题目。"
+    en: "Full exam pages include original English AMC 10 statements and diagrams, with source attribution. Reference cards link to the source problems and related concepts.",
+    zh: "整卷阅读模式提供 AMC 10 英文原题与配图，并注明来源。题目索引卡片链接到原题与相关知识点。"
   },
   problemEyebrow: { en: "Past AMC 10 references", zh: "历年 AMC 10 真题索引" },
+  problemMetadataNote: {
+    en: "Classified from problem-bank topic metadata; practice the linked concepts below.",
+    zh: "按题库主题标签归类；可用于练习下方列出的相关概念。"
+  },
+  browseProblems: { en: "Browse problems", zh: "浏览真题" },
+  byConcept: { en: "By concept & filters", zh: "按知识点筛选" },
+  byExam: { en: "By year & exam", zh: "按年份与试卷" },
+  fullExam: { en: "Full exam page", zh: "整卷阅读" },
+  selectYear: { en: "Year", zh: "年份" },
+  selectExam: { en: "Exam", zh: "试卷" },
+  problems: { en: "problems", zh: "题" },
+  examOrder: { en: "Problems in exam order, matching your progress filter. Open a reference to read the problem.", zh: "按题号顺序显示符合进度筛选的题目。打开题目索引查看原题。" },
+  fullExamSummary: { en: "Original English statements and answer choices on one page, matching your progress filter. Answers and solutions are not shown.", zh: "在一页中阅读符合进度筛选的英文原题及选项，不显示答案或解析。" },
+  examAttribution: { en: "AMC problems © Mathematical Association of America.", zh: "AMC 题目版权归美国数学协会（MAA）所有。" },
+  loadingExam: { en: "Loading exam statements…", zh: "正在加载整卷题目……" },
+  examLoadError: { en: "Unable to load this exam. Please retry or open the source page.", zh: "无法加载试卷，请重试或打开来源页面。" },
+  retry: { en: "Retry", zh: "重试" },
+  openExamSource: { en: "Open source exam", zh: "打开原始试卷" },
   glossaryEyebrow: { en: "Vocabulary", zh: "词汇表" },
   bilingualGlossary: { en: "Bilingual Glossary", zh: "双语词汇表" },
   searchGlossary: { en: "Search glossary", zh: "搜索词汇" },
@@ -225,6 +272,14 @@ const UI_TEXT = {
   unmasteredOnly: { en: "Not mastered", zh: "未掌握" },
   markGlossaryMastered: { en: "Mark vocabulary mastered", zh: "标记词汇已掌握" },
   masteryStatus: { en: "Learning status", zh: "学习状态" },
+  problemProgress: { en: "My progress", zh: "我的进度" },
+  setProblemProgress: { en: "Set my progress", zh: "标记我的进度" },
+  allProgress: { en: "All statuses", zh: "全部进度" },
+  unmarkedProgress: { en: "Not marked yet", zh: "尚未标记" },
+  needUnderstanding: { en: "Need help understanding", zh: "需要帮助理解题意" },
+  needStartingPoint: { en: "Understand, but need a starting point", zh: "理解题意，但还没有解题思路" },
+  haveApproach: { en: "Understand and have a solution approach", zh: "理解题意，并有解题思路" },
+  problemProgressError: { en: "Problem progress could not be read or saved in this browser. New selections may not survive a reload. Check your browser's storage settings.", zh: "无法读取或保存本浏览器中的题目进度，新选择可能在刷新后丢失。请检查浏览器的存储设置。" },
   relatedConcepts: { en: "Related concepts", zh: "相关知识点" },
   openInGlossary: { en: "Open in glossary →", zh: "打开词汇表 →" },
   noProblems: { en: "No problems match these filters.", zh: "没有符合筛选条件的题目。" },
@@ -405,7 +460,7 @@ function renderConcept() {
       <section class="card wide">
         <h3>${uiText("relatedReferences")} (${related.length})</h3>
         <div class="inline-problems">
-          ${related.length ? related.map(problemCard).join("") : `<p class="empty-state">${uiText("noRelatedReferences")}</p>`}
+          ${related.length ? related.map((problem) => problemCard(problem)).join("") : `<p class="empty-state">${uiText("noRelatedReferences")}</p>`}
         </div>
       </section>
       <section class="card wide">
@@ -426,15 +481,47 @@ function renderConcept() {
   wireProblemAndGlossaryLinks($("#conceptView"));
 }
 
-function problemCard(problem) {
+let progressControlId = 0;
+
+function problemProgressControl(key) {
+  const selected = state.problemProgress[key];
+  const groupName = `progress-${++progressControlId}`;
+  return `
+    <details class="problem-progress" data-progress-key="${key}" open>
+      <summary>${uiText("problemProgress")}: ${uiText(selected || "setProblemProgress")}</summary>
+      <fieldset>
+        <legend>${uiText("problemProgress")}</legend>
+        ${PROBLEM_PROGRESS_OPTIONS.map((option) => `
+          <label>
+            <input type="radio" name="${groupName}" value="${option}" ${selected === option ? "checked" : ""}>
+            <span>${uiText(option)}</span>
+          </label>
+        `).join("")}
+      </fieldset>
+    </details>
+  `;
+}
+
+function renderProblemProgressError() {
+  $("#problemProgressError").hidden = !problemProgressStorageError;
+  $("#problemProgressError").textContent = uiText("problemProgressError");
+}
+
+function problemCard(problem, statement = null) {
   const tags = problem.conceptIds.map((id) => conceptById.get(id)).filter(Boolean);
   return `
     <article class="problem-card">
-      <div class="problem-topline">
+      <h3 class="problem-topline">
         <strong>${problem.year} ${problem.exam} #${problem.problemNumber}</strong>
         <span>${difficultyText(problem.difficulty)}</span>
-      </div>
-      <p>${textPair(problem.noteZh, linkGlossaryTerms(problem.noteEn))}</p>
+      </h3>
+      ${problemProgressControl(problemKey(problem))}
+      ${statement ? `
+        <div class="problem-statement" lang="en">${statement.statementHtml}</div>
+        <ol class="problem-choices" type="A" lang="en">
+          ${statement.choices.map((choice) => `<li>${choice}</li>`).join("")}
+        </ol>
+      ` : problem.noteEn && problem.noteZh ? `<p>${textPair(problem.noteZh, linkGlossaryTerms(problem.noteEn))}</p>` : ""}
       <div class="tags">${tags.map((tag) => `<button data-concept="${tag.id}">${textPair(tag.zh, tag.en)}</button>`).join("")}</div>
       <div class="card-actions">
         <a href="${problem.sourceUrl}" target="_blank" rel="noreferrer">${uiText("openReference")}</a>
@@ -445,6 +532,12 @@ function problemCard(problem) {
 }
 
 function populateFilters() {
+  $("#problemProgressFilter").innerHTML = `
+    <option value="all">${uiText("allProgress")}</option>
+    <option value="unmarked">${uiText("unmarkedProgress")}</option>
+    ${PROBLEM_PROGRESS_OPTIONS.map((option) => `<option value="${option}">${uiText(option)}</option>`).join("")}
+  `;
+  $("#problemProgressFilter").value = state.problemProgressFilter;
   const conceptFilter = $("#conceptFilter");
   const yearFilter = $("#yearFilter");
   const examFilter = $("#examFilter");
@@ -485,20 +578,104 @@ function populateFilters() {
   yearFilter.value = state.year;
   examFilter.value = state.exam;
   difficultyFilter.value = state.difficulty;
+  $("#examYear").innerHTML = years.map((year) => `<option value="${year}">${year}</option>`).join("");
+  $("#examYear").value = state.examYear;
+  populateExamPapers();
+}
+
+function populateExamPapers() {
+  const exams = [...new Set(PROBLEM_REFERENCES
+    .filter((problem) => String(problem.year) === state.examYear)
+    .map((problem) => problem.exam))].sort();
+  if (!exams.includes(state.examPaper)) state.examPaper = exams[0];
+  $("#examPaper").innerHTML = exams.map((exam) => `<option value="${exam}">${exam}</option>`).join("");
+  $("#examPaper").value = state.examPaper;
+}
+
+let problemRenderVersion = 0;
+const examStatements = new Map();
+
+async function renderExamStatements(problems, version) {
+  const year = Number(state.examYear);
+  const exam = state.examPaper;
+  const paper = `${year}${exam.slice(-1)}`;
+  const sourceUrl = `https://live.poshenloh.com/past-contests/amc10/${paper}`;
+  const list = $("#problemList");
+  list.setAttribute("aria-busy", "true");
+  list.innerHTML = `<p class="empty-state" role="status">${uiText("loadingExam")}</p>`;
+  $("#examAttribution").textContent = uiText("examAttribution");
+  try {
+    let data = examStatements.get(paper);
+    if (!data) {
+      const response = await fetch(`assets/exams/${paper}.json`);
+      if (!response.ok) throw new Error(`Exam request failed: HTTP ${response.status}`);
+      data = await response.json();
+      if (data.year !== year || data.exam !== exam || data.problems?.length !== 25
+        || !data.problems.every((problem, index) =>
+          problem.problemNumber === index + 1 && typeof problem.statementHtml === "string"
+          && problem.choices?.length === 5 && problem.choices.every((choice) => typeof choice === "string"))) {
+        throw new Error(`Invalid exam statements for ${paper}`);
+      }
+      examStatements.set(paper, data);
+    }
+    if (version !== problemRenderVersion) return;
+    list.innerHTML = problems.map((problem) => problemCard(problem, data.problems[problem.problemNumber - 1])).join("");
+    wireProblemAndGlossaryLinks(list);
+    typesetMath(list);
+  } catch (error) {
+    console.error(`Unable to load exam statements for ${paper}.`, error);
+    if (version !== problemRenderVersion) return;
+    list.innerHTML = `
+      <div class="empty-state" role="alert">
+        <p>${uiText("examLoadError")}</p>
+        <button type="button" id="retryExam">${uiText("retry")}</button>
+        <a href="${sourceUrl}" target="_blank" rel="noreferrer">${uiText("openExamSource")}</a>
+      </div>
+    `;
+    $("#retryExam").addEventListener("click", renderProblems);
+  } finally {
+    if (version === problemRenderVersion) list.setAttribute("aria-busy", "false");
+  }
 }
 
 function renderProblems() {
+  const version = ++problemRenderVersion;
+  const isExam = state.problemMode !== "filters";
+  const isFullExam = state.problemMode === "full";
+  $("#problemFilters").hidden = isExam;
+  $("#examControls").hidden = !isExam;
+  $("#examSummary").hidden = !isExam;
+  $("#examAttribution").hidden = !isFullExam;
+  $("#problemList").classList.toggle("full-exam", isFullExam);
+  $("#problemList").setAttribute("aria-busy", "false");
+  window.MathJax?.typesetClear?.([$("#problemList")]);
+  document.querySelectorAll("[data-problem-mode]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.problemMode === state.problemMode));
+  });
   const selectedConceptId = state.problemConcept === "current" ? state.activeConceptId : state.problemConcept;
   const problems = PROBLEM_REFERENCES.filter((problem) => {
+    const progress = state.problemProgress[problemKey(problem)];
+    if (state.problemProgressFilter !== "all"
+      && (state.problemProgressFilter === "unmarked" ? Boolean(progress) : progress !== state.problemProgressFilter)) return false;
+    if (isExam) return String(problem.year) === state.examYear && problem.exam === state.examPaper;
     return (selectedConceptId === "all" || problem.conceptIds.includes(selectedConceptId))
       && (state.year === "all" || String(problem.year) === state.year)
       && (state.exam === "all" || problem.exam === state.exam)
       && (state.difficulty === "all" || problem.difficulty === state.difficulty);
   });
+  if (isExam) problems.sort((a, b) => a.problemNumber - b.problemNumber);
+  $("#examAttribution").hidden = !isFullExam || !problems.length;
+  $("#problemCount").textContent = isExam
+    ? `${state.examYear} ${state.examPaper} · ${problems.length} / 25 ${uiText("problems")}`
+    : `${problems.length} / ${PROBLEM_REFERENCES.length}`;
+  $("#examSummary").textContent = uiText(isFullExam ? "fullExamSummary" : "examOrder");
+  if (isFullExam && problems.length) {
+    renderExamStatements(problems, version);
+    return;
+  }
   $("#problemList").innerHTML = problems.length
-    ? problems.map(problemCard).join("")
+    ? problems.map((problem) => problemCard(problem)).join("")
     : `<p class="empty-state">${uiText("noProblems")}</p>`;
-  $("#problemCount").textContent = `${problems.length} / ${PROBLEM_REFERENCES.length}`;
   wireProblemAndGlossaryLinks($("#problemList"));
   typesetMath($("#problemList"));
 }
@@ -551,6 +728,34 @@ function renderGlossary() {
 }
 
 function wireProblemAndGlossaryLinks(container) {
+  container.querySelectorAll(".problem-progress input").forEach((input) => {
+    input.addEventListener("change", () => {
+      const control = input.closest("[data-progress-key]");
+      const key = control.dataset.progressKey;
+      const updated = { ...state.problemProgress, [key]: input.value };
+      try {
+        localStorage.setItem("amc10-problem-progress", JSON.stringify(updated));
+        problemProgressStorageError = false;
+      } catch (error) {
+        console.error("Unable to save problem progress.", error);
+        problemProgressStorageError = true;
+      }
+      state.problemProgress = updated;
+      document.querySelectorAll("[data-progress-key]").forEach((instance) => {
+        if (instance.dataset.progressKey !== key) return;
+        instance.querySelector("summary").textContent = `${uiText("problemProgress")}: ${uiText(input.value)}`;
+        instance.querySelectorAll("input").forEach((radio) => {
+          radio.checked = radio.value === input.value;
+        });
+      });
+      control.querySelector("summary").focus();
+      renderProblemProgressError();
+      if (state.problemProgressFilter !== "all") {
+        renderProblems();
+        $("#problemProgressFilter").focus();
+      }
+    });
+  });
   container.querySelectorAll("[data-glossary-concept]").forEach((button) => {
     button.addEventListener("click", () => {
       state.glossaryConcept = button.dataset.glossaryConcept;
@@ -562,6 +767,7 @@ function wireProblemAndGlossaryLinks(container) {
   container.querySelectorAll("[data-problems-concept]").forEach((button) => {
     button.addEventListener("click", () => {
       state.activeConceptId = button.dataset.problemsConcept;
+      state.problemMode = "filters";
       state.problemConcept = "current";
       render();
       setActiveView("problems");
@@ -619,6 +825,25 @@ function setActiveView(view) {
 }
 
 function wireControls() {
+  $("#problemProgressFilter").addEventListener("change", (event) => {
+    state.problemProgressFilter = event.target.value;
+    renderProblems();
+  });
+  document.querySelectorAll("[data-problem-mode]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.problemMode = button.dataset.problemMode;
+      renderProblems();
+    });
+  });
+  $("#examYear").addEventListener("change", (event) => {
+    state.examYear = event.target.value;
+    populateExamPapers();
+    renderProblems();
+  });
+  $("#examPaper").addEventListener("change", (event) => {
+    state.examPaper = event.target.value;
+    renderProblems();
+  });
   document.querySelectorAll("[data-view]").forEach((tab) => {
     tab.addEventListener("click", () => setActiveView(tab.dataset.view));
   });
@@ -668,6 +893,7 @@ function wireControls() {
 
 function render() {
   renderStaticInterface();
+  renderProblemProgressError();
   renderTopicNav();
   renderConcept();
   populateFilters();
