@@ -195,6 +195,10 @@ document.addEventListener("keydown", (event) => {
 
 const UI_TEXT = {
   languageLabel: { en: "Language", zh: "语言" },
+  darkTheme: { en: "Dark theme", zh: "深色主题" },
+  switchToLight: { en: "Switch to light theme", zh: "切换至浅色主题" },
+  switchToDark: { en: "Switch to dark theme", zh: "切换至深色主题" },
+  themeSaveError: { en: "Theme changed, but could not be saved in this browser.", zh: "主题已更改，但无法保存在此浏览器中。" },
   heroEyebrow: { en: "AMC 10 prep", zh: "AMC 10 中英双语备考" },
   heroTitle: { en: "AMC 10 Bilingual Prep Guide", zh: "AMC 10 中英双语备考指南" },
   heroCopy: {
@@ -319,6 +323,7 @@ function textPair(zh, en) {
 }
 
 function renderStaticInterface() {
+  renderThemeControl();
   document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
   document.title = state.language === "zh"
     ? "AMC 10 中英双语备考指南"
@@ -524,8 +529,16 @@ function problemCard(problem, statement = null) {
       ` : problem.noteEn && problem.noteZh ? `<p>${textPair(problem.noteZh, linkGlossaryTerms(problem.noteEn))}</p>` : ""}
       <div class="tags">${tags.map((tag) => `<button data-concept="${tag.id}">${textPair(tag.zh, tag.en)}</button>`).join("")}</div>
       <div class="card-actions">
-        <a href="${problem.sourceUrl}" target="_blank" rel="noreferrer">${uiText("openReference")}</a>
-        <button class="text-button" data-glossary-concept="${problem.conceptIds[0]}">${uiText("relatedVocabulary")}</button>
+        <a class="icon-action" href="${problem.sourceUrl}" target="_blank" rel="noreferrer" aria-label="${uiText("openReference")}" title="${uiText("openReference")}">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5" />
+          </svg>
+        </a>
+        <button type="button" class="icon-action" data-glossary-concept="${problem.conceptIds[0]}" aria-label="${uiText("relatedVocabulary")}" title="${uiText("relatedVocabulary")}">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M12 5C9 3 5 3 2 4v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Zm0 0v15" />
+          </svg>
+        </button>
       </div>
     </article>
   `;
@@ -824,7 +837,34 @@ function setActiveView(view) {
   });
 }
 
+const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+let themeSaveError = false;
+
+function renderThemeControl() {
+  const dark = document.documentElement.dataset.theme
+    ? document.documentElement.dataset.theme === "dark"
+    : systemTheme.matches;
+  $("#themeToggle").setAttribute("aria-label", uiText("darkTheme"));
+  $("#themeToggle").title = uiText(dark ? "switchToLight" : "switchToDark");
+  $("#themeToggle").setAttribute("aria-pressed", String(dark));
+  $("#themeError").hidden = !themeSaveError;
+  $("#themeError").textContent = uiText("themeSaveError");
+}
+
 function wireControls() {
+  systemTheme.addEventListener("change", renderThemeControl);
+  $("#themeToggle").addEventListener("click", () => {
+    const theme = $("#themeToggle").getAttribute("aria-pressed") === "true" ? "light" : "dark";
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem("amc10-theme", theme);
+      themeSaveError = false;
+    } catch (error) {
+      console.error("Unable to save the selected theme.", error);
+      themeSaveError = true;
+    }
+    renderThemeControl();
+  });
   $("#problemProgressFilter").addEventListener("change", (event) => {
     state.problemProgressFilter = event.target.value;
     renderProblems();

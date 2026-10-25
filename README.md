@@ -3,6 +3,10 @@
 Run from this folder with `python3 -m http.server 8000 --bind 127.0.0.1`,
 then open http://127.0.0.1:8000. No dependencies need to be installed.
 Math rendering uses MathJax from a CDN and requires internet access.
+The theme toggle at the top shows a moon to switch to dark appearance and a sun
+to switch to light appearance, with a tooltip describing the action.
+It follows your device preference until you choose a theme, then saves that choice
+in this browser.
 
 In **Problem Explorer**, use **By concept & filters** for the existing concept,
 year, exam, and difficulty filters. Switch to **By year & exam** to select a
@@ -12,6 +16,8 @@ Use **Full exam page** with the same year and exam selectors to read all 25
 original English statements and A-E choices in one scrollable page, including
 local diagrams. Answers and solutions are not imported or displayed.
 Concept tags open the Study Guide; vocabulary links open the Glossary.
+Problem cards use an external-link icon for the source problem and a book icon
+for related vocabulary, with localized hover tooltips and accessible labels.
 Shared topic-classification guidance appears once in the explorer header;
 cards only show notes specific to that problem.
 
