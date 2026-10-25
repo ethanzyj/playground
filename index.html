@@ -75,6 +75,26 @@
         <p id="accountIdentity"></p>
         <p id="accountSyncStatus" role="status" aria-live="polite"></p>
         <p id="accountMessage" role="status" aria-live="polite"></p>
+        <div id="accountLoginMethods" hidden>
+          <label>
+            <span id="accountLoginMethodLabel">Sign-in method / 登录方式</span>
+            <select id="accountLoginMethod">
+              <option value="password">Username &amp; password / 用户名和密码</option>
+              <option value="email">Email link / 邮件链接</option>
+            </select>
+          </label>
+        </div>
+        <form id="accountPasswordForm" hidden>
+          <label>
+            <span id="accountUsernameLabel">Username / 用户名</span>
+            <input id="accountUsername" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_]{3,32}" />
+          </label>
+          <label>
+            <span id="accountPasswordLabel">Password / 密码</span>
+            <input id="accountPassword" name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <button id="accountPasswordSignIn" class="mastery" type="submit">Sign in / 登录</button>
+        </form>
         <form id="accountForm" hidden>
           <label>
             <span id="accountEmailLabel">Email / 电子邮箱</span>
@@ -205,6 +225,6 @@
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261025-14"></script>
+    <script type="module" src="assets/app.mjs?v=20261025-15"></script>
   </body>
 </html>

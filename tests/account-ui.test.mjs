@@ -8,7 +8,7 @@ import { JSDOM, VirtualConsole } from "jsdom";
 const root = new URL("../", import.meta.url);
 const html = readFileSync(new URL("index.html", root), "utf8");
 
-async function page(configured, client) {
+async function page(configured, client, method = "password") {
   const errors = [];
   const virtualConsole = new VirtualConsole();
   virtualConsole.on("jsdomError", (error) => errors.push(error));
@@ -21,6 +21,7 @@ async function page(configured, client) {
   window.scrollTo = () => {};
   window.HTMLElement.prototype.scrollIntoView = () => {};
   window.__testClient = client;
+  window.document.querySelector("#accountLoginMethod").value = method;
   window.fetch = async () => { throw new Error("Unexpected network request"); };
   const bundle = await build({
     entryPoints: [fileURLToPath(new URL("assets/app.mjs", root))],
@@ -56,6 +57,7 @@ test("unconfigured cloud panel preserves guest progress and keeps login disabled
   const p = await page(false);
   try {
     assert.equal(p.$("#accountForm").hidden, true);
+    assert.equal(p.$("#accountPasswordForm").hidden, true);
     assert.match(p.$("#accountMessage").textContent, /not configured/);
     const input = p.$('#conceptView .problem-progress input[value="needUnderstanding"]');
     const key = input.closest("[data-progress-key]").dataset.progressKey;
@@ -74,14 +76,14 @@ test("sign-in failures show actionable localized errors and clear on a successfu
       async signInWithOtp() { return { error: failure }; }
     }
   };
-  const p = await page(true, client);
+  const p = await page(true, client, "email");
   try {
     await p.waitFor(() => !p.$("#accountForm").hidden);
     p.$("#accountEmail").value = "student@example.test";
     const cases = [
       [{ code: "over_email_send_rate_limit", message: "email rate limit exceeded", status: 429 }, /Too many sign-in email requests/],
-      [{ code: "over_request_rate_limit", message: "Request cooldown", status: 429 }, /Too many sign-in email requests/],
-      [{ message: "Too many requests", status: 429 }, /Too many sign-in email requests/],
+      [{ code: "over_request_rate_limit", message: "Request cooldown", status: 429 }, /Too many sign-in attempts/],
+      [{ message: "Too many requests", status: 429 }, /Too many sign-in attempts/],
       [{ code: "email_address_not_authorized", message: "Recipient is not authorized" }, /custom SMTP/],
       [{ code: "email_address_invalid", message: "Invalid email" }, /Check the email address/],
       [{ code: "signup_disabled", message: "Signups not allowed" }, /registration is disabled/],
@@ -141,7 +143,7 @@ test("email login, guest import, cloud save, localization, and logout work throu
       return { data: { saved: true, record } };
     }
   };
-  const p = await page(true, client);
+  const p = await page(true, client, "email");
   try {
     await p.waitFor(() => !p.$("#accountForm").hidden);
     const key = "2016-AMC10A-4";
@@ -183,6 +185,157 @@ test("email login, guest import, cloud save, localization, and logout work throu
     assert.equal(signouts, 1);
     assert.equal(p.$(`#conceptView [data-progress-key="${key}"] input:checked`).value, "needUnderstanding");
     assert.equal(records[key].status, "haveApproach");
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("username password sign-in isolates both accounts and preserves guest progress", async () => {
+  let callback;
+  let activeUser;
+  const requests = [];
+  const records = new Map();
+  const client = {
+    auth: {
+      onAuthStateChange(handler) { callback = handler; },
+      async getSession() { return { data: { session: null } }; },
+      async signInWithPassword(args) {
+        requests.push(args);
+        activeUser = { id: args.email, email: args.email };
+        callback("SIGNED_IN", { user: activeUser });
+        return { data: { user: activeUser } };
+      },
+      async signOut() { activeUser = null; callback("SIGNED_OUT", null); return {}; }
+    },
+    from() { return { select() { return { async eq(_column, id) {
+      return { data: Object.values(records.get(id) || {}) };
+    } }; } }; },
+    async rpc(_name, args) {
+      assert.equal(args.p_expected_user, activeUser.id);
+      const rows = records.get(activeUser.id) || {};
+      const record = {
+        problem_key: args.p_problem_key, status: args.p_status,
+        version: (rows[args.p_problem_key]?.version || 0) + 1
+      };
+      rows[record.problem_key] = record;
+      records.set(activeUser.id, rows);
+      return { data: { saved: true, record } };
+    }
+  };
+  const p = await page(true, client);
+  try {
+    await p.waitFor(() => !p.$("#accountPasswordForm").hidden);
+    assert.equal(p.$("#accountForm").hidden, true);
+    assert.equal(p.$("#accountPassword").type, "password");
+    assert.equal(p.$("#accountPassword").autocomplete, "current-password");
+    const key = "2016-AMC10A-4";
+    const selected = () => p.$(`#conceptView [data-progress-key="${key}"] input:checked`)?.value;
+    p.$(`#conceptView [data-progress-key="${key}"] input[value="needUnderstanding"]`).click();
+    for (const [index, name] of ["ethanzyj", "evanz"].entries()) {
+      p.$("#accountUsername").value = ` ${name.toUpperCase()} `;
+      p.$("#accountPassword").value = "test-only-password";
+      p.$("#accountPasswordForm").dispatchEvent(new p.window.Event("submit", { cancelable: true }));
+      await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
+      assert.equal(requests[index].email, `${name}@users.amc10-prep.invalid`);
+      assert.equal(requests[index].password, "test-only-password");
+      assert.equal(p.$("#accountIdentity").textContent, name);
+      assert.equal(p.$("#accountPassword").value, "");
+      assert.equal(p.$("#accountPasswordForm").hidden, true);
+      assert.equal(p.$("#accountLoginMethods").hidden, true);
+      assert.equal(selected(), undefined);
+      const status = index === 0 ? "haveApproach" : "needStartingPoint";
+      p.$(`#conceptView [data-progress-key="${key}"] input[value="${status}"]`).click();
+      await p.waitFor(() => records.get(`${name}@users.amc10-prep.invalid`)?.[key]?.status === status);
+      await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
+      for (let i = 0; i < p.window.localStorage.length; i += 1) {
+        assert.ok(!p.window.localStorage.getItem(p.window.localStorage.key(i)).includes("test-only-password"));
+      }
+      p.$("#accountSignOut").click();
+      await p.waitFor(() => !p.$("#accountPasswordForm").hidden);
+      assert.equal(selected(), "needUnderstanding");
+    }
+    assert.equal(records.get("ethanzyj@users.amc10-prep.invalid")[key].status, "haveApproach");
+    assert.equal(records.get("evanz@users.amc10-prep.invalid")[key].status, "needStartingPoint");
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("password login validates input, blocks duplicate requests, and surfaces auth failures", async () => {
+  let finish;
+  let requests = 0;
+  const client = {
+    auth: {
+      onAuthStateChange() {},
+      async getSession() { return { data: { session: null } }; },
+      async signInWithPassword() {
+        requests += 1;
+        return new Promise((resolve) => { finish = resolve; });
+      }
+    }
+  };
+  const p = await page(true, client);
+  try {
+    await p.waitFor(() => !p.$("#accountPasswordForm").hidden);
+    const submit = () => p.$("#accountPasswordForm").dispatchEvent(new p.window.Event("submit", { cancelable: true }));
+    p.$("#accountUsername").value = "not-an-email@example.test";
+    p.$("#accountPassword").value = "test-only-password";
+    submit();
+    assert.equal(requests, 0);
+    assert.match(p.$("#accountMessage").textContent, /Use a username/);
+    p.$("#accountUsername").value = "evanz";
+    p.$("#accountPassword").value = "";
+    submit();
+    assert.equal(requests, 0);
+    assert.match(p.$("#accountMessage").textContent, /Enter your password/);
+    for (const [code, guidance] of [
+      ["invalid_credentials", /Incorrect username or password/],
+      ["email_not_confirmed", /has not been confirmed/],
+      ["over_request_rate_limit", /Too many sign-in attempts/]
+    ]) {
+      p.$("#accountPassword").value = "test-only-password";
+      submit();
+      assert.equal(p.$("#accountLoginMethod").disabled, true);
+      assert.equal(p.$("#accountPasswordSignIn").disabled, true);
+      const before = requests;
+      submit();
+      assert.equal(requests, before);
+      finish({ error: { code, message: "Authentication rejected" } });
+      await p.waitFor(() => !p.$("#accountPasswordSignIn").disabled);
+      assert.match(p.$("#accountMessage").textContent, guidance);
+      assert.equal(p.$("#accountPassword").value, "");
+      assert.equal(p.$("#accountPasswordForm").hidden, false);
+    }
+    p.$("#languageMode").value = "zh";
+    p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$("#accountPasswordSignIn").textContent, "登录");
+    assert.match(p.$("#accountMessage").textContent, /登录尝试过多/);
+    p.$("#accountPassword").value = "test-only-password";
+    p.$("#accountLoginMethod").value = "email";
+    p.$("#accountLoginMethod").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$("#accountPassword").value, "");
+    assert.equal(p.$("#accountMessage").textContent, "");
+    assert.equal(p.$("#accountForm").hidden, false);
+    assert.equal(p.$("#accountPasswordForm").hidden, true);
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("a restored username account uses the existing authenticated session", async () => {
+  const user = { id: "existing-user", email: "ethanzyj@users.amc10-prep.invalid" };
+  const client = {
+    auth: {
+      onAuthStateChange() {},
+      async getSession() { return { data: { session: { user } } }; }
+    },
+    from() { return { select() { return { async eq() {
+      return { data: [{ problem_key: "2016-AMC10A-4", status: "haveApproach", version: 1 }] };
+    } }; } }; }
+  };
+  const p = await page(true, client);
+  try {
+    await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
+    assert.equal(p.$("#accountIdentity").textContent, "ethanzyj");
+    assert.equal(p.$("#accountPasswordForm").hidden, true);
+    assert.equal(p.$('#conceptView [data-progress-key="2016-AMC10A-4"] input:checked').value, "haveApproach");
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
