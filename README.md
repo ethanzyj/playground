@@ -118,6 +118,14 @@ the **same browser/profile and site** that requested it (PKCE). The Supabase SDK
 stores the session locally, refreshes tokens, and returns to the page. Passwords
 are not handled by this app. Guest use remains available without an account.
 
+The same email sign-in form works for both new and existing accounts; there is
+no separate registration step. Failed account actions display the service's
+error as plain text, with localized guidance for email limits, unauthorized
+recipients, invalid addresses, and disabled signups. Repeated link requests can
+hit recipient cooldowns or project-wide mail limits. Check Supabase Auth logs
+and email/SMTP settings rather than changing the progress SQL or repeatedly
+requesting links. A public publishable key cannot change those admin settings.
+
 Each account has a separate browser cache and pending-write queue
 (`amc10-account-progress:<user id>`). Signed-in changes are saved locally, then
 synced to the account's server rows. The panel shows syncing, saved, errors,

@@ -65,6 +65,56 @@ test("unconfigured cloud panel preserves guest progress and keeps login disabled
   } finally { p.close(); }
 });
 
+test("sign-in failures show actionable localized errors and clear on a successful retry", async () => {
+  let failure;
+  const client = {
+    auth: {
+      onAuthStateChange() {},
+      async getSession() { return { data: { session: null } }; },
+      async signInWithOtp() { return { error: failure }; }
+    }
+  };
+  const p = await page(true, client);
+  try {
+    await p.waitFor(() => !p.$("#accountForm").hidden);
+    p.$("#accountEmail").value = "student@example.test";
+    const cases = [
+      [{ code: "over_email_send_rate_limit", message: "email rate limit exceeded", status: 429 }, /Too many sign-in email requests/],
+      [{ code: "over_request_rate_limit", message: "Request cooldown", status: 429 }, /Too many sign-in email requests/],
+      [{ message: "Too many requests", status: 429 }, /Too many sign-in email requests/],
+      [{ code: "email_address_not_authorized", message: "Recipient is not authorized" }, /custom SMTP/],
+      [{ code: "email_address_invalid", message: "Invalid email" }, /Check the email address/],
+      [{ code: "signup_disabled", message: "Signups not allowed" }, /registration is disabled/],
+      [{ code: "unexpected_failure", message: "SMTP delivery failed <b>details</b>" }, /Account action failed/],
+      [new TypeError("Failed to fetch"), /Failed to fetch/]
+    ];
+    for (const [error, guidance] of cases) {
+      failure = error;
+      p.$("#accountHeading").parentElement.open = false;
+      p.$("#accountForm").dispatchEvent(new p.window.Event("submit", { cancelable: true }));
+      await p.waitFor(() => !p.$("#accountSendLink").disabled);
+      assert.match(p.$("#accountMessage").textContent, guidance);
+      assert.ok(p.$("#accountMessage").textContent.includes(error.message));
+      assert.equal(p.$("#accountMessage b"), null);
+      assert.equal(p.$("#accountHeading").parentElement.open, true);
+      assert.equal(p.$("#accountForm").hidden, false);
+    }
+    p.$("#languageMode").value = "zh";
+    p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
+    assert.match(p.$("#accountMessage").textContent, /账户操作失败/);
+    failure = { code: "over_email_send_rate_limit", message: "email rate limit exceeded" };
+    p.$("#accountForm").dispatchEvent(new p.window.Event("submit", { cancelable: true }));
+    await p.waitFor(() => !p.$("#accountSendLink").disabled);
+    assert.match(p.$("#accountMessage").textContent, /登录邮件请求过多/);
+    failure = null;
+    p.$("#accountForm").dispatchEvent(new p.window.Event("submit", { cancelable: true }));
+    await p.waitFor(() => !p.$("#accountSendLink").disabled);
+    assert.match(p.$("#accountMessage").textContent, /请检查邮箱/);
+    assert.doesNotMatch(p.$("#accountMessage").textContent, /rate limit/);
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
 test("email login, guest import, cloud save, localization, and logout work through the app", async () => {
   let callback;
   let emailRequest;
