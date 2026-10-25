@@ -1,0 +1,283 @@
+{
+  "year": 2019,
+  "exam": "AMC 10A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2019A",
+  "sourceName": "LIVE by Po-Shen Loh",
+  "problems": [
+    {
+      "problemNumber": 1,
+      "statementHtml": "What is the value of \\[2^{\\left(0^{\\left(1^9\\right)}\\right)}+\\left(\\left(2^0\\right)^1\\right)^9?\\]",
+      "choices": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)"
+      ]
+    },
+    {
+      "problemNumber": 2,
+      "statementHtml": "What is the hundreds digit of \\((20!-15!)?\\)",
+      "choices": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(4\\)",
+        "\\(5\\)"
+      ]
+    },
+    {
+      "problemNumber": 3,
+      "statementHtml": "Ana and Bonita were born on the same date in different years, \\(n\\) years apart. Last year Ana was \\(5\\) times as old as Bonita. This year Ana’s age is the square of Bonita’s age. What is \\(n?\\)",
+      "choices": [
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(9\\)",
+        "\\(12\\)",
+        "\\(15\\)"
+      ]
+    },
+    {
+      "problemNumber": 4,
+      "statementHtml": "A box contains \\(28\\) red balls, \\(20\\) green balls, \\(19\\) yellow balls, \\(13\\) blue balls, \\(11\\) white balls, and \\(9\\) black balls. What is the minimum number of balls that must be drawn from the box without replacement to guarantee that at least \\(15\\) balls of a single color will be drawn?",
+      "choices": [
+        "\\(75\\)",
+        "\\(76\\)",
+        "\\(79\\)",
+        "\\(84\\)",
+        "\\(91\\)"
+      ]
+    },
+    {
+      "problemNumber": 5,
+      "statementHtml": "What is the greatest number of consecutive integers whose sum is \\(45?\\)",
+      "choices": [
+        "\\(9\\)",
+        "\\(25\\)",
+        "\\(45\\)",
+        "\\(90\\)",
+        "\\(120\\)"
+      ]
+    },
+    {
+      "problemNumber": 6,
+      "statementHtml": "For how many of the following types of quadrilaterals does there exist a point in the plane of the quadrilateral that is equidistant from all four vertices of the quadrilateral?\n\n• a square\n\n• a rectangle that is not a square\n\n• a rhombus that is not a square\n\n• a parallelogram that is not a rectangle or a rhombus\n\n• an isosceles trapezoid that is not a parallelogram",
+      "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)"
+      ]
+    },
+    {
+      "problemNumber": 7,
+      "statementHtml": "Two lines with slopes \\(\\frac{1}{2}\\) and \\(2\\) intersect at \\((2, 2).\\) What is the area of the triangle enclosed by these two lines and the line \\(x + y = 10?\\)",
+      "choices": [
+        "\\(4\\)",
+        "\\(4\\sqrt{2}\\)",
+        "\\(6\\)",
+        "\\(8\\)",
+        "\\(6\\sqrt{2}\\)"
+      ]
+    },
+    {
+      "problemNumber": 8,
+      "statementHtml": "The figure below shows line \\(\\ell\\) with a regular, infinite, recurring pattern of squares and line segments.\n\n<img src=\"assets/exams/images/amc10/2019A/8.svg\" alt=\"Diagram for problem 8\" loading=\"lazy\">\n\nHow many of the following four kinds of rigid motion transformations of the plane in which this figure is drawn, other than the identity transformation, will transform this figure into itself?\n\n• some rotation around a point of line \\(\\ell\\)\n\n• some translation in the direction parallel to line \\(\\ell\\)\n\n• the reflection across line \\(\\ell\\)\n\n• some reflection across a line perpendicular to line \\(\\ell\\)",
+      "choices": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)"
+      ]
+    },
+    {
+      "problemNumber": 9,
+      "statementHtml": "What is the greatest three-digit positive integer \\(n\\) for which the sum of the first \\(n\\) positive integers is <span>not</span> a divisor of the product of the first \\(n\\) positive integers?",
+      "choices": [
+        "\\(995\\)",
+        "\\(996\\)",
+        "\\(997\\)",
+        "\\(998\\)",
+        "\\(999\\)"
+      ]
+    },
+    {
+      "problemNumber": 10,
+      "statementHtml": "A rectangular floor that is \\(10\\) feet wide and \\(17\\) feet long is tiled with \\(170\\) one-foot square tiles. A bug walks from one corner to the opposite corner in a straight line. Including the first and the last tile, how many tiles does the bug visit?",
+      "choices": [
+        "\\(17\\)",
+        "\\(25\\)",
+        "\\(26\\)",
+        "\\(27\\)",
+        "\\(28\\)"
+      ]
+    },
+    {
+      "problemNumber": 11,
+      "statementHtml": "How many positive integer divisors of \\(201^9\\) are perfect squares or perfect cubes (or both)?",
+      "choices": [
+        "\\(32\\)",
+        "\\(36\\)",
+        "\\(37\\)",
+        "\\(39\\)",
+        "\\(41\\)"
+      ]
+    },
+    {
+      "problemNumber": 12,
+      "statementHtml": "Melanie computes the mean \\(\\mu,\\) the median \\(M,\\) and the modes of the \\(365\\) values that are the dates in the months of \\(2019.\\) Thus her data consist of \\(12\\) copies of \\(1,\\) \\(12\\) copies of \\(2,\\) and so on through \\(12\\) copies of \\(28,\\) then \\(11\\) copies of \\(29,\\) \\(11\\) copies of \\(30,\\) and \\(7\\) copies of \\(31.\\) Let \\(d\\) be the median of the modes. Which of the following statements is true?",
+      "choices": [
+        "\\(\\mu \\lt d \\lt M\\)",
+        "\\(M \\lt d \\lt \\mu\\)",
+        "\\(d = M =\\mu\\)",
+        "\\(d \\lt M \\lt \\mu\\)",
+        "\\(d \\lt \\mu \\lt M\\)"
+      ]
+    },
+    {
+      "problemNumber": 13,
+      "statementHtml": "Let \\(\\triangle ABC\\) be an isosceles triangle with \\(BC = AC\\) and \\(\\angle ACB = 40^{\\circ}.\\) Construct the circle with diameter \\(\\overline{BC},\\) and let \\(D\\) and \\(E\\) be the other intersection points of the circle with the sides \\(\\overline{AC}\\) and \\(\\overline{AB},\\) respectively. Let \\(F\\) be the intersection of the diagonals of the quadrilateral \\(BCDE.\\) What is the degree measure of \\(\\angle BFC ?\\)",
+      "choices": [
+        "\\(90\\)",
+        "\\(100\\)",
+        "\\(105\\)",
+        "\\(110\\)",
+        "\\(120\\)"
+      ]
+    },
+    {
+      "problemNumber": 14,
+      "statementHtml": "For a set of four distinct lines in a plane, there are exactly \\(N\\) distinct points that lie on two or more of the lines. What is the sum of all possible values of \\(N?\\)",
+      "choices": [
+        "\\(14\\)",
+        "\\(16\\)",
+        "\\(18\\)",
+        "\\(19\\)",
+        "\\(21\\)"
+      ]
+    },
+    {
+      "problemNumber": 15,
+      "statementHtml": "A sequence of numbers is defined recursively by \\(a_1 = 1,\\) \\(a_2 = \\frac{3}{7},\\) and \\[a_n=\\dfrac{a_{n-2} \\cdot a_{n-1}}{2a_{n-2} - a_{n-1}}\\] for all \\(n \\geq 3.\\) Then \\(a_{2019}\\) can be written as \\(\\frac{p}{q},\\) where \\(p\\) and \\(q\\) are relatively prime positive integers. What is \\(p+q ?\\)",
+      "choices": [
+        "\\(2020\\)",
+        "\\(4039\\)",
+        "\\(6057\\)",
+        "\\(6061\\)",
+        "\\(8078\\)"
+      ]
+    },
+    {
+      "problemNumber": 16,
+      "statementHtml": "The figure below shows \\(13\\) circles of radius \\(1\\) within a larger circle. All the intersections occur at points of tangency. What is the area of the region, shaded in the figure, inside the larger circle but outside all the circles of radius \\(1?\\)\n\n<img src=\"assets/exams/images/amc10/2019A/16.svg\" alt=\"Diagram for problem 16\" loading=\"lazy\">",
+      "choices": [
+        "\\(4 \\pi \\sqrt{3}\\)",
+        "\\(7 \\pi\\)",
+        "\\(\\pi\\left(3\\sqrt{3} +2\\right)\\)",
+        "\\(10 \\pi \\left(\\sqrt{3} - 1\\right)\\)",
+        "\\(\\pi\\left(\\sqrt{3} + 6\\right)\\)"
+      ]
+    },
+    {
+      "problemNumber": 17,
+      "statementHtml": "A child builds towers using identically shaped cubes of different colors. How many different towers with a height \\(8\\) cubes can the child build with \\(2\\) red cubes, \\(3\\) blue cubes, and \\(4\\) green cubes? (One cube will be left out.)",
+      "choices": [
+        "\\(24\\)",
+        "\\(288\\)",
+        "\\(312\\)",
+        "\\(1{,}260\\)",
+        "\\(40{,}320\\)"
+      ]
+    },
+    {
+      "problemNumber": 18,
+      "statementHtml": "For some positive integer \\(k,\\) the repeating base-\\(k\\) representation of the (base-ten) fraction \\(\\dfrac{7}{51}\\) is \\[0.\\overline{23}_k = 0.232323..._k.\\] What is \\(k?\\)",
+      "choices": [
+        "\\(13\\)",
+        "\\(14\\)",
+        "\\(15\\)",
+        "\\(16\\)",
+        "\\(17\\)"
+      ]
+    },
+    {
+      "problemNumber": 19,
+      "statementHtml": "What is the least possible value of \\[ \\begin{aligned} &amp;(x+1)(x+2)(x+3)(x+4)\\\\ &amp;\\quad+2019, \\end{aligned} \\] where \\(x\\) is a real number?",
+      "choices": [
+        "\\(2017\\)",
+        "\\(2018\\)",
+        "\\(2019\\)",
+        "\\(2020\\)",
+        "\\(2021\\)"
+      ]
+    },
+    {
+      "problemNumber": 20,
+      "statementHtml": "The numbers \\(1,\\) \\(2,\\) \\(\\dots,\\) \\(9\\) are randomly placed into the \\(9\\) squares of a \\(3 \\times 3\\) grid. Each square gets one number, and each of the numbers is used once. What is the probability that the sum of the numbers in each row and each column is odd?",
+      "choices": [
+        "\\(\\dfrac{1}{21}\\)",
+        "\\(\\dfrac{1}{14}\\)",
+        "\\(\\dfrac{5}{63}\\)",
+        "\\(\\dfrac{2}{21}\\)",
+        "\\(\\dfrac{1}{7}\\)"
+      ]
+    },
+    {
+      "problemNumber": 21,
+      "statementHtml": "A sphere with center \\(O\\) has radius \\(6.\\) A triangle with sides of length \\(15,\\) \\(15,\\) and \\(24\\) is situated in space so that each of its sides is tangent to the sphere. What is the distance between \\(O\\) and the plane determined by the triangle?",
+      "choices": [
+        "\\(2\\sqrt{3}\\)",
+        "\\(4\\)",
+        "\\(3\\sqrt{2}\\)",
+        "\\(2\\sqrt{5}\\)",
+        "\\(5\\)"
+      ]
+    },
+    {
+      "problemNumber": 22,
+      "statementHtml": "Real numbers between \\(0\\) and \\(1,\\) inclusive, are chosen in the following manner. A fair coin is flipped. If it lands heads, then it is flipped again and the chosen number is \\(0\\) if the second flip is heads, and \\(1\\) if the second flip is tails. On the other hand, if the first coin flip is tails, then the number is chosen uniformly at random from the closed interval \\([0,1].\\) Two random numbers \\(x\\) and \\(y\\) are chosen independently in this manner. What is the probability that \\(|x-y| &gt; \\tfrac{1}{2}?\\)",
+      "choices": [
+        "\\(\\dfrac{1}{3}\\)",
+        "\\(\\dfrac{7}{16}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(\\dfrac{9}{16}\\)",
+        "\\(\\dfrac{2}{3}\\)"
+      ]
+    },
+    {
+      "problemNumber": 23,
+      "statementHtml": "Travis has to babysit the terrible Thompson triplets. Knowing that they love big numbers, Travis devises a counting game for them. First Tadd will say the number \\(1,\\) then Todd must say the next two numbers (\\(2\\) and \\(3\\)), then Tucker must say the next three numbers (\\(4,\\) \\(5,\\) \\(6\\)), then Tadd must say the next four numbers (\\(7,\\) \\(8,\\) \\(9,\\) \\(10\\)), and the process continues to rotate through the three children in order, each saying one more number than the previous child did, until the number \\(10{,}000\\) is reached. What is the \\(2019\\)th number said by Tadd?",
+      "choices": [
+        "\\(5743\\)",
+        "\\(5885\\)",
+        "\\(5979\\)",
+        "\\(6001\\)",
+        "\\(6011\\)"
+      ]
+    },
+    {
+      "problemNumber": 24,
+      "statementHtml": "Let \\(p,\\) \\(q,\\) and \\(r\\) be the distinct roots of the polynomial \\[x^3 - 22x^2 + 80x - 67.\\] There exist real numbers \\(A,\\) \\(B,\\) and \\(C\\) such that \\[ \\begin{gathered} \\frac{1}{s^3-22s^2+80s-67}\\\\ =\\frac{A}{s-p}+\\frac{B}{s-q}\\\\ \\quad+\\frac{C}{s-r} \\end{gathered} \\] for all real numbers \\(s\\) with \\(s\\notin\\{p,q,r\\}.\\) What is \\[\\dfrac1A+\\dfrac1B+\\dfrac1C?\\]",
+      "choices": [
+        "\\(243\\)",
+        "\\(244\\)",
+        "\\(245\\)",
+        "\\(246\\)",
+        "\\(247\\)"
+      ]
+    },
+    {
+      "problemNumber": 25,
+      "statementHtml": "For how many integers \\(n\\) between \\(1\\) and \\(50,\\) inclusive, is \\[\\dfrac{(n^2-1)!}{(n!)^n}\\] an integer? (Recall that \\(0! = 1.\\))",
+      "choices": [
+        "\\(31\\)",
+        "\\(32\\)",
+        "\\(33\\)",
+        "\\(34\\)",
+        "\\(35\\)"
+      ]
+    }
+  ]
+}

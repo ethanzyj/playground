@@ -51,7 +51,8 @@ for (const problem of PROBLEM_REFERENCES) {
   assert(/^AMC 10[AB]$/.test(problem.exam), `Unexpected exam label: ${problem.exam}.`);
   assert(problem.problemNumber >= 1 && problem.problemNumber <= 25, `Invalid problem number: ${problem.problemNumber}.`);
   assert(problem.sourceUrl?.startsWith("https://"), `Problem ${problem.year} ${problem.exam} #${problem.problemNumber} needs a source URL.`);
-  assert(problem.noteZh && problem.noteEn, `Problem ${problem.year} ${problem.exam} #${problem.problemNumber} needs bilingual notes.`);
+  assert(Boolean(problem.noteZh) === Boolean(problem.noteEn), `Problem ${problem.year} ${problem.exam} #${problem.problemNumber} notes must be bilingual when present.`);
+  assert(!problem.noteEn?.includes("Classified from problem-bank topic metadata"), "Shared metadata guidance must not be repeated in problem notes.");
   for (const id of problem.conceptIds) {
     assert(conceptIds.has(id), `Problem ${problem.year} ${problem.exam} #${problem.problemNumber} references unknown concept ${id}.`);
   }
@@ -125,12 +126,16 @@ assert(html.includes('id="topicNav"'), "HTML must include the topic navigation m
 assert(html.includes('id="conceptView"'), "HTML must include the concept viewer mount.");
 assert(html.includes('id="problemList"'), "HTML must include the problem explorer mount.");
 assert(html.includes('id="problemCount"'), "Problem Explorer must show filtered and total counts.");
+assert(html.includes('data-i18n="problemMetadataNote"'), "Problem Explorer must show shared metadata guidance in its header.");
 assert(html.includes('role="tablist"'), "HTML must include accessible top-level navigation tabs.");
 assert(html.includes('class="global-language hero-language"'), "Language selection must be available at the top of the page.");
 assert(html.includes('id="studyPanel"'), "HTML must include the study guide panel.");
 assert(html.includes('id="problemsPanel"'), "HTML must include the problem explorer panel.");
 assert(html.includes('id="glossaryPanel"'), "HTML must include the glossary panel.");
 assert(html.includes('id="conceptFilter"'), "Problem Explorer must include a concept filter.");
+assert(html.includes('data-problem-mode="filters"') && html.includes('data-problem-mode="exam"'), "Problem Explorer must offer filter and year/exam modes.");
+assert(html.includes('id="examYear"') && html.includes('id="examPaper"'), "Year/exam mode must include year and exam selectors.");
+assert(html.includes('id="examSummary"'), "Year/exam mode must explain reference-only browsing.");
 assert(html.includes('id="glossarySearch"'), "Glossary must include search.");
 assert(html.includes('id="glossaryCount"'), "Glossary must show filtered and total counts.");
 assert(html.includes('id="glossaryConceptFilter"'), "Glossary must include a concept filter.");
@@ -142,6 +147,13 @@ assert(html.includes("mathjax@3.2.2"), "HTML must load the pinned MathJax render
 const app = readFileSync(new URL("../assets/app.mjs", import.meta.url), "utf8");
 const data = readFileSync(new URL("../assets/data.mjs", import.meta.url), "utf8");
 const css = readFileSync(new URL("../assets/styles.css", import.meta.url), "utf8");
+assert(html.includes('id="problemProgressError"'), "Problem progress storage failures must have a visible alert.");
+assert(html.includes('id="problemProgressFilter"'), "Problem Explorer must include a progress filter shared by all modes.");
+assert(app.includes('state.problemProgressFilter === "unmarked"'), "Progress filtering must include unmarked problems.");
+assert(app.includes('localStorage.setItem("amc10-problem-progress"'), "Problem progress must persist in browser storage.");
+assert(app.includes('const PROBLEM_PROGRESS_OPTIONS = ["needUnderstanding", "needStartingPoint", "haveApproach"]'), "Problem progress must offer the three agreed stages.");
+assert(app.includes("problemProgressControl(problemKey(problem))"), "All problem cards must include progress controls.");
+assert(app.includes('data-progress-key="${key}" open>'), "Problem progress panels must be expanded by default.");
 assert(!data.includes("书达定理"), "The misspelling 书达定理 must not appear; use 韦达定理.");
 assert(!data.includes("外切圆"), "Triangle terminology must use 外接圆 for circumcircle.");
 assert(!data.includes("模意义下的小数"), "Modular arithmetic must refer to remainders, not decimals.");
@@ -159,6 +171,8 @@ assert(app.includes("renderStaticInterface();"), "Language changes must update t
 assert(app.includes("document.title ="), "Language changes must update the browser page title.");
 assert(app.includes('setActiveView("study")'), "Problem concept tags must navigate to the Study Guide.");
 assert(app.includes('state.problemConcept === "current"'), "Problem Explorer must support filtering by the current concept.");
+assert(app.includes('state.problemMode = "filters"'), "Glossary problem links must return to concept filtering.");
+assert(app.includes("a.problemNumber - b.problemNumber"), "Year/exam mode must order problems numerically.");
 assert(app.includes("wireProblemAndGlossaryLinks"), "Study, problem, and glossary views must cross-link.");
 assert(app.includes("amc10-mastered-glossary"), "Vocabulary mastery must persist independently from concept mastery.");
 assert(app.includes("data-glossary-mastery"), "Glossary cards must include mastery controls.");

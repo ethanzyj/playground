@@ -1,0 +1,283 @@
+{
+  "year": 2022,
+  "exam": "AMC 10B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2022B",
+  "sourceName": "LIVE by Po-Shen Loh",
+  "problems": [
+    {
+      "problemNumber": 1,
+      "statementHtml": "Define \\(x~\\diamondsuit~ y\\) to be \\(|x-y|\\) for all real numbers \\(x\\) and \\(y.\\) What is the value of \\[(1~\\diamondsuit~(2~\\diamondsuit~3))-((1~\\diamondsuit~2)~\\diamondsuit~3)?\\]",
+      "choices": [
+        "\\( -2 \\)",
+        "\\( -1 \\)",
+        "\\( 0 \\)",
+        "\\( 1 \\)",
+        "\\( 2 \\)"
+      ]
+    },
+    {
+      "problemNumber": 2,
+      "statementHtml": "In rhombus \\(ABCD,\\) point \\(P\\) lies on segment \\(\\overline{AD}\\) so that \\(\\overline{BP} \\perp \\overline{AD},\\) \\(AP = 3,\\) and \\(PD = 2.\\) What is the area of \\(ABCD?\\)\n\n<img src=\"assets/exams/images/amc10/2022B/2.svg\" alt=\"Diagram for problem 2\" loading=\"lazy\">",
+      "choices": [
+        "\\( 3\\sqrt 5 \\)",
+        "\\( 10 \\)",
+        "\\( 6\\sqrt 5 \\)",
+        "\\( 20 \\)",
+        "\\( 25 \\)"
+      ]
+    },
+    {
+      "problemNumber": 3,
+      "statementHtml": "How many three-digit positive integers have an odd number of even digits?",
+      "choices": [
+        "\\( 150 \\)",
+        "\\( 250 \\)",
+        "\\( 350 \\)",
+        "\\( 450 \\)",
+        "\\( 550 \\)"
+      ]
+    },
+    {
+      "problemNumber": 4,
+      "statementHtml": "A donkey suffers an attack of hiccups and the first hiccup happens at \\(4:00\\) one afternoon. Suppose that the donkey hiccups regularly every \\(5\\) seconds. At what time does the donkey’s \\(700\\)th hiccup occur?",
+      "choices": [
+        "\\(15\\) seconds after \\(4:58\\)",
+        "\\(20\\) seconds after \\(4:58\\)",
+        "\\(25\\) seconds after \\(4:58\\)",
+        "\\(30\\) seconds after \\(4:58\\)",
+        "\\(35\\) seconds after \\(4:58\\)"
+      ]
+    },
+    {
+      "problemNumber": 5,
+      "statementHtml": "What is the value of \\[\\frac{\\left(1+\\frac{1}{3}\\right)\\left(1+\\frac15\\right)\\left(1+\\frac17\\right)}{\\sqrt{\\left(1-\\frac{1}{3^2}\\right)\\left(1-\\frac{1}{5^2}\\right)\\left(1-\\frac{1}{7^2}\\right)}}?\\]",
+      "choices": [
+        "\\( \\sqrt3 \\)",
+        "\\( 2 \\)",
+        "\\( \\sqrt{15} \\)",
+        "\\( 4 \\)",
+        "\\( \\sqrt{105} \\)"
+      ]
+    },
+    {
+      "problemNumber": 6,
+      "statementHtml": "How many of the first ten numbers of the sequence \\[121, 11211, 1112111, \\ldots\\] are prime numbers?",
+      "choices": [
+        "\\( 0 \\)",
+        "\\( 1 \\)",
+        "\\( 2 \\)",
+        "\\( 3 \\)",
+        "\\( 4 \\)"
+      ]
+    },
+    {
+      "problemNumber": 7,
+      "statementHtml": "For how many values of the constant \\(k\\) will the polynomial \\(x^{2}+kx+36\\) have two distinct integer roots?",
+      "choices": [
+        "\\( \\ 6 \\)",
+        "\\( \\ 8 \\)",
+        "\\( \\ 9 \\)",
+        "\\( \\ 14 \\)",
+        "\\( \\ 16 \\)"
+      ]
+    },
+    {
+      "problemNumber": 8,
+      "statementHtml": "Consider the following \\(100\\) sets of \\(10\\) elements each: \\[\\begin{gathered} \\{1,2,3,\\ldots,10\\},\\\\ \\{11,12,13,\\ldots,20\\},\\\\ \\{21,22,23,\\ldots,30\\},\\\\ \\vdots\\\\ \\{991,992,993,\\ldots,1000\\}. \\end{gathered}\\] How many of these sets contain exactly two multiples of \\(7?\\)",
+      "choices": [
+        "\\( \\ 40 \\)",
+        "\\( \\ 42 \\)",
+        "\\( \\ 43 \\)",
+        "\\( \\ 49 \\)",
+        "\\( \\ 50 \\)"
+      ]
+    },
+    {
+      "problemNumber": 9,
+      "statementHtml": "The sum \\[\\dfrac{1}{2!}+\\dfrac{2}{3!}+\\dfrac{3}{4!}+\\cdots+\\dfrac{2021}{2022!}\\] can be expressed as \\(a-\\dfrac{1}{b!},\\) where \\(a\\) and \\(b\\) are positive integers. What is \\(a+b?\\)",
+      "choices": [
+        "\\( \\ 2020 \\)",
+        "\\( \\ 2021 \\)",
+        "\\( \\ 2022 \\)",
+        "\\( \\ 2023 \\)",
+        "\\( \\ 2024 \\)"
+      ]
+    },
+    {
+      "problemNumber": 10,
+      "statementHtml": "Camila writes down five positive integers. The unique mode of these integers is \\(2\\) greater than their median, and the median is \\(2\\) greater than their arithmetic mean. What is the least possible value for the mode?",
+      "choices": [
+        "\\( \\ 5 \\)",
+        "\\( \\ 7 \\)",
+        "\\( \\ 9 \\)",
+        "\\( \\ 11 \\)",
+        "\\( \\ 13 \\)"
+      ]
+    },
+    {
+      "problemNumber": 11,
+      "statementHtml": "All the high schools in a large school district are involved in a fundraiser selling T-shirts. Which of the choices below is logically equivalent to the statement “No school bigger than Euclid HS sold more T-shirts than Euclid HS”?",
+      "choices": [
+        "All schools smaller than Euclid HS sold fewer T-shirts than\nEuclid HS.",
+        "No school that sold more T-shirts than Euclid\nHS is bigger than Euclid HS.",
+        "All schools bigger than Euclid HS sold fewer T-shirts than\nEuclid HS.",
+        "All schools that sold fewer T-shirts than Euclid HS are smaller\nthan Euclid HS.",
+        "All schools smaller than Euclid HS sold more T-shirts than\nEuclid HS."
+      ]
+    },
+    {
+      "problemNumber": 12,
+      "statementHtml": "A pair of fair \\(6\\)-sided dice is rolled \\(n\\) times. What is the least value of \\(n\\) such that the probability that the sum of the numbers face up on a roll equals \\(7\\) at least once is greater than \\(\\dfrac{1}{2}?\\)",
+      "choices": [
+        "\\( 2 \\)",
+        "\\( 3 \\)",
+        "\\( 4 \\)",
+        "\\( 5 \\)",
+        "\\( 6 \\)"
+      ]
+    },
+    {
+      "problemNumber": 13,
+      "statementHtml": "The positive difference between a pair of primes is equal to \\(2,\\) and the positive difference between the cubes of the two primes is \\(31106.\\) What is the sum of the digits of the least prime that is greater than those two primes?",
+      "choices": [
+        "\\( \\ 8 \\)",
+        "\\( \\ 10 \\)",
+        "\\( \\ 11 \\)",
+        "\\( \\ 13 \\)",
+        "\\( \\ 16 \\)"
+      ]
+    },
+    {
+      "problemNumber": 14,
+      "statementHtml": "Suppose that \\(S\\) is a subset of \\(\\left\\{ 1, 2, 3, \\cdots , 25 \\right\\}\\) such that the sum of any two (not necessarily distinct) elements of \\(S\\) is never an element of \\(S.\\) What is the maximum number of elements \\(S\\) may contain?",
+      "choices": [
+        "\\( \\ 12 \\)",
+        "\\( \\ 13 \\)",
+        "\\( \\ 14 \\)",
+        "\\( \\ 15 \\)",
+        "\\( \\ 16 \\)"
+      ]
+    },
+    {
+      "problemNumber": 15,
+      "statementHtml": "Let \\(S_n\\) be the sum of the first \\(n\\) terms of an arithmetic sequence that has a common difference of \\(2.\\) The quotient \\(\\dfrac{S_{3n}}{S_n}\\) does not depend on \\(n.\\) What is \\(S_{20}?\\)",
+      "choices": [
+        "\\( 340 \\)",
+        "\\( 360 \\)",
+        "\\( 380 \\)",
+        "\\( 400 \\)",
+        "\\( 420 \\)"
+      ]
+    },
+    {
+      "problemNumber": 16,
+      "statementHtml": "The diagram below shows a rectangle with side lengths \\(4\\) and \\(8\\) and a square with side length \\(5.\\) Three vertices of the square lie on three different sides of the rectangle, as shown. What is the area of the region inside both the square and the rectangle?\n\n<img src=\"assets/exams/images/amc10/2022B/16.svg\" alt=\"Diagram for problem 16\" loading=\"lazy\">",
+      "choices": [
+        "\\( 15\\dfrac{1}{8} \\)",
+        "\\( 15\\dfrac{3}{8} \\)",
+        "\\( 15\\dfrac{1}{2} \\)",
+        "\\( 15\\dfrac{5}{8} \\)",
+        "\\( 15\\dfrac{7}{8} \\)"
+      ]
+    },
+    {
+      "problemNumber": 17,
+      "statementHtml": "One of the following numbers is not divisible by any prime number less than \\(10.\\) Which is it?",
+      "choices": [
+        "\\( 2^{606}-1 \\)",
+        "\\( 2^{606}+1 \\)",
+        "\\( 2^{607}-1 \\)",
+        "\\( 2^{607}+1 \\)",
+        "\\( 2^{607}+3^{607} \\)"
+      ]
+    },
+    {
+      "problemNumber": 18,
+      "statementHtml": "Consider systems of three linear equations with unknowns \\(x,\\) \\(y,\\) and \\(z,\\) \\[ \\begin{cases} a_1 x + b_1 y + c_1 z &amp; = 0 \\\\ a_2 x + b_2 y + c_2 z &amp; = 0 \\\\ a_3 x + b_3 y + c_3 z &amp; = 0 \\end{cases} \\] where each of the coefficients is either \\(0\\) or \\(1\\) and the system has a solution other than \\(x=y=z=0.\\) For example, one such system is \\[ \\begin{cases} 1 x + 1 y + 0 z &amp; = 0 \\\\ 0 x + 1 y + 1 z &amp; = 0 \\\\ 0 x + 0 y + 0 z &amp; = 0 \\end{cases} \\] with a nonzero solution of \\((x,y,z) = (1, -1, 1).\\) How many such systems of equations are there? (The equations in a system need not be distinct, and two systems containing the same equations in a different order are considered different.)",
+      "choices": [
+        "\\( \\ 302 \\)",
+        "\\( \\ 338 \\)",
+        "\\( \\ 340 \\)",
+        "\\( \\ 343 \\)",
+        "\\( \\ 344 \\)"
+      ]
+    },
+    {
+      "problemNumber": 19,
+      "statementHtml": "Each square in a \\(5 \\times 5\\) grid is either filled or empty, and has up to eight adjacent neighboring squares, where neighboring squares share either a side or a corner. The grid is transformed by the following rules:\n\n• Any filled square with two or three filled neighbors remains filled.\n\n• Any empty square with exactly three filled neighbors becomes a filled square.\n\n• All other squares remain empty or become empty.\n\nA sample transformation is shown in the figure below.\n\n<img src=\"assets/exams/images/amc10/2022B/19_1.svg\" alt=\"Diagram for problem 19\" loading=\"lazy\">\n\nSuppose the \\(5 \\times 5\\) grid has a border of empty squares surrounding a \\(3 \\times 3\\) subgrid. How many initial configurations will lead to a transformed grid consisting of a single filled square in the center after a single transformation? (Rotations and reflections of the same configuration are considered different.)\n\n<img src=\"assets/exams/images/amc10/2022B/19_2.svg\" alt=\"Diagram for problem 19\" loading=\"lazy\">",
+      "choices": [
+        "\\( \\ 14 \\)",
+        "\\( \\ 18 \\)",
+        "\\( \\ 22 \\)",
+        "\\( \\ 26 \\)",
+        "\\( \\ 30 \\)"
+      ]
+    },
+    {
+      "problemNumber": 20,
+      "statementHtml": "Let \\(ABCD\\) be a rhombus with \\(\\angle ADC = 46^\\circ.\\) Let \\(E\\) be the midpoint of \\(\\overline{CD},\\) and let \\(F\\) be the point on \\(\\overline{BE}\\) such that \\(\\overline{AF}\\) is perpendicular to \\(\\overline{BE}.\\) What is the degree measure of \\(\\angle BFC?\\)",
+      "choices": [
+        "\\( \\ 110 \\)",
+        "\\( \\ 111 \\)",
+        "\\( \\ 112 \\)",
+        "\\( \\ 113 \\)",
+        "\\( \\ 114 \\)"
+      ]
+    },
+    {
+      "problemNumber": 21,
+      "statementHtml": "Let \\(P(x)\\) be a polynomial with rational coefficients such that when \\(P(x)\\) is divided by the polynomial \\(x^2 + x + 1,\\) the remainder is \\(x+2,\\) and when \\(P(x)\\) is divided by the polynomial \\(x^2+1,\\) the remainder is \\(2x+1.\\) There is a unique polynomial of least degree with these two properties. What is the sum of the squares of the coefficients of that polynomial?",
+      "choices": [
+        "\\( \\ 10 \\)",
+        "\\( \\ 13 \\)",
+        "\\( \\ 19 \\)",
+        "\\( \\ 20 \\)",
+        "\\( \\ 23 \\)"
+      ]
+    },
+    {
+      "problemNumber": 22,
+      "statementHtml": "Let \\(S\\) be the set of circles in the coordinate plane that are tangent to each of the three circles with equations \\[x^{2}+y^{2}=4,\\qquad x^{2}+y^{2}=64,\\] and \\[(x-5)^{2}+y^{2}=3.\\] What is the sum of the areas of all circles in \\(S?\\)",
+      "choices": [
+        "\\( \\ 48 \\pi \\)",
+        "\\( \\ 68 \\pi \\)",
+        "\\( \\ 96 \\pi \\)",
+        "\\( \\ 102 \\pi \\)",
+        "\\( \\ 136 \\pi \\)"
+      ]
+    },
+    {
+      "problemNumber": 23,
+      "statementHtml": "Ant Amelia starts on the number line at \\(0\\) and crawls in the following manner. For \\(n=1,\\) \\(2,\\) \\(3;\\) Amelia chooses a time duration \\(t_n\\) and an increment \\(x_n\\) independently and uniformly at random from the interval \\((0,1).\\) During the \\(n\\)th step of the process, Amelia moves \\(x_n\\) units in the positive direction, using up \\(t_n\\) minutes. If the total elapsed time has exceeded \\(1\\) minute during the \\(n\\)th step, she stops at the end of that step; otherwise, she continues with the next step, taking at most \\(3\\) steps in all. What is the probability that Amelia’s position when she stops will be greater than \\(1?\\)",
+      "choices": [
+        "\\( \\dfrac 13 \\)",
+        "\\( \\dfrac 12 \\)",
+        "\\( \\dfrac 23 \\)",
+        "\\( \\dfrac 34 \\)",
+        "\\( \\dfrac 56 \\)"
+      ]
+    },
+    {
+      "problemNumber": 24,
+      "statementHtml": "Consider functions \\(f\\) that satisfy \\[|f(x)-f(y)|\\leq \\dfrac{1}{2}|x-y|\\] for all real numbers \\(x\\) and \\(y.\\) Of all such functions that also satisfy the equation \\(f(300) = f(900),\\) what is the greatest possible value of the following expression? \\[f(f(800))-f(f(400))\\]",
+      "choices": [
+        "\\( 25 \\)",
+        "\\( 50 \\)",
+        "\\( 100 \\)",
+        "\\( 150 \\)",
+        "\\( 200 \\)"
+      ]
+    },
+    {
+      "problemNumber": 25,
+      "statementHtml": "Let \\(x_0,\\) \\(x_1,\\) \\(x_2,\\) \\(\\dotsc\\) be a sequence of numbers, where each \\(x_k\\) is either \\(0\\) or \\(1.\\) For each positive integer \\(n,\\) define \\[S_n = \\sum_{k=0}^{n-1} x_k 2^k\\] Suppose \\(7S_n \\equiv 1 \\pmod{2^n}\\) for all \\(n \\geq 1.\\) What is the value of the sum \\[x_{2019} + 2x_{2020} + \\]\\[4x_{2021} + 8x_{2022}?\\]",
+      "choices": [
+        "\\( 6 \\)",
+        "\\( 7 \\)",
+        "\\( 12 \\)",
+        "\\( 14 \\)",
+        "\\( 15 \\)"
+      ]
+    }
+  ]
+}

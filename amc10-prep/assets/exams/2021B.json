@@ -1,0 +1,283 @@
+{
+  "year": 2021,
+  "exam": "AMC 10B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2021B",
+  "sourceName": "LIVE by Po-Shen Loh",
+  "problems": [
+    {
+      "problemNumber": 1,
+      "statementHtml": "How many integer values of \\(x\\) satisfy \\(|x| &lt; 3\\pi?\\)",
+      "choices": [
+        "\\( 9 \\)",
+        "\\( 10 \\)",
+        "\\( 18 \\)",
+        "\\( 19 \\)",
+        "\\( 20 \\)"
+      ]
+    },
+    {
+      "problemNumber": 2,
+      "statementHtml": "What is the value of \\[ \\begin{aligned} &amp;\\sqrt{\\left(3-2\\sqrt{3}\\right)^2} \\\\ &amp;{}+\\sqrt{\\left(3+2\\sqrt{3}\\right)^2}? \\end{aligned} \\]",
+      "choices": [
+        "\\( 0 \\)",
+        "\\( 4\\sqrt{3}-6 \\)",
+        "\\( 6 \\)",
+        "\\( 4\\sqrt{3} \\)",
+        "\\( 4\\sqrt{3}+6 \\)"
+      ]
+    },
+    {
+      "problemNumber": 3,
+      "statementHtml": "In an after-school program for juniors and seniors, there is a debate team with an equal number of students from each class on the team. Among the \\(28\\) students in the program, \\(25\\%\\) of the juniors and \\(10\\%\\) of the seniors are on the debate team. How many juniors are in the program?",
+      "choices": [
+        "\\( 5 \\)",
+        "\\( 6 \\)",
+        "\\( 8 \\)",
+        "\\( 11 \\)",
+        "\\( 20 \\)"
+      ]
+    },
+    {
+      "problemNumber": 4,
+      "statementHtml": "At a math contest, \\(57\\) students are wearing blue shirts, and another \\(75\\) students are wearing yellow shirts. The \\(132\\) students are assigned into \\(66\\) pairs. In exactly \\(23\\) of these pairs, both students are wearing blue shirts. In how many pairs are both students wearing yellow shirts?",
+      "choices": [
+        "\\( 23 \\)",
+        "\\( 32 \\)",
+        "\\( 37 \\)",
+        "\\( 41 \\)",
+        "\\( 64 \\)"
+      ]
+    },
+    {
+      "problemNumber": 5,
+      "statementHtml": "The ages of Jonie’s four cousins are distinct single-digit positive integers. Two of the cousins’ ages multiplied together give \\(24,\\) while the other two multiply to \\(30.\\) What is the sum of the ages of Jonie’s four cousins?",
+      "choices": [
+        "\\( 21 \\)",
+        "\\( 22 \\)",
+        "\\( 23 \\)",
+        "\\( 24 \\)",
+        "\\( 25 \\)"
+      ]
+    },
+    {
+      "problemNumber": 6,
+      "statementHtml": "Ms. Blackwell gives an exam to two classes. The mean of the scores of the students in the morning class is \\(84,\\) and the afternoon class’s mean score is \\(70.\\) The ratio of the number of students in the morning class to the number of students in the afternoon class is \\(\\frac{3}{4}.\\) What is the mean of the scores of all the students?",
+      "choices": [
+        "\\( 74 \\)",
+        "\\( 75 \\)",
+        "\\( 76 \\)",
+        "\\( 77 \\)",
+        "\\( 78 \\)"
+      ]
+    },
+    {
+      "problemNumber": 7,
+      "statementHtml": "In a plane, four circles with radii \\(1,\\) \\(3,\\) \\(5,\\) and \\(7\\) are tangent to line \\(\\ell\\) at the same point \\(A,\\) but they may be on either side of \\(\\ell.\\) Region \\(S\\) consists of all the points that lie inside exactly one of the four circles. What is the maximum possible area of region \\(S?\\)",
+      "choices": [
+        "\\( 24\\pi \\)",
+        "\\( 32\\pi \\)",
+        "\\( 64\\pi \\)",
+        "\\( 65\\pi \\)",
+        "\\( 84\\pi \\)"
+      ]
+    },
+    {
+      "problemNumber": 8,
+      "statementHtml": "Mr. Zhou places all the integers from \\(1\\) to \\(225\\) into a \\(15\\) by \\(15\\) grid. He places \\(1\\) in the middle square (eighth row and eighth column) and places other numbers one by one clockwise, as shown in part in the diagram below. What is the sum of the greatest number and the least number that appear in the second row from the top?\n\n<img src=\"assets/exams/images/amc10/2021B/8.svg\" alt=\"Diagram for problem 8\" loading=\"lazy\">",
+      "choices": [
+        "\\( 367 \\)",
+        "\\( 368 \\)",
+        "\\( 369 \\)",
+        "\\( 379 \\)",
+        "\\( 380 \\)"
+      ]
+    },
+    {
+      "problemNumber": 9,
+      "statementHtml": "The point \\(P(a,b)\\) in the \\(xy\\)-plane is first rotated counterclockwise by \\(90^\\circ\\) around the point \\((1,5)\\) and then reflected about the line \\(y = -x.\\) The image of \\(P\\) after these two transformations is at \\((-6,3).\\) What is \\(b - a ?\\)",
+      "choices": [
+        "\\( 1 \\)",
+        "\\( 3 \\)",
+        "\\( 5 \\)",
+        "\\( 7 \\)",
+        "\\( 9 \\)"
+      ]
+    },
+    {
+      "problemNumber": 10,
+      "statementHtml": "An inverted cone with base radius \\(12 \\mathrm{ cm}\\) and height \\(18 \\mathrm{ cm}\\) is full of water. The water is poured into a tall cylinder whose horizontal base has a radius of \\(24 \\mathrm{ cm}.\\) What is the height in centimeters of the water in the cylinder?",
+      "choices": [
+        "\\( 1.5 \\)",
+        "\\( 3 \\)",
+        "\\( 4 \\)",
+        "\\( 4.5 \\)",
+        "\\( 6 \\)"
+      ]
+    },
+    {
+      "problemNumber": 11,
+      "statementHtml": "Grandma has just finished baking a large rectangular pan of brownies. She is planning to make rectangular pieces of equal size and shape, with straight cuts parallel to the sides of the pan. Each cut must be made entirely across the pan. Grandma wants to make the same number of interior pieces as pieces along the perimeter of the pan. What is the greatest possible number of brownies she can produce?",
+      "choices": [
+        "\\( 24 \\)",
+        "\\( 30 \\)",
+        "\\( 48 \\)",
+        "\\( 60 \\)",
+        "\\( 64 \\)"
+      ]
+    },
+    {
+      "problemNumber": 12,
+      "statementHtml": "Let \\(N = 34 \\cdot 34 \\cdot 63 \\cdot 270.\\) What is the ratio of the sum of the odd divisors of \\(N\\) to the sum of the even divisors of \\(N?\\)",
+      "choices": [
+        "\\( 1 : 16 \\)",
+        "\\( 1 : 15 \\)",
+        "\\( 1 : 14 \\)",
+        "\\( 1 : 8 \\)",
+        "\\( 1 : 3 \\)"
+      ]
+    },
+    {
+      "problemNumber": 13,
+      "statementHtml": "Let \\(n\\) be a positive integer and \\(d\\) be a digit such that the value of the numeral \\(\\underline{32d}\\) in base \\(n\\) equals \\(263,\\) and the value of the numeral \\(\\underline{324}\\) in base \\(n\\) equals the value of the numeral \\(\\underline{11d1}\\) in base six. What is \\(n + d ?\\)",
+      "choices": [
+        "\\( 10 \\)",
+        "\\( 11 \\)",
+        "\\( 13 \\)",
+        "\\( 15 \\)",
+        "\\( 16 \\)"
+      ]
+    },
+    {
+      "problemNumber": 14,
+      "statementHtml": "Three equally spaced parallel lines intersect a circle, creating three chords of lengths \\(38,\\) \\(38,\\) and \\(34.\\) What is the distance between two adjacent parallel lines?",
+      "choices": [
+        "\\( 5\\frac12 \\)",
+        "\\( 6 \\)",
+        "\\( 6\\frac12 \\)",
+        "\\( 7 \\)",
+        "\\( 7\\frac12 \\)"
+      ]
+    },
+    {
+      "problemNumber": 15,
+      "statementHtml": "The real number \\(x\\) satisfies the equation \\[x+\\frac{1}{x} = \\sqrt{5}.\\] What is the value of \\(x^{11}-7x^{7}+x^3?\\)",
+      "choices": [
+        "\\( -1 \\)",
+        "\\( 0 \\)",
+        "\\( 1 \\)",
+        "\\( 2 \\)",
+        "\\( \\sqrt{5} \\)"
+      ]
+    },
+    {
+      "problemNumber": 16,
+      "statementHtml": "Call a positive integer an uphill integer if every digit is strictly greater than the previous digit. For example, \\(1357,\\) \\(89,\\) and \\(5\\) are all uphill integers, but \\(32,\\) \\(1240,\\) and \\(466\\) are not. How many uphill integers are divisible by \\(15?\\)",
+      "choices": [
+        "\\( 4 \\)",
+        "\\( 5 \\)",
+        "\\( 6 \\)",
+        "\\( 7 \\)",
+        "\\( 8 \\)"
+      ]
+    },
+    {
+      "problemNumber": 17,
+      "statementHtml": "Ravon, Oscar, Aditi, Tyrone, and Kim play a card game. Each person is given \\(2\\) cards out of a set of \\(10\\) cards numbered \\(1,\\) \\(2,\\) \\(3,\\) \\(\\dots,\\) \\(10.\\) The score of a player is the sum of the numbers of their cards. The scores of the players are as follows: Ravon--\\(11,\\) Oscar--\\(4,\\) Aditi--\\(7,\\) Tyrone--\\(16,\\) Kim--\\(17.\\) Which of the following statements is true?",
+      "choices": [
+        "Ravon was given card \\(3.\\)",
+        "Aditi was given card \\(3.\\)",
+        "Ravon was given card \\(4.\\)",
+        "Aditi was given card \\(4.\\)",
+        "Tyrone was given card \\(7.\\)"
+      ]
+    },
+    {
+      "problemNumber": 18,
+      "statementHtml": "A fair \\(6\\)-sided die is repeatedly rolled until an odd number appears. What is the probability that every even number appears at least once before the first occurrence of an odd number?",
+      "choices": [
+        "\\( \\dfrac{1}{120} \\)",
+        "\\( \\dfrac{1}{32} \\)",
+        "\\( \\dfrac{1}{20} \\)",
+        "\\( \\dfrac{3}{20} \\)",
+        "\\( \\dfrac{1}{6} \\)"
+      ]
+    },
+    {
+      "problemNumber": 19,
+      "statementHtml": "Suppose that \\(S\\) is a finite set of positive integers.\n\nIf the greatest integer in \\(S\\) is removed from \\(S,\\) then the average value (arithmetic mean) of the integers remaining is \\(32.\\) If the least integer in \\(S\\) is also removed, then the average value of the integers remaining is \\(35.\\) If the greatest integer is then returned to the set, the average value of the integers rises to \\(40.\\) The greatest integer in the original set \\(S\\) is \\(72\\) greater than the least integer in \\(S.\\)\n\nWhat is the average value of all the integers in the set \\(S?\\)",
+      "choices": [
+        "\\( 36.2 \\)",
+        "\\( 36.4 \\)",
+        "\\( 36.6 \\)",
+        "\\( 36.8 \\)",
+        "\\( 37 \\)"
+      ]
+    },
+    {
+      "problemNumber": 20,
+      "statementHtml": "The figure below is constructed from \\(11\\) line segments, each of which has length \\(2.\\) The area of pentagon \\(ABCDE\\) can be written as \\(\\sqrt{m} + \\sqrt{n},\\) where \\(m\\) and \\(n\\) are positive integers. What is \\(m + n ?\\)\n\n<img src=\"assets/exams/images/amc10/2021B/20.svg\" alt=\"Diagram for problem 20\" loading=\"lazy\">",
+      "choices": [
+        "\\( 20 \\)",
+        "\\( 21 \\)",
+        "\\( 22 \\)",
+        "\\( 23 \\)",
+        "\\( 24 \\)"
+      ]
+    },
+    {
+      "problemNumber": 21,
+      "statementHtml": "A square piece of paper has side length \\(1\\) and vertices \\(A,\\) \\(B,\\) \\(C,\\) and \\(D\\) in that order. As shown in the figure, the paper is folded so that vertex \\(C\\) meets edge \\(\\overline{AD}\\) at point \\(C',\\) and edge \\(\\overline{BC}\\) intersects edge \\(\\overline{AB}\\) at point \\(E.\\) Suppose that \\(C'D = \\frac{1}{3}.\\) What is the perimeter of \\(\\triangle AEC'?\\)\n\n<img src=\"assets/exams/images/amc10/2021B/21.svg\" alt=\"Diagram for problem 21\" loading=\"lazy\">",
+      "choices": [
+        "\\( 2 \\)",
+        "\\( 1+\\dfrac{2}{3}\\sqrt{3} \\)",
+        "\\( \\dfrac{13}{6} \\)",
+        "\\( 1 + \\dfrac{3}{4}\\sqrt{3} \\)",
+        "\\( \\dfrac{7}{3} \\)"
+      ]
+    },
+    {
+      "problemNumber": 22,
+      "statementHtml": "Ang, Ben, and Jasmin each have \\(5\\) blocks, colored red, blue, yellow, white, and green; and there are \\(5\\) empty boxes. Each of the people randomly and independently of the other two people places one of their blocks into each box. The probability that at least one box receives \\(3\\) blocks all of the same color is \\(\\frac{m}{n},\\) where \\(m\\) and \\(n\\) are relatively prime positive integers. What is \\(m + n ?\\)",
+      "choices": [
+        "\\( 47 \\)",
+        "\\( 94 \\)",
+        "\\( 227 \\)",
+        "\\( 471 \\)",
+        "\\( 542 \\)"
+      ]
+    },
+    {
+      "problemNumber": 23,
+      "statementHtml": "A square with side length \\(8\\) is colored white except for \\(4\\) black isosceles right triangular regions with legs of length \\(2\\) in each corner of the square and a black diamond with side length \\(2\\sqrt{2}\\) in the center of the square, as shown in the diagram.\n\nA circular coin with diameter \\(1\\) is dropped onto the square and lands in a random location where the coin is completely contained within the square. The probability that the coin will cover part of the black region of the square can be written as \\(\\frac{1}{196}\\left(a+b\\sqrt{2}+\\pi\\right),\\) where \\(a\\) and \\(b\\) are positive integers. What is \\(a+b?\\)\n\n<img src=\"assets/exams/images/amc10/2021B/23.svg\" alt=\"Diagram for problem 23\" loading=\"lazy\">",
+      "choices": [
+        "\\( 64 \\)",
+        "\\( 66 \\)",
+        "\\( 68 \\)",
+        "\\( 70 \\)",
+        "\\( 72 \\)"
+      ]
+    },
+    {
+      "problemNumber": 24,
+      "statementHtml": "Arjun and Beth play a game in which they take turns removing one brick or two adjacent bricks from one “wall” among a set of several walls of bricks, with gaps possibly creating new walls. The walls are one brick tall. For example, a set of walls of sizes \\(4\\) and \\(2\\) can be changed into any of the following by one move: \\((3,2),\\) \\((2,1,2),\\) \\((4),\\) \\((4,1),\\) \\((2,2),\\) or \\((1,1,2).\\)\n\n<img src=\"assets/exams/images/amc10/2021B/24.svg\" alt=\"Diagram for problem 24\" loading=\"lazy\">\n\nArjun plays first, and the player who removes the last brick wins. For which starting configuration is there a strategy that guarantees a win for Beth?",
+      "choices": [
+        "\\( (6,1,1) \\)",
+        "\\( (6,2,1) \\)",
+        "\\( (6,2,2) \\)",
+        "\\( (6,3,1) \\)",
+        "\\( (6,3,2) \\)"
+      ]
+    },
+    {
+      "problemNumber": 25,
+      "statementHtml": "Let \\(S\\) be the set of lattice points in the coordinate plane, both of whose coordinates are integers between \\(1\\) and \\(30,\\) inclusive. Exactly \\(300\\) points in \\(S\\) lie on or below a line with equation \\(y=mx.\\) The possible values of \\(m\\) lie in an interval of length \\(\\frac ab,\\) where \\(a\\) and \\(b\\) are relatively prime positive integers. What is \\(a+b?\\)",
+      "choices": [
+        "\\( 31 \\)",
+        "\\( 47 \\)",
+        "\\( 62 \\)",
+        "\\( 72 \\)",
+        "\\( 85 \\)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "year": 2016,
+  "exam": "AMC 10A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A",
+  "sourceName": "LIVE by Po-Shen Loh",
+  "problems": [
+    {
+      "problemNumber": 1,
+      "statementHtml": "What is the value of \\(\\dfrac{11!-10!}{9!}?\\)",
+      "choices": [
+        "\\(99\\)",
+        "\\(100\\)",
+        "\\(110\\)",
+        "\\(121\\)",
+        "\\(132\\)"
+      ]
+    },
+    {
+      "problemNumber": 2,
+      "statementHtml": "For what value of \\(x\\) does \\[10^{x} \\cdot 100^{2x}=1000^{5}?\\]",
+      "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)"
+      ]
+    },
+    {
+      "problemNumber": 3,
+      "statementHtml": "For every dollar Ben spent on bagels, David spent \\(25\\) cents less. Ben paid \\(\\$12.50\\) more than David. How much did they spend in the bagel store together?",
+      "choices": [
+        "\\(\\$37.50\\)",
+        "\\(\\$50.00\\)",
+        "\\(\\$87.50\\)",
+        "\\(\\$90.00\\)",
+        "\\(\\$92.50\\)"
+      ]
+    },
+    {
+      "problemNumber": 4,
+      "statementHtml": "The remainder function can be defined for all real numbers \\(x\\) and \\(y\\) with \\(y \\neq 0\\) by \\[\\operatorname{rem}(x,y)=x-y\\left\\lfloor\\frac{x}{y}\\right\\rfloor,\\] where \\(\\left \\lfloor \\frac{x}{y} \\right \\rfloor\\) denotes the greatest integer less than or equal to \\(\\frac{x}{y}.\\) What is the value of \\(\\text{rem} \\left(\\frac{3}{8}, -\\frac{2}{5} \\right)?\\)",
+      "choices": [
+        "\\(-\\dfrac{3}{8}\\)",
+        "\\(-\\dfrac{1}{40}\\)",
+        "\\(0\\)",
+        "\\(\\dfrac{3}{8}\\)",
+        "\\(\\dfrac{31}{40}\\)"
+      ]
+    },
+    {
+      "problemNumber": 5,
+      "statementHtml": "A rectangular box has integer side lengths in the ratio \\(1:3:4.\\) Which of the following could be the volume of the box?",
+      "choices": [
+        "\\(48\\)",
+        "\\(56\\)",
+        "\\(64\\)",
+        "\\(96\\)",
+        "\\(144\\)"
+      ]
+    },
+    {
+      "problemNumber": 6,
+      "statementHtml": "Ximena lists the whole numbers \\(1\\) through \\(30\\) once. Emilio copies Ximena’s numbers, replacing each occurrence of the digit \\(2\\) by the digit \\(1.\\) Ximena adds her numbers and Emilio adds his numbers. How much larger is Ximena’s sum than Emilio’s?",
+      "choices": [
+        "\\(13\\)",
+        "\\(26\\)",
+        "\\(102\\)",
+        "\\(103\\)",
+        "\\(110\\)"
+      ]
+    },
+    {
+      "problemNumber": 7,
+      "statementHtml": "The mean, median, and mode of the \\(7\\) data values \\[60, 100, x, 40, 50, 200, 90\\] are all equal to \\(x.\\) What is the value of \\(x?\\)",
+      "choices": [
+        "\\(50\\)",
+        "\\(60\\)",
+        "\\(75\\)",
+        "\\(90\\)",
+        "\\(100\\)"
+      ]
+    },
+    {
+      "problemNumber": 8,
+      "statementHtml": "Trickster Rabbit agrees with Foolish Fox to double Fox’s money every time Fox crosses the bridge by Rabbit’s house, as long as Fox pays \\(40\\) coins in toll to Rabbit after each crossing. The payment is made after the doubling. Fox is excited about his good fortune until he discovers that all his money is gone after crossing the bridge three times. How many coins did Fox have at the beginning?",
+      "choices": [
+        "\\(20\\)",
+        "\\(30\\)",
+        "\\(35\\)",
+        "\\(40\\)",
+        "\\(45\\)"
+      ]
+    },
+    {
+      "problemNumber": 9,
+      "statementHtml": "A triangular array of \\(2016\\) coins has \\(1\\) coin in the first row, \\(2\\) coins in the second row, \\(3\\) coins in the third row, and so on up to \\(N\\) coins in the \\(N\\)th row. What is the sum of the digits of \\(N?\\)",
+      "choices": [
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)",
+        "\\(9\\)",
+        "\\(10\\)"
+      ]
+    },
+    {
+      "problemNumber": 10,
+      "statementHtml": "A rug is made with three different colors as shown. The areas of the three differently colored regions form an arithmetic progression. The inner rectangle is one foot wide, and each of the two shaded regions is \\(1\\) foot wide on all four sides. What is the length in feet of the inner rectangle?\n\n<img src=\"assets/exams/images/amc10/2016A/10.svg\" alt=\"Diagram for problem 10\" loading=\"lazy\">",
+      "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(4\\)",
+        "\\(6\\)",
+        "\\(8\\)"
+      ]
+    },
+    {
+      "problemNumber": 11,
+      "statementHtml": "What is the area of the shaded region of the given \\(8\\times5\\) rectangle?\n\n<img src=\"assets/exams/images/amc10/2016A/11.svg\" alt=\"Diagram for problem 11\" loading=\"lazy\">",
+      "choices": [
+        "\\(4\\dfrac{3}{5}\\)",
+        "\\(5\\)",
+        "\\(5\\dfrac{1}{4}\\)",
+        "\\(6\\dfrac{1}{2}\\)",
+        "\\(8\\)"
+      ]
+    },
+    {
+      "problemNumber": 12,
+      "statementHtml": "Three distinct integers are selected at random between \\(1\\) and \\(2016,\\) inclusive. Which of the following is a correct statement about the probability \\(p\\) that the product of the three integers is odd?",
+      "choices": [
+        "\\(p \\lt \\dfrac{1}{8}\\)",
+        "\\(p = \\dfrac{1}{8}\\)",
+        "\\(\\dfrac{1}{8} \\lt p \\lt \\dfrac{1}{3}\\)",
+        "\\(p = \\dfrac{1}{3}\\)",
+        "\\(p \\gt \\dfrac{1}{3}\\)"
+      ]
+    },
+    {
+      "problemNumber": 13,
+      "statementHtml": "Five friends sat in a movie theater in a row containing \\(5\\) seats, numbered \\(1\\) to \\(5\\) from left to right. (The directions “left” and “right” are from the point of view of the people as they sit in the seats.)\n\nDuring the movie Ada went to the lobby to get some popcorn. When she returned, she found that Bea had moved two seats to the right, Ceci had moved one seat to the left, and Dee and Edie had switched seats, leaving an end seat for Ada. In which seat had Ada been sitting before she got up?",
+      "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)"
+      ]
+    },
+    {
+      "problemNumber": 14,
+      "statementHtml": "How many ways are there to write \\(2016\\) as the sum of twos and threes, ignoring order? (For example, \\(1008\\cdot 2 + 0\\cdot 3\\) and \\(402\\cdot 2 + 404\\cdot 3\\) are two such ways.)",
+      "choices": [
+        "\\(236\\)",
+        "\\(336\\)",
+        "\\(337\\)",
+        "\\(403\\)",
+        "\\(672\\)"
+      ]
+    },
+    {
+      "problemNumber": 15,
+      "statementHtml": "Seven cookies of radius \\(1\\) inch are cut from a circle of cookie dough, as shown. Neighboring cookies are tangent, and all except the center cookie are tangent to the edge of the dough. The leftover scrap is reshaped to form another cookie of the same thickness. What is the radius in inches of the scrap cookie?\n\n<img src=\"assets/exams/images/amc10/2016A/15.svg\" alt=\"Diagram for problem 15\" loading=\"lazy\">",
+      "choices": [
+        "\\(\\sqrt{2}\\)",
+        "\\(1.5\\)",
+        "\\(\\sqrt{\\pi}\\)",
+        "\\(\\sqrt{2\\pi}\\)",
+        "\\(\\pi\\)"
+      ]
+    },
+    {
+      "problemNumber": 16,
+      "statementHtml": "A triangle with vertices \\(A(0, 2),\\) \\(B(-3, 2),\\) and \\(C(-3, 0)\\) is reflected about the \\(x\\)-axis, then the image \\(\\triangle A'B'C'\\) is rotated counterclockwise about the origin by \\(90^{\\circ}\\) to produce \\(\\triangle A''B''C''.\\) Which of the following transformations will return \\(\\triangle A''B''C''\\) to \\(\\triangle ABC?\\)",
+      "choices": [
+        "counterclockwise rotation about the origin by\n\\(90^{\\circ}\\)",
+        "clockwise rotation about the origin by \\(90^{\\circ}\\)",
+        "reflection about the \\(x\\)-axis",
+        "reflection about the line \\(y = x\\)",
+        "reflection about the \\(y\\)-axis"
+      ]
+    },
+    {
+      "problemNumber": 17,
+      "statementHtml": "Let \\(N\\) be a positive multiple of \\(5.\\) One red ball and \\(N\\) green balls are arranged in a line in random order. Let \\(P(N)\\) be the probability that at least \\(\\frac{3}{5}\\) of the green balls are on the same side of the red ball. Observe that \\(P(5)=1\\) and that \\(P(N)\\) approaches \\(\\frac{4}{5}\\) as \\(N\\) grows large. What is the sum of the digits of the least value of \\(N\\) such that \\(P(N) &lt; \\dfrac{321}{400}?\\)",
+      "choices": [
+        "\\(12\\)",
+        "\\(14\\)",
+        "\\(16\\)",
+        "\\(18\\)",
+        "\\(20\\)"
+      ]
+    },
+    {
+      "problemNumber": 18,
+      "statementHtml": "Each vertex of a cube is to be labeled with an integer \\(1\\) through \\(8,\\) with each integer being used once, in such a way that the sum of the four numbers on the vertices of a face is the same for each face. Arrangements that can be obtained from each other through rotations of the cube are considered to be the same. How many different arrangements are possible?",
+      "choices": [
+        "\\(1\\)",
+        "\\(3\\)",
+        "\\(6\\)",
+        "\\(12\\)",
+        "\\(24\\)"
+      ]
+    },
+    {
+      "problemNumber": 19,
+      "statementHtml": "In rectangle \\(ABCD,\\) \\(AB=6\\) and \\(BC=3.\\) Point \\(E\\) between \\(B\\) and \\(C,\\) and point \\(F\\) between \\(E\\) and \\(C\\) are such that \\(BE=EF=FC.\\) Segments \\(\\overline{AE}\\) and \\(\\overline{AF}\\) intersect \\(\\overline{BD}\\) at \\(P\\) and \\(Q,\\) respectively.\n\nThe ratio \\(BP:PQ:QD\\) can be written as \\(r:s:t\\) where the greatest common factor of \\(r,\\) \\(s,\\) and \\(t\\) is \\(1.\\) What is \\(r+s+t?\\)",
+      "choices": [
+        "\\(7\\)",
+        "\\(9\\)",
+        "\\(12\\)",
+        "\\(15\\)",
+        "\\(20\\)"
+      ]
+    },
+    {
+      "problemNumber": 20,
+      "statementHtml": "For some particular value of \\(N,\\) when \\((a+b+c+d+1)^N\\) is expanded and like terms are combined, the resulting expression contains exactly \\(1001\\) terms that include all four variables \\(a,\\) \\(b,\\) \\(c,\\) and \\(d,\\) each to some positive power. What is \\(N?\\)",
+      "choices": [
+        "\\(9\\)",
+        "\\(14\\)",
+        "\\(16\\)",
+        "\\(17\\)",
+        "\\(19\\)"
+      ]
+    },
+    {
+      "problemNumber": 21,
+      "statementHtml": "Circles with centers \\(P,\\) \\(Q\\) and \\(R,\\) having radii \\(1,\\) \\(2\\) and \\(3,\\) respectively, lie on the same side of line \\(l\\) and are tangent to \\(l\\) at \\(P',\\) \\(Q'\\) and \\(R',\\) respectively, with \\(Q'\\) between \\(P'\\) and \\(R'.\\) The circle with center \\(Q\\) is externally tangent to each of the other two circles. What is the area of \\(\\triangle PQR?\\)",
+      "choices": [
+        "\\(0\\)",
+        "\\(\\sqrt{\\dfrac{2}{3}}\\)",
+        "\\(1\\)",
+        "\\(\\sqrt{6}-\\sqrt{2}\\)",
+        "\\(\\sqrt{\\dfrac{3}{2}}\\)"
+      ]
+    },
+    {
+      "problemNumber": 22,
+      "statementHtml": "For some positive integer \\(n,\\) the number \\(110n^3\\) has \\(110\\) positive integer divisors, including \\(1\\) and the number \\(110n^3.\\) How many positive integer divisors does the number \\(81n^4\\) have?",
+      "choices": [
+        "\\(110\\)",
+        "\\(191\\)",
+        "\\(261\\)",
+        "\\(325\\)",
+        "\\(425\\)"
+      ]
+    },
+    {
+      "problemNumber": 23,
+      "statementHtml": "A binary operation \\(\\diamondsuit\\) has the properties that \\[a\\,\\diamondsuit\\, (b\\,\\diamondsuit \\,c) = (a\\,\\diamondsuit \\,b)\\cdot c\\] and that \\(a\\,\\diamondsuit \\,a=1\\) for all nonzero real numbers \\(a,\\) \\(b,\\) and \\(c.\\) (Here the dot \\(\\cdot\\) represents the usual multiplication operation.) The solution to the equation \\[2016 \\,\\diamondsuit\\, (6\\,\\diamondsuit\\, x)=100\\] can be written as \\(\\frac{p}{q},\\) where \\(p\\) and \\(q\\) are relatively prime positive integers. What is \\(p+q?\\)",
+      "choices": [
+        "\\(109\\)",
+        "\\(201\\)",
+        "\\(301\\)",
+        "\\(3049\\)",
+        "\\(33{,}601\\)"
+      ]
+    },
+    {
+      "problemNumber": 24,
+      "statementHtml": "A quadrilateral is inscribed in a circle of radius \\(200\\sqrt{2}.\\) Three of the sides of this quadrilateral have length \\(200.\\) What is the length of the fourth side?",
+      "choices": [
+        "\\(200\\)",
+        "\\(200\\sqrt{2}\\)",
+        "\\(200\\sqrt{3}\\)",
+        "\\(300\\sqrt{2}\\)",
+        "\\(500\\)"
+      ]
+    },
+    {
+      "problemNumber": 25,
+      "statementHtml": "How many ordered triples \\((x,y,z)\\) of positive integers satisfy \\[\\text{lcm}(x,y) = 72,\\]\\[ \\text{lcm}(x,z) = 600,\\] and \\[\\text{lcm}(y,z)=900?\\]",
+      "choices": [
+        "\\(15\\)",
+        "\\(16\\)",
+        "\\(24\\)",
+        "\\(27\\)",
+        "\\(64\\)"
+      ]
+    }
+  ]
+}

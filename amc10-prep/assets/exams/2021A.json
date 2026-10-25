@@ -1,0 +1,283 @@
+{
+  "year": 2021,
+  "exam": "AMC 10A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2021A",
+  "sourceName": "LIVE by Po-Shen Loh",
+  "problems": [
+    {
+      "problemNumber": 1,
+      "statementHtml": "What is the value of \\[(2^2-2)-(3^2-3)+(4^2-4)?\\]",
+      "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(5\\)",
+        "\\(8\\)",
+        "\\(12\\)"
+      ]
+    },
+    {
+      "problemNumber": 2,
+      "statementHtml": "Portia’s high school has \\(3\\) times as many students as Lara’s high school. The two high schools have a total of \\(2600\\) students. How many students does Portia’s high school have?",
+      "choices": [
+        "\\(600\\)",
+        "\\(650\\)",
+        "\\(1950\\)",
+        "\\(2000\\)",
+        "\\(2050\\)"
+      ]
+    },
+    {
+      "problemNumber": 3,
+      "statementHtml": "The sum of two natural numbers is \\(17{,}402.\\) One of the two numbers is divisible by \\(10.\\) If the units digit of that number is erased, the other number is obtained. What is the difference of these two numbers?",
+      "choices": [
+        "\\(10{,}272\\)",
+        "\\(11{,}700\\)",
+        "\\(13{,}362\\)",
+        "\\(14{,}238\\)",
+        "\\(15{,}426\\)"
+      ]
+    },
+    {
+      "problemNumber": 4,
+      "statementHtml": "A cart rolls down a hill, traveling \\(5\\) inches the first second and accelerating so that during each successive \\(1\\)-second time interval, it travels \\(7\\) inches more than during the previous \\(1\\)-second interval. The cart takes \\(30\\) seconds to reach the bottom of the hill. How far, in inches, does it travel?",
+      "choices": [
+        "\\(215\\)",
+        "\\(360\\)",
+        "\\(2992\\)",
+        "\\(3195\\)",
+        "\\(3242\\)"
+      ]
+    },
+    {
+      "problemNumber": 5,
+      "statementHtml": "The quiz scores of a class with \\(k &gt; 12\\) students have a mean of \\(8.\\) The mean of a collection of \\(12\\) of these quiz scores is \\(14.\\) What is the mean of the remaining quiz scores in terms of \\(k?\\)",
+      "choices": [
+        "\\(\\dfrac{14-8}{k-12}\\)",
+        "\\(\\dfrac{8k-168}{k-12}\\)",
+        "\\(\\dfrac{14}{12} - \\dfrac{8}{k}\\)",
+        "\\(\\dfrac{14(k-12)}{k^2}\\)",
+        "\\(\\dfrac{14(k-12)}{8k}\\)"
+      ]
+    },
+    {
+      "problemNumber": 6,
+      "statementHtml": "Chantal and Jean start hiking from a trailhead toward a fire tower. Jean is wearing a heavy backpack and walks slower. Chantal starts walking at \\(4\\) miles per hour. Halfway to the tower, the trail becomes really steep, and Chantal slows down to \\(2\\) miles per hour. After reaching the tower, she immediately turns around and descends the steep part of the trail at \\(3\\) miles per hour. She meets Jean at the halfway point. What was Jean’s average speed, in miles per hour, until they meet?",
+      "choices": [
+        "\\(\\dfrac{12}{13}\\)",
+        "\\(1\\)",
+        "\\(\\dfrac{13}{12}\\)",
+        "\\(\\dfrac{24}{13}\\)",
+        "\\(2\\)"
+      ]
+    },
+    {
+      "problemNumber": 7,
+      "statementHtml": "Tom has a collection of \\(13\\) snakes, \\(4\\) of which are purple and \\(5\\) of which are happy. He observes that\n\n• all of his happy snakes can add,\n\n• none of his purple snakes can subtract, and\n\n• all of his snakes that can’t subtract also can’t add.\n\nWhich of these conclusions can be drawn about Tom’s snakes?",
+      "choices": [
+        "Purple snakes can add.",
+        "Purple snakes are happy.",
+        "Snakes that can add are purple.",
+        "Happy snakes are not purple.",
+        "Happy snakes can’t subtract."
+      ]
+    },
+    {
+      "problemNumber": 8,
+      "statementHtml": "When a student multiplied the number \\(66\\) by the repeating decimal, \\[\\underline{1}.\\underline{a} \\ \\underline{b} \\ \\underline{a} \\ \\underline{b}\\ldots=\\underline{1}.\\overline{\\underline{a} \\ \\underline{b}},\\] where \\(a\\) and \\(b\\) are digits, he did not notice the notation and just multiplied \\(66\\) times \\(\\underline{1}.\\underline{a} \\ \\underline{b}.\\) Later he found that his answer is \\(0.5\\) less than the correct answer. What is the \\(2\\)-digit integer \\(\\underline{a} \\ \\underline{b}?\\)",
+      "choices": [
+        "\\(15\\)",
+        "\\(30\\)",
+        "\\(45\\)",
+        "\\(60\\)",
+        "\\(75\\)"
+      ]
+    },
+    {
+      "problemNumber": 9,
+      "statementHtml": "What is the least possible value of \\((xy-1)^2+(x+y)^2\\) for real numbers \\(x\\) and \\(y?\\)",
+      "choices": [
+        "\\(0\\)",
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(1\\)",
+        "\\(2\\)"
+      ]
+    },
+    {
+      "problemNumber": 10,
+      "statementHtml": "Which of the following is equivalent to \\[ \\begin{aligned} &amp;(2+3)(2^2+3^2)\\\\ &amp;\\quad\\cdot(2^4+3^4)(2^8+3^8)\\\\ &amp;\\quad\\cdot(2^{16}+3^{16})(2^{32}+3^{32})\\\\ &amp;\\quad\\cdot(2^{64}+3^{64})? \\end{aligned} \\]",
+      "choices": [
+        "\\(3^{127} + 2^{127}\\)",
+        "\\(3^{127} + 2^{127} + 2 \\cdot 3^{63}\\)\\( + 3 \\cdot\n2^{63}\\)",
+        "\\(3^{128} - 2^{128}\\)",
+        "\\(3^{128} + 2^{128}\\)",
+        "\\(5^{127}\\)"
+      ]
+    },
+    {
+      "problemNumber": 11,
+      "statementHtml": "For which of the following integers \\(b\\) is the base-\\(b\\) number \\(2021_b - 221_b\\) not divisible by \\(3?\\)",
+      "choices": [
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)"
+      ]
+    },
+    {
+      "problemNumber": 12,
+      "statementHtml": "Two right circular cones with vertices facing down as shown in the figure below contain the same amount of liquid. The radii of the tops of the liquid surfaces are \\(3\\) cm and \\(6\\) cm. Into each cone is dropped a spherical marble of radius \\(1\\) cm, which sinks to the bottom and is completely submerged without spilling any liquid. What is the ratio of the rise of the liquid level in the narrow cone to the rise of the liquid level in the wide cone?\n\n<img src=\"assets/exams/images/amc10/2021A/12.svg\" alt=\"Diagram for problem 12\" loading=\"lazy\">",
+      "choices": [
+        "\\(1:1\\)",
+        "\\(47:43\\)",
+        "\\(2:1\\)",
+        "\\(40:13\\)",
+        "\\(4:1\\)"
+      ]
+    },
+    {
+      "problemNumber": 13,
+      "statementHtml": "What is the volume of tetrahedron \\(ABCD\\) with edge lengths \\(AB = 2,\\) \\(AC = 3,\\) \\(AD = 4,\\) \\(BC = \\sqrt{13},\\) \\(BD = 2\\sqrt{5},\\) and \\(CD = 5?\\)",
+      "choices": [
+        "\\(3\\)",
+        "\\(2\\sqrt{3}\\)",
+        "\\(4\\)",
+        "\\(3\\sqrt{3}\\)",
+        "\\(6\\)"
+      ]
+    },
+    {
+      "problemNumber": 14,
+      "statementHtml": "All the roots of the polynomial \\[ \\begin{aligned} &amp;z^6-10z^5+Az^4+Bz^3\\\\ &amp;\\quad+Cz^2+Dz+16 \\end{aligned} \\] are positive integers, possibly repeated. What is the value of \\(B?\\)",
+      "choices": [
+        "\\(-88\\)",
+        "\\(-80\\)",
+        "\\(-64\\)",
+        "\\(-41\\)",
+        "\\(-40\\)"
+      ]
+    },
+    {
+      "problemNumber": 15,
+      "statementHtml": "Values for \\(A,\\) \\(B,\\) \\(C,\\) and \\(D\\) are to be selected from \\(\\{1, 2, 3, 4, 5, 6\\}\\) without replacement (i.e., no two letters have the same value). How many ways are there to make such choices so that the two curves \\(y=Ax^2+B\\) and \\(y=Cx^2+D\\) intersect?\n\n(The order in which the curves are listed does not matter; for example, the choices \\(A=3,\\)\\(B=2,\\)\\(C=4, \\)\\(D=1\\) is considered the same as the choices \\(A=4,\\)\\( B=1,\\) \\(C=3,\\) \\(D=2.\\))",
+      "choices": [
+        "\\(30\\)",
+        "\\(60\\)",
+        "\\(90\\)",
+        "\\(180\\)",
+        "\\(360\\)"
+      ]
+    },
+    {
+      "problemNumber": 16,
+      "statementHtml": "In the following list of numbers, the integer \\(n\\) appears \\(n\\) times in the list for \\(1\\leq n\\leq200.\\) \\[ \\begin{aligned} &amp;1,2,2,3,3,3,4,4,4,4,\\ldots,\\\\ &amp;200,200,\\ldots,200 \\end{aligned} \\] What is the median of the numbers in this list?",
+      "choices": [
+        "\\(100.5\\)",
+        "\\(134\\)",
+        "\\(142\\)",
+        "\\(150.5\\)",
+        "\\(167\\)"
+      ]
+    },
+    {
+      "problemNumber": 17,
+      "statementHtml": "Trapezoid \\(ABCD\\) has \\(\\overline{AB}\\parallel\\overline{CD},\\) \\(BC=CD=43,\\) and \\(\\overline{AD}\\perp\\overline{BD}.\\) Let \\(O\\) be the intersection of the diagonals \\(\\overline{AC}\\) and \\(\\overline{BD},\\) and let \\(P\\) be the midpoint of \\(\\overline{BD}.\\)\n\nGiven that \\(OP=11,\\) the length of \\(AD\\) can be written in the form \\(m\\sqrt{n},\\) where \\(m\\) and \\(n\\) are positive integers and \\(n\\) is not divisible by the square of any prime. What is \\(m+n?\\)",
+      "choices": [
+        "\\(65\\)",
+        "\\(132\\)",
+        "\\(157\\)",
+        "\\(194\\)",
+        "\\(215\\)"
+      ]
+    },
+    {
+      "problemNumber": 18,
+      "statementHtml": "Let \\(f\\) be a function defined on the set of positive rational numbers with the property that \\(f(a\\cdot b)=f(a)+f(b)\\) for all positive rational numbers \\(a\\) and \\(b.\\) Suppose that \\(f\\) also has the property that \\(f(p)=p\\) for every prime number \\(p.\\) For which of the following numbers \\(x\\) is \\(f(x) &lt; 0?\\)",
+      "choices": [
+        "\\(\\dfrac{17}{32}\\)",
+        "\\(\\dfrac{11}{16}\\)",
+        "\\(\\dfrac{7}{9}\\)",
+        "\\(\\dfrac{7}{6}\\)",
+        "\\(\\dfrac{25}{11}\\)"
+      ]
+    },
+    {
+      "problemNumber": 19,
+      "statementHtml": "The area of the region bounded by the graph of \\[x^2+y^2 = 3|x-y| + 3|x+y|\\] is \\(m+n\\pi,\\) where \\(m\\) and \\(n\\) are integers. What is \\(m + n?\\)",
+      "choices": [
+        "\\(18\\)",
+        "\\(27\\)",
+        "\\(36\\)",
+        "\\(45\\)",
+        "\\(54\\)"
+      ]
+    },
+    {
+      "problemNumber": 20,
+      "statementHtml": "In how many ways can the sequence \\(1,\\) \\(2,\\) \\(3,\\) \\(4,\\) \\(5\\) be rearranged so that no three consecutive terms are increasing and no three consecutive terms are decreasing?",
+      "choices": [
+        "\\(10\\)",
+        "\\(18\\)",
+        "\\(24\\)",
+        "\\(32\\)",
+        "\\(44\\)"
+      ]
+    },
+    {
+      "problemNumber": 21,
+      "statementHtml": "Let \\(ABCDEF\\) be an equiangular hexagon. The lines \\(AB,\\) \\(CD,\\) and \\(EF\\) determine a triangle with area \\(192\\sqrt{3},\\) and the lines \\(BC,\\) \\(DE,\\) and \\(FA\\) determine a triangle with area \\(324\\sqrt{3}.\\) The perimeter of hexagon \\(ABCDEF\\) can be expressed as \\(m +n\\sqrt{p},\\) where \\(m,\\) \\(n,\\) and \\(p\\) are positive integers and \\(p\\) is not divisible by the square of any prime. What is \\(m + n + p?\\)",
+      "choices": [
+        "\\(47\\)",
+        "\\(52\\)",
+        "\\(55\\)",
+        "\\(58\\)",
+        "\\(63\\)"
+      ]
+    },
+    {
+      "problemNumber": 22,
+      "statementHtml": "Hiram’s algebra notes are \\(50\\) pages long and are printed on \\(25\\) sheets of paper; the first sheet contains pages \\(1\\) and \\(2,\\) the second sheet contains pages \\(3\\) and \\(4,\\) and so on. One day he leaves his notes on the table before leaving for lunch, and his roommate decides to borrow some pages from the middle of the notes. When Hiram comes back, he discovers that his roommate has taken a consecutive set of sheets from the notes and that the average (mean) of the page numbers on all remaining sheets is exactly \\(19.\\) How many sheets were borrowed?",
+      "choices": [
+        "\\(10\\)",
+        "\\(13\\)",
+        "\\(15\\)",
+        "\\(17\\)",
+        "\\(20\\)"
+      ]
+    },
+    {
+      "problemNumber": 23,
+      "statementHtml": "Frieda the frog begins a sequence of hops on a \\(3 \\times 3\\) grid of squares, moving one square on each hop and choosing at random the direction of each hop—up, down, left, or right. She does not hop diagonally. When the direction of a hop would take Frieda off the grid, she “wraps around” and jumps to the opposite edge. For example if Frieda begins in the center square and makes two hops “up”, the first hop would place her in the top row middle square, and the second hop would cause Frieda to jump to the opposite edge, landing in the bottom row middle square.\n\nSuppose Frieda starts from the center square, makes at most four hops at random, and stops hopping if she lands on a corner square. What is the probability that she reaches a corner square on one of the four hops?",
+      "choices": [
+        "\\(\\dfrac{9}{16}\\)",
+        "\\(\\dfrac{5}{8}\\)",
+        "\\(\\dfrac{3}{4}\\)",
+        "\\(\\dfrac{25}{32}\\)",
+        "\\(\\dfrac{13}{16}\\)"
+      ]
+    },
+    {
+      "problemNumber": 24,
+      "statementHtml": "The interior of a quadrilateral is bounded by the graphs of \\((x+ay)^2=4a^2\\) and \\((ax-y)^2=a^2,\\) where \\(a\\) is a positive real number. What is the area of this region in terms of \\(a,\\) valid for all \\(a &gt; 0?\\)",
+      "choices": [
+        "\\(\\dfrac{8a^2}{(a+1)^2}\\)",
+        "\\(\\dfrac{4a}{a+1}\\)",
+        "\\(\\dfrac{8a}{a+1}\\)",
+        "\\(\\dfrac{8a^2}{a^2+1}\\)",
+        "\\(\\dfrac{8a}{a^2+1}\\)"
+      ]
+    },
+    {
+      "problemNumber": 25,
+      "statementHtml": "How many ways are there to place \\(3\\) indistinguishable red chips, \\(3\\) indistinguishable blue chips, and \\(3\\) indistinguishable green chips in the squares of a \\(3 \\times 3\\) grid so that no two chips of the same color are directly adjacent to each other, either vertically or horizontally?",
+      "choices": [
+        "\\(12\\)",
+        "\\(18\\)",
+        "\\(24\\)",
+        "\\(30\\)",
+        "\\(36\\)"
+      ]
+    }
+  ]
+}

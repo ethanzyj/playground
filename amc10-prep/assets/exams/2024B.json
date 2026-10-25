@@ -1,0 +1,283 @@
+{
+  "year": 2024,
+  "exam": "AMC 10B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B",
+  "sourceName": "LIVE by Po-Shen Loh",
+  "problems": [
+    {
+      "problemNumber": 1,
+      "statementHtml": "In a long line of people arranged left to right, the \\(1013\\)th person from the left is also the \\(1010\\)th person from the right. How many people are in the line?",
+      "choices": [
+        "\\(2021\\)",
+        "\\(2022\\)",
+        "\\(2023\\)",
+        "\\(2024\\)",
+        "\\(2025\\)"
+      ]
+    },
+    {
+      "problemNumber": 2,
+      "statementHtml": "What is \\(10! - 7! \\cdot 6!?\\)",
+      "choices": [
+        "\\(-120\\)",
+        "\\(0\\)",
+        "\\(120\\)",
+        "\\(600\\)",
+        "\\(720\\)"
+      ]
+    },
+    {
+      "problemNumber": 3,
+      "statementHtml": "For how many integer values of \\(x\\) is \\(|2x| \\le 7\\pi?\\)",
+      "choices": [
+        "\\(16\\)",
+        "\\(17\\)",
+        "\\(19\\)",
+        "\\(20\\)",
+        "\\(21\\)"
+      ]
+    },
+    {
+      "problemNumber": 4,
+      "statementHtml": "Balls numbered \\(1,\\) \\(2,\\) \\(3,\\) \\(\\ldots\\) are deposited in \\(5\\) bins, labeled \\(A,\\) \\(B,\\) \\(C,\\) \\(D,\\) and \\(E,\\) using the following procedure. Ball \\(1\\) is deposited in bin \\(A,\\) and balls \\(2\\) and \\(3\\) are deposited in bin \\(B.\\) The next \\(3\\) balls are deposited in bin \\(C,\\) the next \\(4\\) in bin \\(D,\\) and so on, cycling back to bin \\(A\\) after balls are deposited in bin \\(E.\\) (For example, balls numbered \\(22,\\) \\(23,\\) \\(\\ldots,\\) \\(28\\) are deposited in bin \\(B\\) at step \\(7\\) of this process.) In which bin is ball \\(2024\\) deposited?",
+      "choices": [
+        "\\(A\\)",
+        "\\(B\\)",
+        "\\(C\\)",
+        "\\(D\\)",
+        "\\(E\\)"
+      ]
+    },
+    {
+      "problemNumber": 5,
+      "statementHtml": "In the following expression, Melanie changed some of the plus signs to minus signs:\n\n\\[1 + 3 + 5 + 7 + \\cdots + 97 + 99\\]\n\nWhen the new expression was evaluated, it was negative. What is the least number of plus signs that Melanie could have changed to minus signs?",
+      "choices": [
+        "\\(14\\)",
+        "\\(15\\)",
+        "\\(16\\)",
+        "\\(17\\)",
+        "\\(18\\)"
+      ]
+    },
+    {
+      "problemNumber": 6,
+      "statementHtml": "A rectangle has integer side lengths and an area of \\(2024.\\) What is the least possible perimeter of the rectangle?",
+      "choices": [
+        "\\(160\\)",
+        "\\(180\\)",
+        "\\(222\\)",
+        "\\(228\\)",
+        "\\(390\\)"
+      ]
+    },
+    {
+      "problemNumber": 7,
+      "statementHtml": "What is the remainder when \\(7^{2024} + 7^{2025} + 7^{2026}\\) is divided by \\(19?\\)",
+      "choices": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(7\\)",
+        "\\(11\\)",
+        "\\(18\\)"
+      ]
+    },
+    {
+      "problemNumber": 8,
+      "statementHtml": "Let \\(N\\) be the product of all the positive integer divisors of \\(42.\\) What is the units digit of \\(N?\\)",
+      "choices": [
+        "\\(0\\)",
+        "\\(2\\)",
+        "\\(4\\)",
+        "\\(6\\)",
+        "\\(8\\)"
+      ]
+    },
+    {
+      "problemNumber": 9,
+      "statementHtml": "Real numbers \\(a,\\) \\(b,\\) and \\(c\\) have arithmetic mean \\(0.\\) The arithmetic mean of \\(a^2,\\) \\(b^2,\\) and \\(c^2\\) is \\(10.\\) What is the arithmetic mean of \\(ab,\\) \\(ac,\\) and \\(bc?\\)",
+      "choices": [
+        "\\(-5\\)",
+        "\\(-\\dfrac{10}{3}\\)",
+        "\\(-\\dfrac{10}{9}\\)",
+        "\\(0\\)",
+        "\\(\\dfrac{10}{9}\\)"
+      ]
+    },
+    {
+      "problemNumber": 10,
+      "statementHtml": "Quadrilateral \\(ABCD\\) is a parallelogram, and \\(E\\) is the midpoint of the side \\(\\overline{AD}.\\) Let \\(F\\) be the intersection of lines \\(EB\\) and \\(AC.\\) What is the ratio of the area of quadrilateral \\(CDEF\\) to the area of triangle \\(CFB?\\)",
+      "choices": [
+        "\\(5 : 4\\)",
+        "\\(4 : 3\\)",
+        "\\(3 : 2\\)",
+        "\\(5 : 3\\)",
+        "\\(2 : 1\\)"
+      ]
+    },
+    {
+      "problemNumber": 11,
+      "statementHtml": "In the figure below \\(WXYZ\\) is a rectangle with \\(WX = 4\\) and \\(WZ = 8.\\) Point \\(M\\) lies on \\(\\overline{XY},\\) point \\(A\\) lies on \\(\\overline{YZ},\\) and \\(\\angle WMA\\) is a right angle. The areas of \\(\\triangle WXM\\) and \\(\\triangle WAZ\\) are equal. What is the area of \\(\\triangle WMA?\\)\n\n<img src=\"assets/exams/images/amc10/2024B/11.svg\" alt=\"Diagram for problem 11\" loading=\"lazy\">",
+      "choices": [
+        "\\(13\\)",
+        "\\(14\\)",
+        "\\(15\\)",
+        "\\(16\\)",
+        "\\(17\\)"
+      ]
+    },
+    {
+      "problemNumber": 12,
+      "statementHtml": "A group of \\(100\\) students from different countries meet at a mathematics competition. Each student speaks the same number of languages, and, for every pair of students \\(A\\) and \\(B,\\) student \\(A\\) speaks some language that student \\(B\\) does not speak, and student \\(B\\) speaks some language that student \\(A\\) does not speak. What is the least possible total number of languages spoken by all the students?",
+      "choices": [
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(12\\)",
+        "\\(51\\)",
+        "\\(100\\)"
+      ]
+    },
+    {
+      "problemNumber": 13,
+      "statementHtml": "Positive integers \\(x\\) and \\(y\\) satisfy the equation \\(\\sqrt{x} + \\sqrt{y} = \\sqrt{1183}.\\) What is the minimum possible value of \\(x + y?\\)",
+      "choices": [
+        "\\(585\\)",
+        "\\(595\\)",
+        "\\(623\\)",
+        "\\(700\\)",
+        "\\(791\\)"
+      ]
+    },
+    {
+      "problemNumber": 14,
+      "statementHtml": "A dartboard is the region \\(B\\) in the coordinate plane consisting of points \\((x, y)\\) such that \\(|x| + |y| \\le 8.\\) A target \\(T\\) is the region where \\((x^2 + y^2 - 25)^2 \\le 49.\\) A dart is thrown and lands at a random point in \\(B.\\) The probability that the dart lands in \\(T\\) can be expressed as \\(\\dfrac{m}{n} \\cdot \\pi,\\) where \\(m\\) and \\(n\\) are relatively prime positive integers. What is \\(m + n?\\)",
+      "choices": [
+        "\\(39\\)",
+        "\\(71\\)",
+        "\\(73\\)",
+        "\\(75\\)",
+        "\\(135\\)"
+      ]
+    },
+    {
+      "problemNumber": 15,
+      "statementHtml": "A list of \\(9\\) real numbers consists of \\(1,\\) \\(2.2,\\) \\(3.2,\\) \\(5.2,\\) \\(6.2,\\) \\(7,\\) as well as \\(x,\\) \\(y,\\) \\(z\\) with \\(x \\le y \\le z.\\) The range of the list is \\(7,\\) and the mean and median are both positive integers. How many ordered triples \\((x, y, z)\\) are possible?",
+      "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "infinitely many"
+      ]
+    },
+    {
+      "problemNumber": 16,
+      "statementHtml": "Jerry likes to play with numbers. One day, he wrote all the integers from \\(1\\) to \\(2024\\) on the whiteboard. Then he repeatedly chose four numbers on the whiteboard, erased them, and replaced them by either their sum or their product. (For example, Jerry’s first step might have been to erase \\(1,\\) \\(2,\\) \\(3,\\) and \\(5,\\) and then write either \\(11,\\) their sum, or \\(30,\\) their product, on the whiteboard.) After repeatedly performing this operation, Jerry noticed that all the remaining numbers on the whiteboard were odd. What is the maximum possible number of integers on the whiteboard at that time?",
+      "choices": [
+        "\\(1010\\)",
+        "\\(1011\\)",
+        "\\(1012\\)",
+        "\\(1013\\)",
+        "\\(1014\\)"
+      ]
+    },
+    {
+      "problemNumber": 17,
+      "statementHtml": "In a race among \\(5\\) snails, there is at most one tie, but that tie can involve any number of snails. For example, the result of the race might be that Dazzler is first; Abby, Cyrus, and Elroy are tied for second; and Bruna is fifth. How many different results of the race are possible?",
+      "choices": [
+        "\\(180\\)",
+        "\\(361\\)",
+        "\\(420\\)",
+        "\\(431\\)",
+        "\\(720\\)"
+      ]
+    },
+    {
+      "problemNumber": 18,
+      "statementHtml": "How many different remainders can result when the \\(100\\)th power of an integer is divided by \\(125?\\)",
+      "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(5\\)",
+        "\\(25\\)",
+        "\\(125\\)"
+      ]
+    },
+    {
+      "problemNumber": 19,
+      "statementHtml": "In the following table, each question mark is to be replaced by “Possible” or “Not Possible” to indicate whether a nonvertical line with the given slope can contain the given number of lattice points (points both of whose coordinates are integers). How many of the \\(12\\) entries will be “Possible”?\n\n<img src=\"assets/exams/images/amc10/2024B/19.svg\" alt=\"Diagram for problem 19\" loading=\"lazy\">",
+      "choices": [
+        "\\(4\\)",
+        "\\(5\\)",
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(9\\)"
+      ]
+    },
+    {
+      "problemNumber": 20,
+      "statementHtml": "Three different pairs of shoes are placed in a row so that no left shoe is next to a right shoe from a different pair. In how many ways can these six shoes be lined up?",
+      "choices": [
+        "\\(60\\)",
+        "\\(72\\)",
+        "\\(90\\)",
+        "\\(108\\)",
+        "\\(120\\)"
+      ]
+    },
+    {
+      "problemNumber": 21,
+      "statementHtml": "Two straight pipes (circular cylinders), with radii \\(1\\) and \\(\\tfrac14,\\) lie parallel and in contact on a flat floor. The figure below shows a head-on view. What is the sum of the possible radii of a third parallel pipe lying on the same floor and in contact with both?\n\n<img src=\"assets/exams/images/amc10/2024B/21.svg\" alt=\"Diagram for problem 21\" loading=\"lazy\">",
+      "choices": [
+        "\\(\\dfrac{1}{9}\\)",
+        "\\(1\\)",
+        "\\(\\dfrac{10}{9}\\)",
+        "\\(\\dfrac{11}{9}\\)",
+        "\\(\\dfrac{19}{9}\\)"
+      ]
+    },
+    {
+      "problemNumber": 22,
+      "statementHtml": "A group of \\(16\\) people will be partitioned into \\(4\\) indistinguishable \\(4\\)-person committees. Each committee will have one chairperson and one secretary. The number of different ways to make these assignments can be written as \\(3^r M,\\) where \\(r\\) and \\(M\\) are positive integers and \\(M\\) is not divisible by \\(3.\\) What is \\(r?\\)",
+      "choices": [
+        "\\(5\\)",
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)",
+        "\\(9\\)"
+      ]
+    },
+    {
+      "problemNumber": 23,
+      "statementHtml": "The Fibonacci numbers are defined by \\(F_1 = 1,\\) \\(F_2 = 1,\\) and \\(F_n = F_{n-1} + F_{n-2}\\) for \\(n \\ge 3.\\) What is\n\n\\[\\frac{F_2}{F_1} + \\frac{F_4}{F_2} + \\frac{F_6}{F_3} + \\cdots + \\frac{F_{20}}{F_{10}}?\\]",
+      "choices": [
+        "\\(318\\)",
+        "\\(319\\)",
+        "\\(320\\)",
+        "\\(321\\)",
+        "\\(322\\)"
+      ]
+    },
+    {
+      "problemNumber": 24,
+      "statementHtml": "Let\n\n\\[ \\begin{aligned} P(m) &amp;= \\frac{m}{2} + \\frac{m^2}{4} \\\\ &amp;\\quad {}+ \\frac{m^4}{8} + \\frac{m^8}{8}. \\end{aligned} \\]\n\nHow many of the values of \\(P(2022),\\) \\(P(2023),\\) \\(P(2024),\\) and \\(P(2025)\\) are integers?",
+      "choices": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)"
+      ]
+    },
+    {
+      "problemNumber": 25,
+      "statementHtml": "Each of \\(27\\) bricks (right rectangular prisms) has dimensions \\(a \\times b \\times c,\\) where \\(a,\\) \\(b,\\) and \\(c\\) are pairwise relatively prime positive integers. These bricks are arranged to form a \\(3 \\times 3 \\times 3\\) block, as shown on the left below. A \\(28\\)th brick with the same dimensions is introduced, and these bricks are reconfigured into a \\(2 \\times 2 \\times 7\\) block, shown on the right. The new block is \\(1\\) unit taller, \\(1\\) unit wider, and \\(1\\) unit deeper than the old one. What is \\(a + b + c?\\)\n\n<img src=\"assets/exams/images/amc10/2024B/25.svg\" alt=\"Diagram for problem 25\" loading=\"lazy\">",
+      "choices": [
+        "\\(88\\)",
+        "\\(89\\)",
+        "\\(90\\)",
+        "\\(91\\)",
+        "\\(92\\)"
+      ]
+    }
+  ]
+}
