@@ -631,7 +631,6 @@ input {
   border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
 }
 
-.inline-problems,
 .problem-grid,
 .glossary-grid {
   display: grid;
@@ -1202,4 +1201,126 @@ body[data-auth-gate="open"] .account-actions {
   body[data-auth-gate="open"] .theme-toggle {
     top: 1.25rem;
   }
+}
+
+.related-summary {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+}
+
+.related-table-wrap {
+  overflow-x: auto;
+}
+
+.related-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.related-table th,
+.related-table td {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.related-table thead th {
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.related-table tbody th {
+  width: 4.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.related-empty {
+  color: var(--line);
+}
+
+.problem-chip,
+.legend-swatch {
+  --chip: #64748b;
+}
+
+[data-difficulty="early"] { --chip: #1f9d55; }
+[data-difficulty="medium"] { --chip: #2b7bd6; }
+[data-difficulty="medium-hard"] { --chip: #c98a00; }
+[data-difficulty="hard"] { --chip: #e0622b; }
+[data-difficulty="challenge"] { --chip: #c62f4f; }
+
+.problem-chip {
+  position: relative;
+  min-width: 2.4rem;
+  margin: 0.15rem 0.3rem 0.15rem 0;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--chip) 55%, var(--line));
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--chip) 12%, var(--panel));
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.problem-chip:hover,
+.problem-chip:focus-visible {
+  background: var(--chip);
+  border-color: var(--chip);
+  color: #fff;
+  outline: none;
+}
+
+.problem-chip[data-progress]::after,
+.legend-marked::after {
+  content: "";
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border: 2px solid var(--panel);
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.difficulty-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 0.85rem 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  list-style: none;
+}
+
+.difficulty-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-swatch {
+  position: relative;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 0.25rem;
+  background: var(--chip);
+}
+
+.legend-marked {
+  background: color-mix(in srgb, var(--muted) 20%, var(--panel));
+}
+
+.problem-card.problem-highlight {
+  animation: glossary-flash 1.6s ease-out;
+}
+
+.problem-card:focus {
+  outline: none;
 }
