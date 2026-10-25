@@ -3,6 +3,9 @@ import { CloudProgress } from "./cloud-progress.mjs?v=20261024-12";
 
 const TEXT = {
   heading: ["Account & cloud sync", "账户与云端同步"],
+  landingTitle: ["Sign in to continue", "请先登录"],
+  landingCopy: ["Sign in to open the AMC 10 study guide and keep your problem progress in your account.", "登录后即可使用 AMC 10 备考指南，并将做题进度保存到账户中。"],
+  checkingSession: ["Checking your sign-in…", "正在检查登录状态……"],
   disabled: ["Cloud login is not configured yet. Progress is still saved only in this browser.", "尚未配置云端登录，进度仍仅保存在本浏览器中。"],
   guest: ["Guest mode — progress is saved only in this browser.", "访客模式 — 进度仅保存在本浏览器中。"],
   email: ["Email", "电子邮箱"],
@@ -83,6 +86,7 @@ export class AccountPanel {
     this.ready = false;
     this.restoring = false;
     this.guestCount = 0;
+    this.cloudEnabled = null;
   }
 
   text(key) {
@@ -94,10 +98,12 @@ export class AccountPanel {
   async start() {
     try {
       if (!validateCloudConfig(CLOUD_CONFIG)) {
+        this.cloudEnabled = false;
         this.message = "disabled";
         this.render();
         return;
       }
+      this.cloudEnabled = true;
       this.restoring = true;
       this.render();
       const { createClient } = await import("./vendor/supabase.mjs");
@@ -273,6 +279,15 @@ export class AccountPanel {
 
   render() {
     const $ = (selector) => document.querySelector(selector);
+    const locked = this.cloudEnabled !== false && !this.signedIn;
+    document.body.dataset.authGate = locked ? "locked" : "open";
+    $("main.app-shell").toggleAttribute("inert", locked);
+    $("#accountLanding").hidden = !locked;
+    $("#accountLandingTitle").textContent = this.text("landingTitle");
+    $("#accountLandingCopy").textContent = this.text(
+      this.restoring || (this.cloudEnabled === null && !this.message) ? "checkingSession" : "landingCopy");
+    if (locked) $("#accountHeading").parentElement.open = true;
+    $("#accountSyncStatus").hidden = locked;
     $("#accountHeading").textContent = this.text("heading");
     $("#accountEmailLabel").textContent = this.text("email");
     $("#accountLoginMethodLabel").textContent = this.text("loginMethod");
