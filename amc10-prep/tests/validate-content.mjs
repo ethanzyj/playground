@@ -146,6 +146,12 @@ assert(html.includes('type="module" src="assets/app.mjs?v='), "HTML must load a 
 assert(html.includes("mathjax@3.2.2"), "HTML must load the pinned MathJax renderer.");
 
 const app = readFileSync(new URL("../assets/app.mjs", import.meta.url), "utf8");
+{
+  const anchors = app.match(/<a\b[^>]*>/g) || [];
+  const sameTab = anchors.filter((tag) => !tag.includes('target="_blank"'));
+  assert(anchors.length > 0 && sameTab.length === 0, `Every link must open in a new tab by default: ${sameTab.join(", ")}`);
+  assert(app.includes('params.get("concept")'), "Concept links must deep-link into the Study Guide.");
+}
 assert(html.includes('data-view="map"') && html.includes('id="topicMapTree"') && app.includes("function renderTopicMap()") && app.includes("data-map-term") && app.includes("data-map-concept"), "The Topic Map tab must show a navigable tree of concepts and glossary terms.");
 const data = readFileSync(new URL("../assets/data.mjs", import.meta.url), "utf8");
 const css = readFileSync(new URL("../assets/styles.css", import.meta.url), "utf8");

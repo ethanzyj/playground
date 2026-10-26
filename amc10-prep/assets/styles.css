@@ -346,6 +346,7 @@ input {
 
 .topic-button,
 .tags button,
+.tags a,
 .mastery {
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -364,6 +365,7 @@ input {
 
 .topic-button.active,
 .tags button:hover,
+.tags a:hover,
 .mastery.complete {
   background: var(--accent-soft);
   border-color: var(--accent);
@@ -467,6 +469,7 @@ input {
 }
 
 .glossary-tooltip-jump {
+  display: inline-block;
   font-size: 0.8rem;
   padding: 0;
 }
@@ -767,9 +770,14 @@ input {
   margin: 0.85rem 0;
 }
 
-.tags button {
+.tags button,
+.tags a {
   font-size: 0.78rem;
   padding: 0.35rem 0.55rem;
+}
+
+.tags a {
+  text-decoration: none;
 }
 
 .card-actions {

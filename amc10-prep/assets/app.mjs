@@ -1,7 +1,7 @@
-import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20261026-1";
+import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20261026-2";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
-import { AccountPanel } from "./account.mjs?v=20261026-1";
-import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-1";
+import { AccountPanel } from "./account.mjs?v=20261026-2";
+import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-2";
 
 let problemProgressStorageError = false;
 
@@ -147,7 +147,7 @@ function showGlossaryTooltip(anchorEl, term) {
     <p class="glossary-tooltip-category">${textPair(term.categoryZh, term.categoryEn)}</p>
     <p class="glossary-tooltip-term">${textPair(term.zh, term.en)}</p>
     <p class="glossary-tooltip-note">${textPair(term.noteZh, term.noteEn)}</p>
-    <button type="button" class="text-button glossary-tooltip-jump" data-glossary-term-slug="${slugifyTerm(term.en)}">${uiText("openInGlossary")}</button>
+    <a class="text-button glossary-tooltip-jump" href="${deepLink("term", slugifyTerm(term.en))}" target="_blank" rel="noopener">${uiText("openInGlossary")}</a>
   `;
   tooltip.hidden = false;
   const anchorRect = anchorEl.getBoundingClientRect();
@@ -163,10 +163,7 @@ function showGlossaryTooltip(anchorEl, term) {
   tooltip.style.left = `${left}px`;
   tooltip.style.top = `${top}px`;
   typesetMath(tooltip);
-  tooltip.querySelector(".glossary-tooltip-jump").addEventListener("click", () => {
-    hideGlossaryTooltip();
-    jumpToGlossaryTerm(slugifyTerm(term.en));
-  });
+  tooltip.querySelector(".glossary-tooltip-jump").addEventListener("click", () => hideGlossaryTooltip());
 }
 
 function hideGlossaryTooltip() {
@@ -657,7 +654,7 @@ function problemCard(problem, statement = null) {
           ${statement.choices.map((choice) => `<li>${choice}</li>`).join("")}
         </ol>
       ` : problem.noteEn && problem.noteZh ? `<p>${textPair(problem.noteZh, linkGlossaryTerms(problem.noteEn))}</p>` : ""}
-      <div class="tags">${tags.map((tag) => `<button data-concept="${tag.id}">${textPair(tag.zh, tag.en)}</button>`).join("")}</div>
+      <div class="tags">${tags.map((tag) => `<a class="concept-tag" href="${deepLink("concept", tag.id)}" target="_blank" rel="noopener">${textPair(tag.zh, tag.en)}</a>`).join("")}</div>
       ${problemVocabulary(problem)}
       <div class="card-actions">
         <a class="icon-action" href="${problem.sourceUrl}" target="_blank" rel="noreferrer" aria-label="${uiText("openReference")}" title="${uiText("openReference")}">
@@ -920,8 +917,8 @@ function glossaryCard(term) {
       </div>
       <div class="glossary-related">
         <span class="glossary-action-label">${uiText("relatedConcepts")}</span>
-        <div class="tags">${concepts.map((concept) => `<button data-concept="${concept.id}">${textPair(concept.zh, concept.en)}</button>`).join("")}</div>
-        <button class="text-button" data-problems-concept="${term.conceptIds[0]}">${uiText("relatedProblems")} (${relatedProblemCount})</button>
+        <div class="tags">${concepts.map((concept) => `<a class="concept-tag" href="${deepLink("concept", concept.id)}" target="_blank" rel="noopener">${textPair(concept.zh, concept.en)}</a>`).join("")}</div>
+        <a class="text-button" href="${deepLink("problems-concept", term.conceptIds[0])}" target="_blank" rel="noopener">${uiText("relatedProblems")} (${relatedProblemCount})</a>
       </div>
     </article>
   `;
@@ -960,12 +957,12 @@ function renderTopicMap() {
               <span class="map-label">${textPair(concept.zh, concept.en)}</span>
               ${mastered ? `<span class="status-dot" title="${uiText("mastered")}">✓</span>` : ""}
               <span class="map-count">${terms.length}</span>
-              <button type="button" class="map-open" data-map-concept="${concept.id}" title="${uiText("openConcept")}" aria-label="${uiText("openConcept")}: ${plainTextPair(concept.zh, concept.en)}">${MAP_ICONS.open}</button>
+              <a class="map-open" href="${deepLink("concept", concept.id)}" target="_blank" rel="noopener" data-map-concept="${concept.id}" title="${uiText("openConcept")}" aria-label="${uiText("openConcept")}: ${plainTextPair(concept.zh, concept.en)}">${MAP_ICONS.open}</a>
             </summary>
             <ul class="map-terms">
               ${terms.map((term) => {
                 const slug = slugifyTerm(term.en);
-                return `<li><a class="map-term${state.masteredGlossary.has(term.en) ? " mastered" : ""}" href="?term=${slug}" data-map-term="${slug}" data-vocab-term="${slug}">${textPair(term.zh, term.en)}</a></li>`;
+                return `<li><a class="map-term${state.masteredGlossary.has(term.en) ? " mastered" : ""}" href="${deepLink("term", slug)}" target="_blank" rel="noopener" data-map-term="${slug}" data-vocab-term="${slug}">${textPair(term.zh, term.en)}</a></li>`;
               }).join("")}
             </ul>
           </details>
@@ -998,24 +995,6 @@ function renderTopicMap() {
       if (query) return;
       if (node.open) state.mapCollapsed.delete(node.dataset.mapNode);
       else state.mapCollapsed.add(node.dataset.mapNode);
-    });
-  });
-  tree.querySelectorAll("[data-map-concept]").forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      state.activeConceptId = button.dataset.mapConcept;
-      render();
-      setActiveView("study");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  });
-  tree.querySelectorAll("[data-map-term]").forEach((link) => {
-    link.addEventListener("click", (event) => {
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
-      event.preventDefault();
-      hideGlossaryTooltip();
-      jumpToGlossaryTerm(link.dataset.mapTerm);
     });
   });
   wireProblemAndGlossaryLinks(tree);
@@ -1138,10 +1117,16 @@ function applyDeepLink() {
   const term = params.get("term");
   const problemsConcept = params.get("problems-concept");
   const glossaryConcept = params.get("glossary-concept");
+  const concept = params.get("concept");
   if (problem && PROBLEM_REFERENCES.some((item) => problemKey(item) === problem)) openProblemInExplorer(problem);
   else if (term && glossaryBySlug.has(term)) jumpToGlossaryTerm(term);
   else if (problemsConcept && conceptById.has(problemsConcept)) showConceptProblems(problemsConcept);
   else if (glossaryConcept && conceptById.has(glossaryConcept)) showConceptGlossary(glossaryConcept);
+  else if (concept && conceptById.has(concept)) {
+    state.activeConceptId = concept;
+    render();
+    setActiveView("study");
+  }
   else return false;
   return true;
 }

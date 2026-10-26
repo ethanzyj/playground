@@ -26,6 +26,10 @@ tab. Pure-computation problems with no glossary terms omit the row.
 Shared topic-classification guidance appears once in the explorer header;
 cards only show notes specific to that problem.
 
+Every link — problem chips, concept tags, vocabulary chips, Topic Map entries,
+glossary tooltips, and source links — opens in a new tab by default. Concept links
+use `?concept=<id>` to open that concept in the Study Guide.
+
 The top bar has an icon language switch (bilingual / 中 / EN) next to the theme
 toggle and account menu. The **Topic Map / 知识图谱** tab shows every content area,
 concept, and glossary term as a collapsible tree: the arrow next to a concept opens
