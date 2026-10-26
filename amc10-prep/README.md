@@ -26,6 +26,12 @@ tab. Pure-computation problems with no glossary terms omit the row.
 Shared topic-classification guidance appears once in the explorer header;
 cards only show notes specific to that problem.
 
+The top bar has an icon language switch (bilingual / 中 / EN) next to the theme
+toggle and account menu. The **Topic Map / 知识图谱** tab shows every content area,
+concept, and glossary term as a collapsible tree: the arrow next to a concept opens
+it in the Study Guide, and selecting a term jumps to it in the Glossary. Use the
+filter box or **Expand all / Collapse all** to navigate large branches.
+
 In the Study Guide, formula cards keep their **Step by step** explanations
 collapsed by default; select the heading or chevron icon to expand them.
 

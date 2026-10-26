@@ -129,7 +129,7 @@ assert(html.includes('id="problemList"'), "HTML must include the problem explore
 assert(html.includes('id="problemCount"'), "Problem Explorer must show filtered and total counts.");
 assert(html.includes('data-i18n="problemMetadataNote"'), "Problem Explorer must show shared metadata guidance in its header.");
 assert(html.includes('role="tablist"'), "HTML must include accessible top-level navigation tabs.");
-assert(html.includes('class="global-language hero-language"'), "Language selection must be available at the top of the page.");
+assert(html.includes('class="global-language hero-language language-switch"') && ["both", "zh", "en"].every((mode) => html.includes(`data-language="${mode}"`)), "Language selection must be an icon switch at the top of the page.");
 assert(html.includes('id="studyPanel"'), "HTML must include the study guide panel.");
 assert(html.includes('id="problemsPanel"'), "HTML must include the problem explorer panel.");
 assert(html.includes('id="glossaryPanel"'), "HTML must include the glossary panel.");
@@ -146,6 +146,7 @@ assert(html.includes('type="module" src="assets/app.mjs?v='), "HTML must load a 
 assert(html.includes("mathjax@3.2.2"), "HTML must load the pinned MathJax renderer.");
 
 const app = readFileSync(new URL("../assets/app.mjs", import.meta.url), "utf8");
+assert(html.includes('data-view="map"') && html.includes('id="topicMapTree"') && app.includes("function renderTopicMap()") && app.includes("data-map-term") && app.includes("data-map-concept"), "The Topic Map tab must show a navigable tree of concepts and glossary terms.");
 const data = readFileSync(new URL("../assets/data.mjs", import.meta.url), "utf8");
 const css = readFileSync(new URL("../assets/styles.css", import.meta.url), "utf8");
 assert(html.includes('id="themeToggle"'), "The page must include a theme toggle.");

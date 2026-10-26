@@ -105,8 +105,7 @@ test("sign-in failures show actionable localized errors and clear on a successfu
       assert.equal(p.$("#accountHeading").parentElement.open, true);
       assert.equal(p.$("#accountForm").hidden, false);
     }
-    p.$("#languageMode").value = "zh";
-    p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
+    p.$('[data-language="zh"]').click();
     assert.match(p.$("#accountMessage").textContent, /账户操作失败/);
     failure = { code: "over_email_send_rate_limit", message: "email rate limit exceeded" };
     p.$("#accountForm").dispatchEvent(new p.window.Event("submit", { cancelable: true }));
@@ -171,13 +170,11 @@ test("email login, guest import, cloud save, localization, and logout work throu
     p.$(`#problemList [data-progress-key="${key}"] input[value="haveApproach"]`).click();
     await p.waitFor(() => records[key]?.status === "haveApproach");
     assert.equal(p.$(`#problemList [data-progress-key="${key}"]`).open, true);
-    p.$("#languageMode").value = "zh";
-    p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
+    p.$('[data-language="zh"]').click();
     assert.equal(p.$("#accountHeading").title, "账户与云端同步");
     assert.equal(p.$("#accountHeading").textContent, user.email);
     assert.equal(p.$(`#problemList [data-progress-key="${key}"] input:checked`).value, "haveApproach");
-    p.$("#languageMode").value = "en";
-    p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
+    p.$('[data-language="en"]').click();
     await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
     offline = true;
     p.$(`#problemList [data-progress-key="${key}"] input[value="needStartingPoint"]`).click();
@@ -322,8 +319,7 @@ test("password login validates input, blocks duplicate requests, and surfaces au
       assert.equal(p.$("#accountPassword").value, "");
       assert.equal(p.$("#accountPasswordForm").hidden, false);
     }
-    p.$("#languageMode").value = "zh";
-    p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
+    p.$('[data-language="zh"]').click();
     assert.equal(p.$("#accountPasswordSignIn").textContent, "登录");
     assert.match(p.$("#accountMessage").textContent, /登录尝试过多/);
     p.$("#accountPassword").value = "test-only-password";
@@ -374,8 +370,7 @@ test("the landing page stays locked when the sign-in service cannot be checked",
     assert.equal(p.window.document.body.dataset.authGate, "locked");
     assert.equal(p.$("main.app-shell").hasAttribute("inert"), true);
     assert.equal(p.$("#accountLanding").hidden, false);
-    p.$("#languageMode").value = "zh";
-    p.$("#languageMode").dispatchEvent(new p.window.Event("change"));
+    p.$('[data-language="zh"]').click();
     assert.equal(p.$("#accountLandingTitle").textContent, "请先登录");
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
