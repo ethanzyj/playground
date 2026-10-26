@@ -16,7 +16,7 @@
         console.error("Unable to read the saved theme.", error);
       }
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20261025-24" />
+    <link rel="stylesheet" href="assets/styles.css?v=20261026-1" />
     <script>
       window.MathJax = {
         tex: {
@@ -34,14 +34,19 @@
   </head>
   <body data-auth-gate="locked">
     <header class="hero">
-      <label class="global-language hero-language">
-        <span data-i18n="languageLabel">Language / 语言</span>
-        <select id="languageMode">
-          <option value="both">Bilingual / 双语</option>
-          <option value="zh">中文</option>
-          <option value="en">English</option>
-        </select>
-      </label>
+      <div id="languageMode" class="global-language hero-language language-switch" role="group" aria-label="Language / 语言" data-i18n-aria-label="languageLabel">
+        <svg class="language-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+        </svg>
+        <button type="button" data-language="both" aria-pressed="true" title="Bilingual / 双语" aria-label="Bilingual / 双语">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M4 5h8M8 3v2m3 0c-1 4-3.5 7-7 9m2-6c1 2.5 3 4.5 6 5.5M13 21l4-10 4 10m-6.5-3.5h5" />
+          </svg>
+        </button>
+        <button type="button" data-language="zh" aria-pressed="false" title="中文" aria-label="中文"><span aria-hidden="true">中</span></button>
+        <button type="button" data-language="en" aria-pressed="false" title="English" aria-label="English"><span aria-hidden="true">EN</span></button>
+      </div>
       <button id="themeToggle" class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
           <path class="theme-moon" d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z" />
@@ -131,6 +136,9 @@
           </button>
           <button id="glossaryTab" class="section-tab" type="button" role="tab" aria-selected="false" aria-controls="glossaryPanel" data-view="glossary" data-i18n="glossary">
             Glossary <span>词汇表</span>
+          </button>
+          <button id="mapTab" class="section-tab" type="button" role="tab" aria-selected="false" aria-controls="mapPanel" data-view="map" data-i18n="topicMap">
+            Topic Map <span>知识图谱</span>
           </button>
         </nav>
       </div>
@@ -228,9 +236,28 @@
           </div>
           <div id="glossaryList" class="glossary-grid"></div>
         </section>
+
+        <section id="mapPanel" class="topic-map view-panel" role="tabpanel" aria-labelledby="mapTab" hidden>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="mapEyebrow">Topics &amp; vocabulary / 知识点与词汇</p>
+              <h2 id="mapHeading" data-i18n="topicMap">Topic Map</h2>
+              <p id="mapCount" class="result-count" aria-live="polite"></p>
+            </div>
+            <label class="glossary-search">
+              <span data-i18n="searchMap">Filter map / 筛选图谱</span>
+              <input id="mapSearch" type="search" placeholder="topic or term..." data-i18n-placeholder="mapSearchPlaceholder" />
+            </label>
+            <div class="map-actions">
+              <button id="mapExpandAll" class="mastery" type="button" data-i18n="expandAll">Expand all</button>
+              <button id="mapCollapseAll" class="mastery" type="button" data-i18n="collapseAll">Collapse all</button>
+            </div>
+          </div>
+          <div id="topicMapTree" class="map-tree"></div>
+        </section>
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261025-24"></script>
+    <script type="module" src="assets/app.mjs?v=20261026-1"></script>
   </body>
 </html>

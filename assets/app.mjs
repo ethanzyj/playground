@@ -1,7 +1,7 @@
-import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20261025-24";
+import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20261026-1";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
-import { AccountPanel } from "./account.mjs?v=20261025-24";
-import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261025-24";
+import { AccountPanel } from "./account.mjs?v=20261026-1";
+import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-1";
 
 let problemProgressStorageError = false;
 
@@ -40,6 +40,8 @@ const state = {
   glossaryConcept: "all",
   conceptMastery: "all",
   glossaryMastery: "all",
+  mapSearch: "",
+  mapCollapsed: new Set(),
   mastered: new Set(JSON.parse(localStorage.getItem("amc10-mastered") || "[]")),
   masteredGlossary: new Set(JSON.parse(localStorage.getItem("amc10-mastered-glossary") || "[]"))
 };
@@ -214,6 +216,18 @@ const UI_TEXT = {
   studyGuide: { en: "Study Guide", zh: "学习指南" },
   problemExplorer: { en: "Problem Explorer", zh: "真题索引" },
   glossary: { en: "Glossary", zh: "词汇表" },
+  topicMap: { en: "Topic Map", zh: "知识图谱" },
+  mapEyebrow: { en: "Topics & vocabulary", zh: "知识点与词汇" },
+  searchMap: { en: "Filter map", zh: "筛选图谱" },
+  mapSearchPlaceholder: { en: "topic or term...", zh: "知识点或词汇..." },
+  expandAll: { en: "Expand all", zh: "全部展开" },
+  collapseAll: { en: "Collapse all", zh: "全部收起" },
+  mapRoot: { en: "AMC 10 knowledge map", zh: "AMC 10 知识图谱" },
+  mapConcepts: { en: "concepts", zh: "个知识点" },
+  mapTerms: { en: "terms", zh: "个词汇" },
+  openConcept: { en: "Open in Study Guide", zh: "在学习指南中打开" },
+  openTerm: { en: "Open in Glossary", zh: "在词汇表中打开" },
+  noMapMatches: { en: "Nothing in the map matches your filter.", zh: "图谱中没有符合筛选条件的内容。" },
   searchTopics: { en: "Search topics", zh: "搜索知识点" },
   topicSearchPlaceholder: { en: "topic, formula, keyword...", zh: "知识点、公式、关键词..." },
   copyrightHeading: { en: "Problem sources and attribution.", zh: "题目来源与署名。" },
@@ -336,8 +350,15 @@ function textPair(zh, en) {
   return `<span class="bilingual-pair"><span lang="en">${en}</span><span lang="zh">${zh}</span></span>`;
 }
 
+function renderLanguageControl() {
+  document.querySelectorAll("[data-language]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.language === state.language));
+  });
+}
+
 function renderStaticInterface() {
   renderThemeControl();
+  renderLanguageControl();
   accountPanel?.render();
   document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
   document.title = state.language === "zh"
@@ -906,6 +927,100 @@ function glossaryCard(term) {
   `;
 }
 
+const MAP_ICONS = {
+  topic: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" /></svg>',
+  concept: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" /></svg>',
+  open: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" /></svg>'
+};
+
+function renderTopicMap() {
+  const tree = $("#topicMapTree");
+  if (!tree) return;
+  const query = state.mapSearch.trim().toLowerCase();
+  const matches = (...values) => !query || values.join(" ").toLowerCase().includes(query);
+  let conceptCount = 0;
+  const termSlugs = new Set();
+  const topicsHtml = TOPICS.map((topic) => {
+    const topicMatches = matches(topic.en, topic.zh);
+    const concepts = topic.concepts.map((concept) => {
+      const conceptMatches = topicMatches || matches(concept.en, concept.zh);
+      const terms = GLOSSARY.filter((term) => term.conceptIds.includes(concept.id)
+        && (conceptMatches || matches(term.en, term.zh)));
+      if (!conceptMatches && !terms.length) return "";
+      conceptCount += 1;
+      terms.forEach((term) => termSlugs.add(slugifyTerm(term.en)));
+      const nodeId = `concept:${concept.id}`;
+      const open = query || !state.mapCollapsed.has(nodeId);
+      const mastered = state.mastered.has(concept.id);
+      return `
+        <li>
+          <details class="map-node map-concept"${open ? " open" : ""} data-map-node="${nodeId}">
+            <summary>
+              <span class="map-icon">${MAP_ICONS.concept}</span>
+              <span class="map-label">${textPair(concept.zh, concept.en)}</span>
+              ${mastered ? `<span class="status-dot" title="${uiText("mastered")}">✓</span>` : ""}
+              <span class="map-count">${terms.length}</span>
+              <button type="button" class="map-open" data-map-concept="${concept.id}" title="${uiText("openConcept")}" aria-label="${uiText("openConcept")}: ${plainTextPair(concept.zh, concept.en)}">${MAP_ICONS.open}</button>
+            </summary>
+            <ul class="map-terms">
+              ${terms.map((term) => {
+                const slug = slugifyTerm(term.en);
+                return `<li><a class="map-term${state.masteredGlossary.has(term.en) ? " mastered" : ""}" href="?term=${slug}" data-map-term="${slug}" data-vocab-term="${slug}">${textPair(term.zh, term.en)}</a></li>`;
+              }).join("")}
+            </ul>
+          </details>
+        </li>`;
+    }).join("");
+    if (!concepts.trim()) return "";
+    const nodeId = `topic:${topic.id}`;
+    const open = query || !state.mapCollapsed.has(nodeId);
+    return `
+      <li>
+        <details class="map-node map-topic"${open ? " open" : ""} data-map-node="${nodeId}">
+          <summary>
+            <span class="map-icon">${MAP_ICONS.topic}</span>
+            <span class="map-label">${textPair(topic.zh, topic.en)}</span>
+            <span class="map-count">${topic.concepts.length}</span>
+          </summary>
+          <ul class="map-branch">${concepts}</ul>
+        </details>
+      </li>`;
+  }).join("");
+  $("#mapCount").textContent = plainTextPair(
+    `${conceptCount} ${UI_TEXT.mapConcepts.zh} · ${termSlugs.size} ${UI_TEXT.mapTerms.zh}`,
+    `${conceptCount} ${UI_TEXT.mapConcepts.en} · ${termSlugs.size} ${UI_TEXT.mapTerms.en}`
+  );
+  tree.innerHTML = topicsHtml.trim()
+    ? `<div class="map-root">${textPair(UI_TEXT.mapRoot.zh, UI_TEXT.mapRoot.en)}</div><ul class="map-branch map-top">${topicsHtml}</ul>`
+    : `<p class="empty-state">${uiText("noMapMatches")}</p>`;
+  tree.querySelectorAll("[data-map-node]").forEach((node) => {
+    node.addEventListener("toggle", () => {
+      if (query) return;
+      if (node.open) state.mapCollapsed.delete(node.dataset.mapNode);
+      else state.mapCollapsed.add(node.dataset.mapNode);
+    });
+  });
+  tree.querySelectorAll("[data-map-concept]").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      state.activeConceptId = button.dataset.mapConcept;
+      render();
+      setActiveView("study");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+  tree.querySelectorAll("[data-map-term]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+      event.preventDefault();
+      hideGlossaryTooltip();
+      jumpToGlossaryTerm(link.dataset.mapTerm);
+    });
+  });
+  wireProblemAndGlossaryLinks(tree);
+}
+
 function renderGlossary() {
   const query = state.glossarySearch.trim().toLowerCase();
   const terms = GLOSSARY.filter((term) => {
@@ -1134,11 +1249,31 @@ function wireControls() {
   document.querySelectorAll("[data-view]").forEach((tab) => {
     tab.addEventListener("click", () => setActiveView(tab.dataset.view));
   });
-  $("#languageMode").value = state.language;
-  $("#languageMode").addEventListener("change", (event) => {
-    state.language = event.target.value;
-    localStorage.setItem("amc10-language", state.language);
-    render();
+  document.querySelectorAll("[data-language]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.language = button.dataset.language;
+      try {
+        localStorage.setItem("amc10-language", state.language);
+      } catch (error) {
+        console.error("Unable to save the selected language.", error);
+      }
+      render();
+    });
+  });
+  $("#mapSearch").addEventListener("input", (event) => {
+    state.mapSearch = event.target.value;
+    renderTopicMap();
+  });
+  $("#mapExpandAll").addEventListener("click", () => {
+    state.mapCollapsed.clear();
+    renderTopicMap();
+  });
+  $("#mapCollapseAll").addEventListener("click", () => {
+    TOPICS.forEach((topic) => {
+      state.mapCollapsed.add(`topic:${topic.id}`);
+      topic.concepts.forEach((concept) => state.mapCollapsed.add(`concept:${concept.id}`));
+    });
+    renderTopicMap();
   });
   $("#searchInput").addEventListener("input", (event) => {
     state.search = event.target.value;
@@ -1186,6 +1321,7 @@ function render() {
   populateFilters();
   renderProblems();
   renderGlossary();
+  renderTopicMap();
   accountPanel?.render();
 }
 

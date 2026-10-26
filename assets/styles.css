@@ -148,11 +148,55 @@ a {
   top: 1.25rem;
   right: clamp(1rem, 4vw, 4rem);
   z-index: 1;
-  width: min(16rem, calc(100% - 2rem));
 }
 
-.global-language select {
-  padding: 0.45rem 0.6rem;
+.language-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  width: auto;
+  min-height: 3rem;
+  box-sizing: border-box;
+  padding: 0.3rem 0.35rem 0.3rem 0.7rem;
+  border-radius: 999px;
+}
+
+.language-icon {
+  flex: none;
+  margin-right: 0.25rem;
+  color: var(--muted, var(--text));
+}
+
+.language-switch button {
+  display: grid;
+  place-items: center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 0.55rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.language-switch button:hover {
+  background: var(--accent-soft);
+}
+
+.language-switch button[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--panel);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .theme-toggle {
@@ -1452,4 +1496,228 @@ a.problem-chip {
 .vocab-chips.compact .vocab-chip {
   padding: 0.2rem 0.6rem;
   font-size: 0.82rem;
+}
+
+/* Topic Map: collapsible tree of areas → concepts → glossary terms. */
+.map-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-self: end;
+}
+
+.map-tree {
+  padding: 1.25rem 1.5rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.map-root {
+  display: inline-flex;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--panel);
+  font-weight: 800;
+}
+
+.map-branch {
+  margin: 0;
+  padding: 0 0 0 1.4rem;
+  list-style: none;
+}
+
+.map-top {
+  margin-left: 1rem;
+  padding-left: 1.4rem;
+}
+
+.map-branch > li {
+  position: relative;
+  padding: 0.35rem 0 0;
+}
+
+.map-branch > li::before,
+.map-branch > li::after {
+  content: "";
+  position: absolute;
+  left: -1.4rem;
+  border-color: var(--line);
+  border-style: solid;
+  border-width: 0;
+}
+
+.map-branch > li::before {
+  top: 0;
+  height: 1.55rem;
+  width: 1.2rem;
+  border-left-width: 2px;
+  border-bottom-width: 2px;
+  border-bottom-left-radius: 0.6rem;
+}
+
+.map-branch > li:not(:last-child)::after {
+  top: 0;
+  bottom: 0;
+  border-left-width: 2px;
+}
+
+.map-node > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0.4rem 0.6rem 0.4rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: var(--panel);
+  cursor: pointer;
+  list-style: none;
+}
+
+.map-node > summary::-webkit-details-marker {
+  display: none;
+}
+
+.map-node > summary::before {
+  content: "";
+  flex: none;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin: 0 0.15rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.15s ease;
+}
+
+.map-node[open] > summary::before {
+  transform: rotate(45deg);
+}
+
+.map-node > summary:hover,
+.map-node > summary:focus-visible {
+  border-color: var(--accent);
+}
+
+.map-node > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.map-topic > summary {
+  background: var(--accent-soft);
+  font-weight: 800;
+}
+
+.map-icon {
+  display: grid;
+  flex: none;
+  color: var(--accent);
+}
+
+.map-label .bilingual-pair {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0 0.45rem;
+}
+
+.map-count {
+  flex: none;
+  min-width: 1.4rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--line) 60%, transparent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.map-open {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.map-open:hover,
+.map-open:focus-visible {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--panel);
+}
+
+.map-terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0.35rem 1.4rem;
+  padding: 0.6rem 0.7rem;
+  list-style: none;
+  border-left: 2px dashed var(--line);
+}
+
+.map-terms:empty {
+  display: none;
+}
+
+.map-term {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.map-term .bilingual-pair {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.map-term .bilingual-pair [lang="zh"] {
+  opacity: 0.75;
+}
+
+.map-term:hover,
+.map-term:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.map-term.mastered::before {
+  content: "✓";
+  margin-right: 0.3rem;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .map-tree {
+    padding: 1rem 0.75rem;
+  }
+
+  .map-branch {
+    padding-left: 1rem;
+  }
+
+  .map-branch > li::before,
+  .map-branch > li::after {
+    left: -1rem;
+  }
+
+  .map-branch > li::before {
+    width: 0.8rem;
+  }
 }
