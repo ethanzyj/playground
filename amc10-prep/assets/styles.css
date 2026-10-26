@@ -593,7 +593,36 @@ input {
   border-radius: 0.35rem 0.75rem 0.75rem 0.35rem;
 }
 
-.formula-steps > strong {
+.formula-steps > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  list-style: none;
+  border-radius: 0.35rem;
+}
+
+.formula-steps > summary::-webkit-details-marker {
+  display: none;
+}
+
+.formula-steps > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.steps-chevron {
+  flex: none;
+  color: var(--accent);
+  transition: transform 0.2s ease;
+}
+
+.formula-steps[open] .steps-chevron {
+  transform: rotate(180deg);
+}
+
+.formula-steps > summary strong {
   color: var(--accent);
   font-size: 0.78rem;
   letter-spacing: 0.06em;
