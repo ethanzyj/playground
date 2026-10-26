@@ -177,6 +177,7 @@ assert(!data.includes("外切圆"), "Triangle terminology must use 外接圆 for
 assert(!data.includes("模意义下的小数"), "Modular arithmetic must refer to remainders, not decimals.");
 assert(!data.includes("二分法"), "Binary-choice counting must not be mislabeled as bisection.");
 assert(!/explanation(?:Zh|En): "[^"\n]*\\/.test(data), "Formula explanations containing TeX must use String.raw.");
+assert(app.includes('<details class="formula-steps">') && !app.includes('<details class="formula-steps" open'), "Step-by-step explanations must be collapsible and collapsed by default.");
 assert(app.includes("formulaItems(concept)"), "Formula lists must use the explanatory math renderer.");
 assert(app.includes("typesetPromise"), "Dynamic concept updates must be typeset after rendering.");
 assert(

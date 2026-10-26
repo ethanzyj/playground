@@ -26,6 +26,9 @@ tab. Pure-computation problems with no glossary terms omit the row.
 Shared topic-classification guidance appears once in the explorer header;
 cards only show notes specific to that problem.
 
+In the Study Guide, formula cards keep their **Step by step** explanations
+collapsed by default; select the heading or chevron icon to expand them.
+
 In the Study Guide, each concept's **Related AMC 10 references** appear as a
 compact year × exam table of problem-number chips, color-coded by difficulty,
 with a green dot on problems you have marked. Selecting a chip opens that

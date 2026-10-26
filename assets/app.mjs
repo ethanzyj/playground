@@ -1,7 +1,7 @@
-import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20261025-23";
+import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20261025-24";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
-import { AccountPanel } from "./account.mjs?v=20261025-23";
-import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261025-23";
+import { AccountPanel } from "./account.mjs?v=20261025-24";
+import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261025-24";
 
 let problemProgressStorageError = false;
 
@@ -411,12 +411,15 @@ function formulaItems(concept) {
         <div class="formula-expression"><span class="math-formula">\\(${formula}\\)</span></div>
         <p class="formula-explanation">${textPair(note.explanationZh, linkGlossaryTerms(note.explanationEn))}</p>
         ${note.stepsEn ? `
-          <div class="formula-steps">
-            <strong>${uiText("stepByStep")}</strong>
+          <details class="formula-steps">
+            <summary>
+              <strong>${uiText("stepByStep")}</strong>
+              <svg class="steps-chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6" /></svg>
+            </summary>
             <ol>
               ${note.stepsEn.map((step, stepIndex) => `<li>${textPair(note.stepsZh[stepIndex], linkGlossaryTerms(step))}</li>`).join("")}
             </ol>
-          </div>
+          </details>
         ` : ""}
         <div class="formula-example">
           <strong>${uiText("workedExample")}</strong>
