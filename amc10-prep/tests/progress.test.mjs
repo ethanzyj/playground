@@ -68,7 +68,7 @@ test("overview refreshes counts and numbered lists without resetting the active 
   const state = {
     problemProgress: { "2025-AMC10A-3": "needUnderstanding" },
     problemProgressFilter: "needUnderstanding",
-    problemMode: "filters", year: "all", exam: "all"
+    year: "all", exam: "all"
   };
   const app = readFileSync(new URL("../assets/app.mjs", import.meta.url), "utf8");
   const render = app.slice(app.indexOf("function renderProgressOverview()"), app.indexOf("function downloadProgress()"));
@@ -100,22 +100,19 @@ test("overview refreshes counts and numbered lists without resetting the active 
   runInNewContext("renderProgressOverview();", context);
   assert.match(elements["#problemProgressFilter"].innerHTML, /needUnderstanding \(0\)/);
   assert.match(elements["#problemProgressFilter"].innerHTML, /haveApproach \(1\)/);
-  for (const mode of ["filters", "exam", "full"]) {
-    state.problemMode = mode;
-    state.year = state.examYear = "2025";
-    state.exam = state.examPaper = "AMC 10A";
+    state.year = "2025";
+    state.exam = "AMC 10A";
     runInNewContext("renderProgressOverview();", context);
     assert.match(elements["#progressTotals"].textContent, /1 \/ 25.*24/s);
     assert.match(elements["#progressScope"].textContent, /2025 · AMC 10A/);
     assert.equal(elements["#progressMeter"].max, 25);
     assert.equal(elements["#progressMeter"].value, 1);
-    state.exam = state.examPaper = "AMC 10B";
+    state.exam = "AMC 10B";
     runInNewContext("renderProgressOverview();", context);
     assert.match(elements["#progressTotals"].textContent, /0 \/ 25.*25/s);
     assert.doesNotMatch(elements["#progressBreakdown"].innerHTML, /#3/);
     assert.equal(elements["#progressMeter"].value, 0);
-  }
-  state.year = state.examYear = "1900";
+  state.year = "1900";
   runInNewContext("renderProgressOverview();", context);
   assert.equal(elements["#progressMeter"].max, 1);
   assert.equal(elements["#progressMeter"].value, 0);

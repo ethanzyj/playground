@@ -55,7 +55,9 @@ async function page(configured, client, method = "password", search = "", fetchI
 }
 
 test("compact explorer header keeps labeled filters, localized counts, and progress details working", async () => {
-  const p = await page(false);
+  const p = await page(false, undefined, "password", "", async (url) => ({
+    ok: true, json: async () => JSON.parse(readFileSync(new URL(url, root), "utf8"))
+  }));
   try {
     p.$("#problemsTab").click();
     assert.equal(p.$$("#problemFilters label select").length, 4);
@@ -72,14 +74,37 @@ test("compact explorer header keeps labeled filters, localized counts, and progr
     p.$(".progress-help summary").click();
     assert.equal(p.$(".progress-help").open, true);
     assert.ok(p.$(".progress-help #exportProgress"));
-    p.$('[data-problem-mode="exam"]').click();
-    assert.equal(p.$("#problemFilters").hidden, true);
+    p.$("#examFilter").value = "AMC 10A";
+    p.$("#examFilter").dispatchEvent(new p.window.Event("change"));
+    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 25);
+    assert.equal(p.$$("[data-problem-mode]").length, 0);
+    assert.equal(p.$("#examAttribution").hidden, false);
+    assert.ok(p.$("#problemList").classList.contains("full-exam"));
+    p.$("#examFilter").value = "AMC 10B";
+    p.$("#examFilter").dispatchEvent(new p.window.Event("change"));
+    await p.waitFor(() => p.$('#problemList [data-problem-key="2025-AMC10B-1"] .problem-statement'));
+    assert.equal(p.$$("#problemList .problem-statement").length, 25);
+    p.$("#difficultyFilter").value = "early";
+    p.$("#difficultyFilter").dispatchEvent(new p.window.Event("change"));
+    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 8);
+    assert.equal(p.$("#progressMeter").max, 25);
+    p.$("#problemProgressFilter").value = "haveApproach";
+    p.$("#problemProgressFilter").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$$("#problemList .problem-statement").length, 0);
+    assert.equal(p.$("#examAttribution").hidden, true);
+    p.$("#problemProgressFilter").value = "all";
+    p.$("#problemProgressFilter").dispatchEvent(new p.window.Event("change"));
+    p.$("#difficultyFilter").value = "all";
+    p.$("#difficultyFilter").dispatchEvent(new p.window.Event("change"));
+    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 25);
+    assert.equal(p.$("#problemFilters").hidden, false);
     assert.equal(p.$("#progressMeter").max, 25);
     p.$('[data-language="zh"]').click();
     assert.equal(p.$("#problemHeading").textContent, "真题索引");
     assert.equal(p.$("#progressOverviewHeading").textContent, "进度总览");
     assert.equal(p.$(".progress-status-label").textContent, "待理解题意");
-    p.$('[data-problem-mode="filters"]').click();
+    p.$("#examFilter").value = "all";
+    p.$("#examFilter").dispatchEvent(new p.window.Event("change"));
     assert.equal(p.$("#problemFilters").hidden, false);
     assert.equal(p.$("#yearFilter").value, "2025");
     assert.equal(p.$("#problemCount").textContent, "50 / 500");
@@ -472,9 +497,9 @@ test("study guide shows related problems as a year/exam table of links that open
     });
     await p.waitFor(() => p.$(`#problemList [data-problem-key="${key}"] .problem-statement`));
     assert.equal(p.$("#problemsPanel").hidden, false);
-    assert.equal(p.$('[data-problem-mode="full"]').getAttribute("aria-pressed"), "true");
-    assert.equal(p.$("#examYear").value, year);
-    assert.equal(p.$("#examPaper").value.replace(" ", ""), exam);
+    assert.equal(p.$$("[data-problem-mode]").length, 0);
+    assert.equal(p.$("#yearFilter").value, year);
+    assert.equal(p.$("#examFilter").value.replace(" ", ""), exam);
     assert.equal(p.$(`#problemList [data-problem-key="${key}"] .problem-topline strong`).textContent,
       label.split(" · ")[0]);
     assert.match(label, new RegExp(`#${number}\\b`));

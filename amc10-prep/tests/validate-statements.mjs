@@ -45,7 +45,7 @@ for (let year = 2016; year <= 2025; year += 1) {
 assert.ok(diagrams > 0, "Imported exams must include their diagrams.");
 const app = readFileSync(new URL("assets/app.mjs", root), "utf8");
 const html = readFileSync(new URL("index.html", root), "utf8");
-assert.ok(html.includes('data-problem-mode="full"'), "Full exam mode must be available.");
+assert.ok(!html.includes("data-problem-mode") && app.includes('state.year !== "all" && state.exam !== "all"'), "Selecting one year and exam must automatically show the full paper.");
 assert.ok(html.includes('id="examAttribution"'), "Full exams must credit the source.");
 assert.ok(app.includes("version !== problemRenderVersion"), "Stale loads must not replace a newer selection.");
 assert.ok(app.includes('id="retryExam"'), "Failed loads must offer a retry.");
