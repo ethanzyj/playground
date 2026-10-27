@@ -54,6 +54,39 @@ async function page(configured, client, method = "password", search = "", fetchI
   return { window, $, $$, waitFor, errors, close: () => window.close() };
 }
 
+test("compact explorer header keeps labeled filters, localized counts, and progress details working", async () => {
+  const p = await page(false);
+  try {
+    p.$("#problemsTab").click();
+    assert.equal(p.$$("#problemFilters label select").length, 4);
+    for (const select of p.$$("#problemFilters select")) {
+      assert.ok(select.closest("label").textContent.trim());
+    }
+    assert.equal(p.$("#problemCount").textContent, "500 / 500");
+    p.$("#yearFilter").value = "2025";
+    p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$("#problemCount").textContent, "50 / 500");
+    assert.match(p.$("#progressScope").textContent, /2025/);
+    assert.equal(p.$("#progressMeter").max, 50);
+    assert.equal(p.$(".progress-help").open, false);
+    p.$(".progress-help summary").click();
+    assert.equal(p.$(".progress-help").open, true);
+    assert.ok(p.$(".progress-help #exportProgress"));
+    p.$('[data-problem-mode="exam"]').click();
+    assert.equal(p.$("#problemFilters").hidden, true);
+    assert.equal(p.$("#progressMeter").max, 25);
+    p.$('[data-language="zh"]').click();
+    assert.equal(p.$("#problemHeading").textContent, "真题索引");
+    assert.equal(p.$("#progressOverviewHeading").textContent, "进度总览");
+    assert.equal(p.$(".progress-status-label").textContent, "待理解题意");
+    p.$('[data-problem-mode="filters"]').click();
+    assert.equal(p.$("#problemFilters").hidden, false);
+    assert.equal(p.$("#yearFilter").value, "2025");
+    assert.equal(p.$("#problemCount").textContent, "50 / 500");
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
 test("unconfigured cloud panel preserves guest progress and keeps login disabled", async () => {
   const p = await page(false);
   try {

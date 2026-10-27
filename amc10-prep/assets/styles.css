@@ -116,7 +116,7 @@ a {
 }
 
 .app-shell.full-width {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .workspace-bar {
@@ -496,6 +496,7 @@ input {
 .content-panel {
   display: grid;
   gap: 1.25rem;
+  min-width: 0;
 }
 
 .full-width .content-panel {
@@ -928,12 +929,103 @@ input {
   min-width: 15rem;
 }
 
+.section-heading.explorer-heading {
+  display: grid;
+  gap: 0.65rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--panel);
+}
+
+.explorer-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  min-width: 0;
+}
+
+.explorer-heading h2 {
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  letter-spacing: -0.025em;
+}
+
+.explorer-heading .bilingual-pair {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.55rem;
+}
+
+.explorer-heading h2 [lang="zh"] {
+  font-size: 0.7em;
+  font-weight: 500;
+}
+
+.explorer-heading .result-count {
+  margin: 0;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.explorer-heading .problem-metadata-note {
+  max-width: none;
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.explorer-heading #problemFilters:not([hidden]) {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+#problemFilters label {
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+#problemFilters label > span {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+#problemFilters select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 850px) {
+  .explorer-heading #problemFilters:not([hidden]) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .explorer-heading #problemFilters:not([hidden]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .progress-filter {
   margin-block: 1rem;
 }
 
 .progress-overview {
-  padding: 1rem;
+  padding: 1.25rem;
   margin-bottom: 1.5rem;
   border: 1px solid var(--line);
   border-radius: 1rem;
@@ -941,19 +1033,173 @@ input {
 }
 
 .progress-overview h3 {
-  margin-top: 0;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.progress-header,
+.progress-totals {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.progress-scope {
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.progress-totals {
+  margin: 1rem 0 0.65rem;
+}
+
+.progress-marked {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.progress-marked > strong {
+  font-size: 1.75rem;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-marked > span,
+.progress-unmarked {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+#progressMeter {
+  display: block;
+  appearance: none;
+  width: 100%;
+  height: 0.4rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: var(--line);
+  accent-color: var(--accent);
+}
+
+#progressMeter::-webkit-progress-bar {
+  background: var(--line);
+}
+
+#progressMeter::-webkit-progress-value {
+  background: var(--accent);
+}
+
+#progressMeter::-moz-progress-bar {
+  background: var(--accent);
+}
+
+#progressBreakdown {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 0.65rem;
 }
 
 .progress-status-card {
-  margin-bottom: 0.75rem;
-  padding: 0.75rem;
+  --status-color: var(--accent);
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--status-color) 4%, var(--panel));
+}
+
+.progress-status-card[data-summary-status="needUnderstanding"] {
+  --status-color: #b45309;
+}
+
+.progress-status-card[data-summary-status="needStartingPoint"] {
+  --status-color: #6366f1;
+}
+
+.progress-status-card[data-summary-status="haveApproach"] {
+  --status-color: #15803d;
 }
 
 .progress-status-card summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
   cursor: pointer;
   color: var(--text);
+  list-style: none;
+  border-radius: inherit;
+}
+
+.progress-status-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.progress-status-card summary:focus-visible,
+.progress-help summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.progress-status-label {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.progress-status-count {
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-status-card summary::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  flex: none;
+  border-radius: 50%;
+  background: var(--status-color);
+}
+
+.progress-status-card[open] .steps-chevron {
+  transform: rotate(180deg);
+}
+
+.progress-status-card > ul,
+.progress-status-card > p {
+  margin: 0 0.8rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+.progress-status-card > ul {
+  padding-left: 1rem;
+}
+
+.progress-help {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.8rem;
+}
+
+.progress-help summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+@media (max-width: 700px) {
+  #progressBreakdown {
+    grid-template-columns: 1fr;
+  }
 }
 
 .progress-status-card li {

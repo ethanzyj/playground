@@ -16,7 +16,7 @@
         console.error("Unable to read the saved theme.", error);
       }
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20261026-2" />
+    <link rel="stylesheet" href="assets/styles.css?v=20261026-3" />
     <script>
       window.MathJax = {
         tex: {
@@ -171,27 +171,45 @@
         </section>
 
         <section id="problemsPanel" class="problem-explorer view-panel" role="tabpanel" aria-labelledby="problemsTab" hidden>
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow" data-i18n="problemEyebrow">Past AMC 10 references / 历年真题索引</p>
+          <div class="section-heading explorer-heading">
+            <div class="explorer-title-row">
               <h2 id="problemHeading" data-i18n="problemExplorer">Problem Explorer</h2>
-              <p class="problem-metadata-note" data-i18n="problemMetadataNote"></p>
               <p id="problemCount" class="result-count" aria-live="polite"></p>
             </div>
+            <p class="problem-metadata-note" data-i18n="problemMetadataNote"></p>
             <div id="problemFilters" class="filters">
-              <select id="conceptFilter" aria-label="Filter by concept" data-i18n-aria-label="filterByConcept"></select>
-              <select id="yearFilter" aria-label="Filter by year" data-i18n-aria-label="filterByYear"></select>
-              <select id="examFilter" aria-label="Filter by exam" data-i18n-aria-label="filterByExam"></select>
-              <select id="difficultyFilter" aria-label="Filter by difficulty" data-i18n-aria-label="filterByDifficulty"></select>
+              <label>
+                <span data-i18n="filterConceptLabel">Concept / 知识点</span>
+                <select id="conceptFilter" aria-label="Filter by concept" data-i18n-aria-label="filterByConcept"></select>
+              </label>
+              <label>
+                <span data-i18n="year">Year / 年份</span>
+                <select id="yearFilter" aria-label="Filter by year" data-i18n-aria-label="filterByYear"></select>
+              </label>
+              <label>
+                <span data-i18n="filterExamLabel">Exam / 试卷</span>
+                <select id="examFilter" aria-label="Filter by exam" data-i18n-aria-label="filterByExam"></select>
+              </label>
+              <label>
+                <span data-i18n="filterDifficultyLabel">Difficulty / 难度</span>
+                <select id="difficultyFilter" aria-label="Filter by difficulty" data-i18n-aria-label="filterByDifficulty"></select>
+              </label>
             </div>
           </div>
           <section class="progress-overview" aria-labelledby="progressOverviewHeading">
-            <h3 id="progressOverviewHeading" data-i18n="progressOverview"></h3>
-            <p class="muted" data-i18n="progressOverviewHelp"></p>
-            <p id="progressTotals" aria-live="polite"></p>
+            <div class="progress-header">
+              <h3 id="progressOverviewHeading" data-i18n="progressOverview"></h3>
+              <span id="progressScope" class="progress-scope"></span>
+            </div>
+            <div id="progressTotals" class="progress-totals" aria-live="polite"></div>
+            <progress id="progressMeter" max="1" value="0" data-i18n-aria-label="markedProblems"></progress>
             <div id="progressBreakdown"></div>
-            <button id="exportProgress" class="mastery" type="button" data-i18n="exportProgress"></button>
-            <p class="muted" data-i18n="exportProgressHelp"></p>
+            <details class="progress-help">
+              <summary data-i18n="progressDetails"></summary>
+              <p class="muted" data-i18n="progressOverviewHelp"></p>
+              <p class="muted" data-i18n="exportProgressHelp"></p>
+              <button id="exportProgress" class="mastery" type="button" data-i18n="exportProgress"></button>
+            </details>
             <p id="progressExportError" role="alert" hidden></p>
           </section>
           <div class="problem-modes" role="group" aria-label="Browse problems" data-i18n-aria-label="browseProblems">
@@ -258,6 +276,6 @@
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261026-2"></script>
+    <script type="module" src="assets/app.mjs?v=20261026-3"></script>
   </body>
 </html>

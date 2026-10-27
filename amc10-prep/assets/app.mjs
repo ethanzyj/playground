@@ -282,6 +282,9 @@ const UI_TEXT = {
   allExams: { en: "All exams", zh: "所有试卷" },
   allDifficulties: { en: "All difficulties", zh: "所有难度" },
   filterByConcept: { en: "Filter by concept", zh: "按知识点筛选" },
+  filterConceptLabel: { en: "Concept", zh: "知识点" },
+  filterExamLabel: { en: "Exam", zh: "试卷" },
+  filterDifficultyLabel: { en: "Difficulty", zh: "难度" },
   filterByYear: { en: "Filter by year", zh: "按年份筛选" },
   filterByExam: { en: "Filter by exam", zh: "按试卷筛选" },
   filterByDifficulty: { en: "Filter by difficulty", zh: "按难度筛选" },
@@ -299,6 +302,10 @@ const UI_TEXT = {
   allProgress: { en: "All statuses", zh: "全部进度" },
   unmarkedProgress: { en: "Not marked yet", zh: "尚未标记" },
   progressOverview: { en: "Progress overview", zh: "进度总览" },
+  progressDetails: { en: "About these counts & export", zh: "统计说明与导出" },
+  progressNeedUnderstanding: { en: "Need clarity", zh: "待理解题意" },
+  progressNeedStartingPoint: { en: "Need a starting point", zh: "待寻找思路" },
+  progressHaveApproach: { en: "Have an approach", zh: "已有解题思路" },
   markedProblems: { en: "Marked problems", zh: "已标记题目" },
   progressOverviewHelp: { en: "Counts follow the selected year and exam, independent of concept, difficulty, and status filters. Expand a status to see problem numbers by paper.", zh: "统计随所选年份与试卷更新，不受知识点、难度或状态筛选影响。展开状态可查看各试卷的题号。" },
   noMarkedStatus: { en: "No problems marked with this status yet.", zh: "尚无题目标记为此状态。" },
@@ -727,13 +734,28 @@ function renderProgressOverview() {
   const year = isExam ? state.examYear : state.year;
   const exam = isExam ? state.examPaper : state.exam;
   const summary = summarizeProgress(progressScope(PROBLEM_REFERENCES, year, exam), state.problemProgress);
-  $("#progressOverviewHeading").textContent = `${uiText("progressOverview")} — ${year === "all" ? uiText("allYears") : year} · ${exam === "all" ? uiText("allExams") : exam}`;
+  $("#progressOverviewHeading").textContent = uiText("progressOverview");
+  $("#progressScope").textContent = `${year === "all" ? uiText("allYears") : year} · ${exam === "all" ? uiText("allExams") : exam}`;
   const openStatuses = new Set([...document.querySelectorAll("[data-summary-status][open]")]
     .map((element) => element.dataset.summaryStatus));
-  $("#progressTotals").textContent = `${uiText("markedProblems")}: ${summary.marked} / ${summary.total} · ${uiText("unmarkedProgress")}: ${summary.unmarked}`;
+  $("#progressTotals").innerHTML = `
+    <span class="progress-marked"><strong>${summary.marked} / ${summary.total}</strong><span>${textPair(UI_TEXT.markedProblems.zh, UI_TEXT.markedProblems.en)}</span></span>
+    <span class="progress-unmarked">${summary.unmarked} ${uiText("unmarkedProgress")}</span>
+  `;
+  $("#progressMeter").max = summary.total || 1;
+  $("#progressMeter").value = summary.marked;
+  const statusLabels = {
+    needUnderstanding: "progressNeedUnderstanding",
+    needStartingPoint: "progressNeedStartingPoint",
+    haveApproach: "progressHaveApproach"
+  };
   $("#progressBreakdown").innerHTML = summary.statuses.map((entry) => `
     <details class="progress-status-card" data-summary-status="${entry.status}" ${openStatuses.has(entry.status) ? "open" : ""}>
-      <summary>${uiText(entry.status)} <strong>(${entry.count})</strong></summary>
+      <summary title="${uiText(entry.status)}">
+        <span class="progress-status-label">${textPair(UI_TEXT[statusLabels[entry.status]].zh, UI_TEXT[statusLabels[entry.status]].en)}</span>
+        <strong class="progress-status-count">${entry.count}</strong>
+        <svg class="steps-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6" /></svg>
+      </summary>
       ${entry.count ? `<ul>${entry.papers.map((paper) => `
         <li><strong>${paper.year} ${paper.exam}</strong>: ${paper.problemNumbers.map((number) => `#${number}`).join(", ")}</li>
       `).join("")}</ul>` : `<p class="muted">${uiText("noMarkedStatus")}</p>`}

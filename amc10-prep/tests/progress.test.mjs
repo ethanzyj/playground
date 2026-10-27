@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
+import { JSDOM } from "jsdom";
 import { PROBLEM_REFERENCES, allConcepts } from "../assets/data.mjs";
 import { problemKey, progressScope, summarizeProgress, exportProgress } from "../assets/progress.mjs";
 
@@ -61,8 +62,9 @@ test("complete selections and invalid values produce consistent totals", () => {
 });
 
 test("overview refreshes counts and numbered lists without resetting the active filter", () => {
-  const elements = Object.fromEntries(["#progressTotals", "#progressBreakdown", "#problemProgressFilter", "#progressOverviewHeading"]
-    .map((id) => [id, {}]));
+  const dom = new JSDOM(readFileSync(new URL("../index.html", import.meta.url), "utf8"));
+  const elements = Object.fromEntries(["#progressTotals", "#progressBreakdown", "#problemProgressFilter", "#progressOverviewHeading", "#progressScope", "#progressMeter"]
+    .map((id) => [id, dom.window.document.querySelector(id)]));
   const state = {
     problemProgress: { "2025-AMC10A-3": "needUnderstanding" },
     problemProgressFilter: "needUnderstanding",
@@ -74,13 +76,21 @@ test("overview refreshes counts and numbered lists without resetting the active 
     state, PROBLEM_REFERENCES, progressScope, summarizeProgress,
     $: (selector) => elements[selector],
     uiText: (key) => key,
+    UI_TEXT: Object.fromEntries(["markedProblems", "progressNeedUnderstanding", "progressNeedStartingPoint", "progressHaveApproach"]
+      .map((key) => [key, { en: key, zh: key }])),
+    textPair: (zh, en) => `<span>${en}</span><span>${zh}</span>`,
     document: { querySelectorAll: () => [{ dataset: { summaryStatus: "needUnderstanding" } }] }
   };
   runInNewContext(`${render}\nrenderProgressOverview();`, context);
-  assert.match(elements["#progressTotals"].textContent, /1 \/ 500.*499/);
+  assert.match(elements["#progressTotals"].textContent, /1 \/ 500.*499/s);
   assert.match(elements["#progressBreakdown"].innerHTML, /2025 AMC 10A<\/strong>: #3/);
   assert.match(elements["#progressBreakdown"].innerHTML, /data-summary-status="needUnderstanding" open/);
   assert.equal(elements["#problemProgressFilter"].value, "needUnderstanding");
+  assert.equal(elements["#progressMeter"].max, 500);
+  assert.equal(elements["#progressMeter"].value, 1);
+  assert.equal(elements["#progressBreakdown"].querySelectorAll(".progress-status-count").length, 3);
+  assert.equal(elements["#progressBreakdown"].querySelector(".progress-status-count").textContent, "1");
+  assert.equal(dom.window.document.querySelector(".progress-help").open, false);
   state.problemProgress["2025-AMC10A-3"] = "haveApproach";
   runInNewContext("renderProgressOverview();", context);
   assert.match(elements["#problemProgressFilter"].innerHTML, /needUnderstanding \(0\)/);
@@ -90,13 +100,21 @@ test("overview refreshes counts and numbered lists without resetting the active 
     state.year = state.examYear = "2025";
     state.exam = state.examPaper = "AMC 10A";
     runInNewContext("renderProgressOverview();", context);
-    assert.match(elements["#progressTotals"].textContent, /1 \/ 25.*24/);
-    assert.match(elements["#progressOverviewHeading"].textContent, /2025 · AMC 10A/);
+    assert.match(elements["#progressTotals"].textContent, /1 \/ 25.*24/s);
+    assert.match(elements["#progressScope"].textContent, /2025 · AMC 10A/);
+    assert.equal(elements["#progressMeter"].max, 25);
+    assert.equal(elements["#progressMeter"].value, 1);
     state.exam = state.examPaper = "AMC 10B";
     runInNewContext("renderProgressOverview();", context);
-    assert.match(elements["#progressTotals"].textContent, /0 \/ 25.*25/);
+    assert.match(elements["#progressTotals"].textContent, /0 \/ 25.*25/s);
     assert.doesNotMatch(elements["#progressBreakdown"].innerHTML, /#3/);
+    assert.equal(elements["#progressMeter"].value, 0);
   }
+  state.year = state.examYear = "1900";
+  runInNewContext("renderProgressOverview();", context);
+  assert.equal(elements["#progressMeter"].max, 1);
+  assert.equal(elements["#progressMeter"].value, 0);
+  dom.window.close();
 });
 
 test("scope supports all years, one year, one exam variant, and a single paper", () => {

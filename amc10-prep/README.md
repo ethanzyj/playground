@@ -25,6 +25,10 @@ hover a term for its definition or select it to open it in the Glossary in a new
 tab. Pure-computation problems with no glossary terms omit the row.
 Shared topic-classification guidance appears once in the explorer header;
 cards only show notes specific to that problem.
+The explorer header keeps the result count beside the title and puts labeled
+filters in a responsive row. The progress overview uses a marked/total meter and
+three expandable status tiles; counting guidance and JSON export are tucked into
+**About these counts & export** below the tiles.
 
 Every link — problem chips, concept tags, vocabulary chips, Topic Map entries,
 glossary tooltips, and source links — opens in a new tab by default. Concept links
