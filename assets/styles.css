@@ -816,36 +816,123 @@ input {
 }
 
 .problem-progress summary {
-  padding: 0.6rem 0.75rem;
-  border: 1px solid var(--line);
-  border-radius: 0.75rem;
-  background: var(--accent-soft);
-  color: var(--text);
+  padding: 0.25rem 0;
+  color: var(--muted);
   cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .problem-progress fieldset {
-  margin: 0.5rem 0 0;
-  padding: 0.75rem;
-  border: 1px solid var(--line);
-  border-radius: 0.75rem;
-}
-
-.problem-progress label {
   display: flex;
-  align-items: start;
   gap: 0.5rem;
-  padding-block: 0.4rem;
-  cursor: pointer;
-  font-size: 0.85rem;
+  min-width: 0;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  border: 0;
 }
 
+.problem-progress legend,
 .problem-progress input {
-  width: auto;
-  flex: 0 0 auto;
-  margin-top: 0.2rem;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.progress-option {
+  --status-color: var(--accent);
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.progress-option[data-status="needUnderstanding"] {
+  --status-color: #b45309;
+}
+
+.progress-option[data-status="needStartingPoint"] {
+  --status-color: #6366f1;
+}
+
+.progress-option[data-status="haveApproach"] {
+  --status-color: #15803d;
+}
+
+.progress-option-icon {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: var(--panel);
+  color: var(--muted);
+}
+
+.progress-option:hover .progress-option-icon {
+  border-color: var(--status-color);
+  background: color-mix(in srgb, var(--status-color) 8%, var(--panel));
+}
+
+.progress-option input:checked + .progress-option-icon {
+  border-color: var(--status-color);
+  background: color-mix(in srgb, var(--status-color) 15%, var(--panel));
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--status-color);
+}
+
+.progress-option input:focus-visible + .progress-option-icon {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.progress-option input:disabled + .progress-option-icon {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.progress-option-tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  z-index: 20;
+  width: max-content;
+  max-width: min(15rem, 65vw);
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  transform: translateX(-50%);
+  visibility: hidden;
+}
+
+.progress-option:first-of-type .progress-option-tooltip {
+  left: 0;
+  transform: none;
+}
+
+.progress-option:last-of-type .progress-option-tooltip {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.progress-option:not([data-tooltip-dismissed]):hover .progress-option-tooltip,
+.progress-option:not([data-tooltip-dismissed]):focus-within .progress-option-tooltip {
+  visibility: visible;
 }
 
 .problem-progress summary:focus-visible {

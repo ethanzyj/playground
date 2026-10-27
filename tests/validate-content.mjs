@@ -178,7 +178,7 @@ assert(app.includes('aria-label="${uiText("openReference")}" title="${uiText("op
 }
 assert(app.includes("${problemVocabulary(problem)}"), "Problem cards must list the glossary terms used in that problem.");
 assert(!app.includes('data-glossary-concept="${problem.conceptIds[0]}"'), "Problem cards must not use a concept-wide vocabulary icon.");
-assert(app.includes('data-progress-key="${key}" open>'), "Problem progress panels must be expanded by default.");
+assert(/<details class="problem-progress"[^>]* open>/.test(app), "Problem progress panels must be expanded by default.");
 assert(!data.includes("书达定理"), "The misspelling 书达定理 must not appear; use 韦达定理.");
 assert(!data.includes("外切圆"), "Triangle terminology must use 外接圆 for circumcircle.");
 assert(!data.includes("模意义下的小数"), "Modular arithmetic must refer to remainders, not decimals.");

@@ -97,9 +97,37 @@ test("unconfigured cloud panel preserves guest progress and keeps login disabled
     assert.equal(p.$("main.app-shell").hasAttribute("inert"), false);
     assert.equal(p.$("#accountLanding").hidden, true);
     const input = p.$('#problemList .problem-progress input[value="needUnderstanding"]');
-    const key = input.closest("[data-progress-key]").dataset.progressKey;
+    const control = input.closest("[data-progress-key]");
+    const key = control.dataset.progressKey;
+    assert.equal(control.querySelectorAll(".progress-option-icon svg").length, 3);
+    for (const radio of control.querySelectorAll("input")) {
+      assert.ok(radio.getAttribute("aria-label"));
+      const tip = p.window.document.getElementById(radio.getAttribute("aria-describedby"));
+      assert.equal(tip.getAttribute("role"), "tooltip");
+      assert.match(tip.textContent, /[A-Za-z]/);
+      assert.match(tip.textContent, /[\u4e00-\u9fff]/);
+    }
+    input.focus();
+    input.dispatchEvent(new p.window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+    assert.equal(input.closest("label").dataset.tooltipDismissed, "true");
+    input.blur();
+    input.focus();
+    assert.equal(input.closest("label").hasAttribute("data-tooltip-dismissed"), false);
     input.click();
     assert.equal(JSON.parse(p.window.localStorage.getItem("amc10-problem-progress"))[key], "needUnderstanding");
+    assert.equal(p.window.document.activeElement, input);
+    assert.equal(control.dataset.progressStatus, "needUnderstanding");
+    assert.match(control.querySelector("summary").textContent, /Need clarity/);
+    const approach = control.querySelector('[value="haveApproach"]');
+    approach.click();
+    assert.equal(control.querySelectorAll("input:checked").length, 1);
+    assert.equal(control.dataset.progressStatus, "haveApproach");
+    assert.equal(JSON.parse(p.window.localStorage.getItem("amc10-problem-progress"))[key], "haveApproach");
+    p.$('[data-language="zh"]').click();
+    const localized = p.$(`[data-progress-key="${key}"] input:checked`);
+    assert.equal(localized.value, "haveApproach");
+    assert.match(localized.getAttribute("aria-label"), /理解题意/);
+    assert.match(localized.closest("details").querySelector("summary").textContent, /已有解题思路/);
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
@@ -203,6 +231,8 @@ test("email login, guest import, cloud save, localization, and logout work throu
     p.$(`#problemList [data-progress-key="${key}"] input[value="haveApproach"]`).click();
     await p.waitFor(() => records[key]?.status === "haveApproach");
     assert.equal(p.$(`#problemList [data-progress-key="${key}"]`).open, true);
+    assert.equal(p.$(`[data-progress-key="${key}"]`).dataset.progressStatus, "haveApproach");
+    assert.match(p.$(`[data-progress-key="${key}"] summary`).textContent, /Have an approach/);
     p.$('[data-language="zh"]').click();
     assert.equal(p.$("#accountHeading").title, "账户与云端同步");
     assert.equal(p.$("#accountHeading").textContent, user.email);

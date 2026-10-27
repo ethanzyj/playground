@@ -76,6 +76,11 @@ test("overview refreshes counts and numbered lists without resetting the active 
     state, PROBLEM_REFERENCES, progressScope, summarizeProgress,
     $: (selector) => elements[selector],
     uiText: (key) => key,
+    PROGRESS_LABEL_KEYS: {
+      needUnderstanding: "progressNeedUnderstanding",
+      needStartingPoint: "progressNeedStartingPoint",
+      haveApproach: "progressHaveApproach"
+    },
     UI_TEXT: Object.fromEntries(["markedProblems", "progressNeedUnderstanding", "progressNeedStartingPoint", "progressHaveApproach"]
       .map((key) => [key, { en: key, zh: key }])),
     textPair: (zh, en) => `<span>${en}</span><span>${zh}</span>`,
