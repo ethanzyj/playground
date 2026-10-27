@@ -10,13 +10,12 @@ to switch to light appearance, with a tooltip describing the action.
 It follows your device preference until you choose a theme, then saves that choice
 in this browser.
 
-In **Problem Explorer**, use **By concept & filters** for the existing concept,
-year, exam, and difficulty filters. Switch to **By year & exam** to select a
-single paper (2016-2025, AMC 10A or AMC 10B) and browse all 25 problem references
-in numerical order. Switching modes preserves each mode's selections.
-Use **Full exam page** with the same year and exam selectors to read all 25
-original English statements and A-E choices in one scrollable page, including
-local diagrams. Answers and solutions are not imported or displayed.
+**Problem Explorer** has one view with concept, year, exam, difficulty, and progress
+filters—no mode buttons or duplicate selectors. Selecting a specific year and exam
+(2016-2025, AMC 10A or AMC 10B) automatically shows the original English statements,
+A-E choices, and local diagrams in numerical order. The other filters still apply
+within that paper. Broader year/exam selections show the compact problem index.
+Answers and solutions are not imported or displayed.
 Concept tags open the Study Guide; vocabulary links open the Glossary.
 Problem cards use an external-link icon for the source problem. Under the
 concept tags, **Vocabulary in this problem** lists the glossary terms that
@@ -50,7 +49,7 @@ collapsed by default; select the heading or chevron icon to expand them.
 In the Study Guide, each concept's **Related AMC 10 references** appear as a
 compact year × exam table of problem-number chips, color-coded by difficulty,
 with a green dot on problems you have marked. Selecting a chip opens that
-problem on its **Full exam page** in the Problem Explorer; **View all in Problem
+problem in its full paper in the Problem Explorer; **View all in Problem
 Explorer** shows the concept's full reference list there. **Related vocabulary**
 appears as compact bilingual term chips (✓ marks mastered terms); hover a chip
 for its definition, or select it to open that term in the Glossary. These Study

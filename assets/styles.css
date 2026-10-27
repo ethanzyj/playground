@@ -1304,33 +1304,6 @@ input {
   min-width: 0;
 }
 
-.problem-modes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.problem-modes button {
-  border: 1px solid var(--line);
-  border-radius: 0.75rem;
-  padding: 0.65rem 1rem;
-  background: var(--panel);
-  color: var(--text);
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.problem-modes button[aria-pressed="true"] {
-  background: var(--accent);
-  color: white;
-}
-
-.exam-controls label {
-  display: grid;
-  gap: 0.35rem;
-}
-
 .exam-summary {
   color: var(--muted);
   margin: 1rem 0;

@@ -134,8 +134,8 @@ assert(html.includes('id="studyPanel"'), "HTML must include the study guide pane
 assert(html.includes('id="problemsPanel"'), "HTML must include the problem explorer panel.");
 assert(html.includes('id="glossaryPanel"'), "HTML must include the glossary panel.");
 assert(html.includes('id="conceptFilter"'), "Problem Explorer must include a concept filter.");
-assert(html.includes('data-problem-mode="filters"') && html.includes('data-problem-mode="exam"'), "Problem Explorer must offer filter and year/exam modes.");
-assert(html.includes('id="examYear"') && html.includes('id="examPaper"'), "Year/exam mode must include year and exam selectors.");
+assert(!html.includes("data-problem-mode"), "Problem Explorer must use one view without mode buttons.");
+assert(html.includes('id="yearFilter"') && html.includes('id="examFilter"'), "Problem Explorer must include year and exam filters.");
 assert(html.includes('id="examSummary"'), "Year/exam mode must explain reference-only browsing.");
 assert(html.includes('id="glossarySearch"'), "Glossary must include search.");
 assert(html.includes('id="glossaryCount"'), "Glossary must show filtered and total counts.");
@@ -197,7 +197,7 @@ assert(app.includes("renderStaticInterface();"), "Language changes must update t
 assert(app.includes("document.title ="), "Language changes must update the browser page title.");
 assert(app.includes('setActiveView("study")'), "Problem concept tags must navigate to the Study Guide.");
 assert(app.includes('state.problemConcept === "current"'), "Problem Explorer must support filtering by the current concept.");
-assert(app.includes('state.problemMode = "filters"'), "Glossary problem links must return to concept filtering.");
+assert(!app.includes("state.problemMode"), "Problem Explorer must not retain separate browsing modes.");
 assert(app.includes("a.problemNumber - b.problemNumber"), "Year/exam mode must order problems numerically.");
 assert(app.includes("wireProblemAndGlossaryLinks"), "Study, problem, and glossary views must cross-link.");
 assert(app.includes("amc10-mastered-glossary"), "Vocabulary mastery must persist independently from concept mastery.");

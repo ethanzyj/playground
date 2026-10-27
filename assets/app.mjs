@@ -29,9 +29,6 @@ const state = {
   activeView: "study",
   activeConceptId: allConcepts()[0].id,
   search: "",
-  problemMode: "filters",
-  examYear: String(Math.max(...PROBLEM_REFERENCES.map((problem) => problem.year))),
-  examPaper: "AMC 10A",
   problemConcept: "all",
   year: "all",
   exam: "all",
@@ -237,14 +234,7 @@ const UI_TEXT = {
     en: "Classified from problem-bank topic metadata; practice the linked concepts below.",
     zh: "按题库主题标签归类；可用于练习下方列出的相关概念。"
   },
-  browseProblems: { en: "Browse problems", zh: "浏览真题" },
-  byConcept: { en: "By concept & filters", zh: "按知识点筛选" },
-  byExam: { en: "By year & exam", zh: "按年份与试卷" },
-  fullExam: { en: "Full exam page", zh: "整卷阅读" },
-  selectYear: { en: "Year", zh: "年份" },
-  selectExam: { en: "Exam", zh: "试卷" },
   problems: { en: "problems", zh: "题" },
-  examOrder: { en: "Problems in exam order, matching your progress filter. Open a reference to read the problem.", zh: "按题号顺序显示符合进度筛选的题目。打开题目索引查看原题。" },
   fullExamSummary: { en: "Original English statements and answer choices on one page, matching your progress filter. Answers and solutions are not shown.", zh: "在一页中阅读符合进度筛选的英文原题及选项，不显示答案或解析。" },
   examAttribution: { en: "AMC problems © Mathematical Association of America.", zh: "AMC 题目版权归美国数学协会（MAA）所有。" },
   loadingExam: { en: "Loading exam statements…", zh: "正在加载整卷题目……" },
@@ -655,12 +645,11 @@ function relatedProblemTable(problems) {
 async function openProblemInExplorer(key) {
   const problem = PROBLEM_REFERENCES.find((item) => problemKey(item) === key);
   if (!problem) return;
-  state.problemMode = "full";
-  state.examYear = String(problem.year);
-  $("#examYear").value = state.examYear;
-  populateExamPapers();
-  state.examPaper = problem.exam;
-  $("#examPaper").value = problem.exam;
+  state.year = String(problem.year);
+  state.exam = problem.exam;
+  state.problemConcept = "all";
+  state.difficulty = "all";
+  populateFilters();
   if (state.problemProgressFilter !== "all") {
     state.problemProgressFilter = "all";
     $("#problemProgressFilter").value = "all";
@@ -744,24 +733,10 @@ function populateFilters() {
   yearFilter.value = state.year;
   examFilter.value = state.exam;
   difficultyFilter.value = state.difficulty;
-  $("#examYear").innerHTML = years.map((year) => `<option value="${year}">${year}</option>`).join("");
-  $("#examYear").value = state.examYear;
-  populateExamPapers();
-}
-
-function populateExamPapers() {
-  const exams = [...new Set(PROBLEM_REFERENCES
-    .filter((problem) => String(problem.year) === state.examYear)
-    .map((problem) => problem.exam))].sort();
-  if (!exams.includes(state.examPaper)) state.examPaper = exams[0];
-  $("#examPaper").innerHTML = exams.map((exam) => `<option value="${exam}">${exam}</option>`).join("");
-  $("#examPaper").value = state.examPaper;
 }
 
 function renderProgressOverview() {
-  const isExam = state.problemMode !== "filters";
-  const year = isExam ? state.examYear : state.year;
-  const exam = isExam ? state.examPaper : state.exam;
+  const { year, exam } = state;
   const summary = summarizeProgress(progressScope(PROBLEM_REFERENCES, year, exam), state.problemProgress);
   $("#progressOverviewHeading").textContent = uiText("progressOverview");
   $("#progressScope").textContent = `${year === "all" ? uiText("allYears") : year} · ${exam === "all" ? uiText("allExams") : exam}`;
@@ -818,8 +793,8 @@ let problemRenderVersion = 0;
 const examStatements = new Map();
 
 async function renderExamStatements(problems, version) {
-  const year = Number(state.examYear);
-  const exam = state.examPaper;
+  const year = Number(state.year);
+  const exam = state.exam;
   const paper = `${year}${exam.slice(-1)}`;
   const sourceUrl = `https://live.poshenloh.com/past-contests/amc10/${paper}`;
   const list = $("#problemList");
@@ -863,36 +838,29 @@ async function renderExamStatements(problems, version) {
 function renderProblems() {
   renderProgressOverview();
   const version = ++problemRenderVersion;
-  const isExam = state.problemMode !== "filters";
-  const isFullExam = state.problemMode === "full";
-  $("#problemFilters").hidden = isExam;
-  $("#examControls").hidden = !isExam;
+  const isExam = state.year !== "all" && state.exam !== "all";
   $("#examSummary").hidden = !isExam;
-  $("#examAttribution").hidden = !isFullExam;
-  $("#problemList").classList.toggle("full-exam", isFullExam);
+  $("#examAttribution").hidden = !isExam;
+  $("#problemList").classList.toggle("full-exam", isExam);
   $("#problemList").setAttribute("aria-busy", "false");
   window.MathJax?.typesetClear?.([$("#problemList")]);
-  document.querySelectorAll("[data-problem-mode]").forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.dataset.problemMode === state.problemMode));
-  });
   const selectedConceptId = state.problemConcept === "current" ? state.activeConceptId : state.problemConcept;
   const problems = PROBLEM_REFERENCES.filter((problem) => {
     const progress = state.problemProgress[problemKey(problem)];
     if (state.problemProgressFilter !== "all"
       && (state.problemProgressFilter === "unmarked" ? Boolean(progress) : progress !== state.problemProgressFilter)) return false;
-    if (isExam) return String(problem.year) === state.examYear && problem.exam === state.examPaper;
     return (selectedConceptId === "all" || problem.conceptIds.includes(selectedConceptId))
       && (state.year === "all" || String(problem.year) === state.year)
       && (state.exam === "all" || problem.exam === state.exam)
       && (state.difficulty === "all" || problem.difficulty === state.difficulty);
   });
   if (isExam) problems.sort((a, b) => a.problemNumber - b.problemNumber);
-  $("#examAttribution").hidden = !isFullExam || !problems.length;
+  $("#examAttribution").hidden = !isExam || !problems.length;
   $("#problemCount").textContent = isExam
-    ? `${state.examYear} ${state.examPaper} · ${problems.length} / 25 ${uiText("problems")}`
+    ? `${state.year} ${state.exam} · ${problems.length} / 25 ${uiText("problems")}`
     : `${problems.length} / ${PROBLEM_REFERENCES.length}`;
-  $("#examSummary").textContent = uiText(isFullExam ? "fullExamSummary" : "examOrder");
-  if (isFullExam && problems.length) {
+  $("#examSummary").textContent = uiText("fullExamSummary");
+  if (isExam && problems.length) {
     return renderExamStatements(problems, version);
   }
   $("#problemList").innerHTML = problems.length
@@ -1154,7 +1122,8 @@ function showConceptGlossary(conceptId) {
 
 function showConceptProblems(conceptId) {
   state.activeConceptId = conceptId;
-  state.problemMode = "filters";
+  state.year = "all";
+  state.exam = "all";
   state.problemConcept = "current";
   render();
   setActiveView("problems");
@@ -1264,21 +1233,6 @@ function wireControls() {
   });
   $("#problemProgressFilter").addEventListener("change", (event) => {
     state.problemProgressFilter = event.target.value;
-    renderProblems();
-  });
-  document.querySelectorAll("[data-problem-mode]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.problemMode = button.dataset.problemMode;
-      renderProblems();
-    });
-  });
-  $("#examYear").addEventListener("change", (event) => {
-    state.examYear = event.target.value;
-    populateExamPapers();
-    renderProblems();
-  });
-  $("#examPaper").addEventListener("change", (event) => {
-    state.examPaper = event.target.value;
     renderProblems();
   });
   document.querySelectorAll("[data-view]").forEach((tab) => {
