@@ -4,6 +4,8 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { build } from "esbuild";
 import { JSDOM, VirtualConsole } from "jsdom";
+import { PROBLEM_REFERENCES } from "../assets/data.mjs";
+import { problemKey } from "../assets/progress.mjs";
 
 const root = new URL("../", import.meta.url);
 const html = readFileSync(new URL("index.html", root), "utf8");
@@ -22,7 +24,9 @@ async function page(configured, client, method = "password", search = "", fetchI
   window.HTMLElement.prototype.scrollIntoView = () => {};
   window.__testClient = client;
   window.document.querySelector("#accountLoginMethod").value = method;
-  window.fetch = fetchImpl || (async () => { throw new Error("Unexpected network request"); });
+  window.fetch = fetchImpl || (async (url) => ({
+    ok: true, json: async () => JSON.parse(readFileSync(new URL(url, root), "utf8"))
+  }));
   const bundle = await build({
     entryPoints: [fileURLToPath(new URL("assets/app.mjs", root))],
     bundle: true, write: false, format: "iife", platform: "browser",
@@ -102,12 +106,132 @@ test("compact explorer header keeps labeled filters, localized counts, and progr
     p.$('[data-language="zh"]').click();
     assert.equal(p.$("#problemHeading").textContent, "真题索引");
     assert.equal(p.$("#progressOverviewHeading").textContent, "进度总览");
+    assert.match(p.$("#examAttribution").textContent, /版权/);
     assert.equal(p.$(".progress-status-label").textContent, "待理解题意");
     p.$("#examFilter").value = "all";
     p.$("#examFilter").dispatchEvent(new p.window.Event("change"));
+    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 50);
     assert.equal(p.$("#problemFilters").hidden, false);
     assert.equal(p.$("#yearFilter").value, "2025");
     assert.equal(p.$("#problemCount").textContent, "50 / 500");
+    p.$("#yearFilter").value = "all";
+    p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
+    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 500);
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("statement failures are explicit, retryable, and cannot replace newer filter results", async () => {
+  let release;
+  let fail = true;
+  const p = await page(false, undefined, "password", "?problem=2025-AMC10A-1", async (url) => {
+    if (fail) return { ok: false, status: 503 };
+    if (url.endsWith("2025B.json")) await new Promise((resolve) => { release = resolve; });
+    return { ok: true, json: async () => JSON.parse(readFileSync(new URL(url, root), "utf8")) };
+  });
+  try {
+    await p.waitFor(() => p.$("#retryExam"));
+    assert.ok(p.$("#problemList [role=alert]"));
+    assert.equal(p.$("#problemList").getAttribute("aria-busy"), "false");
+    fail = false;
+    p.$("#retryExam").click();
+    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 25);
+    p.$("#examFilter").value = "all";
+    p.$("#examFilter").dispatchEvent(new p.window.Event("change"));
+    await p.waitFor(() => release);
+    p.$("#yearFilter").value = "2024";
+    p.$("#examFilter").value = "AMC 10A";
+    p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
+    p.$("#examFilter").dispatchEvent(new p.window.Event("change"));
+    await p.waitFor(() => p.$('#problemList [data-problem-key="2024-AMC10A-1"] .problem-statement'));
+    release();
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    assert.equal(p.$$("#problemList .problem-statement").length, 25);
+    assert.equal(p.$('#problemList [data-problem-key="2025-AMC10B-1"]'), null);
+    assert.equal(p.$("#problemList").getAttribute("aria-busy"), "false");
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("review bookmarks are independent of progress, filterable, localized, and persistent", async () => {
+  const p = await page(false);
+  try {
+    p.$("#problemsTab").click();
+    const button = p.$("[data-review-key]");
+    const key = button.dataset.reviewKey;
+    button.click();
+    assert.equal(button.getAttribute("aria-pressed"), "true");
+    assert.equal(p.$(`[data-progress-key="${key}"] input:checked`), null);
+    assert.deepEqual(JSON.parse(p.window.localStorage.getItem("amc10-review-collection")), [key]);
+    assert.equal(p.$("#reviewCollectionCount").textContent, "1");
+    p.$("#reviewOnly").value = "saved";
+    p.$("#reviewOnly").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$$("#problemList .problem-card").length, 1);
+    assert.equal(p.$("#progressMeter").max, 500);
+    p.$('[data-language="zh"]').click();
+    assert.equal(p.$("[data-review-key]").getAttribute("aria-pressed"), "true");
+    assert.equal(p.$("[data-review-key]").getAttribute("aria-label"), "移出错题集");
+    p.$("[data-review-key]").click();
+    assert.equal(p.$$("#problemList .problem-card").length, 0);
+    assert.equal(p.$("#reviewCollectionCount").textContent, "0");
+    p.$("#reviewOnly").value = "all";
+    p.$("#reviewOnly").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$$("#problemList .problem-card").length, 500);
+    const storage = p.window.Storage.prototype.setItem;
+    p.window.Storage.prototype.setItem = () => { throw new Error("Storage full"); };
+    p.$("[data-review-key]").click();
+    assert.equal(p.$("#reviewCollectionError").hidden, false);
+    assert.equal(p.$("[data-review-key]").getAttribute("aria-pressed"), "false");
+    p.window.Storage.prototype.setItem = storage;
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("signed-in review bookmarks save and remove cloud rows without changing progress", async () => {
+  const user = { id: "review-user", email: "student@example.test" };
+  const key = "2016-AMC10A-4";
+  let rows = [{ user_id: user.id, kind: "review", item_id: key }];
+  const client = {
+    auth: {
+      onAuthStateChange() {},
+      async getSession() { return { data: { session: { user } } }; },
+      async signOut() { return {}; }
+    },
+    from(table) {
+      return {
+        select() { return { async eq() { return { data: table === "user_mastery" ? rows : [] }; } }; },
+        async upsert(row) { rows.push(row); return {}; },
+        delete() {
+          const filters = {};
+          const chain = { eq(column, value) {
+            filters[column] = value;
+            if (Object.keys(filters).length < 3) return chain;
+            rows = rows.filter((row) => !Object.entries(filters).every(([k, v]) => row[k] === v));
+            return Promise.resolve({});
+          } };
+          return chain;
+        }
+      };
+    }
+  };
+  const p = await page(true, client);
+  try {
+    await p.waitFor(() => p.$(`[data-review-key="${key}"]`).getAttribute("aria-pressed") === "true"
+      && !p.$(`[data-review-key="${key}"]`).disabled);
+    p.$(`[data-review-key="${key}"]`).click();
+    await p.waitFor(() => rows.length === 0);
+    assert.equal(p.$(`[data-review-key="${key}"]`).getAttribute("aria-pressed"), "false");
+    p.$(`[data-review-key="${key}"]`).click();
+    await p.waitFor(() => rows.length === 1);
+    assert.equal(rows[0].kind, "review");
+    assert.equal(rows[0].item_id, key);
+    assert.equal(p.$("#conceptProgress .concept-progress-statuses > div:last-child dd").textContent,
+      PROBLEM_REFERENCES.find((problem) => problemKey(problem) === key).conceptIds.includes("polynomials") ? "1" : "0");
+    assert.equal(p.$(`[data-progress-key="${key}"] input:checked`), null);
+    assert.equal(p.window.localStorage.getItem("amc10-review-collection"), null);
+    p.$("#accountSignOut").click();
+    await p.waitFor(() => !p.$("#accountPasswordForm").hidden);
+    assert.equal(p.$(`[data-review-key="${key}"]`).getAttribute("aria-pressed"), "false");
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
@@ -124,7 +248,7 @@ test("unconfigured cloud panel preserves guest progress and keeps login disabled
     const input = p.$('#problemList .problem-progress input[value="needUnderstanding"]');
     const control = input.closest("[data-progress-key]");
     const key = control.dataset.progressKey;
-    assert.equal(control.querySelectorAll(".progress-option-icon svg").length, 3);
+    assert.equal(control.querySelectorAll(".progress-option-icon svg").length, 4);
     for (const radio of control.querySelectorAll("input")) {
       assert.ok(radio.getAttribute("aria-label"));
       const tip = p.window.document.getElementById(radio.getAttribute("aria-describedby"));
@@ -251,6 +375,7 @@ test("email login, guest import, cloud save, localization, and logout work throu
     assert.equal(p.$("#accountImportPanel").hidden, false);
     p.$("#accountImport").click();
     await p.waitFor(() => records[key]?.status === "needUnderstanding");
+    assert.equal(p.$('[data-study-metric="problems"] progress').value, 1);
     assert.equal(p.window.localStorage.getItem("amc10-problem-progress"), guest);
     await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
     p.$(`#problemList [data-progress-key="${key}"] input[value="haveApproach"]`).click();
@@ -460,6 +585,50 @@ test("the landing page stays locked when the sign-in service cannot be checked",
     assert.equal(p.$("#accountLanding").hidden, false);
     p.$('[data-language="zh"]').click();
     assert.equal(p.$("#accountLandingTitle").textContent, "请先登录");
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("study dashboard counts the whole collection once and scopes practice to the selected concept", async () => {
+  const p = await page(false);
+  try {
+    const metric = (key) => p.$(`[data-study-metric="${key}"] progress`);
+    assert.equal(metric("concepts").max, 18);
+    assert.equal(metric("vocabulary").max, 144);
+    assert.equal(metric("problems").max, 500);
+    assert.equal(metric("problems").value, 0);
+    p.$('#topicNav [data-concept="numbers-operations"]').click();
+    const related = PROBLEM_REFERENCES.filter((problem) => problem.conceptIds.includes("numbers-operations"));
+    const unrelated = PROBLEM_REFERENCES.find((problem) => !problem.conceptIds.includes("numbers-operations"));
+    assert.equal(related.length, 204);
+    assert.equal(new Set(related.map(problemKey)).size, 204);
+    assert.equal(p.$("#relatedProblemCount").textContent, "204 / 500");
+    assert.match(p.$("#referenceCountHelp").textContent, /must not be added together/);
+    assert.equal(p.$("#conceptProgress > progress").max, 204);
+    const key = problemKey(related[0]);
+    p.$(`#problemList [data-progress-key="${key}"] input[value="haveApproach"]`).click();
+    p.$(`#problemList [data-progress-key="${problemKey(unrelated)}"] input[value="needUnderstanding"]`).click();
+    assert.equal(metric("problems").value, 2);
+    assert.equal(p.$("#conceptProgress > progress").value, 1);
+    assert.equal(p.$('[data-study-status="haveApproach"] dd').textContent, "1");
+    assert.equal(p.$('[data-study-status="needUnderstanding"] dd').textContent, "0");
+    p.$(`#problemList [data-review-key="${key}"]`).click();
+    assert.equal(p.$("#conceptProgress .concept-progress-statuses > div:last-child dd").textContent, "1");
+    p.$("#masteryToggle").click();
+    assert.equal(metric("concepts").value, 1);
+    p.$("[data-glossary-mastery]").click();
+    assert.equal(metric("vocabulary").value, 1);
+    p.$("#yearFilter").value = "2025";
+    p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
+    assert.equal(metric("problems").max, 500);
+    assert.equal(metric("problems").value, 2);
+    assert.equal(p.$("#conceptProgress > progress").max, 204);
+    p.$('[data-language="zh"]').click();
+    assert.equal(p.$("#studyProgressHeading").textContent, "学习进度");
+    assert.equal(p.$("#relatedProblemCount").textContent, "204 / 500");
+    assert.equal(metric("problems").value, 2);
+    assert.equal(metric("concepts").value, 1);
+    assert.equal(metric("vocabulary").value, 1);
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });

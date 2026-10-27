@@ -1,6 +1,6 @@
 import { CLOUD_CONFIG } from "./cloud-config.mjs?v=20261024-13";
 import { CloudProgress } from "./cloud-progress.mjs?v=20261024-12";
-import { CloudMastery } from "./cloud-mastery.mjs?v=20261025-24";
+import { CloudMastery } from "./cloud-mastery.mjs?v=20261026-6";
 
 const TEXT = {
   heading: ["Account & cloud sync", "账户与云端同步"],
@@ -125,7 +125,11 @@ export class AccountPanel {
       });
       this.mastery = new CloudMastery({
         client: this.client, storage: localStorage, readLocal: this.readMastery,
-        onError: (error) => console.warn("Mastery sync is waiting to retry.", error),
+        onError: (error) => {
+          console.warn("Mastery and review collection sync is waiting to retry.", error);
+          this.masterySyncFailed = true;
+          this.render();
+        },
         onChange: (sets) => {
           this.onMastery?.(sets);
           this.render();
@@ -136,6 +140,7 @@ export class AccountPanel {
       this.client.auth.onAuthStateChange((_event, session) => {
         // Supabase auth callbacks must not await other client operations.
         setTimeout(() => this.run(async () => {
+          this.masterySyncFailed = false;
           this.guestCount = Object.keys(this.controller.readGuest()).length;
           await this.controller.activate(session?.user || null);
           await this.mastery.activate(session?.user || null);
@@ -200,12 +205,14 @@ export class AccountPanel {
   }
 
   async syncAll() {
+    this.masterySyncFailed = false;
     await this.controller.sync();
     await this.mastery?.flush();
   }
 
   async setMastery(kind, id, mastered) {
     if (!this.signedIn || !this.mastery) return;
+    this.masterySyncFailed = false;
     await this.mastery.set(kind, id, mastered);
     this.render();
   }
@@ -376,7 +383,7 @@ export class AccountPanel {
     $("#accountIdentity").textContent = identity;
     $("#accountIdentity").dataset.label = this.text("heading");
     $("#accountSyncStatus").textContent = this.signedIn
-      ? `${this.text(this.snapshot?.phase || "syncing")} · ${this.text("pending")}: ${(this.snapshot?.pendingCount || 0) + (this.mastery?.pendingCount || 0)}`
+      ? `${this.text(this.masterySyncFailed ? "syncError" : this.snapshot?.phase || "syncing")} · ${this.text("pending")}: ${(this.snapshot?.pendingCount || 0) + (this.mastery?.pendingCount || 0)}`
       : this.text("guest");
     const importing = this.signedIn && this.guestCount > 0 && this.snapshot?.loaded && !this.snapshot.importDismissed;
     $("#accountImportPanel").hidden = !importing;
@@ -404,7 +411,10 @@ export class AccountPanel {
     document.querySelectorAll(".problem-progress input").forEach((input) => {
       input.disabled = this.editingPaused;
     });
-    if (this.errorDetails || ["authError", "emailRateLimit", "requestRateLimit", "emailNotAuthorized", "invalidEmail", "signupDisabled", "invalidUsername", "missingPassword", "invalidCredentials", "unconfirmedAccount", "unsafeSignout"].includes(this.message)
+    document.querySelectorAll("[data-review-key]").forEach((button) => {
+      button.disabled = this.editingPaused || !$("#reviewCollectionError").hidden;
+    });
+    if (this.masterySyncFailed || this.errorDetails || ["authError", "emailRateLimit", "requestRateLimit", "emailNotAuthorized", "invalidEmail", "signupDisabled", "invalidUsername", "missingPassword", "invalidCredentials", "unconfirmedAccount", "unsafeSignout"].includes(this.message)
       || ["syncError", "storageError", "cacheError", "conflict"].includes(this.snapshot?.phase)) {
       $("#accountHeading").parentElement.open = true;
     }

@@ -451,7 +451,7 @@ export const PROBLEM_VOCABULARY = {
   "2024-AMC10B-7": ["Congruence Modulo n"],
   "2024-AMC10B-8": ["Divisor", "Units Digit"],
   "2024-AMC10B-9": ["Arithmetic Mean"],
-  "2025-AMC10A-1": ["Distance Formula"],
+  "2025-AMC10A-1": ["Speed"],
   "2025-AMC10A-10": ["Tangent", "Chord", "Semicircle", "Diameter", "Radius"],
   "2025-AMC10A-11": ["Sequence"],
   "2025-AMC10A-12": ["Prime Number", "Parity", "Multiplication Principle", "Casework"],

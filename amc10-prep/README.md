@@ -11,11 +11,18 @@ It follows your device preference until you choose a theme, then saves that choi
 in this browser.
 
 **Problem Explorer** has one view with concept, year, exam, difficulty, and progress
-filters—no mode buttons or duplicate selectors. Selecting a specific year and exam
-(2016-2025, AMC 10A or AMC 10B) automatically shows the original English statements,
-A-E choices, and local diagrams in numerical order. The other filters still apply
-within that paper. Broader year/exam selections show the compact problem index.
+filters—no mode buttons or duplicate selectors. All matching problems show their
+original English statements, A-E choices, and local diagrams, including with
+**All years / All exams** selected. Problems are grouped by year (newest first)
+and paper, then ordered numerically. Exam files are loaded on entering the
+explorer and cached for subsequent filtering.
 Answers and solutions are not imported or displayed.
+The Study Guide dashboard shows whole-collection concept mastery, vocabulary
+mastery, and marked-problem counts, plus the selected concept's progress and
+review bookmarks. A marked problem is not necessarily solved. Related-problem
+badges show distinct problems tagged to that concept out of the 500-problem
+collection. Concept tags overlap and are study associations, not official AMC
+classifications; never sum concept counts to calculate the collection size.
 Concept tags open the Study Guide; vocabulary links open the Glossary.
 Problem cards use an external-link icon for the source problem. Under the
 concept tags, **Vocabulary in this problem** lists the glossary terms that
@@ -32,6 +39,17 @@ Each problem's progress picker uses three icon choices: a question mark (need
 clarity), a lightning bolt (need a starting point), and a check (have an approach).
 Hover or focus a choice to read its full description. Choices remain native radio
 buttons for keyboard and screen-reader access; the selected icon is highlighted.
+The fourth, bookmark-shaped icon independently adds/removes the problem from
+**Review collection / 错题集** without changing its progress status. Use the
+collection dropdown beside the progress filter (**Saved only**) to see saved problems; it combines
+with the other filters. Guest bookmarks persist in this browser; signed-in
+bookmarks use the existing per-user queued sync.
+
+To enable cloud bookmarks on an existing Supabase database, rerun
+`supabase/add-user-mastery.sql`. It safely extends the allowed kinds to include
+`review`, preserving existing mastery records and owner-only access. Until that
+update, bookmark changes stay queued locally and the account panel shows a sync
+error; use **Sync now / retry** after applying the SQL.
 
 Every link — problem chips, concept tags, vocabulary chips, Topic Map entries,
 glossary tooltips, and source links — opens in a new tab by default. Concept links

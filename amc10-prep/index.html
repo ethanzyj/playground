@@ -16,7 +16,7 @@
         console.error("Unable to read the saved theme.", error);
       }
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20261026-5" />
+    <link rel="stylesheet" href="assets/styles.css?v=20261026-6" />
     <script>
       window.MathJax = {
         tex: {
@@ -159,6 +159,8 @@
 
       <section class="content-panel">
         <section id="studyPanel" class="view-panel" role="tabpanel" aria-labelledby="studyTab">
+          <section id="studyProgress" class="study-progress" aria-labelledby="studyProgressHeading"></section>
+          <article id="conceptView" class="concept-view" aria-live="polite"></article>
           <section class="notice">
             <strong data-i18n="copyrightHeading">Problem sources and attribution.</strong>
             <span data-i18n="copyrightCopy">
@@ -166,8 +168,6 @@
               Reference cards link to the source problems and related concepts.
             </span>
           </section>
-
-          <article id="conceptView" class="concept-view" aria-live="polite"></article>
         </section>
 
         <section id="problemsPanel" class="problem-explorer view-panel" role="tabpanel" aria-labelledby="problemsTab" hidden>
@@ -217,7 +217,15 @@
               <span data-i18n="problemProgress">My progress / 我的进度</span>
               <select id="problemProgressFilter"></select>
             </label>
+            <label>
+              <span class="review-filter-label"><span data-i18n="reviewCollection">Review collection / 错题集</span><strong id="reviewCollectionCount">0</strong></span>
+              <select id="reviewOnly">
+                <option value="all">All problems / 全部题目</option>
+                <option value="saved">Saved only / 仅错题集</option>
+              </select>
+            </label>
           </div>
+          <p id="reviewCollectionError" role="alert" hidden></p>
           <p id="examSummary" class="exam-summary" hidden></p>
           <p id="examAttribution" class="problem-metadata-note" hidden></p>
           <div id="problemList" class="problem-grid"></div>
@@ -261,6 +269,6 @@
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261026-5"></script>
+    <script type="module" src="assets/app.mjs?v=20261026-6"></script>
   </body>
 </html>
