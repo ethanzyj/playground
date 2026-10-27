@@ -9,6 +9,7 @@ function assert(condition, message) {
 }
 
 const concepts = allConcepts();
+assert(JSON.stringify(PROBLEM_VOCABULARY["2025-AMC10A-1"]) === '["Speed"]', "2025 AMC 10A #1 uses constant speed, not the coordinate distance formula.");
 const conceptIds = new Set(concepts.map((concept) => concept.id));
 
 assert(TOPICS.length === 5, "Expected the five top-level Chinese curriculum modules.");

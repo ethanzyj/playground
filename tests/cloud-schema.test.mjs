@@ -22,6 +22,10 @@ test("PostgreSQL enforces owner isolation, version checks, and RPC-only writes",
     const schema = readFileSync(new URL("../supabase/schema.sql", import.meta.url), "utf8");
     await db.exec(schema);
     await db.exec(schema);
+    const masteryUpgrade = readFileSync(new URL("../supabase/add-user-mastery.sql", import.meta.url), "utf8");
+    await db.exec("alter table public.user_mastery drop constraint user_mastery_kind_check; alter table public.user_mastery add constraint user_mastery_kind_check check (kind in ('concept', 'glossary'))");
+    await db.exec(masteryUpgrade);
+    await db.exec(masteryUpgrade);
     const asUser = async (id) => {
       await db.exec("reset role");
       await db.query("select set_config('request.jwt.claim.sub', $1, false)", [id]);
@@ -55,6 +59,7 @@ test("PostgreSQL enforces owner isolation, version checks, and RPC-only writes",
     assert.equal(own.length, 1);
     assert.equal(own[0].status, "haveApproach");
     await db.query("insert into public.user_mastery(kind,item_id) values ('concept','polynomials'),('glossary','Median')");
+    await db.query("insert into public.user_mastery(kind,item_id) values ('review','2025-AMC10A-1')");
     await assert.rejects(() => db.query(
       "insert into public.user_mastery(user_id,kind,item_id) values ($1,'concept','sequences')", [b]
     ), /row-level security/);
@@ -63,7 +68,8 @@ test("PostgreSQL enforces owner isolation, version checks, and RPC-only writes",
     assert.equal((await db.query("select * from public.user_mastery")).rows.length, 0);
     await db.query("delete from public.user_mastery");
     await asUser(a);
-    assert.equal((await db.query("select * from public.user_mastery")).rows.length, 2);
+    assert.equal((await db.query("select * from public.user_mastery")).rows.length, 3);
+    await db.query("delete from public.user_mastery where kind='review'");
     await db.query("delete from public.user_mastery where kind='glossary'");
     assert.deepEqual((await db.query("select kind,item_id from public.user_mastery")).rows, [{ kind: "concept", item_id: "polynomials" }]);
     await db.exec("reset role; set role anon;");

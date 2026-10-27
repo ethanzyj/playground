@@ -109,3 +109,70 @@ test("signing out clears in-memory mastery and ignores edits", async () => {
   assert.equal(server.calls, calls);
   assert.equal(mastery.pendingCount, 0);
 });
+
+test("review collection queues offline changes, reloads across devices, and isolates accounts", async () => {
+  const key = "2025-AMC10A-1";
+  const server = fakeClient();
+  const storage = memoryStorage();
+  let latest;
+  const sync = new CloudMastery({
+    client: server.client, storage, onChange: (sets) => { latest = sets; }
+  });
+
+  await sync.activate(user);
+  server.offline = true;
+  await sync.set("review", key, true);
+  assert.ok(latest.review.has(key));
+  assert.equal(sync.pendingCount, 1);
+  const reloaded = new CloudMastery({ client: server.client, storage, onChange: (sets) => { latest = sets; } });
+  await reloaded.activate(user);
+  assert.ok(latest.review.has(key));
+  server.offline = false;
+  await reloaded.flush();
+  assert.equal(reloaded.pendingCount, 0);
+  await reloaded.activate({ id: "user-b" });
+  assert.equal(latest.review.size, 0);
+  await reloaded.set("review", "2025-AMC10B-2", true);
+  await reloaded.activate(user);
+  assert.deepEqual([...latest.review], [key]);
+  await reloaded.set("review", key, false);
+  assert.equal(latest.review.size, 0);
+  assert.deepEqual(server.rows, [{ user_id: "user-b", kind: "review", item_id: "2025-AMC10B-2" }]);
+});
+
+test("review edits during an in-flight save automatically flush the latest choice", async () => {
+  const server = fakeClient();
+  const originalFrom = server.client.from;
+  let release;
+  server.client.from = () => {
+    const query = originalFrom();
+    const upsert = query.upsert;
+    query.upsert = async (row) => {
+      await new Promise((resolve) => { release = resolve; });
+      return upsert(row);
+    };
+    return query;
+  };
+  const sync = new CloudMastery({ client: server.client, storage: memoryStorage() });
+  await sync.activate(user);
+  const saved = sync.set("review", "2025-AMC10A-1", true);
+  const removed = sync.set("review", "2025-AMC10A-1", false);
+  release();
+  await Promise.all([saved, removed]);
+  assert.equal(sync.pendingCount, 0);
+  assert.deepEqual(server.rows, []);
+  assert.equal(sync.snapshot().review.size, 0);
+});
+
+test("retry recovers an initial mastery load failure even without queued edits", async () => {
+  const server = fakeClient([{ user_id: user.id, kind: "concept", item_id: "polynomials" }]);
+  server.offline = true;
+  const sync = new CloudMastery({ client: server.client, storage: memoryStorage() });
+  await sync.activate(user);
+  assert.equal(sync.available, false);
+  assert.equal(sync.pendingCount, 0);
+  server.offline = false;
+  await sync.flush();
+  assert.equal(sync.available, true);
+  assert.deepEqual([...sync.snapshot().concept], ["polynomials"]);
+});

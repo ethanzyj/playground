@@ -1,7 +1,7 @@
-const KINDS = ["concept", "glossary"];
+const KINDS = ["concept", "glossary", "review"];
 const TABLE = "user_mastery";
 
-// Syncs Study Guide concept mastery and Glossary term mastery for signed-in users.
+// Syncs concept mastery, glossary mastery, and review bookmarks for signed-in users.
 // Changes are applied locally first, queued per user, and flushed to Supabase.
 export class CloudMastery {
   constructor({ client, storage, readLocal, onChange, onError }) {
@@ -19,7 +19,7 @@ export class CloudMastery {
   }
 
   emptySets() {
-    return { concept: new Set(), glossary: new Set() };
+    return Object.fromEntries(KINDS.map((kind) => [kind, new Set()]));
   }
 
   cacheKey() {
@@ -45,7 +45,7 @@ export class CloudMastery {
   }
 
   snapshot() {
-    const sets = { concept: new Set(this.remote.concept), glossary: new Set(this.remote.glossary) };
+    const sets = Object.fromEntries(KINDS.map((kind) => [kind, new Set(this.remote[kind])]));
     for (const [entry, mastered] of Object.entries(this.pending)) {
       const [kind, id] = splitEntry(entry);
       if (!sets[kind]) continue;
@@ -75,7 +75,10 @@ export class CloudMastery {
     this.remote = this.emptySets();
     this.pending = {};
     this.available = false;
-    if (!this.user) return false;
+    if (!this.user) {
+      this.notify();
+      return false;
+    }
     const cache = this.readCache();
     this.pending = cache?.pending || {};
     let rows;
@@ -115,8 +118,8 @@ export class CloudMastery {
   }
 
   async flush() {
-    if (!this.user) return;
-    if (this.flushing) return this.flushing;
+    while (this.flushing) await this.flushing;
+    if (!this.user || (this.available && !this.pendingCount)) return;
     this.flushing = this.flushPending().finally(() => { this.flushing = null; });
     return this.flushing;
   }
