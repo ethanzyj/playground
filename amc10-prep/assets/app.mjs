@@ -532,18 +532,47 @@ function renderConcept() {
 
 let progressControlId = 0;
 
+const PROGRESS_LABEL_KEYS = {
+  needUnderstanding: "progressNeedUnderstanding",
+  needStartingPoint: "progressNeedStartingPoint",
+  haveApproach: "progressHaveApproach"
+};
+
+const PROGRESS_ICONS = {
+  needUnderstanding: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 .5c0 1.5-2.5 2-2.5 3.5M12 17h.01"/>',
+  needStartingPoint: '<path d="m13 2-9 12h7l-1 8 10-12h-7l1-8Z"/>',
+  haveApproach: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'
+};
+
+function progressSummaryText(status) {
+  return status
+    ? `${uiText("problemProgress")}: ${uiText(PROGRESS_LABEL_KEYS[status])}`
+    : uiText("problemProgress");
+}
+
+function updateProgressControl(control, selected) {
+  control.querySelector("summary").textContent = progressSummaryText(selected);
+  control.dataset.progressStatus = selected || "";
+  control.querySelectorAll("input").forEach((input) => {
+    input.checked = input.value === selected;
+  });
+}
+
 function problemProgressControl(key) {
   const selected = state.problemProgress[key];
   const groupName = `progress-${++progressControlId}`;
   return `
-    <details class="problem-progress" data-progress-key="${key}" open>
-      <summary>${uiText("problemProgress")}: ${uiText(selected || "setProblemProgress")}</summary>
+    <details class="problem-progress" data-progress-key="${key}" data-progress-status="${selected || ""}" open>
+      <summary>${progressSummaryText(selected)}</summary>
       <fieldset>
         <legend>${uiText("problemProgress")}</legend>
         ${PROBLEM_PROGRESS_OPTIONS.map((option) => `
-          <label>
-            <input type="radio" name="${groupName}" value="${option}" ${selected === option ? "checked" : ""}>
-            <span>${uiText(option)}</span>
+          <label class="progress-option" data-status="${option}">
+            <input type="radio" name="${groupName}" value="${option}" aria-label="${uiText(option)}" aria-describedby="${groupName}-${option}-tip" ${selected === option ? "checked" : ""}>
+            <span class="progress-option-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">${PROGRESS_ICONS[option]}</svg>
+            </span>
+            <span class="progress-option-tooltip" id="${groupName}-${option}-tip" role="tooltip">${textPair(UI_TEXT[option].zh, UI_TEXT[option].en)}</span>
           </label>
         `).join("")}
       </fieldset>
@@ -744,15 +773,10 @@ function renderProgressOverview() {
   `;
   $("#progressMeter").max = summary.total || 1;
   $("#progressMeter").value = summary.marked;
-  const statusLabels = {
-    needUnderstanding: "progressNeedUnderstanding",
-    needStartingPoint: "progressNeedStartingPoint",
-    haveApproach: "progressHaveApproach"
-  };
   $("#progressBreakdown").innerHTML = summary.statuses.map((entry) => `
     <details class="progress-status-card" data-summary-status="${entry.status}" ${openStatuses.has(entry.status) ? "open" : ""}>
       <summary title="${uiText(entry.status)}">
-        <span class="progress-status-label">${textPair(UI_TEXT[statusLabels[entry.status]].zh, UI_TEXT[statusLabels[entry.status]].en)}</span>
+        <span class="progress-status-label">${textPair(UI_TEXT[PROGRESS_LABEL_KEYS[entry.status]].zh, UI_TEXT[PROGRESS_LABEL_KEYS[entry.status]].en)}</span>
         <strong class="progress-status-count">${entry.count}</strong>
         <svg class="steps-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6" /></svg>
       </summary>
@@ -1045,6 +1069,14 @@ function renderGlossary() {
 }
 
 function wireProblemAndGlossaryLinks(container) {
+  container.querySelectorAll(".progress-option").forEach((option) => {
+    option.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") option.dataset.tooltipDismissed = "true";
+    });
+    const resetTooltip = () => delete option.dataset.tooltipDismissed;
+    option.addEventListener("mouseenter", resetTooltip);
+    option.addEventListener("focusin", resetTooltip);
+  });
   container.querySelectorAll(".problem-progress input").forEach((input) => {
     input.disabled = accountPanel?.editingPaused || false;
     input.addEventListener("change", () => {
@@ -1065,12 +1097,8 @@ function wireProblemAndGlossaryLinks(container) {
       state.problemProgress = updated;
       document.querySelectorAll("[data-progress-key]").forEach((instance) => {
         if (instance.dataset.progressKey !== key) return;
-        instance.querySelector("summary").textContent = `${uiText("problemProgress")}: ${uiText(input.value)}`;
-        instance.querySelectorAll("input").forEach((radio) => {
-          radio.checked = radio.value === input.value;
-        });
+        updateProgressControl(instance, input.value);
       });
-      control.querySelector("summary").focus();
       renderProblemProgressError();
       renderProgressOverview();
       refreshProblemLinks();
@@ -1352,10 +1380,7 @@ accountPanel = new AccountPanel({
     if (!changed) return;
     document.querySelectorAll("[data-progress-key]").forEach((control) => {
       const selected = selections[control.dataset.progressKey];
-      control.querySelector("summary").textContent = `${uiText("problemProgress")}: ${uiText(selected || "setProblemProgress")}`;
-      control.querySelectorAll("input").forEach((input) => {
-        input.checked = input.value === selected;
-      });
+      updateProgressControl(control, selected);
     });
     renderProgressOverview();
     refreshProblemLinks();

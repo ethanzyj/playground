@@ -29,6 +29,10 @@ The explorer header keeps the result count beside the title and puts labeled
 filters in a responsive row. The progress overview uses a marked/total meter and
 three expandable status tiles; counting guidance and JSON export are tucked into
 **About these counts & export** below the tiles.
+Each problem's progress picker uses three icon choices: a question mark (need
+clarity), a lightning bolt (need a starting point), and a check (have an approach).
+Hover or focus a choice to read its full description. Choices remain native radio
+buttons for keyboard and screen-reader access; the selected icon is highlighted.
 
 Every link — problem chips, concept tags, vocabulary chips, Topic Map entries,
 glossary tooltips, and source links — opens in a new tab by default. Concept links
