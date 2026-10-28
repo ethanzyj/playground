@@ -700,6 +700,9 @@ test("study guide shows related vocabulary as chips that preview and open glossa
     const mastery = p.$("[data-glossary-mastery]");
     assert.equal(mastery.getAttribute("aria-pressed"), "false");
     assert.equal(mastery.querySelector("svg").getAttribute("aria-hidden"), "true");
+    assert.ok(mastery.querySelector("svg circle"));
+    assert.ok(mastery.querySelector('svg path[d^="m6.8"]'));
+    assert.doesNotMatch(mastery.querySelector("svg").innerHTML, /M10 4v12/);
     assert.equal(mastery.textContent.trim(), "");
     assert.match(mastery.getAttribute("aria-label"), /Mark vocabulary mastered/);
     assert.equal(mastery.title, mastery.getAttribute("aria-label"));

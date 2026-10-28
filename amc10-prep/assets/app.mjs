@@ -1034,7 +1034,7 @@ function glossaryCard(term) {
       <p>${textPair(term.noteZh, linkGlossaryTerms(term.noteEn))}</p>
       <div class="glossary-mastery-action" role="group" aria-label="${uiText("masteryStatus")}">
         <button class="mastery glossary-mastery ${state.masteredGlossary.has(term.en) ? "complete" : ""}" data-glossary-mastery="${term.en}" aria-pressed="${state.masteredGlossary.has(term.en)}" aria-label="${state.masteredGlossary.has(term.en) ? uiText("mastered") : uiText("markGlossaryMastered")}" title="${state.masteredGlossary.has(term.en) ? uiText("mastered") : uiText("markGlossaryMastered")}">
-          <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="${state.masteredGlossary.has(term.en) ? "m4 10 4 4 8-8" : "M10 4v12M4 10h12"}"/></svg>
+          <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5"/><path d="m6.8 10.1 2.1 2.1 4.5-4.5"/></svg>
         </button>
       </div>
       <div class="glossary-related" role="group" aria-label="${uiText("relatedConcepts")}">
