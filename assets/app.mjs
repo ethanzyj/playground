@@ -457,6 +457,13 @@ function formulaItems(concept) {
       <li class="formula-item">
         <div class="formula-expression"><span class="math-formula">\\(${formula}\\)</span></div>
         <p class="formula-explanation">${textPair(note.explanationZh, linkGlossaryTerms(note.explanationEn))}</p>
+        <details class="formula-example">
+          <summary>
+            <strong>${uiText("workedExample")}</strong>
+            <svg class="example-chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="formula-example-content">${textPair(note.exampleZh, linkGlossaryTerms(note.exampleEn))}</div>
+        </details>
         ${note.stepsEn ? `
           <details class="formula-steps">
             <summary>
@@ -468,13 +475,6 @@ function formulaItems(concept) {
             </ol>
           </details>
         ` : ""}
-        <details class="formula-example">
-          <summary>
-            <strong>${uiText("workedExample")}</strong>
-            <svg class="example-chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6" /></svg>
-          </summary>
-          <div class="formula-example-content">${textPair(note.exampleZh, linkGlossaryTerms(note.exampleEn))}</div>
-        </details>
       </li>
     `;
   }).join("")}</ol>`;
