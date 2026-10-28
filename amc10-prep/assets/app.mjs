@@ -514,8 +514,8 @@ function renderConcept() {
         <h2>${textPair(concept.zh, concept.en)}</h2>
         <p class="detail">${textPair(concept.detailZh, concept.detailEn)}</p>
       </div>
-      <button id="masteryToggle" class="mastery ${state.mastered.has(concept.id) ? "complete" : ""}">
-        ${state.mastered.has(concept.id) ? `✓ ${uiText("mastered")}` : uiText("markMastered")}
+      <button id="masteryToggle" class="mastery glossary-mastery ${state.mastered.has(concept.id) ? "complete" : ""}" aria-pressed="${state.mastered.has(concept.id)}" aria-label="${state.mastered.has(concept.id) ? uiText("mastered") : uiText("markMastered")}" title="${state.mastered.has(concept.id) ? uiText("mastered") : uiText("markMastered")}">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5"/><path d="m6.8 10.1 2.1 2.1 4.5-4.5"/></svg>
       </button>
     </div>
     <div class="card-grid">
@@ -1084,7 +1084,7 @@ function renderTopicMap() {
       const mastered = state.mastered.has(concept.id);
       return `
         <li>
-          <details class="map-node map-concept"${open ? " open" : ""} data-map-node="${nodeId}">
+          <details class="map-node map-concept${mastered ? " mastered" : ""}"${open ? " open" : ""} data-map-node="${nodeId}">
             <summary>
               <span class="map-icon">${MAP_ICONS.concept}</span>
               <span class="map-label">${textPair(concept.zh, concept.en)}</span>
