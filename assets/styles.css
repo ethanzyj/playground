@@ -8,6 +8,7 @@
   --accent: #2457d6;
   --accent-soft: #e8efff;
   --success: #1f8a4c;
+  --success-strong: #166534;
   --shadow: 0 18px 45px rgba(24, 39, 75, 0.12);
 }
 
@@ -22,6 +23,7 @@
     --accent: #8fb2ff;
     --accent-soft: #1f3157;
     --success: #6bd596;
+    --success-strong: #6bd596;
     --shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
   }
 }
@@ -36,6 +38,7 @@
   --accent: #8fb2ff;
   --accent-soft: #1f3157;
   --success: #6bd596;
+  --success-strong: #6bd596;
   --shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
 }
 
@@ -382,10 +385,10 @@ input {
   width: 2.5rem;
   height: 2.5rem;
   padding: 0;
-  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-color: color-mix(in srgb, var(--muted) 45%, var(--line));
   border-radius: 50%;
   background: var(--panel);
-  color: var(--accent);
+  color: var(--muted);
   transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, transform 140ms ease, box-shadow 140ms ease;
 }
 
@@ -394,9 +397,9 @@ input {
 }
 
 .glossary-mastery:hover {
-  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--muted) 8%, var(--panel));
   transform: translateY(-1px);
-  box-shadow: 0 3px 10px color-mix(in srgb, var(--accent) 15%, transparent);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--muted) 15%, transparent);
 }
 
 .glossary-mastery:focus-visible {
@@ -405,15 +408,31 @@ input {
 }
 
 .glossary-mastery.complete {
-  color: white;
-  background: var(--accent);
-  border-color: var(--accent);
+  color: var(--success-strong);
+  background: color-mix(in srgb, var(--success-strong) 12%, var(--panel));
+  border-color: var(--success-strong);
 }
 
 .glossary-mastery-action {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   margin-top: 0.5rem;
+}
+
+.glossary-problem-count {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.glossary-problem-count .bilingual-pair {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.4rem;
 }
 
 .glossary-mastery:active {
@@ -429,26 +448,22 @@ input {
   .glossary-mastery {
     transition: none;
   }
-  }
+}
 
-  .glossary-related {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.35rem 0.6rem;
-    margin-top: 0.65rem;
-    padding-top: 0.65rem;
-    border-top: 1px solid var(--line);
-  }
+.glossary-related {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.6rem;
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--line);
+}
 
-  .glossary-related .tags {
-    gap: 0.35rem;
-    margin: 0;
-  }
-
-  .glossary-related > .text-button {
-    margin: 0;
-  }
+.glossary-related .tags {
+  gap: 0.35rem;
+  margin: 0;
+}
 
 .glossary-term-link {
   cursor: help;
