@@ -226,6 +226,8 @@ assert(app.includes("jumpToGlossaryTerm"), "Tooltip must still offer a way to ju
 assert(css.includes(".glossary-term-link"), "Stylesheet must style inline glossary terms.");
 assert(css.includes(".glossary-tooltip"), "Stylesheet must style the hover/focus glossary tooltip.");
 assert(css.includes(".glossary-mastery-action"), "Glossary mastery controls must have distinct styling.");
+assert(css.includes(".glossary-mastery {") && css.includes("color: var(--muted);"), "Unmastered glossary mastery controls must be neutral gray.");
+assert(css.includes(".glossary-mastery.complete {") && css.includes("color: var(--success-strong);"), "Mastered glossary controls must use the stronger green color.");
 assert(css.includes(".glossary-related"), "Related glossary actions must have distinct styling.");
 assert(css.includes("glossary-highlight"), "Stylesheet must include a highlight effect for jumped-to glossary cards.");
 

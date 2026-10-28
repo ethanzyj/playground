@@ -1032,14 +1032,14 @@ function glossaryCard(term) {
       <p class="glossary-category">${textPair(term.categoryZh, term.categoryEn)}</p>
       <h3>${textPair(term.zh, term.en)}</h3>
       <p>${textPair(term.noteZh, linkGlossaryTerms(term.noteEn))}</p>
-      <div class="glossary-mastery-action" role="group" aria-label="${uiText("masteryStatus")}">
+      <div class="glossary-mastery-action">
+        <a class="text-button glossary-problem-count" aria-label="${uiText("relatedProblems")} (${relatedProblemCount})" href="${deepLink("problems-concept", term.conceptIds[0])}" target="_blank" rel="noopener">${textPair(`${relatedProblemCount} 道真题`, `${relatedProblemCount} problems`)}</a>
         <button class="mastery glossary-mastery ${state.masteredGlossary.has(term.en) ? "complete" : ""}" data-glossary-mastery="${term.en}" aria-pressed="${state.masteredGlossary.has(term.en)}" aria-label="${state.masteredGlossary.has(term.en) ? uiText("mastered") : uiText("markGlossaryMastered")}" title="${state.masteredGlossary.has(term.en) ? uiText("mastered") : uiText("markGlossaryMastered")}">
           <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5"/><path d="m6.8 10.1 2.1 2.1 4.5-4.5"/></svg>
         </button>
       </div>
       <div class="glossary-related" role="group" aria-label="${uiText("relatedConcepts")}">
         <div class="tags">${concepts.map((concept) => `<a class="concept-tag" href="${deepLink("concept", concept.id)}" target="_blank" rel="noopener">${textPair(concept.zh, concept.en)}</a>`).join("")}</div>
-        <a class="text-button" aria-label="${uiText("relatedProblems")} (${relatedProblemCount})" href="${deepLink("problems-concept", term.conceptIds[0])}" target="_blank" rel="noopener">${textPair(`${relatedProblemCount} 道真题`, `${relatedProblemCount} problems`)}</a>
       </div>
     </article>
   `;
