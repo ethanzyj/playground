@@ -9,6 +9,7 @@
   --accent-soft: #e8efff;
   --success: #1f8a4c;
   --success-strong: #166534;
+  --success-contrast: #ffffff;
   --shadow: 0 18px 45px rgba(24, 39, 75, 0.12);
 }
 
@@ -24,6 +25,7 @@
     --accent-soft: #1f3157;
     --success: #6bd596;
     --success-strong: #6bd596;
+    --success-contrast: #0d1424;
     --shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
   }
 }
@@ -39,6 +41,7 @@
   --accent-soft: #1f3157;
   --success: #6bd596;
   --success-strong: #6bd596;
+  --success-contrast: #0d1424;
   --shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
 }
 
@@ -408,9 +411,14 @@ input {
 }
 
 .glossary-mastery.complete {
-  color: var(--success-strong);
-  background: color-mix(in srgb, var(--success-strong) 12%, var(--panel));
+  color: var(--success-contrast);
+  background: var(--success-strong);
   border-color: var(--success-strong);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--success-strong) 18%, transparent);
+}
+
+.glossary-mastery.complete svg {
+  stroke-width: 2.4;
 }
 
 .glossary-mastery-action {
@@ -790,12 +798,43 @@ input {
 }
 
 .formula-example {
-  display: grid;
-  gap: 0.35rem;
   padding: 0.75rem;
   background: color-mix(in srgb, var(--panel) 75%, transparent);
   border-radius: 0.75rem;
   line-height: 1.5;
+}
+
+.formula-example > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  list-style: none;
+  border-radius: 0.35rem;
+}
+
+.formula-example > summary::-webkit-details-marker {
+  display: none;
+}
+
+.formula-example > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.example-chevron {
+  flex: none;
+  color: var(--accent);
+  transition: transform 0.2s ease;
+}
+
+.formula-example[open] .example-chevron {
+  transform: rotate(180deg);
+}
+
+.formula-example-content {
+  margin-top: 0.35rem;
 }
 
 .formula-steps {
@@ -854,7 +893,7 @@ input {
   line-height: 1.5;
 }
 
-.formula-example strong {
+.formula-example > summary strong {
   color: var(--accent);
   font-size: 0.78rem;
   letter-spacing: 0.06em;
