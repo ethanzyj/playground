@@ -411,22 +411,9 @@ input {
 }
 
 .glossary-mastery-action {
-  min-height: 3.1rem;
-  flex-wrap: wrap;
-  padding: 0.7rem 0.8rem;
-  background: color-mix(in srgb, var(--accent-soft) 64%, var(--panel));
-  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
-  border-radius: 0.85rem;
-  transition: background-color 140ms ease, border-color 140ms ease;
-}
-
-.glossary-mastery-action:has(.glossary-mastery.complete) {
-  background: color-mix(in srgb, var(--accent-soft) 78%, var(--panel));
-  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
-}
-
-.glossary-mastery-action .glossary-action-label {
-  color: var(--muted);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
 }
 
 .glossary-mastery:active {
@@ -439,55 +426,29 @@ input {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .glossary-mastery,
-  .glossary-mastery-action {
+  .glossary-mastery {
     transition: none;
   }
-}
+  }
 
-.glossary-mastery-action,
-.glossary-related {
-  padding: 0.7rem 0.8rem;
-  border-radius: 0.75rem;
-}
+  .glossary-related {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.6rem;
+    margin-top: 0.65rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--line);
+  }
 
-.glossary-mastery-action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  background: var(--accent-soft);
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
-}
+  .glossary-related .tags {
+    gap: 0.35rem;
+    margin: 0;
+  }
 
-.glossary-related {
-  margin-top: 0.75rem;
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--panel) 88%, var(--bg));
-}
-
-.glossary-action-label {
-  display: block;
-  margin-bottom: 0.35rem;
-  color: var(--muted);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.glossary-mastery-action .glossary-action-label {
-  margin-bottom: 0;
-  color: var(--accent);
-}
-
-.glossary-related .tags {
-  margin-top: 0.35rem;
-}
-
-.glossary-related > .text-button {
-  margin-top: 0.2rem;
-}
+  .glossary-related > .text-button {
+    margin: 0;
+  }
 
 .glossary-term-link {
   cursor: help;

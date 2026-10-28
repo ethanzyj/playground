@@ -703,6 +703,12 @@ test("study guide shows related vocabulary as chips that preview and open glossa
     assert.equal(mastery.textContent.trim(), "");
     assert.match(mastery.getAttribute("aria-label"), /Mark vocabulary mastered/);
     assert.equal(mastery.title, mastery.getAttribute("aria-label"));
+    assert.equal(p.$(".glossary-mastery-action .glossary-action-label"), null);
+    assert.equal(p.$(".glossary-related .glossary-action-label"), null);
+    assert.equal(p.$(".glossary-mastery-action").getAttribute("aria-label"), "Learning status / 学习状态");
+    const relatedProblems = p.$(".glossary-related .text-button");
+    assert.match(relatedProblems.textContent, /\d+ problems\d+ 道真题/);
+    assert.match(relatedProblems.getAttribute("aria-label"), /Related problems/);
     mastery.click();
     const mastered = p.$("[data-glossary-mastery]");
     assert.equal(mastered.getAttribute("aria-pressed"), "true");
