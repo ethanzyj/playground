@@ -187,6 +187,7 @@ assert(!data.includes("二分法"), "Binary-choice counting must not be mislabel
 assert(!/explanation(?:Zh|En): "[^"\n]*\\/.test(data), "Formula explanations containing TeX must use String.raw.");
 assert(app.includes('<details class="formula-steps">') && !app.includes('<details class="formula-steps" open'), "Step-by-step explanations must be collapsible and collapsed by default.");
 assert(app.includes('<details class="formula-example">') && !app.includes('<details class="formula-example" open'), "Worked examples must be collapsible and collapsed by default.");
+assert(app.indexOf('<details class="formula-example">') < app.indexOf('<details class="formula-steps">'), "Worked examples must appear before step-by-step explanations.");
 assert(app.includes("formulaItems(concept)"), "Formula lists must use the explanatory math renderer.");
 assert(app.includes("typesetPromise"), "Dynamic concept updates must be typeset after rendering.");
 assert(
