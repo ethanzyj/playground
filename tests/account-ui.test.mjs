@@ -647,6 +647,22 @@ test("study dashboard counts the whole collection once and scopes practice to th
   } finally { p.close(); }
 });
 
+test("concept mastery uses the glossary check icon and highlights mastered Topic Map nodes", async () => {
+  const p = await page(false);
+  try {
+    const mastery = p.$("#masteryToggle");
+    assert.equal(mastery.getAttribute("aria-pressed"), "false");
+    assert.match(mastery.getAttribute("aria-label"), /Mark mastered/);
+    assert.ok(mastery.querySelector("svg circle"));
+    assert.ok(mastery.querySelector("svg path"));
+    mastery.click();
+    assert.equal(p.$("#masteryToggle").getAttribute("aria-pressed"), "true");
+    assert.match(p.$("#masteryToggle").getAttribute("aria-label"), /Mastered/);
+    p.$("#mapTab").click();
+    assert.ok(p.$('.map-concept.mastered[data-map-node="concept:polynomials"]'));
+  } finally { p.close(); }
+});
+
 test("study guide shows related problems as a year/exam table of links that open the full exam page", async () => {
   let p = await page(false);
   try {

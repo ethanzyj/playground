@@ -2218,6 +2218,21 @@ a.problem-chip {
   font-weight: 800;
 }
 
+.map-concept.mastered > summary {
+  background: color-mix(in srgb, var(--success-strong) 14%, var(--panel));
+  border-color: color-mix(in srgb, var(--success-strong) 58%, var(--line));
+}
+
+.map-concept.mastered .map-icon,
+.map-concept.mastered .status-dot {
+  color: var(--success-strong);
+}
+
+.map-concept.mastered .map-count {
+  background: color-mix(in srgb, var(--success-strong) 18%, var(--panel));
+  color: var(--success-strong);
+}
+
 .map-icon {
   display: grid;
   flex: none;

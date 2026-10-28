@@ -158,6 +158,8 @@ const data = readFileSync(new URL("../assets/data.mjs", import.meta.url), "utf8"
 const css = readFileSync(new URL("../assets/styles.css", import.meta.url), "utf8");
 assert(html.includes('id="themeToggle"'), "The page must include a theme toggle.");
 assert(app.includes('$("#themeToggle").setAttribute("aria-label", uiText("darkTheme"))'), "The icon-only theme toggle must retain a localized accessible label.");
+assert(app.includes('id="masteryToggle" class="mastery glossary-mastery'), "Concept mastery must reuse the glossary's icon button styling.");
+assert(app.includes('class="map-node map-concept${mastered ? " mastered" : ""}"'), "The Topic Map must distinguish mastered concepts.");
 assert(app.includes('localStorage.setItem("amc10-theme", theme)'), "Theme choices must persist.");
 assert(css.includes(':root[data-theme="dark"]') && css.includes(':root:not([data-theme="light"])'), "Explicit theme choices must override the system theme.");
 assert(html.includes('id="problemProgressError"'), "Problem progress storage failures must have a visible alert.");
