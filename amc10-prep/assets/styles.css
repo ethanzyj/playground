@@ -376,7 +376,73 @@ input {
 }
 
 .glossary-mastery {
-  font-size: 0.82rem;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--accent);
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+}
+
+.glossary-mastery svg {
+  display: block;
+}
+
+.glossary-mastery:hover {
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.glossary-mastery:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.glossary-mastery.complete {
+  color: white;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.glossary-mastery-action {
+  min-height: 3.1rem;
+  flex-wrap: wrap;
+  padding: 0.7rem 0.8rem;
+  background: color-mix(in srgb, var(--accent-soft) 64%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
+  border-radius: 0.85rem;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.glossary-mastery-action:has(.glossary-mastery.complete) {
+  background: color-mix(in srgb, var(--accent-soft) 78%, var(--panel));
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+}
+
+.glossary-mastery-action .glossary-action-label {
+  color: var(--muted);
+}
+
+.glossary-mastery:active {
+  transform: scale(0.96);
+}
+
+.glossary-mastery:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glossary-mastery,
+  .glossary-mastery-action {
+    transition: none;
+  }
 }
 
 .glossary-mastery-action,
@@ -1094,6 +1160,10 @@ input {
   line-height: 1.5;
   transform: translateX(-50%);
   visibility: hidden;
+}
+
+.review-bookmark .progress-option-tooltip {
+  font-weight: 600;
 }
 
 .progress-option:first-of-type .progress-option-tooltip {

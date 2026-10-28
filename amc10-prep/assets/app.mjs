@@ -506,7 +506,6 @@ function renderConcept() {
         ${state.mastered.has(concept.id) ? `✓ ${uiText("mastered")}` : uiText("markMastered")}
       </button>
     </div>
-    <section id="conceptProgress" class="concept-progress" aria-labelledby="conceptProgressHeading"></section>
     <div class="card-grid">
       <section class="card wide">
         <h3>${uiText("conceptExplanation")}</h3>
@@ -529,6 +528,7 @@ function renderConcept() {
         <p>${textPair(concept.exampleZh, linkGlossaryTerms(concept.exampleEn))}</p>
       </section>
       <section class="card wide">
+        <section id="conceptProgress" class="concept-progress" aria-labelledby="conceptProgressHeading"></section>
         <div class="study-section-heading">
           <h3>${uiText("relatedReferences")}</h3>
           <span class="result-count" id="relatedProblemCount" aria-describedby="referenceCountHelp">${related.length} / ${PROBLEM_REFERENCES.length}</span>
@@ -1034,8 +1034,8 @@ function glossaryCard(term) {
       <p>${textPair(term.noteZh, linkGlossaryTerms(term.noteEn))}</p>
       <div class="glossary-mastery-action">
         <span class="glossary-action-label">${uiText("masteryStatus")}</span>
-        <button class="mastery glossary-mastery ${state.masteredGlossary.has(term.en) ? "complete" : ""}" data-glossary-mastery="${term.en}">
-          ${state.masteredGlossary.has(term.en) ? `✓ ${uiText("mastered")}` : uiText("markGlossaryMastered")}
+        <button class="mastery glossary-mastery ${state.masteredGlossary.has(term.en) ? "complete" : ""}" data-glossary-mastery="${term.en}" aria-pressed="${state.masteredGlossary.has(term.en)}" aria-label="${state.masteredGlossary.has(term.en) ? uiText("mastered") : uiText("markGlossaryMastered")}" title="${state.masteredGlossary.has(term.en) ? uiText("mastered") : uiText("markGlossaryMastered")}">
+          <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="${state.masteredGlossary.has(term.en) ? "m4 10 4 4 8-8" : "M10 4v12M4 10h12"}"/></svg>
         </button>
       </div>
       <div class="glossary-related">
