@@ -186,6 +186,7 @@ assert(!data.includes("模意义下的小数"), "Modular arithmetic must refer t
 assert(!data.includes("二分法"), "Binary-choice counting must not be mislabeled as bisection.");
 assert(!/explanation(?:Zh|En): "[^"\n]*\\/.test(data), "Formula explanations containing TeX must use String.raw.");
 assert(app.includes('<details class="formula-steps">') && !app.includes('<details class="formula-steps" open'), "Step-by-step explanations must be collapsible and collapsed by default.");
+assert(app.includes('<details class="formula-example">') && !app.includes('<details class="formula-example" open'), "Worked examples must be collapsible and collapsed by default.");
 assert(app.includes("formulaItems(concept)"), "Formula lists must use the explanatory math renderer.");
 assert(app.includes("typesetPromise"), "Dynamic concept updates must be typeset after rendering.");
 assert(
@@ -227,7 +228,7 @@ assert(css.includes(".glossary-term-link"), "Stylesheet must style inline glossa
 assert(css.includes(".glossary-tooltip"), "Stylesheet must style the hover/focus glossary tooltip.");
 assert(css.includes(".glossary-mastery-action"), "Glossary mastery controls must have distinct styling.");
 assert(css.includes(".glossary-mastery {") && css.includes("color: var(--muted);"), "Unmastered glossary mastery controls must be neutral gray.");
-assert(css.includes(".glossary-mastery.complete {") && css.includes("color: var(--success-strong);"), "Mastered glossary controls must use the stronger green color.");
+assert(css.includes(".glossary-mastery.complete {") && css.includes("background: var(--success-strong);") && css.includes("color: var(--success-contrast);"), "Mastered glossary controls must use a filled green background and a contrasting icon.");
 assert(css.includes(".glossary-related"), "Related glossary actions must have distinct styling.");
 assert(css.includes("glossary-highlight"), "Stylesheet must include a highlight effect for jumped-to glossary cards.");
 
