@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { build } from "esbuild";
 import { JSDOM, VirtualConsole } from "jsdom";
-import { PROBLEM_REFERENCES } from "../assets/data.mjs";
+import { allConcepts, PROBLEM_REFERENCES } from "../assets/data.mjs";
 import { problemKey } from "../assets/progress.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -57,6 +57,20 @@ async function page(configured, client, method = "password", search = "", fetchI
   };
   return { window, $, $$, waitFor, errors, close: () => window.close() };
 }
+
+test("formula inequalities stay intact when rendered into HTML", async () => {
+  const concept = allConcepts().find((item) => item.formulas.some((formula) => formula.includes("<")));
+  const formula = concept.formulas.find((item) => item.includes("<"));
+  const p = await page(false);
+  try {
+    p.$(`[data-concept="${concept.id}"]`).click();
+    const expression = p.$(".math-formula");
+    assert.equal(expression.textContent, `\\(${formula}\\)`);
+    assert.equal(expression.querySelector("*"), null);
+  } finally {
+    p.close();
+  }
+});
 
 test("compact explorer header keeps labeled filters, localized counts, and progress details working", async () => {
   const p = await page(false, undefined, "password", "", async (url) => ({

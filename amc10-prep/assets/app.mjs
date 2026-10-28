@@ -376,6 +376,15 @@ function textPair(zh, en) {
   return `<span class="bilingual-pair"><span lang="en">${en}</span><span lang="zh">${zh}</span></span>`;
 }
 
+function escapeHtml(text) {
+  return text.replace(/[&<>"]/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;"
+  })[character]);
+}
+
 function renderLanguageControl() {
   document.querySelectorAll("[data-language]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.language === state.language));
@@ -455,7 +464,7 @@ function formulaItems(concept) {
     const note = concept.formulaNotes[index];
     return `
       <li class="formula-item">
-        <div class="formula-expression"><span class="math-formula">\\(${formula}\\)</span></div>
+        <div class="formula-expression"><span class="math-formula">\\(${escapeHtml(formula)}\\)</span></div>
         <p class="formula-explanation">${textPair(note.explanationZh, linkGlossaryTerms(note.explanationEn))}</p>
         <details class="formula-example">
           <summary>
