@@ -57,7 +57,9 @@ The 25 earlier broad/focused quests remain under **Review quests · No badges**.
 Their progress IDs and saved work are preserved, but they do not inflate the
 course badge count. Previous/Next follows the grouped dropdown order and stops
 at either end. The mission selector is directly above the current mission title.
-Circular chevron buttons flank the title, with localized accessible names/tooltips. LIVE's catalog informed
+Circular chevron buttons flank the title, with localized accessible names/tooltips.
+The workflow icons let you revisit unlocked steps; completed checkpoints, problems,
+and vocabulary remain available for review without resetting badge evidence. LIVE's catalog informed
 the pilot categories; explanations and
 mini-challenges are authored for this app, not copied source solutions.
 
