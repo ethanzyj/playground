@@ -2,7 +2,7 @@ import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
 import { AccountPanel } from "./account.mjs?v=20261026-6";
 import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-6";
-import { QuestPanel } from "./quests.mjs?v=20261030-13";
+import { QuestPanel } from "./quests.mjs?v=20261031-2";
 import { QUEST_COURSE } from "./quest-course.mjs?v=20261030-1";
 
 let problemProgressStorageError = false;

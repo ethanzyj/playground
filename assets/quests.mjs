@@ -268,6 +268,7 @@ export class QuestPanel {
     const identity = this.getUserId() || "guest";
     if (identity === this.identity) return;
     this.identity = identity;
+    this.viewStage = null;
     this.key = `amc10-quests:${identity}`;
     this.data = { version: 1, quests: {} };
     this.error = "";
@@ -297,6 +298,7 @@ export class QuestPanel {
   selectMission(id) {
     questContent(id);
     this.active = id;
+    this.viewStage = null;
     this.feedback = null;
     this.practiceError = "";
     this.grading = null;
@@ -318,6 +320,7 @@ export class QuestPanel {
       validateQuestProgress(next);
       this.storage.setItem(this.key, JSON.stringify(next));
       this.data = next;
+      this.viewStage = null;
       this.error = "";
       this.onAchievements(next, this.getUserId() || null);
       if (this.syncEnabled) this.cloud.queue(this.active, progress);
@@ -466,11 +469,20 @@ export class QuestPanel {
     const budget = content.concept.budget;
     const earnsBadge = badgeMissions.some((mission) => mission.id === this.active);
     const progress = this.progress();
-    const stage = questStage(content, progress);
+    const earnedStage = questStage(content, progress);
+    const unlockedIndex = stages.indexOf(earnedStage);
+    const stage = this.viewStage && stages.indexOf(this.viewStage) <= unlockedIndex ? this.viewStage : earnedStage;
     const labels = {
       learn: ["学习", "Learn"], checkpoint: ["概念测验", "Checkpoint"],
       practice: ["真题练习", "Practice"], vocabulary: ["词汇挑战", "Vocabulary"],
       finish: ["任务完成", "Quest complete"]
+    };
+    const stageIcons = {
+      learn: '<path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Z"/><path d="M12 6v14"/>',
+      checkpoint: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M8 12l2 2 5-5M8 18h8"/>',
+      practice: '<path d="m4 16-1 5 5-1L20 8l-4-4L4 16ZM14 6l4 4M4 16l4 4"/>',
+      vocabulary: '<path d="M4 4h16v13H9l-5 4V4ZM8 8h8M8 12h5"/>',
+      finish: '<path d="M8 3h8v5a4 4 0 0 1-8 0V3ZM8 5H4v2a4 4 0 0 0 4 4M16 5h4v2a4 4 0 0 1-4 4M12 12v6M8 21v-3h8v3"/>'
     };
     const stageIndex = stages.indexOf(stage);
     const total = 1 + content.concept.formulas.length + content.problems.length + content.terms.length;
@@ -488,8 +500,17 @@ export class QuestPanel {
         <p class="muted">${this.pair("阅读公式及其条件，再进入测验。", "Read each formula and its conditions, then take the checkpoint.")}</p>
         <button id="questLearned" class="mastery" ${this.blocked ? "disabled" : ""}>${this.pair("开始测验", "Start checkpoint")}</button>`;
     } else if (stage === "checkpoint" || stage === "vocabulary") {
-      body = this.quiz(content, progress, stage === "vocabulary");
+      const complete = stage === "checkpoint" ? progress.formulas.length === content.concept.formulas.length
+        : progress.terms.length === content.terms.length;
+      body = complete ? `<p class="quest-feedback">${this.pair("本步骤已完成。可在这里复习，完成记录不会改变。", "This step is complete. Review it here without changing your progress.")}</p>
+        ${stage === "checkpoint" ? content.concept.formulas.map((formula, i) => `<section class="quest-lesson"><p>\\(${html(formula)}\\)</p><p>${this.pair(content.concept.formulaNotes[i].explanationZh, content.concept.formulaNotes[i].explanationEn)}</p></section>`).join("")
+          : content.terms.map((term) => `<section class="quest-lesson"><h4>${this.pair(term.zh, term.en)}</h4><p>${this.pair(term.noteZh, term.noteEn)}</p></section>`).join("")}`
+        : this.quiz(content, progress, stage === "vocabulary");
     } else if (stage === "practice") {
+      if (progress.problems.length === content.problems.length) {
+        body = `<p class="quest-feedback">${this.pair("本关真题已全部正确作答。选择题目即可复习。", "All mission problems have been answered correctly. Open a problem to review it.")}</p>
+          <ul>${content.problems.map((problem) => `<li><a href="?problem=${problemKey(problem)}" target="_blank" rel="noopener">${html(`${problem.year} ${problem.exam} #${problem.problemNumber}`)}</a></li>`).join("")}</ul>`;
+      } else {
       const problem = content.problems.find((item) => !progress.problems.includes(problemKey(item)));
       const exam = this.papers.get(`${problem.year}${problem.exam.slice(-1)}`);
       const question = exam?.problems[problem.problemNumber - 1];
@@ -506,7 +527,8 @@ export class QuestPanel {
         ${this.feedback ? `<p role="status" class="quest-feedback">${this.pair(this.feedback.zh, this.feedback.en)}</p>
           <a href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener">${this.pair("查看来源解析（含答案）", "Review source solution (reveals answer)")}</a>` : ""}
         ${this.gradingError ? `<p role="alert">${html(this.gradingError)}</p>` : ""}
-        <a href="?problem=${problemKey(problem)}" target="_blank" rel="noopener">${this.pair("在真题索引中查看", "Open in Problem Explorer")}</a>`;
+        <a class="quest-explorer-link" href="?problem=${problemKey(problem)}" target="_blank" rel="noopener">${this.pair("在真题索引中查看", "Open in Problem Explorer")}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>`;
+      }
     } else {
       body = `<div class="quest-conquest" role="status">${earnsBadge ? '<span class="quest-badge" aria-hidden="true">&#9733;</span>' : ""}
         <h4>${earnsBadge ? this.pair("任务完成徽章", "Mission completion badge") : this.pair("综合复习完成", "Review complete")}: ${this.pair(content.concept.zh, content.concept.en)}</h4>
@@ -568,11 +590,27 @@ export class QuestPanel {
       ${this.error ? `<p class="notice" role="alert">${html(this.error)}</p>` : ""}
       ${this.syncError ? `<p class="notice" role="alert">${html(this.syncError)}</p><button id="questSyncRetry" type="button" class="mastery">${this.pair("重试同步", "Retry sync")}</button>` : ""}
       <p role="status" data-quest-sync-status ${this.syncPending ? "" : "hidden"}>${this.pair("待同步任务", "Missions pending sync")}: ${this.syncPending}</p>
-      <ol class="quest-stages">${stages.map((item, index) => `<li class="${index < stageIndex ? "complete" : index === stageIndex ? "current" : ""}" ${index === stageIndex ? 'aria-current="step"' : ""}>${this.pair(...labels[item])}</li>`).join("")}</ol>
+      <ol class="quest-stages" aria-label="${html(this.text("任务流程", "Quest workflow"))}">${stages.map((item, index) => {
+        const completed = index < unlockedIndex || earnedStage === "finish";
+        return `<li class="${completed ? "complete" : ""} ${index === stageIndex ? "current" : ""}" ${index === stageIndex ? 'aria-current="step"' : ""}>
+          <button type="button" class="quest-stage-button" data-quest-stage="${item}" ${index > unlockedIndex ? "disabled" : ""}>
+          <span class="quest-stage-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${stageIcons[item]}</svg>${completed ? '<span class="quest-stage-check" aria-hidden="true">&#10003;</span>' : ""}</span>
+          ${this.pair(...labels[item])}</button></li>`;
+      }).join("")}</ol>
       <progress max="${total}" value="${done}" aria-label="${html(this.text("任务进度", "Quest progress"))}"></progress>
       <p>${done} / ${total} · ${this.pair("挑战完成", "challenges cleared")}</p><section class="card quest-task"><h3>${this.pair(...labels[stage])}</h3>${body}</section>`;
     this.mount.querySelector("#questConcept").addEventListener("change", (event) => {
       this.selectMission(event.target.value);
+    });
+    this.mount.querySelectorAll("[data-quest-stage]").forEach((button) => {
+      button.addEventListener("click", () => {
+        this.viewStage = button.dataset.questStage;
+        this.feedback = null;
+        this.grading = null;
+        this.gradingError = "";
+        this.render();
+        this.mount.querySelector(`[data-quest-stage="${this.viewStage}"]`)?.focus();
+      });
     });
     this.mount.querySelector("#questSyncRetry")?.addEventListener("click", () => this.cloud.retry(this.data));
     this.mount.querySelectorAll("[data-quest-world]").forEach((button) => {
@@ -595,10 +633,14 @@ export class QuestPanel {
       }
     });
     this.mount.querySelector("#questLearned")?.addEventListener("click", () => {
-      if (questStage(questContent(this.active), this.progress()) !== "learn") return;
+      if (this.progress().learned) {
+        this.viewStage = "checkpoint";
+        this.render();
+        return;
+      }
       this.save((value) => ({ ...value, learned: true }));
     });
-    if (stage === "practice") {
+    if (stage === "practice" && progress.problems.length < content.problems.length) {
       const problem = content.problems.find((item) => !progress.problems.includes(problemKey(item)));
       this.mount.querySelector("#questRetry")?.addEventListener("click", () => {
         this.practiceError = "";

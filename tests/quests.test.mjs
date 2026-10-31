@@ -33,6 +33,33 @@ function page(storageOverride, fetchOverride, clientOverride) {
   return { panel, mount, dom, setUser: (id) => { userId = id; }, setLanguage: (value) => { language = value; } };
 }
 
+test("workflow navigation reviews completed steps without changing badge evidence", () => {
+  const p = page();
+  try {
+    p.panel.selectMission(QUEST_COURSE.missions[0].concept.id);
+    assert.equal(p.mount.querySelector('[data-quest-stage="practice"]').disabled, true);
+    const content = questContent(p.panel.active);
+    p.panel.save(() => ({
+      learned: true,
+      formulas: content.concept.formulas.map((_, i) => i),
+      problems: content.problems.map(problemKey),
+      terms: content.terms.map((term) => term.en)
+    }));
+    const snapshot = JSON.stringify(p.panel.data);
+    for (const stage of ["learn", "checkpoint", "practice", "vocabulary", "finish"]) {
+      p.mount.querySelector(`[data-quest-stage="${stage}"]`).click();
+      assert.equal(p.mount.querySelector('[aria-current="step"] button').dataset.questStage, stage);
+      assert.equal(JSON.stringify(p.panel.data), snapshot);
+      assert.equal(p.mount.querySelectorAll(".quest-stage-check").length, 5);
+    }
+    p.mount.querySelector('[data-quest-stage="learn"]').click();
+    p.mount.querySelector("#questLearned").click();
+    assert.equal(p.mount.querySelector('[aria-current="step"] button').dataset.questStage, "checkpoint");
+    p.panel.selectMission(QUEST_COURSE.missions[1].concept.id);
+    assert.equal(p.mount.querySelector('[aria-current="step"] button').dataset.questStage, "learn");
+  } finally { p.dom.window.close(); }
+});
+
 test("meaning quizzes show distinct choices and radio inputs keep their intrinsic width", () => {
   const p = page();
   try {
@@ -166,6 +193,9 @@ test("course badges show their workload, collected items, and full-course covera
   try {
     p.panel.selectMission(QUEST_COURSE.missions[0].concept.id);
     const content = QUEST_COURSE.missions[0];
+    assert.equal(p.mount.querySelectorAll(".quest-stages .quest-stage-icon svg").length, 5);
+    assert.equal(p.mount.querySelectorAll('.quest-stages [aria-current="step"]').length, 1);
+    assert.equal(p.mount.querySelectorAll(".quest-stage-check").length, 0);
     assert.match(p.mount.querySelector(".quest-budget").textContent, /45–60 minute sitting/);
     assert.match(p.mount.querySelector(".quest-session-collection").textContent, /Collected for this badge/);
     assert.equal(p.mount.querySelectorAll(".quest-budget .quest-metric").length, 5);
