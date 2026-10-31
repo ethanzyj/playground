@@ -5,6 +5,77 @@ then open http://127.0.0.1:8000. The checked-in browser bundle runs without
 installing dependencies. Development and tests require Node.js 20 or later:
 run `npm ci`, then `npm run build` after SDK dependency changes.
 Math rendering uses MathJax from a CDN and requires internet access.
+
+## Learning quests
+
+The **Quests / 学习任务** tab organizes the entire collection into **153 course
+sessions**, each with an estimated **45–60 minute** lesson/checkpoint/practice/
+vocabulary/review budget. Difficulty estimates are 6, 10, 14, 18, or 24 minutes
+per AMC problem, plus 8 minutes for the lesson, 2 per formula checkpoint, and
+1 per vocabulary check. Shorter sessions include a review allowance.
+These are planning estimates, not measured or guaranteed completion times:
+retries and hard problems can take longer. There is no timer, waiting requirement,
+or interruption penalty.
+
+| World | Course badges |
+| --- | ---: |
+| Algebra | 49 |
+| Geometry | 45 |
+| Solid Geometry | 10 |
+| Number Theory | 26 |
+| Counting and Probability | 23 |
+
+`assets/quest-course.mjs` deterministically assigns every one of the **500**
+problems to a tagged concept, balancing estimated workload across overlapping
+tags; it assigns each of the **144** glossary entries to one linked concept.
+Sessions split that workload into hour-sized chunks and cover all **18** current
+Study Guide concepts. Tags remain editorial study associations, not an official
+curriculum or a mathematical source audit. Badges require passing every assigned
+checkpoint, problem, and vocabulary check. The full course completion message
+requires all badges and exact coverage of all concepts, problems, and vocabulary.
+The page shows collected badges and unique coverage counts as work is completed.
+
+Quest progress resumes from `amc10-quests:<user id>` and is synced through
+`user_quest_progress` and the `save_quest_progress` RPC. Run
+**`supabase/add-quest-progress.sql`** in Supabase's SQL Editor to enable this
+additional feature. Pending updates are cached per account; failures are visible
+and retryable. Server saves merge completed tasks rather than overwriting another
+device's work. Guest progress stays local. Invalid caches/remote progress pause
+or report errors instead of silently discarding work.
+
+Correct course answers update Explorer's existing `haveApproach` status and
+also display **Answered correctly in Quests**. Manually marking `haveApproach`
+does not count as a graded answer. Passed course glossary checks set the same
+mastery marks used in the Glossary and map. Completing **every course session
+for a concept** sets its Study Guide/map mastery mark. These are learning
+completion indicators, not a certification. Achievements are replayed from
+synced quest evidence on another device; sync failures remain visible.
+Problem cards link to their assigned mission, and missions link back to the
+Explorer and Study Guide.
+
+The 25 earlier broad/focused quests remain under **Review quests · No badges**.
+Their progress IDs and saved work are preserved, but they do not inflate the
+course badge count. Previous/Next follows the grouped dropdown order and stops
+at either end. The mission selector is directly above the current mission title.
+Circular chevron buttons flank the title, with localized accessible names/tooltips. LIVE's catalog informed
+the pilot categories; explanations and
+mini-challenges are authored for this app, not copied source solutions.
+
+Signed-in practice is graded by the Supabase `check_quiz_answer` RPC using the
+administrator-managed `quiz_answers` table. Run `supabase/add-quest-answers.sql`
+in the linked project's SQL Editor to create the table, seed all 500 entries,
+and grant authenticated users access to the grading RPC only. Browser accounts
+cannot read or edit the table directly. The RPC returns correctness, not the
+answer letter; missing setup or network errors are visible and never award
+credit. Guest mode (when cloud login is disabled) uses the local key instead.
+The separate progress migration above is also needed for cloud quest persistence.
+
+Answer letters are also in `assets/answer-key.json`, separate from the explorer's
+statement files. `npm run import:answers` retrieves them from the authorized
+LIVE by Po-Shen Loh archive and matches every statement and all five choices
+against the local paper before writing the 500-entry key.
+`npm run build:answer-migration` regenerates the rerunnable seeded SQL migration.
+No solutions are copied into the app. Problem Explorer still does not display answers.
 The theme toggle at the top shows a moon to switch to dark appearance and a sun
 to switch to light appearance, with a tooltip describing the action.
 It follows your device preference until you choose a theme, then saves that choice
@@ -24,7 +95,9 @@ badges show distinct problems tagged to that concept out of the 500-problem
 collection. Concept tags overlap and are study associations, not official AMC
 classifications; never sum concept counts to calculate the collection size.
 Concept tags open the Study Guide; vocabulary links open the Glossary.
-Problem cards use an external-link icon for the source problem. Under the
+Problem cards use an external-link icon for the AoPS source problem and a
+lightbulb icon for the LIVE answer/solution page; the latter explicitly warns
+that it reveals the answer. Both open in a new tab. Under the
 concept tags, **Vocabulary in this problem** lists the glossary terms that
 problem actually uses (from `assets/problem-vocab.mjs`, reviewed per problem);
 hover a term for its definition or select it to open it in the Glossary in a new

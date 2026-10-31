@@ -2,7 +2,9 @@
   "scripts": {
     "test": "node tests/validate-content.mjs && node tests/validate-statements.mjs && node --test tests/*.test.mjs",
     "build": "node scripts/build-sdk.mjs",
-    "import:statements": "python3 scripts/import-statements.py"
+    "import:statements": "python3 scripts/import-statements.py",
+    "import:answers": "python3 scripts/import-answers.py",
+    "build:answer-migration": "python3 scripts/build-answer-migration.py"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.80.0"

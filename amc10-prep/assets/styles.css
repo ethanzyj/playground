@@ -2324,7 +2324,289 @@ a.problem-chip {
   font-weight: 800;
 }
 
+.quest-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: clamp(1rem, 3vw, 2rem);
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--accent);
+  border-radius: 1.25rem;
+  background: var(--accent-soft);
+}
+
+.quest-eyebrow {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.quest-navigation {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  min-width: 0;
+  max-width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.quest-worlds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.quest-coverage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+
+.quest-budget {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.quest-budget summary {
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.quest-budget summary .bilingual-pair {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.quest-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+}
+
+.quest-metric {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.quest-metric strong {
+  white-space: nowrap;
+  color: var(--accent);
+}
+
+.quest-session-collection {
+  margin-bottom: 1rem;
+}
+
+.quest-session-collection .quest-metrics {
+  margin-bottom: 0;
+}
+
+.quest-solved {
+  color: var(--success-strong);
+  font-weight: 700;
+}
+
+.quest-worlds [aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.quest-navigation label {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.quest-navigation select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.quests .section-heading > div {
+  width: 100%;
+  min-width: 0;
+}
+
+.quest-mission-title {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.quest-mission-title h3 {
+  margin: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.quest-nav-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--accent);
+  background: var(--panel);
+  cursor: pointer;
+}
+
+.quest-nav-icon:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.quest-nav-icon:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.quest-nav-icon:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.quest-trophy {
+  display: grid;
+  gap: 0.25rem;
+  flex: none;
+  text-align: center;
+  color: var(--success-strong);
+}
+
+.quest-trophy > span,
+.quest-trophy strong,
+.quest-badge {
+  font-size: 2rem;
+}
+
+.quest-conquest {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--success-strong);
+  border: 1px solid var(--success-strong);
+  border-radius: 1rem;
+  background: var(--accent-soft);
+}
+
+.quest-stages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.quest-stages li {
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  color: var(--muted);
+}
+
+.quest-stages .current {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 700;
+}
+
+.quest-stages .complete {
+  color: var(--success-strong);
+  border-color: var(--success-strong);
+}
+
+.quests > progress {
+  width: 100%;
+  accent-color: var(--success-strong);
+}
+
+.quest-lesson {
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.quest-task fieldset {
+  display: grid;
+  gap: 0.75rem;
+  margin-block: 1rem;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.quest-task legend {
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.quest-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  min-width: 0;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.quest-choice > .bilingual-pair {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.quest-choice:has(input:checked) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.quest-choice input {
+  flex: none;
+  width: auto;
+  padding: 0;
+  margin-top: 0.3rem;
+}
+
+.quest-feedback {
+  padding: 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.75rem;
+  background: var(--accent-soft);
+}
+
+.quest-statement img,
+.quest-choice img {
+  max-width: 100%;
+  height: auto;
+}
+
 @media (max-width: 600px) {
+  .quest-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .map-tree {
     padding: 1rem 0.75rem;
   }
