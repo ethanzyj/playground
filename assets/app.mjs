@@ -2,6 +2,8 @@ import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
 import { AccountPanel } from "./account.mjs?v=20261026-6";
 import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-6";
+import { QuestPanel } from "./quests.mjs?v=20261030-13";
+import { QUEST_COURSE } from "./quest-course.mjs?v=20261030-1";
 
 let problemProgressStorageError = false;
 let reviewStorageError = false;
@@ -64,6 +66,80 @@ const conceptById = new Map(allConcepts().map((concept) => [concept.id, concept]
 
 const $ = (selector) => document.querySelector(selector);
 let accountPanel;
+let questSolved = new Set();
+let achievementSync = Promise.resolve();
+const questPanel = new QuestPanel({
+  mount: document.querySelector("#questPanel"),
+  storage: localStorage,
+  getUserId: () => accountPanel?.controller?.user?.id,
+  getClient: () => accountPanel?.client,
+  getLanguage: () => state.language,
+  typeset: typesetMath,
+  onAchievements: syncQuestAchievements
+});
+
+window.addEventListener("online", () => {
+  if (accountPanel?.signedIn && !questPanel.blocked) questPanel.cloud.retry(questPanel.data);
+});
+window.addEventListener("focus", () => {
+  if (accountPanel?.signedIn && !accountPanel.editingPaused && !questPanel.blocked) questPanel.cloud.retry(questPanel.data);
+});
+
+function syncQuestAchievements(data, userId) {
+  const solved = new Set();
+  const terms = new Set();
+  const mastered = new Set();
+  for (const mission of QUEST_COURSE.missions) {
+    const progress = data.quests[mission.concept.id];
+    for (const key of progress?.problems || []) solved.add(key);
+    for (const term of progress?.terms || []) terms.add(term);
+  }
+  for (const concept of allConcepts()) {
+    const sessions = QUEST_COURSE.missions.filter((mission) => mission.concept.studyConceptId === concept.id);
+    if (sessions.every((mission) => {
+      const progress = data.quests[mission.concept.id];
+      return progress?.learned && progress.formulas.length === mission.concept.formulas.length
+        && mission.problems.every((problem) => progress.problems.includes(problemKey(problem)))
+        && mission.terms.every((term) => progress.terms.includes(term.en));
+    })) mastered.add(concept.id);
+  }
+  questSolved = solved;
+  achievementSync = achievementSync.then(async () => {
+    if ((accountPanel?.controller?.user?.id || null) !== userId) return;
+    let changed = false;
+    for (const key of solved) {
+      if ((accountPanel?.controller?.user?.id || null) !== userId) return;
+      if (state.problemProgress[key] === "haveApproach") continue;
+      if (userId) await accountPanel.controller.mark(key, "haveApproach");
+      else {
+        const next = { ...state.problemProgress, [key]: "haveApproach" };
+        localStorage.setItem("amc10-problem-progress", JSON.stringify(next));
+        state.problemProgress = next;
+      }
+      changed = true;
+    }
+    for (const [kind, ids, existing] of [
+      ["glossary", terms, state.masteredGlossary],
+      ["concept", mastered, state.mastered]
+    ]) {
+      for (const id of ids) {
+        if ((accountPanel?.controller?.user?.id || null) !== userId) return;
+        if (existing.has(id)) continue;
+        if (userId) await accountPanel.setMastery(kind, id, true);
+        else {
+          existing.add(id);
+          saveLocalMastery();
+        }
+        changed = true;
+      }
+    }
+    if (changed || state.activeView === "problems") render();
+  }).catch((error) => {
+    console.error("Unable to update linked quest achievements.", error);
+    questPanel.syncError = uiText("questLinkedSyncError");
+    questPanel.render();
+  });
+}
 
 // --- Inline glossary term linking -------------------------------------------------
 // Wraps recognized English glossary terms (e.g. "quadratic", "difference of squares")
@@ -233,6 +309,8 @@ const UI_TEXT = {
   problemExplorer: { en: "Problem Explorer", zh: "真题索引" },
   glossary: { en: "Glossary", zh: "词汇表" },
   topicMap: { en: "Topic Map", zh: "知识图谱" },
+  quests: { en: "Quests", zh: "学习任务" },
+  questLinkedSyncError: { en: "Could not update linked Study Guide, Glossary, or Explorer progress. Your quest progress is retained; retry quest sync.", zh: "无法更新学习指南、词汇表或真题进度。任务进度已保留，请重试任务同步。" },
   mapEyebrow: { en: "Topics & vocabulary", zh: "知识点与词汇" },
   searchMap: { en: "Filter map", zh: "筛选图谱" },
   mapSearchPlaceholder: { en: "topic or term...", zh: "知识点或词汇..." },
@@ -292,6 +370,7 @@ const UI_TEXT = {
   markMastered: { en: "Mark mastered", zh: "标记掌握" },
   mastered: { en: "Mastered", zh: "已掌握" },
   openReference: { en: "View problem reference", zh: "查看题目索引" },
+  openSolution: { en: "LIVE answer & solution (reveals answer)", zh: "LIVE 答案与解析（含答案）" },
   allConcepts: { en: "All concepts", zh: "所有知识点" },
   currentConcept: { en: "Current", zh: "当前知识点" },
   allYears: { en: "All years", zh: "所有年份" },
@@ -505,6 +584,7 @@ function typesetMath(target) {
 
 function renderConcept() {
   const concept = conceptById.get(state.activeConceptId) || allConcepts()[0];
+  const mission = QUEST_COURSE.missions.find((item) => item.concept.studyConceptId === concept.id);
   const related = PROBLEM_REFERENCES.filter((problem) => problem.conceptIds.includes(concept.id));
   const relatedTerms = GLOSSARY.filter((term) => term.conceptIds.includes(concept.id));
   $("#conceptView").innerHTML = `
@@ -513,6 +593,7 @@ function renderConcept() {
         <p class="eyebrow">${textPair(concept.topicZh, concept.topicEn)}</p>
         <h2>${textPair(concept.zh, concept.en)}</h2>
         <p class="detail">${textPair(concept.detailZh, concept.detailEn)}</p>
+        ${mission ? `<a href="${deepLink("quest", mission.concept.id)}" target="_blank" rel="noopener">${textPair("学习此知识点的任务", "Study this concept in Quests")}</a>` : ""}
       </div>
       <button id="masteryToggle" class="mastery glossary-mastery ${state.mastered.has(concept.id) ? "complete" : ""}" aria-pressed="${state.mastered.has(concept.id)}" aria-label="${state.mastered.has(concept.id) ? uiText("mastered") : uiText("markMastered")}" title="${state.mastered.has(concept.id) ? uiText("mastered") : uiText("markMastered")}">
         <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5"/><path d="m6.8 10.1 2.1 2.1 4.5-4.5"/></svg>
@@ -776,6 +857,7 @@ async function openProblemInExplorer(key) {
 
 function problemCard(problem, statement = null) {
   const tags = problem.conceptIds.map((id) => conceptById.get(id)).filter(Boolean);
+  const mission = QUEST_COURSE.missions.find((item) => item.problems.some((ref) => problemKey(ref) === problemKey(problem)));
   return `
     <article class="problem-card" data-problem-key="${problemKey(problem)}" tabindex="-1">
       <h3 class="problem-topline">
@@ -783,6 +865,8 @@ function problemCard(problem, statement = null) {
         <span>${difficultyText(problem.difficulty)}</span>
       </h3>
       ${problemProgressControl(problemKey(problem))}
+      ${questSolved.has(problemKey(problem)) ? `<p class="quest-solved">${textPair("任务中已正确作答", "Answered correctly in Quests")}</p>` : ""}
+      ${mission ? `<a href="${deepLink("quest", mission.concept.id)}" target="_blank" rel="noopener">${textPair("进入对应任务", "Open this problem's mission")}</a>` : ""}
       ${statement ? `
         <div class="problem-statement" lang="en">${statement.statementHtml}</div>
         <ol class="problem-choices" type="A" lang="en">
@@ -795,6 +879,11 @@ function problemCard(problem, statement = null) {
         <a class="icon-action" href="${problem.sourceUrl}" target="_blank" rel="noreferrer" aria-label="${uiText("openReference")}" title="${uiText("openReference")}">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5" />
+          </svg>
+        </a>
+        <a class="icon-action" href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener" aria-label="${uiText("openSolution")}" title="${uiText("openSolution")}">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
           </svg>
         </a>
       </div>
@@ -1036,6 +1125,7 @@ function relatedVocabularyList(terms, conceptId) {
 
 function glossaryCard(term) {
   const concepts = term.conceptIds.map((id) => conceptById.get(id)).filter(Boolean);
+  const mission = QUEST_COURSE.missions.find((item) => item.terms.some((entry) => entry.en === term.en));
   const relatedProblemCount = PROBLEM_REFERENCES.filter((problem) =>
     problem.conceptIds.some((id) => term.conceptIds.includes(id))
   ).length;
@@ -1044,6 +1134,7 @@ function glossaryCard(term) {
       <p class="glossary-category">${textPair(term.categoryZh, term.categoryEn)}</p>
       <h3>${textPair(term.zh, term.en)}</h3>
       <p>${textPair(term.noteZh, linkGlossaryTerms(term.noteEn))}</p>
+      ${mission ? `<a href="${deepLink("quest", mission.concept.id)}" target="_blank" rel="noopener">${textPair("进入此词汇的任务", "Open this vocabulary mission")}</a>` : ""}
       <div class="glossary-mastery-action">
         <a class="text-button glossary-problem-count" aria-label="${uiText("relatedProblems")} (${relatedProblemCount})" href="${deepLink("problems-concept", term.conceptIds[0])}" target="_blank" rel="noopener">${textPair(`${relatedProblemCount} 道真题`, `${relatedProblemCount} problems`)}</a>
         <button class="mastery glossary-mastery ${state.masteredGlossary.has(term.en) ? "complete" : ""}" data-glossary-mastery="${term.en}" aria-pressed="${state.masteredGlossary.has(term.en)}" aria-label="${state.masteredGlossary.has(term.en) ? uiText("mastered") : uiText("markGlossaryMastered")}" title="${state.masteredGlossary.has(term.en) ? uiText("mastered") : uiText("markGlossaryMastered")}">
@@ -1296,7 +1387,12 @@ function applyDeepLink() {
   const problemsConcept = params.get("problems-concept");
   const glossaryConcept = params.get("glossary-concept");
   const concept = params.get("concept");
-  if (problem && PROBLEM_REFERENCES.some((item) => problemKey(item) === problem)) openProblemInExplorer(problem);
+  const quest = params.get("quest");
+  if (quest && QUEST_COURSE.missions.some((mission) => mission.concept.id === quest)) {
+    questPanel.selectMission(quest);
+    setActiveView("quests");
+  }
+  else if (problem && PROBLEM_REFERENCES.some((item) => problemKey(item) === problem)) openProblemInExplorer(problem);
   else if (term && glossaryBySlug.has(term)) jumpToGlossaryTerm(term);
   else if (problemsConcept && conceptById.has(problemsConcept)) showConceptProblems(problemsConcept);
   else if (glossaryConcept && conceptById.has(glossaryConcept)) showConceptGlossary(glossaryConcept);
@@ -1360,6 +1456,7 @@ function setActiveView(view) {
     $(`#${tab.getAttribute("aria-controls")}`).hidden = !isActive;
   });
   if (view === "problems") return renderProblems();
+  if (view === "quests") questPanel.render();
 }
 
 const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
@@ -1475,6 +1572,7 @@ function render() {
   renderProblems();
   renderGlossary();
   renderTopicMap();
+  if (state.activeView === "quests") questPanel.render();
   refreshReviewCollection(false);
   accountPanel?.render();
 }
@@ -1504,6 +1602,7 @@ accountPanel = new AccountPanel({
     } else refreshReviewCollection();
   },
   onProgress: (selections) => {
+    if (questPanel.identity !== (accountPanel?.controller?.user?.id || "guest")) questPanel.load();
     const changed = Object.keys(state.problemProgress).length !== Object.keys(selections).length
       || Object.entries(selections).some(([key, value]) => state.problemProgress[key] !== value);
     state.problemProgress = selections;

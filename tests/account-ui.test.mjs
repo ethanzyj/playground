@@ -6,11 +6,12 @@ import { build } from "esbuild";
 import { JSDOM, VirtualConsole } from "jsdom";
 import { allConcepts, PROBLEM_REFERENCES } from "../assets/data.mjs";
 import { problemKey } from "../assets/progress.mjs";
+import { QUEST_COURSE } from "../assets/quest-course.mjs";
 
 const root = new URL("../", import.meta.url);
 const html = readFileSync(new URL("index.html", root), "utf8");
 
-async function page(configured, client, method = "password", search = "", fetchImpl = null) {
+async function page(configured, client, method = "password", search = "", fetchImpl = null, questProgress = null) {
   const errors = [];
   const virtualConsole = new VirtualConsole();
   virtualConsole.on("jsdomError", (error) => errors.push(error));
@@ -21,8 +22,10 @@ async function page(configured, client, method = "password", search = "", fetchI
   const window = dom.window;
   window.matchMedia = () => ({ matches: false, addEventListener() {} });
   window.scrollTo = () => {};
+  window.structuredClone = structuredClone;
   window.HTMLElement.prototype.scrollIntoView = () => {};
   window.__testClient = client;
+  if (questProgress) window.localStorage.setItem("amc10-quests:guest", JSON.stringify(questProgress));
   window.document.querySelector("#accountLoginMethod").value = method;
   window.fetch = fetchImpl || (async (url) => ({
     ok: true, json: async () => JSON.parse(readFileSync(new URL(url, root), "utf8"))
@@ -70,6 +73,61 @@ test("formula inequalities stay intact when rendered into HTML", async () => {
   } finally {
     p.close();
   }
+});
+
+test("Quests launch from their tab and problem cards link to both AoPS and LIVE solutions", async () => {
+  const p = await page(false);
+  try {
+    p.$("#questTab").click();
+    assert.equal(p.$("#questPanel").hidden, false);
+    assert.equal(p.$("#studySidebar").hidden, true);
+    assert.ok(p.$("#questLearned"));
+    assert.equal(p.$("#questConcept").value, QUEST_COURSE.missions[0].concept.id);
+    assert.equal(p.$("#questConcept optgroup").label, "Algebra / 代数");
+    assert.equal(p.$$("#questConcept optgroup option").length, QUEST_COURSE.missions.length + 25);
+    assert.equal(p.$(".quest-trophy strong").textContent, `0 / ${QUEST_COURSE.missions.length}`);
+    assert.equal(p.$$("[data-quest-world]").length, 6);
+    assert.match(p.$("#questPanel").textContent, /Guest quest progress is saved in this browser only/);
+    p.$("#questLearned").click();
+    assert.ok(p.$("#questQuiz"));
+    p.$('[data-language="zh"]').click();
+    assert.match(p.$("#questPanel").textContent, /概念测验/);
+    p.$("#problemsTab").click();
+    const card = p.$('[data-problem-key="2025-AMC10A-1"]');
+    assert.ok(card.querySelector('a[href*="artofproblemsolving.com"]'));
+    const solution = card.querySelector('a[href="https://live.poshenloh.com/past-contests/amc10/2025A/problem/1"]');
+    assert.equal(solution.target, "_blank");
+    assert.match(solution.getAttribute("aria-label"), /含答案/);
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("completed course evidence updates Explorer, Glossary, Study Guide and map without treating self-reported approaches as solved", async () => {
+  const concept = allConcepts().reduce((best, candidate) =>
+    QUEST_COURSE.missions.filter((mission) => mission.concept.studyConceptId === candidate.id).length
+      < QUEST_COURSE.missions.filter((mission) => mission.concept.studyConceptId === best.id).length ? candidate : best);
+  const missions = QUEST_COURSE.missions.filter((mission) => mission.concept.studyConceptId === concept.id);
+  const data = { version: 1, quests: Object.fromEntries(missions.map((mission) => [mission.concept.id, {
+    learned: true, formulas: mission.concept.formulas.map((_, i) => i),
+    problems: mission.problems.map(problemKey), terms: mission.terms.map((term) => term.en)
+  }])) };
+  const p = await page(false, undefined, "password", "", null, data);
+  try {
+    p.$("#questTab").click();
+    const problem = missions.flatMap((mission) => mission.problems)[0];
+    const term = missions.flatMap((mission) => mission.terms)[0];
+    await p.waitFor(() => p.$(`[data-problem-key="${problemKey(problem)}"] .quest-solved`));
+    assert.ok(p.$(`[data-problem-key="${problemKey(problem)}"] input[value="haveApproach"]`).checked);
+    assert.ok(p.$(`[data-problem-key="${problemKey(problem)}"] a[href*="?quest="]`));
+    if (term) assert.equal(p.$(`[data-glossary-mastery="${term.en}"]`).getAttribute("aria-pressed"), "true");
+    p.$(`[data-concept="${concept.id}"]`).click();
+    assert.equal(p.$("#masteryToggle").getAttribute("aria-pressed"), "true");
+    assert.ok(p.$(`.map-concept.mastered[data-map-node="concept:${concept.id}"]`));
+    const coverage = p.$(".quest-coverage").textContent;
+    assert.match(coverage, /500/);
+    assert.match(coverage, /144/);
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
 });
 
 test("compact explorer header keeps labeled filters, localized counts, and progress details working", async () => {

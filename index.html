@@ -16,7 +16,7 @@
         console.error("Unable to read the saved theme.", error);
       }
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20261028-17" />
+    <link rel="stylesheet" href="assets/styles.css?v=20261030-26" />
     <script>
       window.MathJax = {
         tex: {
@@ -139,6 +139,9 @@
           </button>
           <button id="mapTab" class="section-tab" type="button" role="tab" aria-selected="false" aria-controls="mapPanel" data-view="map" data-i18n="topicMap">
             Topic Map <span>知识图谱</span>
+          </button>
+          <button id="questTab" class="section-tab" type="button" role="tab" aria-selected="false" aria-controls="questPanel" data-view="quests" data-i18n="quests">
+            Quests <span>学习任务</span>
           </button>
         </nav>
       </div>
@@ -266,9 +269,10 @@
           </div>
           <div id="topicMapTree" class="map-tree"></div>
         </section>
+        <section id="questPanel" class="view-panel quests" role="tabpanel" aria-labelledby="questTab" hidden></section>
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261028-16"></script>
+    <script type="module" src="assets/app.mjs?v=20261030-29"></script>
   </body>
 </html>
