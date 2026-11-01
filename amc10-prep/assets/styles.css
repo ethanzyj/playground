@@ -2352,9 +2352,9 @@ a.problem-chip {
 }
 
 .quest-worlds {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
   margin-bottom: 1.25rem;
 }
 
@@ -2384,21 +2384,91 @@ a.problem-chip {
 }
 
 .quest-worlds .mastery {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.55rem 0.7rem;
+  min-width: 0;
+  margin: 0;
   border-radius: 0.85rem;
   background: var(--panel);
-  padding: 0.7rem 0.85rem;
+  padding: 0.9rem;
+  text-align: left;
+  transition: border-color 150ms ease, background-color 150ms ease;
 }
 
-.quest-worlds .mastery > span:last-child:not(.bilingual-pair) {
-  padding: 0.2rem 0.45rem;
-  border-radius: 0.5rem;
+.quest-world-icon {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.65rem;
   background: var(--accent-soft);
   color: var(--accent);
-  font-size: 0.8rem;
+}
+
+.quest-world-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.quest-world-name .bilingual-pair {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.quest-world-name [lang="zh"] {
+  font-size: 0.85em;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.quest-world-meta {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.quest-world-meta strong {
+  color: var(--accent);
+  font-size: 0.95rem;
   white-space: nowrap;
+}
+
+.quest-world-meta strong span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.quest-world-meta .bilingual-pair {
+  gap: 0.3rem;
+}
+
+.quest-worlds .mastery:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .quest-worlds {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 440px) {
+  .quest-worlds {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .quests .section-heading .muted {

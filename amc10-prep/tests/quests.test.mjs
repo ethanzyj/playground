@@ -33,6 +33,35 @@ function page(storageOverride, fetchOverride, clientOverride) {
   return { panel, mount, dom, setUser: (id) => { userId = id; }, setLanguage: (value) => { language = value; } };
 }
 
+test("world cards label badge counts and preserve subject selection in every language", () => {
+  const p = page();
+  try {
+    for (const language of ["en", "zh", "both"]) {
+      p.setLanguage(language);
+      p.panel.selectMission(QUEST_COURSE.missions[0].concept.id);
+      const cards = p.mount.querySelectorAll(".quest-world-card");
+      assert.equal(cards.length, 6);
+      for (const card of cards) {
+        assert.ok(card.querySelector('.quest-world-icon[aria-hidden="true"] svg'));
+        assert.ok(card.querySelector(".quest-world-name").textContent.trim());
+        assert.ok(card.querySelector(".quest-world-meta").textContent.trim());
+        assert.equal(card.querySelector("svg").innerHTML.includes("undefined"), false);
+      }
+      const algebra = p.mount.querySelector('[data-quest-world="advanced-algebra"]');
+      assert.equal(algebra.getAttribute("aria-pressed"), "true");
+      assert.match(algebra.querySelector(".quest-world-meta").textContent, /0\s*\/ 49/);
+      assert.match(algebra.textContent, language === "zh" ? /徽章已获得/ : /badges earned/);
+      p.mount.querySelector('[data-quest-world="advanced-geometry"]').click();
+      assert.equal(p.mount.querySelector('[data-quest-world="advanced-geometry"]').getAttribute("aria-pressed"), "true");
+      assert.equal(p.mount.querySelector('[data-quest-world="advanced-algebra"]').getAttribute("aria-pressed"), "false");
+      p.mount.querySelector('[data-quest-world="review"]').click();
+      const review = p.mount.querySelector('[data-quest-world="review"]');
+      assert.equal(review.getAttribute("aria-pressed"), "true");
+      assert.equal(review.querySelector(".quest-world-meta strong"), null);
+    }
+  } finally { p.dom.window.close(); }
+});
+
 test("incorrect AMC answers add review evidence before retry and correct answers do not remove it", async () => {
   const p = page();
   try {
