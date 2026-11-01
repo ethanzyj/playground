@@ -13,12 +13,28 @@
         "\\(4{:}00\\)",
         "\\(4{:}15\\)",
         "\\(4{:}30\\)"
+      ],
+      "statementZhHtml": "Andy 和 Betsy 都住在 Mathville。Andy 在 \\(1{:}30\\) 从 Mathville 骑自行车出发，以稳定的每小时 \\(8\\) 英里正北行驶。Betsy 在 \\(2{:}30\\) 从同一点骑自行车出发，以稳定的每小时 \\(12\\) 英里正东行驶。什么时候他们离共同出发点的距离恰好相同？",
+      "choicesZh": [
+        "\\(3{:}30\\)",
+        "\\(3{:}45\\)",
+        "\\(4{:}00\\)",
+        "\\(4{:}15\\)",
+        "\\(4{:}30\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "A box contains \\(10\\) pounds of a nut mix that is \\(50\\) percent peanuts, \\(20\\) percent cashews, and \\(30\\) percent almonds. A second nut mix containing \\(20\\) percent peanuts, \\(40\\) percent cashews, and \\(40\\) percent almonds is added to the box resulting in a new nut mix that is \\(40\\) percent peanuts. How many pounds of cashews are now in the box?",
       "choices": [
+        "\\(3.5\\)",
+        "\\(4\\)",
+        "\\(4.5\\)",
+        "\\(5\\)",
+        "\\(6\\)"
+      ],
+      "statementZhHtml": "一个盒子里有 \\(10\\) 磅坚果混合物，其中 \\(50\\)% 是花生，\\(20\\)% 是腰果，\\(30\\)% 是杏仁。向盒子中加入另一种坚果混合物，其中 \\(20\\)% 是花生，\\(40\\)% 是腰果，\\(40\\)% 是杏仁，结果新的混合物中花生占 \\(40\\)%。现在盒子里有多少磅腰果？",
+      "choicesZh": [
         "\\(3.5\\)",
         "\\(4\\)",
         "\\(4.5\\)",
@@ -35,12 +51,28 @@
         "\\(3012\\)",
         "\\(3037\\)",
         "\\(4050\\)"
+      ],
+      "statementZhHtml": "有多少个面积为正的等腰三角形，其边长都是正整数，并且最长边的长度为 \\(2025\\)？",
+      "choicesZh": [
+        "\\(2025\\)",
+        "\\(2026\\)",
+        "\\(3012\\)",
+        "\\(3037\\)",
+        "\\(4050\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "A team of students is going to compete against a team of teachers in a trivia contest. The total number of students and teachers is \\(15.\\) Ash, a cousin of one of the students, wants to join the contest. If Ash plays with the students, the average age on that team will increase from \\(12\\) to \\(14.\\) If Ash plays with the teachers, the average age on that team will decrease from \\(55\\) to \\(52.\\) How old is Ash?",
       "choices": [
+        "\\(28\\)",
+        "\\(29\\)",
+        "\\(30\\)",
+        "\\(32\\)",
+        "\\(33\\)"
+      ],
+      "statementZhHtml": "一队学生将和一队老师进行知识竞赛。学生和老师的总人数为 \\(15\\)。Ash 是其中一名学生的表亲，他想加入比赛。如果 Ash 加入学生队，该队的平均年龄会从 \\(12\\) 岁增加到 \\(14\\) 岁。如果 Ash 加入老师队，该队的平均年龄会从 \\(55\\) 岁降低到 \\(52\\) 岁。Ash 多少岁？",
+      "choicesZh": [
         "\\(28\\)",
         "\\(29\\)",
         "\\(30\\)",
@@ -57,6 +89,14 @@
         "\\(16\\)",
         "\\(44\\)",
         "\\(45\\)"
+      ],
+      "statementZhHtml": "考虑正整数序列\n\n\\[ \\begin{gathered} 1, 2, 1, 2, 3, 2, 1, 2, 3, 4, \\\\ 3, 2, 1, 2, 3, 4, 5, 4, 3, 2, \\\\ 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, \\\\ 1, 2, \\ldots \\end{gathered} \\]\n\n这个序列的第 \\(2025\\) 项是多少？",
+      "choicesZh": [
+        "\\(5\\)",
+        "\\(15\\)",
+        "\\(16\\)",
+        "\\(44\\)",
+        "\\(45\\)"
       ]
     },
     {
@@ -68,12 +108,28 @@
         "\\(100\\)",
         "\\(110\\)",
         "\\(120\\)"
+      ],
+      "statementZhHtml": "在一个等边三角形中，每个内角都由两条射线三等分。每个顶点处中间那个 \\(20^\\circ\\) 角的内部相交部分，是一个凸六边形的内部。这个六边形最小内角的度数是多少？",
+      "choicesZh": [
+        "\\(80\\)",
+        "\\(90\\)",
+        "\\(100\\)",
+        "\\(110\\)",
+        "\\(120\\)"
       ]
     },
     {
       "problemNumber": 7,
+      "statementZhHtml": "设 \\(a\\) 和 \\(b\\) 是实数。多项式 \\(x^3 + x^2 + ax + b\\) 除以 \\(x - 1\\) 时余数为 \\(4\\)，除以 \\(x - 2\\) 时余数为 \\(6\\)。\\(b - a\\) 等于多少？",
       "statementHtml": "Suppose \\(a\\) and \\(b\\) are real numbers. When the polynomial \\(x^3 + x^2 + ax + b\\) is divided by \\(x - 1,\\) the remainder is \\(4.\\) When the polynomial is divided by \\(x - 2,\\) the remainder is \\(6.\\) What is \\(b - a?\\)",
       "choices": [
+        "\\(14\\)",
+        "\\(15\\)",
+        "\\(16\\)",
+        "\\(17\\)",
+        "\\(18\\)"
+      ],
+      "choicesZh": [
         "\\(14\\)",
         "\\(15\\)",
         "\\(16\\)",
@@ -90,6 +146,14 @@
         "\\(2\\)",
         "\\(3\\)",
         "\\(4\\)"
+      ],
+      "statementZhHtml": "Agnes 在一张空白纸上写下下面四个陈述。\n\n• 这些陈述中至少有一个是真的。\n\n• 这些陈述中至少有两个是真的。\n\n• 这些陈述中至少有两个是假的。\n\n• 这些陈述中至少有一个是假的。\n\n每个陈述要么真，要么假。Agnes 在纸上写了多少个假陈述？",
+      "choicesZh": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)"
       ]
     },
     {
@@ -101,12 +165,28 @@
         "\\(3\\)",
         "\\(4\\)",
         "more than \\(4\\)"
+      ],
+      "statementZhHtml": "设 \\(f(x) = 100x^3 - 300x^2 + 200x\\)。有多少个实数 \\(a\\)，使得 \\(y = f(x - a)\\) 的图像经过点 \\((1, 25)\\)？",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "多于 \\(4\\)"
       ]
     },
     {
       "problemNumber": 10,
       "statementHtml": "A semicircle has diameter \\(AB\\) and chord \\(CD\\) of length \\(16\\) parallel to \\(AB.\\) A smaller semicircle with diameter on \\(AB\\) and tangent to \\(CD\\) is cut from the larger semicircle, as shown below.\n\n<img src=\"assets/exams/images/amc10/2025A/10.svg\" alt=\"Diagram for problem 10\" loading=\"lazy\">\n\nWhat is the area of the resulting figure, shown shaded?",
       "choices": [
+        "\\(16\\pi\\)",
+        "\\(24\\pi\\)",
+        "\\(32\\pi\\)",
+        "\\(48\\pi\\)",
+        "\\(64\\pi\\)"
+      ],
+      "statementZhHtml": "一个半圆的直径为 \\(AB\\)，有一条长为 \\(16\\) 的弦 \\(CD\\) 平行于 \\(AB\\)。从大半圆中剪去一个较小的半圆，较小半圆的直径在 \\(AB\\) 上，并且与 \\(CD\\) 相切，如下图所示。\n\n<img src=\"assets/exams/images/amc10/2025A/10.svg\" alt=\"Diagram for problem 10\" loading=\"lazy\">\n\n阴影部分的面积是多少？",
+      "choicesZh": [
         "\\(16\\pi\\)",
         "\\(24\\pi\\)",
         "\\(32\\pi\\)",
@@ -123,12 +203,28 @@
         "\\(103\\)",
         "\\(132\\)",
         "\\(149\\)"
+      ],
+      "statementZhHtml": "序列 \\(1\\)，\\(x\\)，\\(y\\)，\\(z\\) 是等差数列，序列 \\(1\\)，\\(p\\)，\\(q\\)，\\(z\\) 是等比数列。两个序列都严格递增且只含整数，并且 \\(z\\) 尽可能小。\\(x + y + z + p + q\\) 的值是多少？",
+      "choicesZh": [
+        "\\(66\\)",
+        "\\(91\\)",
+        "\\(103\\)",
+        "\\(132\\)",
+        "\\(149\\)"
       ]
     },
     {
       "problemNumber": 12,
       "statementHtml": "Carlos uses a \\(4\\)-digit passcode to unlock his computer. In his passcode, exactly one digit is even, exactly one (possibly different) digit is prime, and no digit is \\(0.\\) How many \\(4\\)-digit passcodes satisfy these conditions?",
       "choices": [
+        "\\(176\\)",
+        "\\(192\\)",
+        "\\(432\\)",
+        "\\(464\\)",
+        "\\(608\\)"
+      ],
+      "statementZhHtml": "Carlos 用一个 \\(4\\) 位密码解锁电脑。在他的密码中，恰好一个数字是偶数，恰好一个（可能是不同的）数字是质数，并且没有数字是 \\(0\\)。有多少个 \\(4\\) 位密码满足这些条件？",
+      "choicesZh": [
         "\\(176\\)",
         "\\(192\\)",
         "\\(432\\)",
@@ -145,12 +241,28 @@
         "\\(\\dfrac{2}{3}\\)",
         "\\(\\dfrac{3}{4}\\)",
         "\\(\\dfrac{4}{5}\\)"
+      ],
+      "statementZhHtml": "下图中，外面的正方形内含有无限多个正方形，每个正方形都有相同的中心，且边都平行于外面的正方形。一个正方形的边长与下一个内层正方形的边长之比为 \\(k\\)，其中 \\(0 \\lt k \\lt 1\\)。相邻正方形之间的区域交替涂色，如图所示（图不一定按比例绘制）。\n\n<img src=\"assets/exams/images/amc10/2025A/13.svg\" alt=\"Diagram for problem 13\" loading=\"lazy\">\n\n阴影部分的面积是原正方形面积的 \\(64\\%\\)。\\(k\\) 等于多少？",
+      "choicesZh": [
+        "\\(\\dfrac{3}{5}\\)",
+        "\\(\\dfrac{16}{25}\\)",
+        "\\(\\dfrac{2}{3}\\)",
+        "\\(\\dfrac{3}{4}\\)",
+        "\\(\\dfrac{4}{5}\\)"
       ]
     },
     {
       "problemNumber": 14,
       "statementHtml": "Six chairs are arranged around a round table. Two students and two teachers randomly select four of the chairs to sit in. What is the probability that the two students will sit in two adjacent chairs and the two teachers will also sit in two adjacent chairs?",
       "choices": [
+        "\\(\\dfrac{1}{6}\\)",
+        "\\(\\dfrac{1}{5}\\)",
+        "\\(\\dfrac{2}{9}\\)",
+        "\\(\\dfrac{3}{13}\\)",
+        "\\(\\dfrac{1}{4}\\)"
+      ],
+      "statementZhHtml": "六把椅子围着一张圆桌摆放。两名学生和两名老师随机选择其中四把椅子坐下。两名学生坐在相邻两把椅子上，并且两名老师也坐在相邻两把椅子上的概率是多少？",
+      "choicesZh": [
         "\\(\\dfrac{1}{6}\\)",
         "\\(\\dfrac{1}{5}\\)",
         "\\(\\dfrac{2}{9}\\)",
@@ -167,12 +279,28 @@
         "\\(\\dfrac{1}{8}\\sqrt{13}\\)",
         "\\(\\dfrac{7}{15}\\)",
         "\\(\\dfrac{1}{8}\\sqrt{15}\\)"
+      ],
+      "statementZhHtml": "下图中，\\(ABEF\\) 是矩形，\\(AD \\perp DE\\)，\\(AF = 7\\)，\\(AB = 1\\)，且 \\(AD = 5\\)。\\(\\triangle ABC\\) 的面积是多少？\n\n<img src=\"assets/exams/images/amc10/2025A/15.svg\" alt=\"Diagram for problem 15\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(\\dfrac{3}{8}\\)",
+        "\\(\\dfrac{4}{9}\\)",
+        "\\(\\dfrac{1}{8}\\sqrt{13}\\)",
+        "\\(\\dfrac{7}{15}\\)",
+        "\\(\\dfrac{1}{8}\\sqrt{15}\\)"
       ]
     },
     {
       "problemNumber": 16,
       "statementHtml": "There are three jars. Each of three coins is placed in one of the three jars, chosen at random and independently of the placements of the other coins. What is the expected number of coins in a jar with the most coins?",
       "choices": [
+        "\\(\\dfrac{4}{3}\\)",
+        "\\(\\dfrac{39}{27}\\)",
+        "\\(\\dfrac{5}{3}\\)",
+        "\\(\\dfrac{17}{9}\\)",
+        "\\(2\\)"
+      ],
+      "statementZhHtml": "有三个罐子。三枚硬币中的每一枚都随机且相互独立地放入三个罐子之一。装有最多硬币的罐子中的硬币数的期望是多少？",
+      "choicesZh": [
         "\\(\\dfrac{4}{3}\\)",
         "\\(\\dfrac{39}{27}\\)",
         "\\(\\dfrac{5}{3}\\)",
@@ -189,12 +317,28 @@
         "\\(2\\)",
         "\\(3\\)",
         "\\(4\\)"
+      ],
+      "statementZhHtml": "设 \\(N\\) 是唯一的正整数，使得 \\(273436\\) 除以 \\(N\\) 的余数为 \\(16\\)，并且 \\(272760\\) 除以 \\(N\\) 的余数为 \\(15\\)。\\(N\\) 的十位数字是多少？",
+      "choicesZh": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)"
       ]
     },
     {
       "problemNumber": 18,
       "statementHtml": "The harmonic mean of a collection of numbers is the reciprocal of the arithmetic mean of the reciprocals of the numbers in the collection. For example, the harmonic mean of \\(4,\\) \\(4,\\) and \\(5\\) is\n\n\\[\\frac{1}{\\frac{1}{3}\\left(\\frac{1}{4} + \\frac{1}{4} + \\frac{1}{5}\\right)} = \\frac{30}{7}.\\]\n\nWhat is the harmonic mean of all the real roots of the \\(4050\\)th degree polynomial\n\n\\[ \\begin{gathered} \\prod_{k=1}^{2025}(kx^2 - 4x - 3) \\\\ {}= (x^2 - 4x - 3) \\\\ \\quad {}\\cdot (2x^2 - 4x - 3) \\\\ \\quad {}\\cdot (3x^2 - 4x - 3)\\cdots \\\\ \\quad {}\\cdot (2025x^2 - 4x - 3)? \\end{gathered} \\]",
       "choices": [
+        "\\(-\\dfrac{5}{3}\\)",
+        "\\(-\\dfrac{3}{2}\\)",
+        "\\(-\\dfrac{6}{5}\\)",
+        "\\(-\\dfrac{5}{6}\\)",
+        "\\(-\\dfrac{2}{3}\\)"
+      ],
+      "statementZhHtml": "一组数的调和平均数，定义为这些数的倒数的算术平均数的倒数。例如，\\(4\\)、\\(4\\) 和 \\(5\\) 的调和平均数为\n\n\\[\\frac{1}{\\frac{1}{3}\\left(\\frac{1}{4} + \\frac{1}{4} + \\frac{1}{5}\\right)} = \\frac{30}{7}\\text{。}\\]\n\n下面这个 \\(4050\\) 次多项式所有实根的调和平均数是多少？\n\n\\[ \\begin{gathered} \\prod_{k=1}^{2025}(kx^2 - 4x - 3) \\\\ {}= (x^2 - 4x - 3) \\\\ \\quad {}\\cdot (2x^2 - 4x - 3) \\\\ \\quad {}\\cdot (3x^2 - 4x - 3)\\cdots \\\\ \\quad {}\\cdot (2025x^2 - 4x - 3) \\end{gathered}\\text{？}\\]",
+      "choicesZh": [
         "\\(-\\dfrac{5}{3}\\)",
         "\\(-\\dfrac{3}{2}\\)",
         "\\(-\\dfrac{6}{5}\\)",
@@ -211,12 +355,28 @@
         "\\(-14\\)",
         "\\(-8\\)",
         "\\(-3\\)"
+      ],
+      "statementZhHtml": "一个数阵从顶行的 \\(-1\\)，\\(3\\)，\\(1\\) 开始构造。每一对相邻数字相加，得到下一行中的一个数字。每一行的开头和结尾分别是 \\(-1\\) 和 \\(1\\)，前三行如下图所示。\n\n<img src=\"assets/exams/images/amc10/2025A/19.svg\" alt=\"Diagram for problem 19\" loading=\"lazy\">\n\n如果这个过程继续下去，某一行的和将为 \\(12{,}288\\)。在那一行中，从左数第三个数是多少？",
+      "choicesZh": [
+        "\\(-29\\)",
+        "\\(-21\\)",
+        "\\(-14\\)",
+        "\\(-8\\)",
+        "\\(-3\\)"
       ]
     },
     {
       "problemNumber": 20,
       "statementHtml": "A silo (right circular cylinder) with diameter \\(20\\) meters stands in a field. MacDonald is located \\(20\\) meters west and \\(15\\) meters south of the center of the silo. McGregor is located \\(20\\) meters east and \\(g \\gt 0\\) meters south of the center of the silo. The line of sight between MacDonald and McGregor is tangent to the silo. The value of \\(g\\) can be written as \\(\\dfrac{a\\sqrt{b} - c}{d},\\) where \\(a,\\) \\(b,\\) \\(c,\\) and \\(d\\) are positive integers, \\(b\\) is not divisible by the square of any prime, and \\(d\\) is relatively prime to the greatest common divisor of \\(a\\) and \\(c.\\) What is \\(a + b + c + d?\\)",
       "choices": [
+        "\\(119\\)",
+        "\\(120\\)",
+        "\\(121\\)",
+        "\\(122\\)",
+        "\\(123\\)"
+      ],
+      "statementZhHtml": "一个直圆柱形筒仓直径为 \\(20\\) 米，立在一片田地中。MacDonald 位于筒仓中心以西 \\(20\\) 米、以南 \\(15\\) 米处。McGregor 位于筒仓中心以东 \\(20\\) 米、以南 \\(g \\gt 0\\) 米处。MacDonald 和 McGregor 之间的视线与筒仓相切。\\(g\\) 的值可写为 \\(\\dfrac{a\\sqrt{b} - c}{d}\\)，其中 \\(a\\)，\\(b\\)，\\(c\\) 和 \\(d\\) 是正整数，\\(b\\) 不被任何质数的平方整除，且 \\(d\\) 与 \\(a\\) 和 \\(c\\) 的最大公因数互质。\\(a + b + c + d\\) 等于多少？",
+      "choicesZh": [
         "\\(119\\)",
         "\\(120\\)",
         "\\(121\\)",
@@ -233,12 +393,28 @@
         "\\(10\\)",
         "\\(11\\)",
         "\\(12\\)"
+      ],
+      "statementZhHtml": "若一个数集满足：无论 \\(x\\) 和 \\(y\\) 是否相同，只要它们都是该集合的元素，\\(x + y\\) 就不是该集合的元素，则称这个数集为无和集。例如，\\(\\{1, 4, 6\\}\\) 和空集是无和集，但 \\(\\{2, 4, 5\\}\\) 不是。从 \\(\\{1, 2, 3, \\ldots, 20\\}\\) 中取出的无和子集最多可以有多少个元素？",
+      "choicesZh": [
+        "\\(8\\)",
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(11\\)",
+        "\\(12\\)"
       ]
     },
     {
       "problemNumber": 22,
       "statementHtml": "A circle of radius \\(r\\) is surrounded by three circles, whose radii are \\(1,\\) \\(2,\\) and \\(3,\\) all externally tangent to the inner circle and externally tangent to each other, as shown in the diagram below.\n\n<img src=\"assets/exams/images/amc10/2025A/22.svg\" alt=\"Diagram for problem 22\" loading=\"lazy\">\n\nWhat is \\(r?\\)",
       "choices": [
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{6}{23}\\)",
+        "\\(\\dfrac{3}{11}\\)",
+        "\\(\\dfrac{5}{17}\\)",
+        "\\(\\dfrac{3}{10}\\)"
+      ],
+      "statementZhHtml": "一个半径为 \\(r\\) 的圆被三个圆围住，这三个圆的半径分别为 \\(1\\)，\\(2\\) 和 \\(3\\)，它们都与内圆外切，并且彼此也外切，如图所示。\n\n<img src=\"assets/exams/images/amc10/2025A/22.svg\" alt=\"Diagram for problem 22\" loading=\"lazy\">\n\n\\(r\\) 等于多少？",
+      "choicesZh": [
         "\\(\\dfrac{1}{4}\\)",
         "\\(\\dfrac{6}{23}\\)",
         "\\(\\dfrac{3}{11}\\)",
@@ -255,12 +431,28 @@
         "\\(20\\)",
         "\\(21\\)",
         "\\(22\\)"
+      ],
+      "statementZhHtml": "三角形 \\(\\triangle ABC\\) 的边长为 \\(AB = 80\\)、\\(BC = 45\\)、\\(AC = 75\\)。\\(\\angle B\\) 的角平分线与到边 \\(AB\\) 的高相交于点 \\(P\\)。\\(BP\\) 等于多少？",
+      "choicesZh": [
+        "\\(18\\)",
+        "\\(19\\)",
+        "\\(20\\)",
+        "\\(21\\)",
+        "\\(22\\)"
       ]
     },
     {
       "problemNumber": 24,
       "statementHtml": "Call a positive integer fair if no digit is used more than once, it has no \\(0\\)s, and no digit is adjacent to two greater digits. For example, \\(23,\\) \\(196,\\) and \\(12463\\) are fair, but \\(1546,\\) \\(320,\\) and \\(34321\\) are not fair. How many fair positive integers are there?",
       "choices": [
+        "\\(511\\)",
+        "\\(2{,}584\\)",
+        "\\(9{,}841\\)",
+        "\\(17{,}711\\)",
+        "\\(19{,}682\\)"
+      ],
+      "statementZhHtml": "若一个正整数不重复使用任何数字，没有数字 \\(0\\)，并且没有任何数字同时与两个更大的数字相邻，则称它为公平数。例如，\\(23\\)，\\(196\\) 和 \\(12463\\) 是公平数，但 \\(1546\\)，\\(320\\) 和 \\(34321\\) 不是。共有多少个公平正整数？",
+      "choicesZh": [
         "\\(511\\)",
         "\\(2{,}584\\)",
         "\\(9{,}841\\)",
@@ -277,7 +469,16 @@
         "\\(27\\)",
         "\\(28\\)",
         "\\(29\\)"
+      ],
+      "statementZhHtml": "从正方形 \\(ABCD\\) 内随机选择一点 \\(P\\)。若 \\(AP\\) 既不是 \\(\\triangle APB\\) 的最短边，也不是最长边，则这个概率可以写成 \\(\\dfrac{a + b\\pi - c\\sqrt{d}}{e}\\)，其中 \\(a\\)，\\(b\\)，\\(c\\)，\\(d\\) 和 \\(e\\) 是正整数，\\(\\gcd(a, b, c, e) = 1\\)，且 \\(d\\) 不被任何质数的平方整除。\\(a + b + c + d + e\\) 等于多少？",
+      "choicesZh": [
+        "\\(25\\)",
+        "\\(26\\)",
+        "\\(27\\)",
+        "\\(28\\)",
+        "\\(29\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2025A"
 }

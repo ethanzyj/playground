@@ -13,12 +13,28 @@
         "\\(18\\)",
         "\\(19\\)",
         "\\(20\\)"
+      ],
+      "statementZhHtml": "一袋 \\(350\\) 克的咖啡豆说明上写着：正确冲泡一大杯手冲咖啡需要 \\(20\\) 克咖啡豆。用这袋咖啡豆最多可以正确冲泡多少大杯咖啡？",
+      "choicesZh": [
+        "\\(16\\)",
+        "\\(17\\)",
+        "\\(18\\)",
+        "\\(19\\)",
+        "\\(20\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "Jerry wrote down the ones digit of each of the first \\(2025\\) positive squares: \\(1,\\) \\(4,\\) \\(9,\\) \\(6,\\) \\(5,\\) \\(6,\\) \\(\\ldots\\) What is the sum of all the numbers Jerry wrote down?",
       "choices": [
+        "\\(9025\\)",
+        "\\(9070\\)",
+        "\\(9090\\)",
+        "\\(9115\\)",
+        "\\(9160\\)"
+      ],
+      "statementZhHtml": "Jerry 写下前 \\(2025\\) 个正平方数的个位数字：\\(1\\)，\\(4\\)，\\(9\\)，\\(6\\)，\\(5\\)，\\(6\\)，\\(\\ldots\\)。他写下的所有数字之和是多少？",
+      "choicesZh": [
         "\\(9025\\)",
         "\\(9070\\)",
         "\\(9090\\)",
@@ -35,12 +51,28 @@
         "\\(14\\)",
         "\\(16\\)",
         "\\(17\\)"
+      ],
+      "statementZhHtml": "一个类似帕斯卡三角形的三角形，第一行为 \\(10\\)，第二行为 \\(10\\) 后接 \\(1\\)。在之后的每一行中，第一个数是 \\(10\\)，最后一个数是 \\(1\\)，并且和标准帕斯卡三角形一样，行中每个其他数都是它正上方两个数之和。前四行如下图所示。\n\n<img src=\"assets/exams/images/amc10/2025B/3.svg\" alt=\"Diagram for problem 3\" loading=\"lazy\">\n\n第 \\(11\\) 行所有数之和的各位数字之和是多少？",
+      "choicesZh": [
+        "\\(11\\)",
+        "\\(13\\)",
+        "\\(14\\)",
+        "\\(16\\)",
+        "\\(17\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "The value of the two-digit number \\(\\underline{a}\\,\\underline{b}\\) in base seven equals the value of the two-digit number \\(\\underline{b}\\,\\underline{a}\\) in base nine. What is \\(a + b?\\)",
       "choices": [
+        "\\(7\\)",
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(11\\)",
+        "\\(14\\)"
+      ],
+      "statementZhHtml": "七进位两位数 \\(\\underline{a}\\,\\underline{b}\\) 的值等于九进位两位数 \\(\\underline{b}\\,\\underline{a}\\) 的值。\\(a + b\\) 是多少？",
+      "choicesZh": [
         "\\(7\\)",
         "\\(9\\)",
         "\\(10\\)",
@@ -57,12 +89,28 @@
         "\\(40\\)",
         "\\(50\\)",
         "\\(60\\)"
+      ],
+      "statementZhHtml": "在 \\(\\triangle ABC\\) 中，\\(AB = 10\\)、\\(AC = 18\\)、\\(\\angle B = 130^\\circ\\)。设 \\(O\\) 是经过 \\(A\\)、\\(B\\)、\\(C\\) 三点的圆的圆心。求 \\(\\angle CAO\\) 的度数。",
+      "choicesZh": [
+        "\\(20\\)",
+        "\\(30\\)",
+        "\\(40\\)",
+        "\\(50\\)",
+        "\\(60\\)"
       ]
     },
     {
       "problemNumber": 6,
       "statementHtml": "The line \\(y = \\tfrac{1}{3}x + 1\\) divides the square region defined by \\(0 \\le x \\le 2\\) and \\(0 \\le y \\le 2\\) into an upper region and a lower region. The line \\(x = a\\) divides the lower region into two regions of equal area. Then \\(a\\) can be written as \\(\\sqrt{s} - t,\\) where \\(s\\) and \\(t\\) are positive integers. What is \\(s + t?\\)",
       "choices": [
+        "\\(18\\)",
+        "\\(19\\)",
+        "\\(20\\)",
+        "\\(21\\)",
+        "\\(22\\)"
+      ],
+      "statementZhHtml": "直线 \\(y = \\tfrac{1}{3}x + 1\\) 把由 \\(0 \\le x \\le 2\\) 和 \\(0 \\le y \\le 2\\) 定义的正方形区域分成上、下两部分。直线 \\(x = a\\) 又把下方区域分成面积相等的两部分。若 \\(a\\) 可以写成 \\(\\sqrt{s} - t\\)，其中 \\(s\\) 和 \\(t\\) 是正整数，求 \\(s + t\\)。",
+      "choicesZh": [
         "\\(18\\)",
         "\\(19\\)",
         "\\(20\\)",
@@ -79,12 +127,28 @@
         "\\(3\\tfrac{4}{7}\\)",
         "\\(3\\tfrac{5}{7}\\)",
         "\\(3\\tfrac{6}{7}\\)"
+      ],
+      "statementZhHtml": "Frances 站在一扇上锁的门正南方 \\(15\\) 米处，这扇门位于一条东西走向的栅栏上。栅栏正后方有一盒巧克力，位于上锁的门以东 \\(x\\) 米处。另有一扇未上锁的门位于巧克力盒以东 \\(9\\) 米处，还有一扇未上锁的门位于上锁的门以西 \\(8\\) 米处。Frances 可以走向一扇未上锁的门，穿过它，再走向巧克力盒。碰巧无论经由哪一扇未上锁的门，她走的总距离都相同。求 \\(x\\)？",
+      "choicesZh": [
+        "\\(3\\tfrac{2}{7}\\)",
+        "\\(3\\tfrac{3}{7}\\)",
+        "\\(3\\tfrac{4}{7}\\)",
+        "\\(3\\tfrac{5}{7}\\)",
+        "\\(3\\tfrac{6}{7}\\)"
       ]
     },
     {
       "problemNumber": 8,
       "statementHtml": "Emmy says to Max, “I ordered \\(36\\) math club sweatshirts today.” Max asks, “How much did each shirt cost?” Emmy responds, “I’ll give you a hint. The total cost was \\(\\$\\underline{A}\\,\\underline{B}\\,\\underline{B}.\\underline{B}\\,\\underline{A},\\) where \\(A\\) and \\(B\\) are digits and \\(A \\ne 0.\\)” After a pause, Max says, “That was a good price.” What is \\(A + B?\\)",
       "choices": [
+        "\\(7\\)",
+        "\\(8\\)",
+        "\\(11\\)",
+        "\\(14\\)",
+        "\\(15\\)"
+      ],
+      "statementZhHtml": "Emmy 对 Max 说：“我今天订了 \\(36\\) 件数学俱乐部运动衫。”Max 问：“每件多少钱？”Emmy 回答：“我给你一个提示。总价是 \\(\\$\\underline{A}\\,\\underline{B}\\,\\underline{B}.\\underline{B}\\,\\underline{A}\\)，其中 \\(A\\) 和 \\(B\\) 是数字，且 \\(A \\ne 0\\)。”停顿片刻后，Max 说：“这个价格不错。”求 \\(A + B\\)。",
+      "choicesZh": [
         "\\(7\\)",
         "\\(8\\)",
         "\\(11\\)",
@@ -101,12 +165,28 @@
         "\\(11\\)",
         "\\(15\\)",
         "\\(17\\)"
+      ],
+      "statementZhHtml": "有多少个整数有序三元组 \\((x, y, z)\\) 满足下面的不等式组？\n\n\\[-x - y - z \\le -2\\] \\[-x + y + z \\le 2\\] \\[x - y + z \\le 2\\] \\[x + y - z \\le 2\\]",
+      "choicesZh": [
+        "\\(4\\)",
+        "\\(8\\)",
+        "\\(11\\)",
+        "\\(15\\)",
+        "\\(17\\)"
       ]
     },
     {
       "problemNumber": 10,
       "statementHtml": "Let \\(f(n) = n^3 - 5n^2 + 2n + 8,\\) and let \\(g(n) = n^3 - 6n^2 + 5n + 12.\\) What is the sum of all integer values of \\(n\\) for which \\(\\dfrac{f(n)}{g(n)}\\) is also an integer?",
       "choices": [
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)",
+        "\\(6\\)"
+      ],
+      "statementZhHtml": "设 \\(f(n) = n^3 - 5n^2 + 2n + 8\\)，\\(g(n) = n^3 - 6n^2 + 5n + 12\\)。使 \\(\\dfrac{f(n)}{g(n)}\\) 也为整数的所有整数 \\(n\\) 之和是多少？",
+      "choicesZh": [
         "\\(2\\)",
         "\\(3\\)",
         "\\(4\\)",
@@ -123,12 +203,28 @@
         "\\(\\dfrac{1}{4}\\)",
         "\\(\\dfrac{3}{8}\\)",
         "\\(\\dfrac{1}{2}\\)"
+      ],
+      "statementZhHtml": "星期一，\\(6\\) 名学生同时来到辅导中心，每人随机分配给当天值班的 \\(6\\) 名导师之一。星期二，同样的 \\(6\\) 名学生又来了，同样的 \\(6\\) 名导师也在值班，学生再次随机分配给导师。恰有 \\(2\\) 名学生两天都见到同一位导师的概率是多少？",
+      "choicesZh": [
+        "\\(\\dfrac{1}{16}\\)",
+        "\\(\\dfrac{3}{16}\\)",
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{3}{8}\\)",
+        "\\(\\dfrac{1}{2}\\)"
       ]
     },
     {
       "problemNumber": 12,
       "statementHtml": "The figure below shows an equilateral triangle, a rhombus with a \\(60^\\circ\\) angle, and a regular hexagon, each of them containing some mutually tangent congruent disks. Let \\(T,\\) \\(R,\\) and \\(H,\\) respectively, denote the ratio in each case of the total area of the disks to the area of the enclosing polygon.\n\n<img src=\"assets/exams/images/amc10/2025B/12.svg\" alt=\"Diagram for problem 12\" loading=\"lazy\">\n\nWhich of the following is true?",
       "choices": [
+        "\\(T = H = R\\)",
+        "\\(H \\lt R = T\\)",
+        "\\(H = R \\lt T\\)",
+        "\\(H \\lt R \\lt T\\)",
+        "\\(H \\lt T \\lt R\\)"
+      ],
+      "statementZhHtml": "下图显示了一个等边三角形、一个有 \\(60^\\circ\\) 角的菱形和一个正六边形。每个图形中都放有一些两两相切的全等圆盘。分别令 \\(T\\)、\\(R\\)、\\(H\\) 表示每种情况下圆盘总面积与外部多边形面积之比。\n\n<img src=\"assets/exams/images/amc10/2025B/12.svg\" alt=\"Diagram for problem 12\" loading=\"lazy\">\n\n下列哪一项正确？",
+      "choicesZh": [
         "\\(T = H = R\\)",
         "\\(H \\lt R = T\\)",
         "\\(H = R \\lt T\\)",
@@ -145,12 +241,28 @@
         "\\(\\dfrac{4}{9}\\)",
         "\\(\\dfrac{5}{11}\\)",
         "\\(\\dfrac{4\\sqrt3}{15}\\)"
+      ],
+      "statementZhHtml": "一个 \\(30\\)-\\(60\\)-\\(90^\\circ\\) 直角三角形斜边上的高，被到最短边的中线分成长度为 \\(x \\lt y\\) 的两段。求 \\(\\dfrac{x}{x + y}\\)。",
+      "choicesZh": [
+        "\\(\\dfrac{3}{7}\\)",
+        "\\(\\dfrac{\\sqrt3}{4}\\)",
+        "\\(\\dfrac{4}{9}\\)",
+        "\\(\\dfrac{5}{11}\\)",
+        "\\(\\dfrac{4\\sqrt3}{15}\\)"
       ]
     },
     {
       "problemNumber": 14,
       "statementHtml": "Nine athletes, no two of whom are the same height, try out for the basketball team. One at a time, they draw a wristband at random, without replacement, from a bag containing \\(3\\) blue bands, \\(3\\) red bands, and \\(3\\) green bands. They are divided into a blue group, a red group, and a green group. The tallest member of each group is named the group captain. What is the probability that the group captains are the three tallest athletes?",
       "choices": [
+        "\\(\\dfrac{2}{9}\\)",
+        "\\(\\dfrac{2}{7}\\)",
+        "\\(\\dfrac{9}{28}\\)",
+        "\\(\\dfrac{1}{3}\\)",
+        "\\(\\dfrac{3}{8}\\)"
+      ],
+      "statementZhHtml": "九名运动员参加篮球队选拔，且没有两人身高相同。他们依次从一个袋子中随机抽取腕带，不放回；袋中有 \\(3\\) 条蓝色、\\(3\\) 条红色、\\(3\\) 条绿色腕带。他们被分成蓝组、红组和绿组。每组最高的成员被指定为该组队长。三名队长正好是最高的三名运动员的概率是多少？",
+      "choicesZh": [
         "\\(\\dfrac{2}{9}\\)",
         "\\(\\dfrac{2}{7}\\)",
         "\\(\\dfrac{9}{28}\\)",
@@ -167,12 +279,28 @@
         "\\(102\\)",
         "\\(107\\)",
         "\\(129\\)"
+      ],
+      "statementZhHtml": "级数\n\n\\[\\sum_{k=1}^{\\infty} \\frac{1}{k^3 + 6k^2 + 8k}\\]\n\n可以表示为 \\(\\dfrac{a}{b}\\)，其中 \\(a\\) 和 \\(b\\) 是互质的正整数。求 \\(a + b\\)。",
+      "choicesZh": [
+        "\\(89\\)",
+        "\\(97\\)",
+        "\\(102\\)",
+        "\\(107\\)",
+        "\\(129\\)"
       ]
     },
     {
       "problemNumber": 16,
       "statementHtml": "A circle has been divided into \\(6\\) sectors of different sizes. Then \\(2\\) of the sectors are painted red, \\(2\\) painted green, and \\(2\\) painted blue so that no two neighboring sectors are painted the same color. One such coloring is shown below.\n\n<img src=\"assets/exams/images/amc10/2025B/16.svg\" alt=\"Diagram for problem 16\" loading=\"lazy\">\n\nHow many different colorings are possible?",
       "choices": [
+        "\\(12\\)",
+        "\\(16\\)",
+        "\\(18\\)",
+        "\\(24\\)",
+        "\\(28\\)"
+      ],
+      "statementZhHtml": "一个圆被分成 \\(6\\) 个大小互不相同的扇形。接着把其中 \\(2\\) 个扇形涂红、\\(2\\) 个涂绿、\\(2\\) 个涂蓝，并要求相邻的两个扇形颜色不同。下图展示了一种涂色方式。\n\n<img src=\"assets/exams/images/amc10/2025B/16.svg\" alt=\"Diagram for problem 16\" loading=\"lazy\">\n\n一共有多少种不同的涂色方式？",
+      "choicesZh": [
         "\\(12\\)",
         "\\(16\\)",
         "\\(18\\)",
@@ -189,12 +317,28 @@
         "\\(1016\\)",
         "\\(2016\\)",
         "\\(2025\\)"
+      ],
+      "statementZhHtml": "考虑一个由 \\(n\\) 个正整数组成的递减序列 \\(x_1 \\gt x_2 \\gt x_3 \\gt \\cdots \\gt x_n\\)，满足以下条件。序列前 \\(3\\) 项的平均数是 \\(2025\\)。对所有 \\(4 \\le k \\le n\\)，序列前 \\(k\\) 项的平均数比前 \\(k - 1\\) 项的平均数小 \\(1\\)。\n\n\\(n\\) 的最大可能值是多少？",
+      "choicesZh": [
+        "\\(1013\\)",
+        "\\(1014\\)",
+        "\\(1016\\)",
+        "\\(2016\\)",
+        "\\(2025\\)"
       ]
     },
     {
       "problemNumber": 18,
       "statementHtml": "What is the ones digit of the sum \\(\\lfloor\\sqrt{1}\\rfloor + \\lfloor\\sqrt{2}\\rfloor + \\lfloor\\sqrt{3}\\rfloor\\) \\(+ \\cdots + \\lfloor\\sqrt{2024}\\rfloor\\) \\(+ \\lfloor\\sqrt{2025}\\rfloor?\\) (Recall that \\(\\lfloor x \\rfloor\\) denotes the greatest integer less than or equal to \\(x.\\))",
       "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(8\\)"
+      ],
+      "statementZhHtml": "求和 \\(\\lfloor\\sqrt{1}\\rfloor + \\lfloor\\sqrt{2}\\rfloor + \\lfloor\\sqrt{3}\\rfloor\\) \\(+ \\cdots + \\lfloor\\sqrt{2024}\\rfloor\\) \\(+ \\lfloor\\sqrt{2025}\\rfloor\\) 的个位数字是多少？（记 \\(\\lfloor x \\rfloor\\) 为小于或等于 \\(x\\) 的最大整数。）",
+      "choicesZh": [
         "\\(1\\)",
         "\\(2\\)",
         "\\(3\\)",
@@ -211,12 +355,28 @@
         "\\(90\\)",
         "\\(95\\)",
         "\\(105\\)"
+      ],
+      "statementZhHtml": "一个容器底部是 \\(1 \\times 1\\) 的正方形，顶部开口是 \\(3 \\times 3\\) 的正方形，四个侧面是全等的梯形，如图所示。从空容器开始，一根以恒定速率出水的水管用 \\(35\\) 分钟把容器装到梯形侧面的中线高度。\n\n<img src=\"assets/exams/images/amc10/2025B/19.svg\" alt=\"Diagram for problem 19\" loading=\"lazy\">\n\n还需要多少分钟才能把容器剩余部分装满？",
+      "choicesZh": [
+        "\\(70\\)",
+        "\\(85\\)",
+        "\\(90\\)",
+        "\\(95\\)",
+        "\\(105\\)"
       ]
     },
     {
       "problemNumber": 20,
       "statementHtml": "Four congruent semicircles are inscribed in a square of side length \\(1\\) so that their diameters are on the sides of the square, one endpoint of each diameter is at a vertex of the square, and adjacent semicircles are tangent to each other. A small circle centered at the center of the square is tangent to each of the four semicircles, as shown below.\n\n<img src=\"assets/exams/images/amc10/2025B/20.svg\" alt=\"Diagram for problem 20\" loading=\"lazy\">\n\nThe diameter of the small circle can be written as \\((\\sqrt{a} + b)(\\sqrt{c} + d),\\) where \\(a,\\) \\(b,\\) \\(c,\\) and \\(d\\) are integers. What is \\(a + b + c + d?\\)",
       "choices": [
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(8\\)",
+        "\\(9\\)",
+        "\\(11\\)"
+      ],
+      "statementZhHtml": "四个全等的半圆内接于边长为 \\(1\\) 的正方形中，使得它们的直径在正方形的边上，每条直径的一个端点位于正方形的一个顶点，并且相邻半圆互相相切。一个以正方形中心为圆心的小圆与四个半圆都相切，如下图所示。\n\n<img src=\"assets/exams/images/amc10/2025B/20.svg\" alt=\"Diagram for problem 20\" loading=\"lazy\">\n\n小圆的直径可以写成 \\((\\sqrt{a} + b)(\\sqrt{c} + d)\\)，其中 \\(a\\)，\\(b\\)，\\(c\\) 和 \\(d\\) 是整数。求 \\(a + b + c + d\\)。",
+      "choicesZh": [
         "\\(3\\)",
         "\\(5\\)",
         "\\(8\\)",
@@ -233,12 +393,28 @@
         "\\(12\\)",
         "\\(18\\)",
         "\\(27\\)"
+      ],
+      "statementZhHtml": "一个 \\(3 \\times 3\\) 方格中的 \\(9\\) 个小正方形要被涂成红、蓝、黄三色，要求每个红色小方格至少与一个蓝色小方格共边，每个蓝色小方格至少与一个黄色小方格共边，每个黄色小方格至少与一个红色小方格共边。可以通过旋转和/或反射互相得到的涂色视为相同。共有多少种不同的涂色？",
+      "choicesZh": [
+        "\\(3\\)",
+        "\\(9\\)",
+        "\\(12\\)",
+        "\\(18\\)",
+        "\\(27\\)"
       ]
     },
     {
       "problemNumber": 22,
       "statementHtml": "A seven-digit positive integer is chosen at random. What is the probability that the number is divisible by \\(11,\\) given that the sum of its digits is \\(61?\\)",
       "choices": [
+        "\\(\\dfrac{3}{14}\\)",
+        "\\(\\dfrac{3}{11}\\)",
+        "\\(\\dfrac{2}{7}\\)",
+        "\\(\\dfrac{4}{11}\\)",
+        "\\(\\dfrac{3}{7}\\)"
+      ],
+      "statementZhHtml": "随机选择一个七位正整数。已知它的各位数字之和为 \\(61\\)，求它能被 \\(11\\) 整除的概率。",
+      "choicesZh": [
         "\\(\\dfrac{3}{14}\\)",
         "\\(\\dfrac{3}{11}\\)",
         "\\(\\dfrac{2}{7}\\)",
@@ -255,12 +431,28 @@
         "\\(11\\)",
         "\\(12\\)",
         "\\(19\\)"
+      ],
+      "statementZhHtml": "一个由小正方形组成的矩形网格有 \\(141\\) 行和 \\(91\\) 列。每个小正方形里有放两个数字的空间。Horace 和 Vera 都把从 \\(1\\) 到 \\(141 \\times 91 = 12{,}831\\) 的数字填入网格。Horace 按行填写：他把 \\(1\\) 到 \\(91\\) 依次从左到右填入第 \\(1\\) 行，把 \\(92\\) 到 \\(182\\) 依次从左到右填入第 \\(2\\) 行，并如此继续到第 \\(141\\) 行。Vera 按列填写：她把 \\(1\\) 到 \\(141\\) 依次从上到下填入第 \\(1\\) 列，再把 \\(142\\) 到 \\(282\\) 依次从上到下填入第 \\(2\\) 列，并如此继续到第 \\(91\\) 列。有多少个小正方形中两人写下了相同的数字？",
+      "choicesZh": [
+        "\\(7\\)",
+        "\\(10\\)",
+        "\\(11\\)",
+        "\\(12\\)",
+        "\\(19\\)"
       ]
     },
     {
       "problemNumber": 24,
       "statementHtml": "A frog hops along the number line according to the following rules. It starts at \\(0.\\) If it is at \\(0,\\) then it moves to \\(1\\) with probability \\(\\tfrac12\\) and it disappears with probability \\(\\tfrac12.\\) For \\(n = 1,\\) \\(2,\\) or \\(3,\\) if it is at \\(n,\\) then it moves to \\(n + 1\\) with probability \\(\\tfrac14,\\) it moves to \\(n - 1\\) with probability \\(\\tfrac14,\\) and it disappears with probability \\(\\tfrac12.\\)\n\nWhat is the probability that the frog reaches \\(4?\\)",
       "choices": [
+        "\\(\\dfrac{1}{101}\\)",
+        "\\(\\dfrac{1}{100}\\)",
+        "\\(\\dfrac{1}{99}\\)",
+        "\\(\\dfrac{1}{98}\\)",
+        "\\(\\dfrac{1}{97}\\)"
+      ],
+      "statementZhHtml": "一只青蛙按如下规则在数轴上跳跃。它从 \\(0\\) 开始。如果它在 \\(0\\)，那么它以概率 \\(\\tfrac12\\) 移动到 \\(1\\)，并以概率 \\(\\tfrac12\\) 消失。对于 \\(n = 1\\)，\\(2\\) 或 \\(3\\)，如果它在 \\(n\\)，那么它以概率 \\(\\tfrac14\\) 移动到 \\(n + 1\\)，以概率 \\(\\tfrac14\\) 移动到 \\(n - 1\\)，并以概率 \\(\\tfrac12\\) 消失。\n\n青蛙到达 \\(4\\) 的概率是多少？",
+      "choicesZh": [
         "\\(\\dfrac{1}{101}\\)",
         "\\(\\dfrac{1}{100}\\)",
         "\\(\\dfrac{1}{99}\\)",
@@ -277,7 +469,16 @@
         "\\(C\\)",
         "\\(D\\)",
         "The path continues forever."
+      ],
+      "statementZhHtml": "正方形 \\(ABCD\\) 的边长为 \\(4\\)。点 \\(P\\) 和 \\(Q\\) 分别在 \\(\\overline{AD}\\) 和 \\(\\overline{CD}\\) 上，且 \\(AP = \\tfrac{8}{5}\\)、\\(DQ = \\tfrac{10}{3}\\)。一条路径从 \\(P\\) 到 \\(Q\\) 的线段开始，之后在正方形 \\(ABCD\\) 的边上反射继续前进（入射角等于反射角），如下图所示。如果路径碰到正方形的顶点，就在那里终止；否则它将永远继续。\n\n<img src=\"assets/exams/images/amc10/2025B/25.svg\" alt=\"Diagram for problem 25\" loading=\"lazy\">\n\n这条路径会在哪个顶点终止？",
+      "choicesZh": [
+        "\\(A\\)",
+        "\\(B\\)",
+        "\\(C\\)",
+        "\\(D\\)",
+        "路径会永远继续下去。"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2025B"
 }

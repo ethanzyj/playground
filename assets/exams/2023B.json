@@ -13,12 +13,28 @@
         "\\(\\dfrac{1}{6}\\)",
         "\\(\\dfrac{1}{8}\\)",
         "\\(\\dfrac{2}{9}\\)"
+      ],
+      "statementZhHtml": "Jones 太太正在把橙汁倒入四个相同的杯子，给她的四个儿子喝。她把前三个杯子都倒满了，但橙汁用完时，第四个杯子只倒了 \\(\\frac{1}{3}\\)。Jones 太太需要从前三个杯子中的每个杯子倒出几分之一个杯子的橙汁到第四个杯子里，才能使四个杯子中的橙汁量相同？",
+      "choicesZh": [
+        "\\(\\dfrac{1}{12}\\)",
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{1}{6}\\)",
+        "\\(\\dfrac{1}{8}\\)",
+        "\\(\\dfrac{2}{9}\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "Carlos went to a sports store to buy running shoes. Running shoes were on sale, with prices reduced by \\(20\\%\\) on every pair of shoes. Carlos also knew that he had to pay a \\(7.5\\%\\) sales tax on the discounted price. He had \\(43\\) dollars. What is the original (before discount) price of the most expensive shoes he could afford to buy?",
       "choices": [
+        "\\(\\$46\\)",
+        "\\(\\$50\\)",
+        "\\(\\$48\\)",
+        "\\(\\$47\\)",
+        "\\(\\$49\\)"
+      ],
+      "statementZhHtml": "Carlos 去体育用品店买跑鞋。跑鞋正在促销，每双价格降低 \\(20\\%\\)。Carlos 还知道，他必须按折后价支付 \\(7.5\\%\\) 的销售税。他有 \\(43\\) 美元。他能买得起的最贵跑鞋的原价（折扣前价格）是多少？",
+      "choicesZh": [
         "\\(\\$46\\)",
         "\\(\\$50\\)",
         "\\(\\$48\\)",
@@ -35,12 +51,28 @@
         "\\(\\dfrac{1}{5}\\)",
         "\\(\\dfrac{25}{169}\\)",
         "\\(\\dfrac{4}{25}\\)"
+      ],
+      "statementZhHtml": "一个 \\(3\\)-\\(4\\)-\\(5\\) 直角三角形内接于圆 \\(A\\)，一个 \\(5\\)-\\(12\\)-\\(13\\) 直角三角形内接于圆 \\(B\\)。圆 \\(A\\) 的面积与圆 \\(B\\) 的面积之比是多少？",
+      "choicesZh": [
+        "\\(\\dfrac{9}{25}\\)",
+        "\\(\\dfrac{1}{9}\\)",
+        "\\(\\dfrac{1}{5}\\)",
+        "\\(\\dfrac{25}{169}\\)",
+        "\\(\\dfrac{4}{25}\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "Jackson’s paintbrush makes a narrow strip with a width of \\(6.5\\) millimeters. Jackson has enough paint to make a strip \\(25\\) meters long. How many square centimeters of paper could Jackson cover with paint?",
       "choices": [
+        "\\(162{,}500\\)",
+        "\\(162.5\\)",
+        "\\(1{,}625\\)",
+        "\\(1{,}625{,}000\\)",
+        "\\(16{,}250\\)"
+      ],
+      "statementZhHtml": "Jackson 的画笔能刷出宽 \\(6.5\\) 毫米的窄条。Jackson 的油漆足够刷出 \\(25\\) 米长的一条。Jackson 能用油漆覆盖多少平方厘米的纸？",
+      "choicesZh": [
         "\\(162{,}500\\)",
         "\\(162.5\\)",
         "\\(1{,}625\\)",
@@ -57,12 +89,28 @@
         "\\(6\\)",
         "\\(8\\)",
         "\\(9\\)"
+      ],
+      "statementZhHtml": "Maddy 和 Lara 看到黑板上写着一列数。Maddy 给列表中的每个数加上 \\(3\\)，发现新数之和为 \\(45\\)。Lara 把列表中的每个数乘以 \\(3\\)，发现新数之和也为 \\(45\\)。黑板上写了多少个数？",
+      "choicesZh": [
+        "\\(10\\)",
+        "\\(5\\)",
+        "\\(6\\)",
+        "\\(8\\)",
+        "\\(9\\)"
       ]
     },
     {
       "problemNumber": 6,
       "statementHtml": "Let \\(L_1 = 1,\\) \\(L_2 = 3,\\) and \\(L_{n+2} = L_{n+1} + L_n\\) for \\(n \\ge 1.\\) How many terms in the sequence \\(L_1,\\) \\(L_2,\\) \\(L_3,\\) \\(\\ldots,\\) \\(L_{2023}\\) are even?",
       "choices": [
+        "\\(673\\)",
+        "\\(1011\\)",
+        "\\(675\\)",
+        "\\(1010\\)",
+        "\\(674\\)"
+      ],
+      "statementZhHtml": "令 \\(L_1 = 1\\)，\\(L_2 = 3\\)，且对 \\(n \\ge 1\\)，\\(L_{n+2} = L_{n+1} + L_n\\)。序列 \\(L_1\\)，\\(L_2\\)，\\(L_3\\)，\\(\\ldots\\)，\\(L_{2023}\\) 中有多少项是偶数？",
+      "choicesZh": [
         "\\(673\\)",
         "\\(1011\\)",
         "\\(675\\)",
@@ -79,12 +127,28 @@
         "\\(30^\\circ\\)",
         "\\(32^\\circ\\)",
         "\\(20^\\circ\\)"
+      ],
+      "statementZhHtml": "正方形 \\(ABCD\\) 绕其中心顺时针旋转 \\(20^\\circ\\)，得到正方形 \\(EFGH\\)，如下图所示。求 \\(\\angle EAB\\) 的度数。\n\n<img src=\"assets/exams/images/amc10/2023B/7.svg\" alt=\"Diagram for problem 7\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(24^\\circ\\)",
+        "\\(35^\\circ\\)",
+        "\\(30^\\circ\\)",
+        "\\(32^\\circ\\)",
+        "\\(20^\\circ\\)"
       ]
     },
     {
       "problemNumber": 8,
       "statementHtml": "What is the units digit of \\[2022^{2023} + 2023^{2022}?\\]",
       "choices": [
+        "\\(7\\)",
+        "\\(1\\)",
+        "\\(9\\)",
+        "\\(5\\)",
+        "\\(3\\)"
+      ],
+      "statementZhHtml": "下列表达式的个位数字是多少？\\[2022^{2023} + 2023^{2022}\\text{？}\\]",
+      "choicesZh": [
         "\\(7\\)",
         "\\(1\\)",
         "\\(9\\)",
@@ -101,12 +165,28 @@
         "\\(1010\\)",
         "\\(2019\\)",
         "\\(2017\\)"
+      ],
+      "statementZhHtml": "\\(16\\) 和 \\(25\\) 是一对连续正完全平方数，它们的差为 \\(9\\)。有多少对连续正完全平方数的差小于或等于 \\(2023\\)？",
+      "choicesZh": [
+        "\\(674\\)",
+        "\\(1011\\)",
+        "\\(1010\\)",
+        "\\(2019\\)",
+        "\\(2017\\)"
       ]
     },
     {
       "problemNumber": 10,
       "statementHtml": "You are playing a game. A \\(2 \\times 1\\) rectangle covers two adjacent squares (oriented either horizontally or vertically) of a \\(3 \\times 3\\) grid of squares, but you are not told which two squares are covered. Your goal is to find at least one square that is covered by the rectangle. A “turn” consists of you guessing a square, after which you are told whether that square is covered by the hidden rectangle. What is the minimum number of turns you need to ensure that at least one of your guessed squares is covered by the rectangle?",
       "choices": [
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(4\\)",
+        "\\(8\\)",
+        "\\(6\\)"
+      ],
+      "statementZhHtml": "你正在玩一个游戏。一个 \\(2 \\times 1\\) 矩形覆盖了一个 \\(3 \\times 3\\) 方格网中两个相邻的小方格，方向可以水平或竖直，但你不知道它覆盖了哪两个小方格。你的目标是找到至少一个被矩形覆盖的小方格。一次“回合”包括你猜一个小方格，随后你会被告知该小方格是否被隐藏矩形覆盖。为了保证至少有一个猜中的小方格，你最少需要多少回合？",
+      "choicesZh": [
         "\\(3\\)",
         "\\(5\\)",
         "\\(4\\)",
@@ -123,12 +203,28 @@
         "\\(36\\)",
         "\\(28\\)",
         "\\(32\\)"
+      ],
+      "statementZhHtml": "Suzanne 去银行取了 \\(\\$800\\)。柜员用 \\(\\$20\\)、\\(\\$50\\) 和 \\(\\$100\\) 纸币给她这笔钱，并且每种面额至少有一张。Suzanne 可能收到多少种不同的纸币组合？",
+      "choicesZh": [
+        "\\(45\\)",
+        "\\(21\\)",
+        "\\(36\\)",
+        "\\(28\\)",
+        "\\(32\\)"
       ]
     },
     {
       "problemNumber": 12,
       "statementHtml": "When the roots of the polynomial \\[P(x) = (x-1)^1(x-2)^2(x-3)^3 \\cdots (x-10)^{10}\\] are removed from the real number line, what remains is the union of \\(11\\) disjoint open intervals. On how many of those intervals is \\(P(x)\\) positive?",
       "choices": [
+        "\\(3\\)",
+        "\\(7\\)",
+        "\\(6\\)",
+        "\\(4\\)",
+        "\\(5\\)"
+      ],
+      "statementZhHtml": "将多项式 \\[P(x) = (x-1)^1(x-2)^2(x-3)^3 \\cdots (x-10)^{10}\\] 的根从实数轴上去掉后，剩余部分是 \\(11\\) 个不相交开区间的并。在其中多少个区间上 \\(P(x)\\) 为正？",
+      "choicesZh": [
         "\\(3\\)",
         "\\(7\\)",
         "\\(6\\)",
@@ -145,12 +241,28 @@
         "\\(4\\)",
         "\\(15\\)",
         "\\(12\\)"
+      ],
+      "statementZhHtml": "坐标平面中由下列不等式定义的区域面积是多少？\\[\\bigl||x| - 1\\bigr| + \\bigl||y| - 1\\bigr| \\le 1\\text{？}\\]",
+      "choicesZh": [
+        "\\(2\\)",
+        "\\(8\\)",
+        "\\(4\\)",
+        "\\(15\\)",
+        "\\(12\\)"
       ]
     },
     {
       "problemNumber": 14,
       "statementHtml": "How many ordered pairs of integers \\((m, n)\\) satisfy the equation \\[m^2 + mn + n^2 = m^2 n^2?\\]",
       "choices": [
+        "\\(7\\)",
+        "\\(1\\)",
+        "\\(3\\)",
+        "\\(6\\)",
+        "\\(5\\)"
+      ],
+      "statementZhHtml": "有多少个整数有序对 \\((m, n)\\) 满足下列方程？\\[m^2 + mn + n^2 = m^2 n^2\\text{？}\\]",
+      "choicesZh": [
         "\\(7\\)",
         "\\(1\\)",
         "\\(3\\)",
@@ -167,12 +279,28 @@
         "\\(70\\)",
         "\\(1430\\)",
         "\\(1001\\)"
+      ],
+      "statementZhHtml": "使 \\(m \\cdot 2! \\cdot 3! \\cdot 4! \\cdot 5! \\cdots 16!\\) 成为完全平方数的最小正整数 \\(m\\) 是多少？",
+      "choicesZh": [
+        "\\(30\\)",
+        "\\(30030\\)",
+        "\\(70\\)",
+        "\\(1430\\)",
+        "\\(1001\\)"
       ]
     },
     {
       "problemNumber": 16,
       "statementHtml": "Define an <em>upno</em> to be a positive integer of \\(2\\) or more digits where the digits are strictly increasing moving left to right. Similarly, define a <em>downno</em> to be a positive integer of \\(2\\) or more digits where the digits are strictly decreasing moving left to right. For instance, the number \\(258\\) is an upno and \\(8620\\) is a downno. Let \\(U\\) equal the total number of upnos and let \\(D\\) equal the total number of downnos. What is \\(|U - D|?\\)",
       "choices": [
+        "\\(512\\)",
+        "\\(10\\)",
+        "\\(0\\)",
+        "\\(9\\)",
+        "\\(511\\)"
+      ],
+      "statementZhHtml": "定义“<em>升数</em>”为一个至少 \\(2\\) 位的正整数，其数字从左到右严格递增。类似地，定义“<em>降数</em>”为一个至少 \\(2\\) 位的正整数，其数字从左到右严格递减。例如，\\(258\\) 是升数，\\(8620\\) 是降数。令 \\(U\\) 为所有升数的总数，令 \\(D\\) 为所有降数的总数。求 \\(|U - D|\\)。",
+      "choicesZh": [
         "\\(512\\)",
         "\\(10\\)",
         "\\(0\\)",
@@ -189,6 +317,14 @@
         "\\(\\dfrac{9}{8}\\)",
         "\\(\\dfrac{9}{4}\\)",
         "\\(\\dfrac{3}{2}\\)"
+      ],
+      "statementZhHtml": "长方体 \\(\\mathcal{P}\\) 的三条不同边长为 \\(a\\)、\\(b\\)、\\(c\\)。\\(\\mathcal{P}\\) 的所有 \\(12\\) 条边长之和为 \\(13\\)，\\(\\mathcal{P}\\) 的所有 \\(6\\) 个面的面积之和为 \\(\\frac{11}{2}\\)，\\(\\mathcal{P}\\) 的体积为 \\(\\frac{1}{2}\\)。连接 \\(\\mathcal{P}\\) 两个顶点的最长内部对角线长度是多少？",
+      "choicesZh": [
+        "\\(2\\)",
+        "\\(\\dfrac{3}{8}\\)",
+        "\\(\\dfrac{9}{8}\\)",
+        "\\(\\dfrac{9}{4}\\)",
+        "\\(\\dfrac{3}{2}\\)"
       ]
     },
     {
@@ -200,12 +336,28 @@
         "\\(\\mathrm{I}\\) and \\(\\mathrm{II}\\) only",
         "\\(\\mathrm{III}\\) only",
         "\\(\\mathrm{II}\\) and \\(\\mathrm{III}\\) only"
+      ],
+      "statementZhHtml": "假设 \\(a\\)、\\(b\\)、\\(c\\) 为正整数，满足 \\[\\frac{a}{14} + \\frac{b}{15} = \\frac{c}{210}\\text{。}\\] 下列哪些命题必定为真？\n\nI. 如果 \\(\\gcd(a, 14) = 1\\) 或 \\(\\gcd(b, 15) = 1\\)，或两者都成立，则 \\(\\gcd(c, 210) = 1\\)。\n\nII. 如果 \\(\\gcd(c, 210) = 1\\)，则 \\(\\gcd(a, 14) = 1\\) 或 \\(\\gcd(b, 15) = 1\\)，或两者都成立。\n\nIII. \\(\\gcd(c, 210) = 1\\) 当且仅当 \\(\\gcd(a, 14) = \\gcd(b, 15) = 1\\)。",
+      "choicesZh": [
+        "\\(\\mathrm{I}\\)、\\(\\mathrm{II}\\) 和 \\(\\mathrm{III}\\)",
+        "仅 \\(\\mathrm{I}\\)",
+        "仅 \\(\\mathrm{I}\\) 和 \\(\\mathrm{II}\\)",
+        "仅 \\(\\mathrm{III}\\)",
+        "仅 \\(\\mathrm{II}\\) 和 \\(\\mathrm{III}\\)"
       ]
     },
     {
       "problemNumber": 19,
       "statementHtml": "Sonya the frog chooses a point uniformly at random lying within the square \\([0, 6] \\times [0, 6]\\) in the coordinate plane and hops to that point. She then chooses a distance uniformly at random from \\([0, 1]\\) and a direction uniformly at random from \\(\\{\\text{north}, \\text{south}, \\text{east}, \\text{west}\\}.\\) All her choices are independent. She now hops the distance in the chosen direction. What is the probability that she lands outside the square?",
       "choices": [
+        "\\(\\dfrac{1}{6}\\)",
+        "\\(\\dfrac{1}{12}\\)",
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{1}{10}\\)",
+        "\\(\\dfrac{1}{9}\\)"
+      ],
+      "statementZhHtml": "青蛙 Sonya 在坐标平面中的正方形 \\([0, 6] \\times [0, 6]\\) 内均匀随机选择一个点并跳到该点。然后她从 \\([0, 1]\\) 中均匀随机选择一个距离，并从 \\(\\{\\text{北}, \\text{南}, \\text{东}, \\text{西}\\}\\) 中均匀随机选择一个方向。所有选择相互独立。她沿所选方向跳所选距离。她落在正方形外的概率是多少？",
+      "choicesZh": [
         "\\(\\dfrac{1}{6}\\)",
         "\\(\\dfrac{1}{12}\\)",
         "\\(\\dfrac{1}{4}\\)",
@@ -222,12 +374,28 @@
         "\\(48\\)",
         "\\(36\\)",
         "\\(27\\)"
+      ],
+      "statementZhHtml": "如图，在半径为 \\(2\\) 的球面上画出四个全等半圆，形成一条闭合曲线，将球面分成两个全等区域。该曲线长度为 \\(\\pi\\sqrt{n}\\)。求 \\(n\\)。\n\n<img src=\"assets/exams/images/amc10/2023B/20.svg\" alt=\"Diagram for problem 20\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(32\\)",
+        "\\(12\\)",
+        "\\(48\\)",
+        "\\(36\\)",
+        "\\(27\\)"
       ]
     },
     {
       "problemNumber": 21,
       "statementHtml": "Each of \\(2023\\) balls is randomly placed into one of \\(3\\) bins. Which of the following is closest to the probability that each of the bins will contain an odd number of balls?",
       "choices": [
+        "\\(\\dfrac{2}{3}\\)",
+        "\\(\\dfrac{3}{10}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(\\dfrac{1}{3}\\)",
+        "\\(\\dfrac{1}{4}\\)"
+      ],
+      "statementZhHtml": "将 \\(2023\\) 个球分别随机放入 \\(3\\) 个盒子中的一个。下列哪一项最接近每个盒子中球数都是奇数的概率？",
+      "choicesZh": [
         "\\(\\dfrac{2}{3}\\)",
         "\\(\\dfrac{3}{10}\\)",
         "\\(\\dfrac{1}{2}\\)",
@@ -244,12 +412,28 @@
         "\\(2\\)",
         "\\(3\\)",
         "\\(0\\)"
+      ],
+      "statementZhHtml": "有多少个不同的 \\(x\\) 值满足 \\[\\lfloor x \\rfloor^2 - 3x + 2 = 0\\text{，}\\] 其中 \\(\\lfloor x \\rfloor\\) 表示不超过 \\(x\\) 的最大整数？",
+      "choicesZh": [
+        "无限多个",
+        "\\(4\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(0\\)"
       ]
     },
     {
       "problemNumber": 23,
       "statementHtml": "An arithmetic sequence of positive integers has \\(n \\ge 3\\) terms, initial term \\(a,\\) and common difference \\(d \\gt 1.\\) Carl wrote down all the terms in this sequence correctly except for one term, which was off by \\(1.\\) The sum of the terms he wrote down was \\(222.\\) What is \\(a + d + n?\\)",
       "choices": [
+        "\\(24\\)",
+        "\\(20\\)",
+        "\\(22\\)",
+        "\\(28\\)",
+        "\\(26\\)"
+      ],
+      "statementZhHtml": "一个由正整数组成的等差数列有 \\(n \\ge 3\\) 项，首项为 \\(a\\)，公差为 \\(d \\gt 1\\)。Carl 正确写下了这个数列中的所有项，除了有一项相差了 \\(1\\)。他写下的各项之和为 \\(222\\)。求 \\(a + d + n\\)。",
+      "choicesZh": [
         "\\(24\\)",
         "\\(20\\)",
         "\\(22\\)",
@@ -266,6 +450,14 @@
         "\\(12\\)",
         "\\(18\\)",
         "\\(16\\)"
+      ],
+      "statementZhHtml": "由所有可表示为 \\((2u - 3w,\\ v + 4w)\\) 的点组成的区域边界周长是多少？其中 \\(0 \\le u \\le 1\\)、\\(0 \\le v \\le 1\\)、\\(0 \\le w \\le 1\\)。",
+      "choicesZh": [
+        "\\(10\\sqrt{3}\\)",
+        "\\(13\\)",
+        "\\(12\\)",
+        "\\(18\\)",
+        "\\(16\\)"
       ]
     },
     {
@@ -277,7 +469,16 @@
         "\\(8 - 3\\sqrt{5}\\)",
         "\\(\\dfrac{\\sqrt{5} + 1}{2}\\)",
         "\\(\\dfrac{2 + \\sqrt{5}}{3}\\)"
+      ],
+      "statementZhHtml": "一个面积为 \\(1 + \\sqrt{5}\\) 的正五边形印在纸上并剪下。将五边形的五个顶点都折到五边形的中心，形成一个较小的五边形。新五边形的面积是多少？",
+      "choicesZh": [
+        "\\(4 - \\sqrt{5}\\)",
+        "\\(\\sqrt{5} - 1\\)",
+        "\\(8 - 3\\sqrt{5}\\)",
+        "\\(\\dfrac{\\sqrt{5} + 1}{2}\\)",
+        "\\(\\dfrac{2 + \\sqrt{5}}{3}\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2023B"
 }

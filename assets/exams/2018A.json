@@ -13,6 +13,14 @@
         "\\(\\dfrac{8}{5}\\)",
         "\\(\\dfrac{18}{11}\\)",
         "\\(\\dfrac{15}{8}\\)"
+      ],
+      "statementZhHtml": "求下式的值：\\[\\left(\\left((2+1)^{-1}+1\\right)^{-1}+1\\right)^{-1}+1\\text{？}\\]",
+      "choicesZh": [
+        "\\(\\dfrac{5}{8}\\)",
+        "\\(\\dfrac{11}{7}\\)",
+        "\\(\\dfrac{8}{5}\\)",
+        "\\(\\dfrac{18}{11}\\)",
+        "\\(\\dfrac{15}{8}\\)"
       ]
     },
     {
@@ -24,6 +32,14 @@
         "Liliane has \\(45\\%\\) more soda than Alice.",
         "Liliane has \\(75\\%\\) more soda than Alice.",
         "Liliane has \\(100\\%\\) more soda than Alice."
+      ],
+      "statementZhHtml": "Liliane 的汽水比 Jacqueline 多 \\(50\\%\\)，Alice 的汽水比 Jacqueline 多 \\(25\\%\\)。Liliane 和 Alice 的汽水量有什么关系？",
+      "choicesZh": [
+        "Liliane 的汽水比 Alice 多 \\(20\\%\\)。",
+        "Liliane 的汽水比 Alice 多 \\(25\\%\\)。",
+        "Liliane 的汽水比 Alice 多 \\(45\\%\\)。",
+        "Liliane 的汽水比 Alice 多 \\(75\\%\\)。",
+        "Liliane 的汽水比 Alice 多 \\(100\\%\\)。"
       ]
     },
     {
@@ -35,12 +51,28 @@
         "January \\(22\\)",
         "February \\(11\\)",
         "February \\(12\\)"
+      ],
+      "statementZhHtml": "一单位血液经过 \\[10! = 10 \\cdot 9 \\cdot 8 \\cdots 1\\] 秒后过期。Yasin 在一月 \\(1\\) 日中午捐献了一单位血液。这单位血液会在哪一天过期？",
+      "choicesZh": [
+        "一月 \\(2\\) 日",
+        "一月 \\(12\\) 日",
+        "一月 \\(22\\) 日",
+        "二月 \\(11\\) 日",
+        "二月 \\(12\\) 日"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "How many ways can a student schedule \\(3\\) mathematics courses — algebra, geometry, and number theory — in a \\(6\\)-period day if no two mathematics courses can be taken in consecutive periods?\n\n(What courses the student takes during the other \\(3\\) periods is of no concern here.)",
       "choices": [
+        "\\(3\\)",
+        "\\(6\\)",
+        "\\(12\\)",
+        "\\(18\\)",
+        "\\(24\\)"
+      ],
+      "statementZhHtml": "一天有 \\(6\\) 节课。若任意两门数学课都不能安排在相邻课时，那么一名学生安排 \\(3\\) 门数学课，包括代数、几何和数论，共有多少种排法？\n\n（其余 \\(3\\) 节课所上的课程无需考虑。）",
+      "choicesZh": [
         "\\(3\\)",
         "\\(6\\)",
         "\\(12\\)",
@@ -57,12 +89,28 @@
         "\\((4,6)\\)",
         "\\((5,6)\\)",
         "\\((5,\\infty)\\)"
+      ],
+      "statementZhHtml": "Alice、Bob 和 Charlie 徒步时想知道最近的城镇有多远。Alice 说：“我们离城镇至少 \\(6\\) 英里。”Bob 回答：“我们离城镇至多 \\(5\\) 英里。”Charlie 接着说：“其实最近的城镇至多在 \\(4\\) 英里外。”结果三人的话都不正确。设到最近城镇的距离为 \\(d\\) 英里。下列哪个区间是 \\(d\\) 的所有可能取值？",
+      "choicesZh": [
+        "\\((0,4)\\)",
+        "\\((4,5)\\)",
+        "\\((4,6)\\)",
+        "\\((5,6)\\)",
+        "\\((5,\\infty)\\)"
       ]
     },
     {
       "problemNumber": 6,
       "statementHtml": "Sangho uploaded a video to a website where viewers can vote that they like or dislike a video. Each video begins with a score of \\(0,\\) and the score increases by \\(1\\) for each like vote and decreases by \\(1\\) for each dislike vote.\n\nAt one point Sangho saw that his video had a score of \\(90,\\) and that \\(65\\%\\) of the votes cast on his video were like votes. How many votes had been cast on Sangho’s video at that point?",
       "choices": [
+        "\\(200\\)",
+        "\\(300\\)",
+        "\\(400\\)",
+        "\\(500\\)",
+        "\\(600\\)"
+      ],
+      "statementZhHtml": "Sangho 把一个视频上传到某网站，观看者可以投喜欢票或不喜欢票。每个视频的初始分数为 \\(0\\)，每收到一张喜欢票，分数增加 \\(1\\)；每收到一张不喜欢票，分数减少 \\(1\\)。\n\n某一时刻，Sangho 看到视频的分数为 \\(90\\)，而且所有投票中有 \\(65\\%\\) 是喜欢票。当时这个视频一共收到了多少票？",
+      "choicesZh": [
         "\\(200\\)",
         "\\(300\\)",
         "\\(400\\)",
@@ -79,12 +127,28 @@
         "\\(6\\)",
         "\\(8\\)",
         "\\(9\\)"
+      ],
+      "statementZhHtml": "有多少个整数 \\(n\\)（不一定是正数）使下式为整数？\\[4000 \\cdot \\left(\\dfrac{2}{5}\\right)^n\\]",
+      "choicesZh": [
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(6\\)",
+        "\\(8\\)",
+        "\\(9\\)"
       ]
     },
     {
       "problemNumber": 8,
       "statementHtml": "Joe has a collection of \\(23\\) coins, consisting of \\(5\\)-cent coins, \\(10\\)-cent coins, and \\(25\\)-cent coins. He has \\(3\\) more \\(10\\)-cent coins than \\(5\\)-cent coins, and the total value of his collection is \\(320\\) cents. How many more \\(25\\)-cent coins does Joe have than \\(5\\)-cent coins?",
       "choices": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)"
+      ],
+      "statementZhHtml": "Joe 有 \\(23\\) 枚硬币，分别是 \\(5\\) 分、\\(10\\) 分和 \\(25\\) 分硬币。他的 \\(10\\) 分硬币比 \\(5\\) 分硬币多 \\(3\\) 枚，所有硬币总值为 \\(320\\) 分。Joe 的 \\(25\\) 分硬币比 \\(5\\) 分硬币多多少枚？",
+      "choicesZh": [
         "\\(0\\)",
         "\\(1\\)",
         "\\(2\\)",
@@ -101,12 +165,28 @@
         "\\(20\\)",
         "\\(22\\)",
         "\\(24\\)"
+      ],
+      "statementZhHtml": "下图中的所有三角形都与等腰三角形 \\(ABC\\) 相似，其中 \\(AB=AC\\)。\\(7\\) 个最小三角形的面积均为 \\(1\\)，而 \\(\\triangle ABC\\) 的面积为 \\(40\\)。梯形 \\(DBCE\\) 的面积是多少？\n\n<img src=\"assets/exams/images/amc10/2018A/9.svg\" alt=\"Diagram for problem 9\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(16\\)",
+        "\\(18\\)",
+        "\\(20\\)",
+        "\\(22\\)",
+        "\\(24\\)"
       ]
     },
     {
       "problemNumber": 10,
       "statementHtml": "Suppose that real number \\(x\\) satisfies \\[\\sqrt{49-x^2}-\\sqrt{25-x^2}=3.\\] What is the value of \\[\\sqrt{49-x^2}+\\sqrt{25-x^2}?\\]",
       "choices": [
+        "\\(8\\)",
+        "\\(\\sqrt{33}+3\\)",
+        "\\(9\\)",
+        "\\(2\\sqrt{10}+4\\)",
+        "\\(12\\)"
+      ],
+      "statementZhHtml": "设实数 \\(x\\) 满足\\[\\sqrt{49-x^2}-\\sqrt{25-x^2}=3\\text{。}\\]求下式的值：\\[\\sqrt{49-x^2}+\\sqrt{25-x^2}\\text{？}\\]",
+      "choicesZh": [
         "\\(8\\)",
         "\\(\\sqrt{33}+3\\)",
         "\\(9\\)",
@@ -123,12 +203,28 @@
         "\\(56\\)",
         "\\(63\\)",
         "\\(84\\)"
+      ],
+      "statementZhHtml": "掷出 \\(7\\) 个公平的标准 \\(6\\) 面骰子，朝上点数之和为 \\(10\\) 的概率可写成 \\[\\dfrac{n}{6^{7}}\\text{，}\\] 其中 \\(n\\) 是正整数。求 \\(n\\)。",
+      "choicesZh": [
+        "\\(42\\)",
+        "\\(49\\)",
+        "\\(56\\)",
+        "\\(63\\)",
+        "\\(84\\)"
       ]
     },
     {
       "problemNumber": 12,
       "statementHtml": "How many ordered pairs of real numbers \\((x,y)\\) satisfy the following system of equations? \\[\\begin{cases} ~x+3y&amp;=3 \\\\ ~\\big||x|-|y|\\big|&amp;=1 \\end{cases}\\]",
       "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(8\\)"
+      ],
+      "statementZhHtml": "有多少个实数有序对 \\((x,y)\\) 满足下列方程组？\\[\\begin{cases} ~x+3y&amp;=3 \\\\ ~\\big||x|-|y|\\big|&amp;=1 \\end{cases}\\]",
+      "choicesZh": [
         "\\(1\\)",
         "\\(2\\)",
         "\\(3\\)",
@@ -145,12 +241,28 @@
         "\\(\\dfrac{7}{4}\\)",
         "\\(\\dfrac{15}{8}\\)",
         "\\(2\\)"
+      ],
+      "statementZhHtml": "如图所示，一张三角形纸片的三边长分别为 \\(3\\)、\\(4\\) 和 \\(5\\) 英寸。将纸片折叠，使点 \\(A\\) 落到点 \\(B\\) 上。折痕长多少英寸？\n\n<img src=\"assets/exams/images/amc10/2018A/13.svg\" alt=\"Diagram for problem 13\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(1+\\dfrac{1}{2} \\sqrt{2}\\)",
+        "\\(\\sqrt{3}\\)",
+        "\\(\\dfrac{7}{4}\\)",
+        "\\(\\dfrac{15}{8}\\)",
+        "\\(2\\)"
       ]
     },
     {
       "problemNumber": 14,
       "statementHtml": "What is the greatest integer less than or equal to \\[\\dfrac{3^{100}+2^{100}}{3^{96}+2^{96}}?\\]",
       "choices": [
+        "\\(80\\)",
+        "\\(81\\)",
+        "\\(96\\)",
+        "\\(97\\)",
+        "\\(625\\)"
+      ],
+      "statementZhHtml": "求不超过下式的最大整数：\\[\\dfrac{3^{100}+2^{100}}{3^{96}+2^{96}}\\text{？}\\]",
+      "choicesZh": [
         "\\(80\\)",
         "\\(81\\)",
         "\\(96\\)",
@@ -167,12 +279,28 @@
         "\\(58\\)",
         "\\(69\\)",
         "\\(93\\)"
+      ],
+      "statementZhHtml": "两个半径为 \\(5\\) 的圆彼此外切，并且都内切于一个半径为 \\(13\\) 的圆，切点分别为 \\(A\\) 和 \\(B\\)，如图所示。距离 \\(AB\\) 可写成 \\(\\frac{m}{n}\\)，其中 \\(m\\) 与 \\(n\\) 是互质的正整数。求 \\(m+n\\)。\n\n<img src=\"assets/exams/images/amc10/2018A/15.svg\" alt=\"Diagram for problem 15\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(21\\)",
+        "\\(29\\)",
+        "\\(58\\)",
+        "\\(69\\)",
+        "\\(93\\)"
       ]
     },
     {
       "problemNumber": 16,
       "statementHtml": "Right triangle \\(ABC\\) has leg lengths \\(AB=20\\) and \\(BC=21.\\) Including \\(\\overline{AB}\\) and \\(\\overline{BC},\\) how many line segments with integer length can be drawn from vertex \\(B\\) to a point on hypotenuse \\(\\overline{AC}?\\)",
       "choices": [
+        "\\(5\\)",
+        "\\(8\\)",
+        "\\(12\\)",
+        "\\(13\\)",
+        "\\(15\\)"
+      ],
+      "statementZhHtml": "直角三角形 \\(ABC\\) 的两条直角边长分别为 \\(AB=20\\) 和 \\(BC=21\\)。从顶点 \\(B\\) 向斜边 \\(\\overline{AC}\\) 上一点作线段，把 \\(\\overline{AB}\\) 和 \\(\\overline{BC}\\) 也计算在内，共有多少条这样的线段长度是整数？",
+      "choicesZh": [
         "\\(5\\)",
         "\\(8\\)",
         "\\(12\\)",
@@ -189,12 +317,28 @@
         "\\(4\\)",
         "\\(5\\)",
         "\\(7\\)"
+      ],
+      "statementZhHtml": "设 \\(S\\) 是从 \\(\\{1,2,\\dots,12\\}\\) 中选出的 \\(6\\) 个整数所组成的集合，并满足：若 \\(a\\) 和 \\(b\\) 都属于 \\(S\\)，且 \\(a &lt; b\\)，则 \\(b\\) 不是 \\(a\\) 的倍数。\\(S\\) 中元素的最小可能值是多少？",
+      "choicesZh": [
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)",
+        "\\(7\\)"
       ]
     },
     {
       "problemNumber": 18,
       "statementHtml": "How many nonnegative integers can be written in the form \\[a_7\\cdot3^7+a_6\\cdot3^6+a_5\\cdot3^5\\]\\[+a_4\\cdot3^4+a_3\\cdot3^3+a_2\\cdot3^2\\]\\[+a_1\\cdot3^1+a_0\\cdot3^0,\\] where \\(a_i\\in \\{-1,0,1\\}\\) for \\(0\\le i \\le 7?\\)",
       "choices": [
+        "\\(512\\)",
+        "\\(729\\)",
+        "\\(1094\\)",
+        "\\(3281\\)",
+        "\\(59{,}048\\)"
+      ],
+      "statementZhHtml": "有多少个非负整数可以写成\\[a_7\\cdot3^7+a_6\\cdot3^6+a_5\\cdot3^5\\]\\[+a_4\\cdot3^4+a_3\\cdot3^3+a_2\\cdot3^2\\]\\[+a_1\\cdot3^1+a_0\\cdot3^0\\text{，}\\]其中对 \\(0\\le i \\le 7\\)，都有 \\(a_i\\in \\{-1,0,1\\}\\)？",
+      "choicesZh": [
         "\\(512\\)",
         "\\(729\\)",
         "\\(1094\\)",
@@ -211,12 +355,28 @@
         "\\(\\dfrac{3}{10}\\)",
         "\\(\\dfrac{7}{20}\\)",
         "\\(\\dfrac{2}{5}\\)"
+      ],
+      "statementZhHtml": "从集合 \\[\\{11,13,15,17,19\\}\\] 中随机选择一个数 \\(m\\)，并从集合 \\[\\{1999,2000,2001,\\ldots,2018\\}\\] 中随机选择一个数 \\(n\\)。\\(m^n\\) 的个位数字为 \\(1\\) 的概率是多少？",
+      "choicesZh": [
+        "\\(\\dfrac{1}{5}\\)",
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{3}{10}\\)",
+        "\\(\\dfrac{7}{20}\\)",
+        "\\(\\dfrac{2}{5}\\)"
       ]
     },
     {
       "problemNumber": 20,
       "statementHtml": "A scanning code consists of a \\(7 \\times 7\\) grid of squares, with some of its squares colored black and the rest colored white. There must be at least one square of each color in this grid of \\(49\\) squares.\n\nA scanning code is called <i>symmetric</i> if its look does not change when the entire square is rotated by a multiple of \\(90^{\\circ}\\) counterclockwise around its center, nor when it is reflected across a line joining opposite corners or a line joining midpoints of opposite sides.\n\nWhat is the total number of possible symmetric scanning codes?",
       "choices": [
+        "\\(510\\)",
+        "\\(1022\\)",
+        "\\(8190\\)",
+        "\\(8192\\)",
+        "\\(65{,}534\\)"
+      ],
+      "statementZhHtml": "一个扫描码由一个 \\(7 \\times 7\\) 方格构成，其中一些小方格涂黑，其余小方格涂白。在这个由 \\(49\\) 个小方格组成的网格中，两种颜色都必须至少出现一次。\n\n如果把整个正方形绕中心逆时针旋转 \\(90^{\\circ}\\) 的任意整数倍，或关于连接两个对角顶点的直线、连接两条对边中点的直线反射后，扫描码的外观都不改变，就称它是<i>对称的</i>。\n\n一共有多少种可能的对称扫描码？",
+      "choicesZh": [
         "\\(510\\)",
         "\\(1022\\)",
         "\\(8190\\)",
@@ -233,12 +393,28 @@
         "\\(a \\gt \\dfrac14\\)",
         "\\(a = \\dfrac12\\)",
         "\\(a \\gt \\dfrac12\\)"
+      ],
+      "statementZhHtml": "在实 \\(xy\\) 平面内，曲线 \\(x^2+y^2=a^2\\) 与 \\(y=x^2-a\\) 恰好相交于 \\(3\\) 个点时，下列哪一项描述了 \\(a\\) 的取值范围？",
+      "choicesZh": [
+        "\\(a = \\dfrac14\\)",
+        "\\(\\dfrac14 \\lt a \\lt \\dfrac12\\)",
+        "\\(a \\gt \\dfrac14\\)",
+        "\\(a = \\dfrac12\\)",
+        "\\(a \\gt \\dfrac12\\)"
       ]
     },
     {
       "problemNumber": 22,
       "statementHtml": "Let \\(a,\\) \\(b,\\) \\(c,\\) and \\(d\\) be positive integers such that \\[\\gcd(a, b)=24,\\] \\[\\gcd(b, c)=36,\\] \\[\\gcd(c, d)=54,\\] and \\[70 &lt; \\gcd(d, a) &lt; 100.\\] Which of the following must be a divisor of \\(a?\\)",
       "choices": [
+        "\\(5\\)",
+        "\\(7\\)",
+        "\\(11\\)",
+        "\\(13\\)",
+        "\\(17\\)"
+      ],
+      "statementZhHtml": "设 \\(a\\)、\\(b\\)、\\(c\\) 和 \\(d\\) 是正整数，并满足 \\[\\gcd(a, b)=24\\text{，}\\]\\[\\gcd(b, c)=36\\text{，}\\]\\[\\gcd(c, d)=54\\text{，}\\] 以及 \\[70 &lt; \\gcd(d, a) &lt; 100\\text{。}\\] 下列哪一个数一定是 \\(a\\) 的因数？",
+      "choicesZh": [
         "\\(5\\)",
         "\\(7\\)",
         "\\(11\\)",
@@ -255,12 +431,28 @@
         "\\(\\dfrac{73}{75}\\)",
         "\\(\\dfrac{145}{147}\\)",
         "\\(\\dfrac{74}{75}\\)"
+      ],
+      "statementZhHtml": "农夫 Pythagoras 有一块直角三角形田地，两条直角边分别长 \\(3\\) 和 \\(4\\) 个单位。他在两条直角边相交的角落留出一个未种植的小正方形 \\(S\\)，使它从空中看起来像直角符号。田地的其余部分都已种植。\\(S\\) 到斜边的最短距离为 \\(2\\) 个单位。田地中已种植部分占几分之几？\n\n<img src=\"assets/exams/images/amc10/2018A/23.svg\" alt=\"Diagram for problem 23\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(\\dfrac{25}{27}\\)",
+        "\\(\\dfrac{26}{27}\\)",
+        "\\(\\dfrac{73}{75}\\)",
+        "\\(\\dfrac{145}{147}\\)",
+        "\\(\\dfrac{74}{75}\\)"
       ]
     },
     {
       "problemNumber": 24,
       "statementHtml": "Triangle \\(ABC\\) with \\(AB=50\\) and \\(AC=10\\) has area \\(120.\\) Let \\(D\\) be the midpoint of \\(\\overline{AB},\\) and let \\(E\\) be the midpoint of \\(\\overline{AC}.\\) The angle bisector of \\(\\angle BAC\\) intersects \\(\\overline{DE}\\) and \\(\\overline{BC}\\) at \\(F\\) and \\(G,\\) respectively. What is the area of quadrilateral \\(FDBG?\\)",
       "choices": [
+        "\\(60\\)",
+        "\\(65\\)",
+        "\\(70\\)",
+        "\\(75\\)",
+        "\\(80\\)"
+      ],
+      "statementZhHtml": "三角形 \\(ABC\\) 中，\\(AB=50\\)，\\(AC=10\\)，面积为 \\(120\\)。设 \\(D\\) 是 \\(\\overline{AB}\\) 的中点，\\(E\\) 是 \\(\\overline{AC}\\) 的中点。\\(\\angle BAC\\) 的角平分线分别与 \\(\\overline{DE}\\) 和 \\(\\overline{BC}\\) 交于 \\(F\\) 和 \\(G\\)。四边形 \\(FDBG\\) 的面积是多少？",
+      "choicesZh": [
         "\\(60\\)",
         "\\(65\\)",
         "\\(70\\)",
@@ -277,7 +469,16 @@
         "\\(16\\)",
         "\\(18\\)",
         "\\(20\\)"
+      ],
+      "statementZhHtml": "对于正整数 \\(n\\) 和非零数字 \\(a\\)、\\(b\\)、\\(c\\)，令 \\(A_n\\) 表示每一位数字都等于 \\(a\\) 的 \\(n\\) 位整数；令 \\(B_n\\) 表示每一位数字都等于 \\(b\\) 的 \\(n\\) 位整数；令 \\(C_n\\) 表示每一位数字都等于 \\(c\\) 的 \\(2n\\) 位（而不是 \\(n\\) 位）整数。若至少有两个 \\(n\\) 的取值使下式成立，那么 \\(a + b + c\\) 的最大可能值是多少？\\[C_n - B_n = A_n^2\\text{？}\\]",
+      "choicesZh": [
+        "\\(12\\)",
+        "\\(14\\)",
+        "\\(16\\)",
+        "\\(18\\)",
+        "\\(20\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2018A"
 }

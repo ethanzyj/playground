@@ -13,12 +13,28 @@
         "\\(180\\)",
         "\\(200\\)",
         "\\(360\\)"
+      ],
+      "statementZhHtml": "Kate 烤了一盘 \\(20\\) 英寸乘 \\(18\\) 英寸的玉米面包。玉米面包被切成 \\(2\\) 英寸乘 \\(2\\) 英寸的小块。这一盘共有多少块玉米面包？",
+      "choicesZh": [
+        "\\(90\\)",
+        "\\(100\\)",
+        "\\(180\\)",
+        "\\(200\\)",
+        "\\(360\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "Sam drove \\(96\\) miles in \\(90\\) minutes. His average speed during the first \\(30\\) minutes was \\(60\\) mph (miles per hour), and his average speed during the second \\(30\\) minutes was \\(65\\) mph. What was his average speed, in mph, during the last \\(30\\) minutes?",
       "choices": [
+        "\\(64\\)",
+        "\\(65\\)",
+        "\\(66\\)",
+        "\\(67\\)",
+        "\\(68\\)"
+      ],
+      "statementZhHtml": "Sam 在 \\(90\\) 分钟内开了 \\(96\\) 英里。前 \\(30\\) 分钟他的平均速度是每小时 \\(60\\) 英里，第二个 \\(30\\) 分钟的平均速度是每小时 \\(65\\) 英里。最后 \\(30\\) 分钟他的平均速度是每小时多少英里？",
+      "choicesZh": [
         "\\(64\\)",
         "\\(65\\)",
         "\\(66\\)",
@@ -35,12 +51,28 @@
         "\\(4\\)",
         "\\(6\\)",
         "\\(24\\)"
+      ],
+      "statementZhHtml": "在表达式 \\((\\underline{\\phantom{x}} \\times \\underline{\\phantom{x}}) + (\\underline{\\phantom{x}} \\times \\underline{\\phantom{x}})\\) 中，每个空格要填入数字 \\(1\\)、\\(2\\)、\\(3\\) 或 \\(4\\)，且每个数字恰好使用一次。可以得到多少个不同的值？",
+      "choicesZh": [
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(6\\)",
+        "\\(24\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "A three-dimensional rectangular box with dimensions \\(X,\\) \\(Y,\\) and \\(Z\\) has faces whose surface areas are \\(24,\\) \\(24,\\) \\(48,\\) \\(48,\\) \\(72,\\) and \\(72\\) square units. What is \\(X + Y + Z?\\)",
       "choices": [
+        "\\(18\\)",
+        "\\(22\\)",
+        "\\(24\\)",
+        "\\(30\\)",
+        "\\(36\\)"
+      ],
+      "statementZhHtml": "一个长方体的三条边长为 \\(X\\)、\\(Y\\) 和 \\(Z\\)，它的六个面的面积分别为 \\(24\\)，\\(24\\)，\\(48\\)，\\(48\\)，\\(72\\) 和 \\(72\\) 平方单位。求 \\(X + Y + Z\\)。",
+      "choicesZh": [
         "\\(18\\)",
         "\\(22\\)",
         "\\(24\\)",
@@ -57,12 +89,28 @@
         "\\(224\\)",
         "\\(240\\)",
         "\\(256\\)"
+      ],
+      "statementZhHtml": "集合 \\(\\{2, 3, 4, 5, 6, 7, 8, 9\\}\\) 的子集中，有多少个至少包含一个质数？",
+      "choicesZh": [
+        "\\(128\\)",
+        "\\(192\\)",
+        "\\(224\\)",
+        "\\(240\\)",
+        "\\(256\\)"
       ]
     },
     {
       "problemNumber": 6,
       "statementHtml": "A box contains \\(5\\) chips, numbered \\(1,\\) \\(2,\\) \\(3,\\) \\(4,\\) and \\(5.\\) Chips are drawn randomly one at a time without replacement until the sum of the values drawn exceeds \\(4.\\) What is the probability that \\(3\\) draws are required?",
       "choices": [
+        "\\(\\dfrac{1}{15}\\)",
+        "\\(\\dfrac{1}{10}\\)",
+        "\\(\\dfrac{1}{6}\\)",
+        "\\(\\dfrac{1}{5}\\)",
+        "\\(\\dfrac{1}{4}\\)"
+      ],
+      "statementZhHtml": "一个盒子里有 \\(5\\) 个筹码，编号为 \\(1\\)、\\(2\\)、\\(3\\)、\\(4\\) 和 \\(5\\)。每次随机抽出一个筹码且不放回，直到抽出的编号之和超过 \\(4\\)。需要抽 \\(3\\) 次的概率是多少？",
+      "choicesZh": [
         "\\(\\dfrac{1}{15}\\)",
         "\\(\\dfrac{1}{10}\\)",
         "\\(\\dfrac{1}{6}\\)",
@@ -79,12 +127,28 @@
         "\\(18\\)",
         "\\(19\\)",
         "\\(36\\)"
+      ],
+      "statementZhHtml": "下图中，沿着一个大半圆的直径画了 \\(N\\) 个全等的小半圆，它们的直径无重叠地覆盖大半圆的直径。设 \\(A\\) 为这些小半圆面积之和，\\(B\\) 为大半圆内部但小半圆外部区域的面积。若 \\(A : B\\) 为 \\(1 : 18\\)，求 \\(N\\)。\n\n<img src=\"assets/exams/images/amc10/2018B/7.svg\" alt=\"Diagram for problem 7\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(16\\)",
+        "\\(17\\)",
+        "\\(18\\)",
+        "\\(19\\)",
+        "\\(36\\)"
       ]
     },
     {
       "problemNumber": 8,
       "statementHtml": "Sara makes a staircase out of toothpicks as shown:\n\n<img src=\"assets/exams/images/amc10/2018B/8.svg\" alt=\"Diagram for problem 8\" loading=\"lazy\">\n\nThis is a \\(3\\)-step staircase and uses \\(18\\) toothpicks. How many steps would be in a staircase that used \\(180\\) toothpicks?",
       "choices": [
+        "\\(10\\)",
+        "\\(11\\)",
+        "\\(12\\)",
+        "\\(24\\)",
+        "\\(30\\)"
+      ],
+      "statementZhHtml": "Sara 用牙签搭了如下楼梯：\n\n<img src=\"assets/exams/images/amc10/2018B/8.svg\" alt=\"Diagram for problem 8\" loading=\"lazy\">\n\n这是一个 \\(3\\) 级楼梯，使用了 \\(18\\) 根牙签。如果一个楼梯使用了 \\(180\\) 根牙签，它有多少级？",
+      "choicesZh": [
         "\\(10\\)",
         "\\(11\\)",
         "\\(12\\)",
@@ -101,12 +165,28 @@
         "\\(32\\)",
         "\\(39\\)",
         "\\(42\\)"
+      ],
+      "statementZhHtml": "\\(7\\) 个标准骰子的每个面分别标有整数 \\(1\\) 到 \\(6\\)。设 \\(p\\) 为这 \\(7\\) 个骰子同时掷出时，上方面点数之和为 \\(10\\) 的概率。还有哪个点数和出现的概率也等于 \\(p\\)？",
+      "choicesZh": [
+        "\\(13\\)",
+        "\\(26\\)",
+        "\\(32\\)",
+        "\\(39\\)",
+        "\\(42\\)"
       ]
     },
     {
       "problemNumber": 10,
       "statementHtml": "In the rectangular parallelepiped shown, \\(AB = 3,\\) \\(BC = 1,\\) and \\(CG = 2.\\) Point \\(M\\) is the midpoint of \\(FG.\\) What is the volume of the rectangular pyramid with base \\(BCHE\\) and apex \\(M?\\)\n\n<img src=\"assets/exams/images/amc10/2018B/10.svg\" alt=\"Diagram for problem 10\" loading=\"lazy\">",
       "choices": [
+        "\\(1\\)",
+        "\\(\\dfrac{4}{3}\\)",
+        "\\(\\dfrac{3}{2}\\)",
+        "\\(\\dfrac{5}{3}\\)",
+        "\\(2\\)"
+      ],
+      "statementZhHtml": "在图示长方体中，\\(AB = 3\\)、\\(BC = 1\\)，且 \\(CG = 2\\)。点 \\(M\\) 是 \\(FG\\) 的中点。以 \\(BCHE\\) 为底、\\(M\\) 为顶点的棱锥体积是多少？\n\n<img src=\"assets/exams/images/amc10/2018B/10.svg\" alt=\"Diagram for problem 10\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(1\\)",
         "\\(\\dfrac{4}{3}\\)",
         "\\(\\dfrac{3}{2}\\)",
@@ -123,12 +203,28 @@
         "\\(p^2 + 26\\)",
         "\\(p^2 + 46\\)",
         "\\(p^2 + 96\\)"
+      ],
+      "statementZhHtml": "当 \\(p\\) 是质数时，下面哪个表达式永远不是质数？",
+      "choicesZh": [
+        "\\(p^2 + 16\\)",
+        "\\(p^2 + 24\\)",
+        "\\(p^2 + 26\\)",
+        "\\(p^2 + 46\\)",
+        "\\(p^2 + 96\\)"
       ]
     },
     {
       "problemNumber": 12,
       "statementHtml": "Line segment \\(AB\\) is a diameter of a circle with \\(AB = 24.\\) Point \\(C,\\) not equal to \\(A\\) or \\(B,\\) lies on the circle. As point \\(C\\) moves around the circle, the centroid (center of mass) of \\(\\triangle ABC\\) traces out a closed curve missing two points. To the nearest positive integer, what is the area of the region bounded by this curve?",
       "choices": [
+        "\\(25\\)",
+        "\\(38\\)",
+        "\\(50\\)",
+        "\\(63\\)",
+        "\\(75\\)"
+      ],
+      "statementZhHtml": "线段 \\(AB\\) 是一个圆的直径，且 \\(AB = 24\\)。点 \\(C\\) 在圆上，但不等于 \\(A\\) 或 \\(B\\)。当 \\(C\\) 绕圆运动时，\\(\\triangle ABC\\) 的重心描出一条少了两个点的闭曲线。四舍五入到最接近的正整数，这条曲线围成区域的面积是多少？",
+      "choicesZh": [
         "\\(25\\)",
         "\\(38\\)",
         "\\(50\\)",
@@ -145,12 +241,28 @@
         "\\(505\\)",
         "\\(506\\)",
         "\\(1009\\)"
+      ],
+      "statementZhHtml": "数列 \\(101\\)，\\(1001\\)，\\(10001\\)，\\(100001\\)，\\(\\ldots\\) 的前 \\(2018\\) 项中，有多少项能被 \\(101\\) 整除？",
+      "choicesZh": [
+        "\\(253\\)",
+        "\\(504\\)",
+        "\\(505\\)",
+        "\\(506\\)",
+        "\\(1009\\)"
       ]
     },
     {
       "problemNumber": 14,
       "statementHtml": "A list of \\(2018\\) positive integers has a unique mode, which occurs exactly \\(10\\) times. What is the least number of distinct values that can occur in the list?",
       "choices": [
+        "\\(202\\)",
+        "\\(223\\)",
+        "\\(224\\)",
+        "\\(225\\)",
+        "\\(234\\)"
+      ],
+      "statementZhHtml": "一个由 \\(2018\\) 个正整数组成的列表有唯一的众数，且这个众数恰好出现 \\(10\\) 次。这个列表中最少可能出现多少个不同的值？",
+      "choicesZh": [
         "\\(202\\)",
         "\\(223\\)",
         "\\(224\\)",
@@ -167,12 +279,28 @@
         "\\(2w^2 + 4wh\\)",
         "\\(2w^2\\)",
         "\\(w^2 h\\)"
+      ],
+      "statementZhHtml": "一个正方形底面的封闭盒子要用一张正方形包装纸包裹。如左图所示，盒子放在包装纸中央，底面顶点位于正方形纸张的中线上。包装纸的四个角将沿盒子侧面向上折，并在盒子顶面中心、即右图中的点 \\(A\\) 处相会。盒子底边长为 \\(w\\)，高为 \\(h\\)。包装纸的面积是多少？\n\n<img src=\"assets/exams/images/amc10/2018B/15.svg\" alt=\"Diagram for problem 15\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(2(w + h)^2\\)",
+        "\\(\\dfrac{(w + h)^2}{2}\\)",
+        "\\(2w^2 + 4wh\\)",
+        "\\(2w^2\\)",
+        "\\(w^2 h\\)"
       ]
     },
     {
       "problemNumber": 16,
       "statementHtml": "Let \\(a_1,\\) \\(a_2,\\) \\(\\ldots,\\) \\(a_{2018}\\) be a strictly increasing sequence of positive integers such that\n\n\\[a_1 + a_2 + \\cdots + a_{2018} = 2018^{2018}.\\]\n\nWhat is the remainder when \\(a_1^3 + a_2^3 + \\cdots + a_{2018}^3\\) is divided by \\(6?\\)",
       "choices": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)"
+      ],
+      "statementZhHtml": "设 \\(a_1\\)，\\(a_2\\)，\\(\\ldots\\)，\\(a_{2018}\\) 是一个严格递增的正整数数列，且\n\n\\[a_1 + a_2 + \\cdots + a_{2018} = 2018^{2018}\\text{。}\\]\n\n\\(a_1^3 + a_2^3 + \\cdots + a_{2018}^3\\) 除以 \\(6\\) 的余数是多少？",
+      "choicesZh": [
         "\\(0\\)",
         "\\(1\\)",
         "\\(2\\)",
@@ -189,12 +317,28 @@
         "\\(21\\)",
         "\\(92\\)",
         "\\(106\\)"
+      ],
+      "statementZhHtml": "在长方形 \\(PQRS\\) 中，\\(PQ = 8\\)，\\(QR = 6\\)。点 \\(A\\)、\\(B\\) 在 \\(PQ\\) 上，点 \\(C\\)、\\(D\\) 在 \\(QR\\) 上，点 \\(E\\)、\\(F\\) 在 \\(RS\\) 上，点 \\(G\\)、\\(H\\) 在 \\(SP\\) 上，满足 \\(AP = BQ &lt; 4\\)，并且凸八边形 \\(ABCDEFGH\\) 是等边的。这个八边形的边长可写成 \\(k + m\\sqrt{n}\\)，其中 \\(k\\)、\\(m\\)、\\(n\\) 是整数，且 \\(n\\) 不被任何质数的平方整除。求 \\(k + m + n\\)。",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(7\\)",
+        "\\(21\\)",
+        "\\(92\\)",
+        "\\(106\\)"
       ]
     },
     {
       "problemNumber": 18,
       "statementHtml": "Three young brother-sister pairs from different families need to take a trip in a van. These six children will occupy the second and third rows in the van, each of which has three seats. To avoid disruptions, siblings may not sit right next to each other in the same row, and no child may sit directly in front of his or her sibling. How many seating arrangements are possible for this trip?",
       "choices": [
+        "\\(60\\)",
+        "\\(72\\)",
+        "\\(92\\)",
+        "\\(96\\)",
+        "\\(120\\)"
+      ],
+      "statementZhHtml": "来自三个不同家庭的三对年幼兄妹需要乘面包车出行。这六个孩子将坐在车的第二排和第三排，每排有三个座位。为了避免打闹，兄妹不能在同一排相邻而坐，也不能一个正好坐在另一个的正前方。共有多少种座位安排？",
+      "choicesZh": [
         "\\(60\\)",
         "\\(72\\)",
         "\\(92\\)",
@@ -211,12 +355,28 @@
         "\\(9\\)",
         "\\(10\\)",
         "\\(11\\)"
+      ],
+      "statementZhHtml": "Joey、Chloe 和他们的女儿 Zoe 都同一天生日。Joey 比 Chloe 大 \\(1\\) 岁，Zoe 今天正好 \\(1\\) 岁。今天是 Chloe 的年龄会是 Zoe 年龄整数倍的 \\(9\\) 个生日中的第一个。下一次 Joey 的年龄是 Zoe 年龄的整数倍时，Joey 年龄的两个数字之和是多少？",
+      "choicesZh": [
+        "\\(7\\)",
+        "\\(8\\)",
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(11\\)"
       ]
     },
     {
       "problemNumber": 20,
       "statementHtml": "A function \\(f\\) is defined recursively by \\(f(1) = f(2) = 1\\) and\n\n\\[f(n) = f(n - 1) - f(n - 2) + n\\]\n\nfor all integers \\(n \\ge 3.\\) What is \\(f(2018)?\\)",
       "choices": [
+        "\\(2016\\)",
+        "\\(2017\\)",
+        "\\(2018\\)",
+        "\\(2019\\)",
+        "\\(2020\\)"
+      ],
+      "statementZhHtml": "函数 \\(f\\) 递归定义为 \\(f(1) = f(2) = 1\\)，且\n\n\\[f(n) = f(n - 1) - f(n - 2) + n\\]\n\n对所有整数 \\(n \\ge 3\\) 成立。求 \\(f(2018)\\)。",
+      "choicesZh": [
         "\\(2016\\)",
         "\\(2017\\)",
         "\\(2018\\)",
@@ -233,12 +393,28 @@
         "\\(340\\)",
         "\\(361\\)",
         "\\(646\\)"
+      ],
+      "statementZhHtml": "Mary 选择了一个偶数 \\(4\\) 位数 \\(n\\)。她把 \\(n\\) 的所有因子按从小到大的顺序从左到右写下：\\(1\\)，\\(2\\)，\\(\\ldots\\)，\\(\\frac{n}{2}\\)，\\(n\\)。某一刻 Mary 写下了 \\(323\\)，它是 \\(n\\) 的一个因子。写在 \\(323\\) 右边的下一个因子的最小可能值是多少？",
+      "choicesZh": [
+        "\\(324\\)",
+        "\\(330\\)",
+        "\\(340\\)",
+        "\\(361\\)",
+        "\\(646\\)"
       ]
     },
     {
       "problemNumber": 22,
       "statementHtml": "Real numbers \\(x\\) and \\(y\\) are chosen independently and uniformly at random from the interval \\([0, 1].\\) Which of the following numbers is closest to the probability that \\(x,\\) \\(y,\\) and \\(1\\) are the side lengths of an obtuse triangle?",
       "choices": [
+        "\\(0.21\\)",
+        "\\(0.25\\)",
+        "\\(0.29\\)",
+        "\\(0.50\\)",
+        "\\(0.79\\)"
+      ],
+      "statementZhHtml": "实数 \\(x\\) 和 \\(y\\) 独立且均匀地从区间 \\([0, 1]\\) 中随机选取。下面哪个数最接近 \\(x\\)、\\(y\\) 和 \\(1\\) 能作为一个钝角三角形三边长的概率？",
+      "choicesZh": [
         "\\(0.21\\)",
         "\\(0.25\\)",
         "\\(0.29\\)",
@@ -255,12 +431,28 @@
         "\\(4\\)",
         "\\(6\\)",
         "\\(8\\)"
+      ],
+      "statementZhHtml": "有多少个正整数有序对 \\((a, b)\\) 满足方程\n\n\\[ \\begin{aligned} a \\cdot b + 63 &amp;= 20 \\cdot \\operatorname{lcm}(a, b) \\\\ &amp;\\quad {}+ 12 \\cdot \\gcd(a, b) \\end{aligned}\\text{，}\\]\n\n其中 \\(\\gcd(a, b)\\) 表示 \\(a\\) 和 \\(b\\) 的最大公因数，\\(\\operatorname{lcm}(a, b)\\) 表示它们的最小公倍数。",
+      "choicesZh": [
+        "\\(0\\)",
+        "\\(2\\)",
+        "\\(4\\)",
+        "\\(6\\)",
+        "\\(8\\)"
       ]
     },
     {
       "problemNumber": 24,
       "statementHtml": "Let \\(ABCDEF\\) be a regular hexagon with side length \\(1.\\) Denote by \\(X,\\) \\(Y,\\) and \\(Z\\) the midpoints of sides \\(AB,\\) \\(CD,\\) and \\(EF,\\) respectively. What is the area of the convex hexagon whose interior is the intersection of the interiors of \\(\\triangle ACE\\) and \\(\\triangle XYZ?\\)",
       "choices": [
+        "\\(\\dfrac{3}{8}\\sqrt{3}\\)",
+        "\\(\\dfrac{7}{16}\\sqrt{3}\\)",
+        "\\(\\dfrac{15}{32}\\sqrt{3}\\)",
+        "\\(\\dfrac{1}{2}\\sqrt{3}\\)",
+        "\\(\\dfrac{9}{16}\\sqrt{3}\\)"
+      ],
+      "statementZhHtml": "设 \\(ABCDEF\\) 是边长为 \\(1\\) 的正六边形。令 \\(X\\)、\\(Y\\)、\\(Z\\) 分别为边 \\(AB\\)、\\(CD\\)、\\(EF\\) 的中点。某个凸六边形的内部恰好是 \\(\\triangle ACE\\) 与 \\(\\triangle XYZ\\) 的内部交集。这个凸六边形的面积是多少？",
+      "choicesZh": [
         "\\(\\dfrac{3}{8}\\sqrt{3}\\)",
         "\\(\\dfrac{7}{16}\\sqrt{3}\\)",
         "\\(\\dfrac{15}{32}\\sqrt{3}\\)",
@@ -277,7 +469,16 @@
         "\\(199\\)",
         "\\(200\\)",
         "\\(201\\)"
+      ],
+      "statementZhHtml": "令 \\(\\lfloor x \\rfloor\\) 表示小于或等于 \\(x\\) 的最大整数。有多少个实数 \\(x\\) 满足方程 \\(x^2 + 10{,}000\\lfloor x \\rfloor = 10{,}000x\\)？",
+      "choicesZh": [
+        "\\(197\\)",
+        "\\(198\\)",
+        "\\(199\\)",
+        "\\(200\\)",
+        "\\(201\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2018B"
 }

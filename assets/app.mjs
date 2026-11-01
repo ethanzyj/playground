@@ -2,7 +2,8 @@ import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
 import { AccountPanel } from "./account.mjs?v=20261026-6";
 import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-6";
-import { QuestPanel } from "./quests.mjs?v=20261031-2";
+import { QuestPanel } from "./quests.mjs?v=20261031-18";
+import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
 import { QUEST_COURSE } from "./quest-course.mjs?v=20261030-1";
 
 let problemProgressStorageError = false;
@@ -75,7 +76,11 @@ const questPanel = new QuestPanel({
   getClient: () => accountPanel?.client,
   getLanguage: () => state.language,
   typeset: typesetMath,
-  onAchievements: syncQuestAchievements
+  onAchievements: syncQuestAchievements,
+  onIncorrectAnswer: async (key, userId) => {
+    if ((accountPanel?.controller?.user?.id || null) !== (userId || null)) return;
+    await setReviewCollection(key, true);
+  }
 });
 
 window.addEventListener("online", () => {
@@ -868,9 +873,9 @@ function problemCard(problem, statement = null) {
       ${questSolved.has(problemKey(problem)) ? `<p class="quest-solved">${textPair("任务中已正确作答", "Answered correctly in Quests")}</p>` : ""}
       ${mission ? `<a href="${deepLink("quest", mission.concept.id)}" target="_blank" rel="noopener">${textPair("进入对应任务", "Open this problem's mission")}</a>` : ""}
       ${statement ? `
-        <div class="problem-statement" lang="en">${statement.statementHtml}</div>
-        <ol class="problem-choices" type="A" lang="en">
-          ${statement.choices.map((choice) => `<li>${choice}</li>`).join("")}
+        <div class="problem-statement">${problemStatement(statement, state.language, problem)}</div>
+        <ol class="problem-choices" type="A">
+          ${statement.choices.map((_, index) => `<li>${problemChoice(statement, index, state.language)}</li>`).join("")}
         </ol>
       ` : problem.noteEn && problem.noteZh ? `<p>${textPair(problem.noteZh, linkGlossaryTerms(problem.noteEn))}</p>` : ""}
       <div class="tags">${tags.map((tag) => `<a class="concept-tag" href="${deepLink("concept", tag.id)}" target="_blank" rel="noopener">${textPair(tag.zh, tag.en)}</a>`).join("")}</div>
@@ -1001,7 +1006,7 @@ async function renderExamStatements(problems, version) {
     const papers = new Map(problems.map((problem) => [`${problem.year}${problem.exam.slice(-1)}`, problem]));
     await Promise.all([...papers].map(async ([paper, { year, exam }]) => {
       if (!examStatements.has(paper)) {
-        const response = await fetch(`assets/exams/${paper}.json`);
+        const response = await fetch(`assets/exams/${paper}.json?v=20261031-zh`);
         if (!response.ok) {
           sourceUrl = `https://live.poshenloh.com/past-contests/amc10/${paper}`;
           throw new Error(`Exam ${paper} request failed: HTTP ${response.status}`);
@@ -1246,29 +1251,41 @@ function renderGlossary() {
   typesetMath($("#glossaryList"));
 }
 
+async function setReviewCollection(key, saved) {
+  if (state.reviewCollection.has(key) === saved) return;
+  if (accountPanel?.signedIn) {
+    if (accountPanel.editingPaused) throw new Error("Review collection editing is paused.");
+    await accountPanel.setMastery("review", key, saved);
+    return;
+  }
+  const updated = new Set(state.reviewCollection);
+  if (saved) updated.add(key);
+  else updated.delete(key);
+  try {
+    if (reviewStorageError) throw new Error("Review collection storage is unavailable.");
+    localStorage.setItem("amc10-review-collection", JSON.stringify([...updated]));
+  } catch (error) {
+    console.error("Unable to save the review collection.", error);
+    reviewStorageError = true;
+    renderProblemProgressError();
+    throw error;
+  }
+  state.reviewCollection = updated;
+  refreshReviewCollection();
+}
+
 function wireProblemAndGlossaryLinks(container) {
   container.querySelectorAll("[data-review-key]").forEach((button) => {
     button.disabled = accountPanel?.editingPaused || reviewStorageError;
-    button.addEventListener("click", () => {
+    button.addEventListener("click", async () => {
       const key = button.dataset.reviewKey;
       const saved = !state.reviewCollection.has(key);
-      if (accountPanel?.signedIn) {
-        accountPanel.setMastery("review", key, saved);
-        return;
-      }
-      const updated = new Set(state.reviewCollection);
-      if (saved) updated.add(key);
-      else updated.delete(key);
       try {
-        localStorage.setItem("amc10-review-collection", JSON.stringify([...updated]));
+        await setReviewCollection(key, saved);
       } catch (error) {
-        console.error("Unable to save the review collection.", error);
-        reviewStorageError = true;
+        console.error("Unable to update the review collection.", error);
         renderProblemProgressError();
-        return;
       }
-      state.reviewCollection = updated;
-      refreshReviewCollection();
     });
   });
   container.querySelectorAll(".progress-option").forEach((option) => {

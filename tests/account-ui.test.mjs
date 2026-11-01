@@ -61,6 +61,54 @@ async function page(configured, client, method = "password", search = "", fetchI
   return { window, $, $$, waitFor, errors, close: () => window.close() };
 }
 
+test("wrong quest practice answers persist in Review collection after a correct retry", async () => {
+  const mission = QUEST_COURSE.missions[0];
+  const key = problemKey(mission.problems[0]);
+  const answers = JSON.parse(readFileSync(new URL("assets/answer-key.json", root), "utf8")).answers;
+  const p = await page(false, null, "password", `?quest=${mission.concept.id}`, null, {
+    version: 1,
+    quests: { [mission.concept.id]: {
+      learned: true, formulas: mission.concept.formulas.map((_, i) => i), problems: [], terms: []
+    } }
+  });
+  try {
+    await p.waitFor(() => p.$("#questPractice"));
+    const wrong = answers[key] === "A" ? "B" : "A";
+    p.$(`input[name="questPracticeAnswer"][value="${wrong}"]`).checked = true;
+    p.$("#questPractice").dispatchEvent(new p.window.Event("submit", { bubbles: true, cancelable: true }));
+    await p.waitFor(() => JSON.parse(p.window.localStorage.getItem("amc10-review-collection") || "[]").includes(key));
+    await p.waitFor(() => !p.$("#questPractice button").disabled);
+    p.$(`input[name="questPracticeAnswer"][value="${answers[key]}"]`).checked = true;
+    p.$("#questPractice").dispatchEvent(new p.window.Event("submit", { bubbles: true, cancelable: true }));
+    await p.waitFor(() => JSON.parse(p.window.localStorage.getItem("amc10-quests:guest")).quests[mission.concept.id].problems.includes(key));
+    assert.ok(JSON.parse(p.window.localStorage.getItem("amc10-review-collection")).includes(key));
+  } finally { p.close(); }
+});
+
+test("Chinese problem statements and choices follow the language switch in Quests and Explorer", async () => {
+  const mission = QUEST_COURSE.missions[0];
+  const p = await page(false, null, "password", `?quest=${mission.concept.id}`, null, {
+    version: 1, quests: { [mission.concept.id]: {
+      learned: true, formulas: mission.concept.formulas.map((_, i) => i), problems: [], terms: []
+    } }
+  });
+  try {
+    await p.waitFor(() => p.$(".quest-statement"));
+    p.$('[data-language="zh"]').click();
+    assert.ok(p.$('.quest-statement [lang="zh"]'));
+    assert.equal(p.$('.quest-statement [lang="en"]'), null);
+    assert.ok(p.$('#questPractice [lang="zh"]'));
+  } finally { p.close(); }
+  const explorer = await page(false, null, "password", "?problem=2025-AMC10A-7");
+  try {
+    await explorer.waitFor(() => explorer.$(".problem-statement"));
+    explorer.$('[data-language="zh"]').click();
+    await explorer.waitFor(() => explorer.$('.problem-statement [lang="zh"]'));
+    assert.equal(explorer.$('.problem-statement [lang="en"]'), null);
+    assert.ok(explorer.$('.problem-choices [lang="zh"]'));
+  } finally { explorer.close(); }
+});
+
 test("formula inequalities stay intact when rendered into HTML", async () => {
   const concept = allConcepts().find((item) => item.formulas.some((formula) => formula.includes("<")));
   const formula = concept.formulas.find((item) => item.includes("<"));

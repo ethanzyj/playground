@@ -13,12 +13,28 @@
         "\\(2\\)",
         "\\(3\\)",
         "\\(4\\)"
+      ],
+      "statementZhHtml": "求下式的值：\\[2^{\\left(0^{\\left(1^9\\right)}\\right)}+\\left(\\left(2^0\\right)^1\\right)^9\\text{？}\\]",
+      "choicesZh": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "What is the hundreds digit of \\((20!-15!)?\\)",
       "choices": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(4\\)",
+        "\\(5\\)"
+      ],
+      "statementZhHtml": "\\((20!-15!)\\) 的百位数字是多少？",
+      "choicesZh": [
         "\\(0\\)",
         "\\(1\\)",
         "\\(2\\)",
@@ -35,12 +51,28 @@
         "\\(9\\)",
         "\\(12\\)",
         "\\(15\\)"
+      ],
+      "statementZhHtml": "Ana 和 Bonita 的生日是同月同日，但出生年份相差 \\(n\\) 年。去年 Ana 的年龄是 Bonita 的 \\(5\\) 倍。今年 Ana 的年龄是 Bonita 年龄的平方。求 \\(n\\)。",
+      "choicesZh": [
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(9\\)",
+        "\\(12\\)",
+        "\\(15\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "A box contains \\(28\\) red balls, \\(20\\) green balls, \\(19\\) yellow balls, \\(13\\) blue balls, \\(11\\) white balls, and \\(9\\) black balls. What is the minimum number of balls that must be drawn from the box without replacement to guarantee that at least \\(15\\) balls of a single color will be drawn?",
       "choices": [
+        "\\(75\\)",
+        "\\(76\\)",
+        "\\(79\\)",
+        "\\(84\\)",
+        "\\(91\\)"
+      ],
+      "statementZhHtml": "一个盒子里有 \\(28\\) 个红球、\\(20\\) 个绿球、\\(19\\) 个黄球、\\(13\\) 个蓝球、\\(11\\) 个白球和 \\(9\\) 个黑球。从盒中不放回地取球，最少要取多少个球，才能保证至少取到 \\(15\\) 个同色球？",
+      "choicesZh": [
         "\\(75\\)",
         "\\(76\\)",
         "\\(79\\)",
@@ -57,12 +89,28 @@
         "\\(45\\)",
         "\\(90\\)",
         "\\(120\\)"
+      ],
+      "statementZhHtml": "和为 \\(45\\) 的连续整数最多可以有多少个？",
+      "choicesZh": [
+        "\\(9\\)",
+        "\\(25\\)",
+        "\\(45\\)",
+        "\\(90\\)",
+        "\\(120\\)"
       ]
     },
     {
       "problemNumber": 6,
       "statementHtml": "For how many of the following types of quadrilaterals does there exist a point in the plane of the quadrilateral that is equidistant from all four vertices of the quadrilateral?\n\n• a square\n\n• a rectangle that is not a square\n\n• a rhombus that is not a square\n\n• a parallelogram that is not a rectangle or a rhombus\n\n• an isosceles trapezoid that is not a parallelogram",
       "choices": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)"
+      ],
+      "statementZhHtml": "对下面多少种四边形，存在一个位于该四边形所在平面内的点，它到四个顶点的距离都相等？\n\n• 正方形\n\n• 非正方形的矩形\n\n• 非正方形的菱形\n\n• 既不是矩形也不是菱形的平行四边形\n\n• 不是平行四边形的等腰梯形",
+      "choicesZh": [
         "\\(1\\)",
         "\\(2\\)",
         "\\(3\\)",
@@ -79,12 +127,28 @@
         "\\(6\\)",
         "\\(8\\)",
         "\\(6\\sqrt{2}\\)"
+      ],
+      "statementZhHtml": "两条斜率分别为 \\(\\frac{1}{2}\\) 和 \\(2\\) 的直线相交于 \\((2, 2)\\)。这两条直线与直线 \\(x + y = 10\\) 围成的三角形面积是多少？",
+      "choicesZh": [
+        "\\(4\\)",
+        "\\(4\\sqrt{2}\\)",
+        "\\(6\\)",
+        "\\(8\\)",
+        "\\(6\\sqrt{2}\\)"
       ]
     },
     {
       "problemNumber": 8,
       "statementHtml": "The figure below shows line \\(\\ell\\) with a regular, infinite, recurring pattern of squares and line segments.\n\n<img src=\"assets/exams/images/amc10/2019A/8.svg\" alt=\"Diagram for problem 8\" loading=\"lazy\">\n\nHow many of the following four kinds of rigid motion transformations of the plane in which this figure is drawn, other than the identity transformation, will transform this figure into itself?\n\n• some rotation around a point of line \\(\\ell\\)\n\n• some translation in the direction parallel to line \\(\\ell\\)\n\n• the reflection across line \\(\\ell\\)\n\n• some reflection across a line perpendicular to line \\(\\ell\\)",
       "choices": [
+        "\\(0\\)",
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)"
+      ],
+      "statementZhHtml": "下图显示了一条直线 \\(\\ell\\)，其上有由正方形和线段组成的规则无限重复图案。\n\n<img src=\"assets/exams/images/amc10/2019A/8.svg\" alt=\"Diagram for problem 8\" loading=\"lazy\">\n\n除恒等变换外，在下面四类平面刚体运动中，有多少类的某个变换会把该图形变到自身？\n\n• 绕直线 \\(\\ell\\) 上某点旋转\n\n• 沿平行于直线 \\(\\ell\\) 的方向平移\n\n• 关于直线 \\(\\ell\\) 反射\n\n• 关于垂直于直线 \\(\\ell\\) 的某条直线反射",
+      "choicesZh": [
         "\\(0\\)",
         "\\(1\\)",
         "\\(2\\)",
@@ -101,12 +165,28 @@
         "\\(997\\)",
         "\\(998\\)",
         "\\(999\\)"
+      ],
+      "statementZhHtml": "最大的三位正整数 \\(n\\) 是多少，使得前 \\(n\\) 个正整数之和 <span>不是</span> 前 \\(n\\) 个正整数之积的因子？",
+      "choicesZh": [
+        "\\(995\\)",
+        "\\(996\\)",
+        "\\(997\\)",
+        "\\(998\\)",
+        "\\(999\\)"
       ]
     },
     {
       "problemNumber": 10,
       "statementHtml": "A rectangular floor that is \\(10\\) feet wide and \\(17\\) feet long is tiled with \\(170\\) one-foot square tiles. A bug walks from one corner to the opposite corner in a straight line. Including the first and the last tile, how many tiles does the bug visit?",
       "choices": [
+        "\\(17\\)",
+        "\\(25\\)",
+        "\\(26\\)",
+        "\\(27\\)",
+        "\\(28\\)"
+      ],
+      "statementZhHtml": "一个 \\(10\\) 英尺宽、\\(17\\) 英尺长的矩形地板铺有 \\(170\\) 块一英尺见方的方砖。一只虫子从一个角沿直线走到对角。包括第一块和最后一块方砖在内，它经过多少块方砖？",
+      "choicesZh": [
         "\\(17\\)",
         "\\(25\\)",
         "\\(26\\)",
@@ -123,12 +203,28 @@
         "\\(37\\)",
         "\\(39\\)",
         "\\(41\\)"
+      ],
+      "statementZhHtml": "\\(201^9\\) 的正整数因子中，有多少个是完全平方数或完全立方数（或两者都是）？",
+      "choicesZh": [
+        "\\(32\\)",
+        "\\(36\\)",
+        "\\(37\\)",
+        "\\(39\\)",
+        "\\(41\\)"
       ]
     },
     {
       "problemNumber": 12,
       "statementHtml": "Melanie computes the mean \\(\\mu,\\) the median \\(M,\\) and the modes of the \\(365\\) values that are the dates in the months of \\(2019.\\) Thus her data consist of \\(12\\) copies of \\(1,\\) \\(12\\) copies of \\(2,\\) and so on through \\(12\\) copies of \\(28,\\) then \\(11\\) copies of \\(29,\\) \\(11\\) copies of \\(30,\\) and \\(7\\) copies of \\(31.\\) Let \\(d\\) be the median of the modes. Which of the following statements is true?",
       "choices": [
+        "\\(\\mu \\lt d \\lt M\\)",
+        "\\(M \\lt d \\lt \\mu\\)",
+        "\\(d = M =\\mu\\)",
+        "\\(d \\lt M \\lt \\mu\\)",
+        "\\(d \\lt \\mu \\lt M\\)"
+      ],
+      "statementZhHtml": "Melanie 计算 \\(2019\\) 年各月日期所组成的 \\(365\\) 个数的平均数 \\(\\mu\\)、中位数 \\(M\\) 和众数。因此数据中有 \\(12\\) 个 \\(1\\)、\\(12\\) 个 \\(2\\)、……、\\(12\\) 个 \\(28\\)、\\(11\\) 个 \\(29\\)、\\(11\\) 个 \\(30\\) 和 \\(7\\) 个 \\(31\\)。令 \\(d\\) 为所有众数的中位数。下面哪个说法正确？",
+      "choicesZh": [
         "\\(\\mu \\lt d \\lt M\\)",
         "\\(M \\lt d \\lt \\mu\\)",
         "\\(d = M =\\mu\\)",
@@ -145,12 +241,28 @@
         "\\(105\\)",
         "\\(110\\)",
         "\\(120\\)"
+      ],
+      "statementZhHtml": "设 \\(\\triangle ABC\\) 是等腰三角形，\\(BC = AC\\)，且 \\(\\angle ACB = 40^{\\circ}\\)。以 \\(\\overline{BC}\\) 为直径作圆，令 \\(D\\) 和 \\(E\\) 分别为该圆与边 \\(\\overline{AC}\\) 和 \\(\\overline{AB}\\) 的另一个交点。令 \\(F\\) 为四边形 \\(BCDE\\) 的两条对角线交点。求 \\(\\angle BFC \\) 的度数。",
+      "choicesZh": [
+        "\\(90\\)",
+        "\\(100\\)",
+        "\\(105\\)",
+        "\\(110\\)",
+        "\\(120\\)"
       ]
     },
     {
       "problemNumber": 14,
       "statementHtml": "For a set of four distinct lines in a plane, there are exactly \\(N\\) distinct points that lie on two or more of the lines. What is the sum of all possible values of \\(N?\\)",
       "choices": [
+        "\\(14\\)",
+        "\\(16\\)",
+        "\\(18\\)",
+        "\\(19\\)",
+        "\\(21\\)"
+      ],
+      "statementZhHtml": "平面中有四条不同的直线，恰好有 \\(N\\) 个不同的点位于两条或更多条直线上。所有可能的 \\(N\\) 值之和是多少？",
+      "choicesZh": [
         "\\(14\\)",
         "\\(16\\)",
         "\\(18\\)",
@@ -167,12 +279,28 @@
         "\\(6057\\)",
         "\\(6061\\)",
         "\\(8078\\)"
+      ],
+      "statementZhHtml": "数列递归定义为 \\(a_1 = 1\\)，\\(a_2 = \\frac{3}{7}\\)，且对所有 \\(n \\geq 3\\)，有 \\[a_n=\\dfrac{a_{n-2} \\cdot a_{n-1}}{2a_{n-2} - a_{n-1}}\\] \\(a_{2019}\\) 可写成 \\(\\frac{p}{q}\\)，其中 \\(p\\) 和 \\(q\\) 为互质正整数。求 \\(p+q \\)。",
+      "choicesZh": [
+        "\\(2020\\)",
+        "\\(4039\\)",
+        "\\(6057\\)",
+        "\\(6061\\)",
+        "\\(8078\\)"
       ]
     },
     {
       "problemNumber": 16,
       "statementHtml": "The figure below shows \\(13\\) circles of radius \\(1\\) within a larger circle. All the intersections occur at points of tangency. What is the area of the region, shaded in the figure, inside the larger circle but outside all the circles of radius \\(1?\\)\n\n<img src=\"assets/exams/images/amc10/2019A/16.svg\" alt=\"Diagram for problem 16\" loading=\"lazy\">",
       "choices": [
+        "\\(4 \\pi \\sqrt{3}\\)",
+        "\\(7 \\pi\\)",
+        "\\(\\pi\\left(3\\sqrt{3} +2\\right)\\)",
+        "\\(10 \\pi \\left(\\sqrt{3} - 1\\right)\\)",
+        "\\(\\pi\\left(\\sqrt{3} + 6\\right)\\)"
+      ],
+      "statementZhHtml": "下图显示了一个大圆内的 \\(13\\) 个半径为 \\(1\\) 的圆，所有交点都是切点。求图中位于大圆内部、所有半径为 \\(1\\) 的小圆外部的阴影区域面积。\n\n<img src=\"assets/exams/images/amc10/2019A/16.svg\" alt=\"Diagram for problem 16\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(4 \\pi \\sqrt{3}\\)",
         "\\(7 \\pi\\)",
         "\\(\\pi\\left(3\\sqrt{3} +2\\right)\\)",
@@ -189,12 +317,28 @@
         "\\(312\\)",
         "\\(1{,}260\\)",
         "\\(40{,}320\\)"
+      ],
+      "statementZhHtml": "一个孩子用形状相同但颜色不同的立方体搭塔。用 \\(2\\) 个红色立方体、\\(3\\) 个蓝色立方体和 \\(4\\) 个绿色立方体，可以搭出多少种高度为 \\(8\\) 个立方体的不同塔？（会剩下一个立方体。）",
+      "choicesZh": [
+        "\\(24\\)",
+        "\\(288\\)",
+        "\\(312\\)",
+        "\\(1{,}260\\)",
+        "\\(40{,}320\\)"
       ]
     },
     {
       "problemNumber": 18,
       "statementHtml": "For some positive integer \\(k,\\) the repeating base-\\(k\\) representation of the (base-ten) fraction \\(\\dfrac{7}{51}\\) is \\[0.\\overline{23}_k = 0.232323..._k.\\] What is \\(k?\\)",
       "choices": [
+        "\\(13\\)",
+        "\\(14\\)",
+        "\\(15\\)",
+        "\\(16\\)",
+        "\\(17\\)"
+      ],
+      "statementZhHtml": "对某个正整数 \\(k\\)，十进制分数 \\(\\dfrac{7}{51}\\) 的 \\(k\\) 进制循环表示为 \\[0.\\overline{23}_k = 0.232323..._k\\text{。}\\] 求 \\(k\\)。",
+      "choicesZh": [
         "\\(13\\)",
         "\\(14\\)",
         "\\(15\\)",
@@ -211,12 +355,28 @@
         "\\(2019\\)",
         "\\(2020\\)",
         "\\(2021\\)"
+      ],
+      "statementZhHtml": "当 \\(x\\) 为实数时，下式 \\[ \\begin{aligned} &amp;(x+1)(x+2)(x+3)(x+4)\\\\ &amp;\\quad+2019 \\end{aligned} \\] 的最小可能值是多少？",
+      "choicesZh": [
+        "\\(2017\\)",
+        "\\(2018\\)",
+        "\\(2019\\)",
+        "\\(2020\\)",
+        "\\(2021\\)"
       ]
     },
     {
       "problemNumber": 20,
       "statementHtml": "The numbers \\(1,\\) \\(2,\\) \\(\\dots,\\) \\(9\\) are randomly placed into the \\(9\\) squares of a \\(3 \\times 3\\) grid. Each square gets one number, and each of the numbers is used once. What is the probability that the sum of the numbers in each row and each column is odd?",
       "choices": [
+        "\\(\\dfrac{1}{21}\\)",
+        "\\(\\dfrac{1}{14}\\)",
+        "\\(\\dfrac{5}{63}\\)",
+        "\\(\\dfrac{2}{21}\\)",
+        "\\(\\dfrac{1}{7}\\)"
+      ],
+      "statementZhHtml": "数字 \\(1\\)，\\(2\\)，\\(\\dots\\)，\\(9\\) 被随机放入 \\(3 \\times 3\\) 方格的 \\(9\\) 个格子中。每格一个数，每个数用一次。每一行和每一列的数字和都是奇数的概率是多少？",
+      "choicesZh": [
         "\\(\\dfrac{1}{21}\\)",
         "\\(\\dfrac{1}{14}\\)",
         "\\(\\dfrac{5}{63}\\)",
@@ -233,12 +393,28 @@
         "\\(3\\sqrt{2}\\)",
         "\\(2\\sqrt{5}\\)",
         "\\(5\\)"
+      ],
+      "statementZhHtml": "空间中有一个以 \\(O\\) 为球心、半径为 \\(6\\) 的球，以及一个边长为 \\(15\\)，\\(15\\) 和 \\(24\\) 的三角形。三角形的每一条边都与球相切。求 \\(O\\) 到该三角形所在平面的距离。",
+      "choicesZh": [
+        "\\(2\\sqrt{3}\\)",
+        "\\(4\\)",
+        "\\(3\\sqrt{2}\\)",
+        "\\(2\\sqrt{5}\\)",
+        "\\(5\\)"
       ]
     },
     {
       "problemNumber": 22,
       "statementHtml": "Real numbers between \\(0\\) and \\(1,\\) inclusive, are chosen in the following manner. A fair coin is flipped. If it lands heads, then it is flipped again and the chosen number is \\(0\\) if the second flip is heads, and \\(1\\) if the second flip is tails. On the other hand, if the first coin flip is tails, then the number is chosen uniformly at random from the closed interval \\([0,1].\\) Two random numbers \\(x\\) and \\(y\\) are chosen independently in this manner. What is the probability that \\(|x-y| &gt; \\tfrac{1}{2}?\\)",
       "choices": [
+        "\\(\\dfrac{1}{3}\\)",
+        "\\(\\dfrac{7}{16}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(\\dfrac{9}{16}\\)",
+        "\\(\\dfrac{2}{3}\\)"
+      ],
+      "statementZhHtml": "按如下方式选择从 \\(0\\) 到 \\(1\\)（含端点）的实数：先抛一枚公平硬币。若为正面，再抛一次，第二次为正面则选 \\(0\\)，第二次为反面则选 \\(1\\)；若第一次为反面，则从闭区间 \\([0,1]\\) 中均匀随机选择一个数。两个随机数 \\(x\\) 和 \\(y\\) 独立地按这种方式选择。求 \\(|x-y| &gt; \\tfrac{1}{2}\\) 的概率。",
+      "choicesZh": [
         "\\(\\dfrac{1}{3}\\)",
         "\\(\\dfrac{7}{16}\\)",
         "\\(\\dfrac{1}{2}\\)",
@@ -255,12 +431,28 @@
         "\\(5979\\)",
         "\\(6001\\)",
         "\\(6011\\)"
+      ],
+      "statementZhHtml": "Travis 要照看难缠的 Thompson 三胞胎。知道他们喜欢大数，Travis 为他们设计了一个数数游戏。先由 Tadd 说数字 \\(1\\)，然后 Todd 必须说接下来的两个数（\\(2\\) 和 \\(3\\)），接着 Tucker 必须说接下来的三个数（\\(4\\)、\\(5\\)、\\(6\\)），再由 Tadd 说接下来的四个数（\\(7\\)、\\(8\\)、\\(9\\)、\\(10\\)）。此后仍按三个孩子的顺序轮流，每个孩子说的数都比前一个孩子多一个，直到数到 \\(10{,}000\\)。Tadd 说出的第 \\(2019\\) 个数是多少？",
+      "choicesZh": [
+        "\\(5743\\)",
+        "\\(5885\\)",
+        "\\(5979\\)",
+        "\\(6001\\)",
+        "\\(6011\\)"
       ]
     },
     {
       "problemNumber": 24,
       "statementHtml": "Let \\(p,\\) \\(q,\\) and \\(r\\) be the distinct roots of the polynomial \\[x^3 - 22x^2 + 80x - 67.\\] There exist real numbers \\(A,\\) \\(B,\\) and \\(C\\) such that \\[ \\begin{gathered} \\frac{1}{s^3-22s^2+80s-67}\\\\ =\\frac{A}{s-p}+\\frac{B}{s-q}\\\\ \\quad+\\frac{C}{s-r} \\end{gathered} \\] for all real numbers \\(s\\) with \\(s\\notin\\{p,q,r\\}.\\) What is \\[\\dfrac1A+\\dfrac1B+\\dfrac1C?\\]",
       "choices": [
+        "\\(243\\)",
+        "\\(244\\)",
+        "\\(245\\)",
+        "\\(246\\)",
+        "\\(247\\)"
+      ],
+      "statementZhHtml": "设 \\(p\\)、\\(q\\) 和 \\(r\\) 是多项式 \\[x^3 - 22x^2 + 80x - 67\\] 的三个不同的根。存在实数 \\(A\\)、\\(B\\) 和 \\(C\\)，使得 \\[ \\begin{gathered} \\frac{1}{s^3-22s^2+80s-67}\\\\ =\\frac{A}{s-p}+\\frac{B}{s-q}\\\\ \\quad+\\frac{C}{s-r} \\end{gathered} \\] 对每个满足 \\(s\\notin\\{p,q,r\\}\\) 的实数 \\(s\\) 都成立。求下式的值： \\[\\dfrac1A+\\dfrac1B+\\dfrac1C\\text{。}\\]",
+      "choicesZh": [
         "\\(243\\)",
         "\\(244\\)",
         "\\(245\\)",
@@ -277,7 +469,16 @@
         "\\(33\\)",
         "\\(34\\)",
         "\\(35\\)"
+      ],
+      "statementZhHtml": "对从 \\(1\\) 到 \\(50\\)（含端点）的多少个整数 \\(n\\)，下式是整数？\\[\\dfrac{(n^2-1)!}{(n!)^n}\\]（规定 \\(0! = 1\\)。）",
+      "choicesZh": [
+        "\\(31\\)",
+        "\\(32\\)",
+        "\\(33\\)",
+        "\\(34\\)",
+        "\\(35\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2019A"
 }

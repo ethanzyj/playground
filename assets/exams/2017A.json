@@ -13,12 +13,28 @@
         "\\(127\\)",
         "\\(159\\)",
         "\\(729\\)"
+      ],
+      "statementZhHtml": "下列表达式的值是多少？\n\n\\[ \\begin{aligned} &amp;2(2(2(2(2(2+1)+1)\\\\ &amp;\\qquad{}+1)+1)+1)+1 \\end{aligned} \\]",
+      "choicesZh": [
+        "\\(70\\)",
+        "\\(97\\)",
+        "\\(127\\)",
+        "\\(159\\)",
+        "\\(729\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "Pablo buys popsicles for his friends. The store sells single popsicles for \\(\\$1\\) each, \\(3\\)-popsicle boxes for \\(\\$2\\) each, and \\(5\\)-popsicle boxes for \\(\\$3.\\) What is the greatest number of popsicles that Pablo can buy with \\(\\$8?\\)",
       "choices": [
+        "\\(8\\)",
+        "\\(11\\)",
+        "\\(12\\)",
+        "\\(13\\)",
+        "\\(15\\)"
+      ],
+      "statementZhHtml": "Pablo 给朋友们买冰棒。商店出售单支冰棒，每支 \\(\\$1\\)；\\(3\\) 支装盒子，每盒 \\(\\$2\\)；\\(5\\) 支装盒子，每盒 \\(\\$3\\)。Pablo 用 \\(\\$8\\) 最多可以买多少支冰棒？",
+      "choicesZh": [
         "\\(8\\)",
         "\\(11\\)",
         "\\(12\\)",
@@ -35,12 +51,28 @@
         "\\(90\\)",
         "\\(120\\)",
         "\\(150\\)"
+      ],
+      "statementZhHtml": "Tamara 的花园里有三排花坛，每排有两个 \\(6\\) 英尺乘 \\(2\\) 英尺的花坛。花坛之间以及花坛外侧都有 \\(1\\) 英尺宽的小路，如图所示。所有小路的总面积是多少平方英尺？\n\n<img src=\"assets/exams/images/amc10/2017A/3.svg\" alt=\"Diagram for problem 3\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(72\\)",
+        "\\(78\\)",
+        "\\(90\\)",
+        "\\(120\\)",
+        "\\(150\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "Mia is “helping” her mom pick up \\(30\\) toys that are strewn on the floor. Mia’s mom manages to put \\(3\\) toys into the toy box every \\(30\\) seconds, but each time immediately after those \\(30\\) seconds have elapsed, Mia takes \\(2\\) toys out of the box. How much time, in minutes, will it take Mia and her mom to put all \\(30\\) toys into the box for the first time?",
       "choices": [
+        "\\(13.5\\)",
+        "\\(14\\)",
+        "\\(14.5\\)",
+        "\\(15\\)",
+        "\\(15.5\\)"
+      ],
+      "statementZhHtml": "Mia 正在“帮”妈妈把散落在地板上的 \\(30\\) 个玩具捡起来。Mia 的妈妈每 \\(30\\) 秒能把 \\(3\\) 个玩具放进玩具箱，但每次这 \\(30\\) 秒刚结束，Mia 立刻从箱子里拿出 \\(2\\) 个玩具。Mia 和妈妈第一次把全部 \\(30\\) 个玩具放进箱子需要多少分钟？",
+      "choicesZh": [
         "\\(13.5\\)",
         "\\(14\\)",
         "\\(14.5\\)",
@@ -57,6 +89,14 @@
         "\\(4\\)",
         "\\(8\\)",
         "\\(12\\)"
+      ],
+      "statementZhHtml": "两个非零实数的和等于它们乘积的 \\(4\\) 倍。这两个数的倒数之和是多少？",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(4\\)",
+        "\\(8\\)",
+        "\\(12\\)"
       ]
     },
     {
@@ -68,12 +108,28 @@
         "If Lewis got at least one of the multiple choice questions\nwrong, then he did not receive an A.",
         "If Lewis received an A, then he got all of the multiple choice\nquestions right.",
         "If Lewis received an A, then he got at least one of the\nmultiple choice questions right."
+      ],
+      "statementZhHtml": "Carroll 老师承诺：即将到来的考试中，所有选择题都答对的人都会得到 A。下面哪一个陈述在逻辑上必然成立？",
+      "choicesZh": [
+        "如果 Lewis 没有得到 A，那么他所有选择题都答错了。",
+        "如果 Lewis 没有得到 A，那么他至少答错了一道选择题。",
+        "如果 Lewis 至少答错了一道选择题，那么他没有得到 A。",
+        "如果 Lewis 得到了 A，那么他所有选择题都答对了。",
+        "如果 Lewis 得到了 A，那么他至少答对了一道选择题。"
       ]
     },
     {
       "problemNumber": 7,
       "statementHtml": "Jerry and Silvia wanted to go from the southwest corner of a square field to the northeast corner. Jerry walked due east and then due north to reach the goal, but Silvia headed northeast and reached the goal walking in a straight line. Which of the following is closest to how much shorter Silvia’s trip was, compared to Jerry’s trip?",
       "choices": [
+        "\\(30\\%\\)",
+        "\\(40\\%\\)",
+        "\\(50\\%\\)",
+        "\\(60\\%\\)",
+        "\\(70\\%\\)"
+      ],
+      "statementZhHtml": "Jerry 和 Silvia 想从一块正方形田地的西南角走到东北角。Jerry 先向正东走，再向正北走到达目标；Silvia 则向东北方向沿直线到达目标。与 Jerry 的路程相比，Silvia 的路程大约短了多少？",
+      "choicesZh": [
         "\\(30\\%\\)",
         "\\(40\\%\\)",
         "\\(50\\%\\)",
@@ -90,12 +146,28 @@
         "\\(290\\)",
         "\\(480\\)",
         "\\(490\\)"
+      ],
+      "statementZhHtml": "在一个 \\(30\\) 人的聚会上，有 \\(20\\) 个人彼此都认识，另有 \\(10\\) 个人谁也不认识。认识的人拥抱，不认识的人握手。这个群体中会发生多少次握手？",
+      "choicesZh": [
+        "\\(240\\)",
+        "\\(245\\)",
+        "\\(290\\)",
+        "\\(480\\)",
+        "\\(490\\)"
       ]
     },
     {
       "problemNumber": 9,
       "statementHtml": "Minnie rides on a flat road at \\(20\\) kilometers per hour (kph), downhill at \\(30\\) kph, and uphill at \\(5\\) kph. Penny rides on a flat road at \\(30\\) kph, downhill at \\(40\\) kph, and uphill at \\(10\\) kph. Minnie goes from town \\(A\\) to town \\(B,\\) a distance of \\(10\\) km all uphill, then from town \\(B\\) to town \\(C,\\) a distance of \\(15\\) km all downhill, and then back to town \\(A,\\) a distance of \\(20\\) km on the flat. Penny goes the other way around using the same route. How many more minutes does it take Minnie to complete the \\(45\\)-km ride than it takes Penny?",
       "choices": [
+        "\\(45\\)",
+        "\\(60\\)",
+        "\\(65\\)",
+        "\\(90\\)",
+        "\\(95\\)"
+      ],
+      "statementZhHtml": "Minnie 在平路上以每小时 \\(20\\) 千米骑行，下坡以每小时 \\(30\\) 千米骑行，上坡以每小时 \\(5\\) 千米骑行。Penny 在平路上以每小时 \\(30\\) 千米骑行，下坡以每小时 \\(40\\) 千米骑行，上坡以每小时 \\(10\\) 千米骑行。Minnie 从城镇 \\(A\\) 到城镇 \\(B\\)，全程上坡 \\(10\\) 千米；再从 \\(B\\) 到 \\(C\\)，全程下坡 \\(15\\) 千米；然后沿平路 \\(20\\) 千米回到 \\(A\\)，Penny 沿同一路线反方向骑行。Minnie 完成这 \\(45\\) 千米骑行比 Penny 多花多少分钟？",
+      "choicesZh": [
         "\\(45\\)",
         "\\(60\\)",
         "\\(65\\)",
@@ -112,12 +184,28 @@
         "\\(18\\)",
         "\\(19\\)",
         "\\(20\\)"
+      ],
+      "statementZhHtml": "Joy 有 \\(30\\) 根细杆，长度分别为从 \\(1\\) 厘米到 \\(30\\) 厘米的每个整数。她把长度为 \\(3\\) 厘米、\\(7\\) 厘米和 \\(15\\) 厘米的细杆放在桌上。她想再选一根细杆，与这三根一起组成一个面积为正的四边形。剩下的细杆中有多少根可以作为第四根？",
+      "choicesZh": [
+        "\\(16\\)",
+        "\\(17\\)",
+        "\\(18\\)",
+        "\\(19\\)",
+        "\\(20\\)"
       ]
     },
     {
       "problemNumber": 11,
       "statementHtml": "The region consisting of all points in three-dimensional space within \\(3\\) units of line segment \\(\\overline{AB}\\) has volume \\(216\\pi.\\) What is the length \\(AB?\\)",
       "choices": [
+        "\\(6\\)",
+        "\\(12\\)",
+        "\\(18\\)",
+        "\\(20\\)",
+        "\\(24\\)"
+      ],
+      "statementZhHtml": "三维空间中所有距离线段 \\(\\overline{AB}\\) 不超过 \\(3\\) 个单位的点组成的区域体积为 \\(216\\pi\\)。\\(AB\\) 的长度是多少？",
+      "choicesZh": [
         "\\(6\\)",
         "\\(12\\)",
         "\\(18\\)",
@@ -134,12 +222,28 @@
         "three lines whose pairwise intersections are three distinct\npoints",
         "a triangle",
         "three rays with a common endpoint"
+      ],
+      "statementZhHtml": "设 \\(S\\) 是坐标平面中的点 \\((x,y)\\) 的集合，满足三个量 \\(3\\)，\\(x+2\\)、\\(y-4\\) 中有两个相等，而第三个量不大于这个公共值。下面哪一项正确描述了 \\(S\\)？",
+      "choicesZh": [
+        "一个点",
+        "两条相交直线",
+        "三条直线，且两两交于三个不同点",
+        "一个三角形",
+        "有共同端点的三条射线"
       ]
     },
     {
       "problemNumber": 13,
       "statementHtml": "Define a sequence recursively by \\(F_{0}=0,\\) \\(~F_{1}=1,\\) and \\(F_{n}=\\) the remainder when \\(F_{n-1}+F_{n-2}\\) is divided by \\(3,\\) for all \\(n\\geq 2.\\) Thus the sequence starts \\(0,\\) \\(1,\\) \\(1,\\) \\(2,\\) \\(0,\\) \\(2,\\) \\(\\ldots.\\) What is \\[F_{2017}+F_{2018}+F_{2019}+F_{2020}+\\]\\[F_{2021}+F_{2022}+F_{2023}+F_{2024}?\\]",
       "choices": [
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)",
+        "\\(9\\)",
+        "\\(10\\)"
+      ],
+      "statementZhHtml": "递归定义数列：\\(F_{0}=0\\)，\\(~F_{1}=1\\)，且对所有 \\(n\\geq 2\\)，\\(F_{n}=\\) \\(F_{n-1}+F_{n-2}\\) 除以 \\(3\\) 的余数。因此数列开头为 \\(0\\)，\\(1\\)，\\(1\\)，\\(2\\)，\\(0\\)，\\(2\\)，\\(\\ldots\\)。求 \\[F_{2017}+F_{2018}+F_{2019}+F_{2020}+\\] \\[F_{2021}+F_{2022}+F_{2023}+F_{2024}\\text{？}\\]",
+      "choicesZh": [
         "\\(6\\)",
         "\\(7\\)",
         "\\(8\\)",
@@ -156,12 +260,28 @@
         "\\(22\\%\\)",
         "\\(23\\%\\)",
         "\\(25\\%\\)"
+      ],
+      "statementZhHtml": "Roger 每周用零花钱买一张电影票和一杯汽水。上周 Roger 的零花钱是 \\(A\\) 美元。电影票价格是 \\(A\\) 与汽水价格之差的 \\(20\\%\\)，汽水价格是 \\(A\\) 与电影票价格之差的 \\(5\\%\\)。四舍五入到最接近的整数百分比，Roger 买电影票和汽水共花了 \\(A\\) 的百分之多少？",
+      "choicesZh": [
+        "\\(9\\%\\)",
+        "\\(19\\%\\)",
+        "\\(22\\%\\)",
+        "\\(23\\%\\)",
+        "\\(25\\%\\)"
       ]
     },
     {
       "problemNumber": 15,
       "statementHtml": "Chloé chooses a real number uniformly at random from the interval \\([0, 2017].\\)\n\nIndependently, Laurent chooses a real number uniformly at random from the interval \\([0, 4034].\\)\n\nWhat is the probability that Laurent’s number is greater than Chloé’s number?",
       "choices": [
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(\\dfrac{2}{3}\\)",
+        "\\(\\dfrac{3}{4}\\)",
+        "\\(\\dfrac{5}{6}\\)",
+        "\\(\\dfrac{7}{8}\\)"
+      ],
+      "statementZhHtml": "Chloe 从区间 \\([0, 2017]\\) 中均匀随机选择一个实数。\n\nLaurent 独立地从区间 \\([0, 4034]\\) 中均匀随机选择一个实数。\n\nLaurent 选择的数大于 Chloe 选择的数的概率是多少？",
+      "choicesZh": [
         "\\(\\dfrac{1}{2}\\)",
         "\\(\\dfrac{2}{3}\\)",
         "\\(\\dfrac{3}{4}\\)",
@@ -178,12 +298,28 @@
         "\\(4\\)",
         "\\(5\\)",
         "\\(6\\)"
+      ],
+      "statementZhHtml": "有 \\(10\\) 匹马，名字分别是 Horse \\(1\\)、Horse \\(2\\)、……、Horse \\(10\\)。Horse \\(k\\) 跑完圆形赛道一圈恰好需要 \\(k\\) 分钟。时刻 \\(0\\)，所有马都在起点。它们沿同一方向以恒定速度奔跑。\n\n所有 \\(10\\) 匹马再次同时回到起点的最小正时间 \\(S &gt; 0\\) 为 \\(S=2520\\) 分钟。设 \\(T &gt; 0\\) 是至少 \\(5\\) 匹马再次同时在起点的最小正时间。\\(T\\) 的各位数字之和是多少？",
+      "choicesZh": [
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)",
+        "\\(6\\)"
       ]
     },
     {
       "problemNumber": 17,
       "statementHtml": "Distinct points \\(P,\\) \\(Q,\\) \\(R,\\) \\(S\\) lie on the circle \\(x^{2}+y^{2}=25\\) and have integer coordinates. The distances \\(PQ\\) and \\(RS\\) are irrational numbers.\n\nWhat is the greatest possible value of the ratio \\(\\dfrac{PQ}{RS}?\\)",
       "choices": [
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(3\\sqrt{5}\\)",
+        "\\(7\\)",
+        "\\(5\\sqrt{2}\\)"
+      ],
+      "statementZhHtml": "不同点 \\(P\\)、\\(Q\\)、\\(R\\)、\\(S\\) 都在圆 \\(x^{2}+y^{2}=25\\) 上，并且坐标都是整数。距离 \\(PQ\\) 和 \\(RS\\) 都是无理数。\n\n比值 \\(\\dfrac{PQ}{RS}\\) 的最大可能值是多少？",
+      "choicesZh": [
         "\\(3\\)",
         "\\(5\\)",
         "\\(3\\sqrt{5}\\)",
@@ -200,12 +336,28 @@
         "\\(3\\)",
         "\\(4\\)",
         "\\(5\\)"
+      ],
+      "statementZhHtml": "Amelia 有一枚正面朝上的概率为 \\(\\frac{1}{3}\\) 的硬币，Blaine 有一枚正面朝上的概率为 \\(\\frac{2}{5}\\) 的硬币。Amelia 和 Blaine 轮流抛自己的硬币，直到有人抛出正面；第一个抛出正面的人获胜。所有抛硬币事件相互独立。Amelia 先抛。Amelia 获胜的概率为 \\(\\frac{p}{q}\\)，其中 \\(p\\)、\\(q\\) 是互质正整数。求 \\(q-p\\)。",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)"
       ]
     },
     {
       "problemNumber": 19,
       "statementHtml": "Alice refuses to sit next to either Bob or Carla. Derek refuses to sit next to Eric. How many ways are there for the five of them to sit in a row of \\(5\\) chairs under these conditions?",
       "choices": [
+        "\\(12\\)",
+        "\\(16\\)",
+        "\\(28\\)",
+        "\\(32\\)",
+        "\\(40\\)"
+      ],
+      "statementZhHtml": "Alice 拒绝坐在 Bob 或 Carla 旁边。Derek 拒绝坐在 Eric 旁边。在这些条件下，五个人坐成一排 \\(5\\) 把椅子有多少种方式？",
+      "choicesZh": [
         "\\(12\\)",
         "\\(16\\)",
         "\\(28\\)",
@@ -222,12 +374,28 @@
         "\\(12\\)",
         "\\(1239\\)",
         "\\(1265\\)"
+      ],
+      "statementZhHtml": "设 \\(S(n)\\) 表示正整数 \\(n\\) 的各位数字之和。例如，\\(S(1507) = 13\\)。对某个正整数 \\(n\\)，有 \\(S(n) = 1274\\)。\n\n下面哪一个值可能等于 \\(S(n+1)\\)？",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(3\\)",
+        "\\(12\\)",
+        "\\(1239\\)",
+        "\\(1265\\)"
       ]
     },
     {
       "problemNumber": 21,
       "statementHtml": "A square with side length \\(x\\) is inscribed in a right triangle with sides of length \\(3,\\) \\(4,\\) and \\(5\\) so that one vertex of the square coincides with the right-angle vertex of the triangle. A square with side length \\(y\\) is inscribed in another right triangle with sides of length \\(3,\\) \\(4,\\) and \\(5\\) so that one side of the square lies on the hypotenuse of the triangle. What is \\(\\dfrac{x}{y}?\\)",
       "choices": [
+        "\\(\\dfrac{12}{13}\\)",
+        "\\(\\dfrac{35}{37}\\)",
+        "\\(1\\)",
+        "\\(\\dfrac{37}{35}\\)",
+        "\\(\\dfrac{13}{12}\\)"
+      ],
+      "statementZhHtml": "一个边长为 \\(x\\) 的正方形内接于一个边长为 \\(3\\)、\\(4\\)、\\(5\\) 的直角三角形，使正方形的一个顶点与三角形的直角顶点重合。另一个边长为 \\(y\\) 的正方形内接于另一个边长为 \\(3\\)、\\(4\\)、\\(5\\) 的直角三角形，使正方形的一条边落在三角形的斜边上。求 \\(\\dfrac{x}{y}\\) 的值。",
+      "choicesZh": [
         "\\(\\dfrac{12}{13}\\)",
         "\\(\\dfrac{35}{37}\\)",
         "\\(1\\)",
@@ -244,12 +412,28 @@
         "\\(\\dfrac{1}{2}\\)",
         "\\(\\sqrt{3}-\\dfrac{2\\sqrt{3}\\pi}{9}\\)",
         "\\(\\dfrac{4}{3}-\\dfrac{4\\sqrt{3}\\pi}{27}\\)"
+      ],
+      "statementZhHtml": "等边三角形 \\(ABC\\) 的边 \\(\\overline{AB}\\) 和 \\(\\overline{AC}\\) 分别在点 \\(B\\) 和 \\(C\\) 处与一个圆相切。\\(\\triangle ABC\\) 的面积中，有多少比例在圆外？",
+      "choicesZh": [
+        "\\(\\dfrac{4\\sqrt{3}\\pi}{27}-\\dfrac{1}{3}\\)",
+        "\\(\\dfrac{\\sqrt{3}}{2}-\\dfrac{\\pi}{8}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(\\sqrt{3}-\\dfrac{2\\sqrt{3}\\pi}{9}\\)",
+        "\\(\\dfrac{4}{3}-\\dfrac{4\\sqrt{3}\\pi}{27}\\)"
       ]
     },
     {
       "problemNumber": 23,
       "statementHtml": "How many triangles with positive area have all their vertices at points \\((i,j)\\) in the coordinate plane, where \\(i\\) and \\(j\\) are integers between \\(1\\) and \\(5,\\) inclusive?",
       "choices": [
+        "\\(2128\\)",
+        "\\(2148\\)",
+        "\\(2160\\)",
+        "\\(2200\\)",
+        "\\(2300\\)"
+      ],
+      "statementZhHtml": "在坐标平面中，所有顶点都在点 \\((i,j)\\) 上、面积为正的三角形有多少个？其中 \\(i\\) 和 \\(j\\) 都是 \\(1\\) 到 \\(5\\) 之间的整数（含端点）。",
+      "choicesZh": [
         "\\(2128\\)",
         "\\(2148\\)",
         "\\(2160\\)",
@@ -266,6 +450,14 @@
         "\\(-7007\\)",
         "\\(-6006\\)",
         "\\(-5005\\)"
+      ],
+      "statementZhHtml": "对于某些实数 \\(a\\)、\\(b\\) 和 \\(c\\)，多项式 \\[g(x) = x^3 + ax^2 + x + 10\\] 有三个不同的根，并且 \\(g(x)\\) 的每个根也都是多项式 \\[ \\begin{aligned} f(x) &amp;= x^4 + x^3 \\\\ &amp;\\quad {}+ bx^2 + 100x + c \\end{aligned} \\] 的根。求 \\(f(1)\\)。",
+      "choicesZh": [
+        "\\(-9009\\)",
+        "\\(-8008\\)",
+        "\\(-7007\\)",
+        "\\(-6006\\)",
+        "\\(-5005\\)"
       ]
     },
     {
@@ -277,7 +469,16 @@
         "\\(270\\)",
         "\\(469\\)",
         "\\(486\\)"
+      ],
+      "statementZhHtml": "在 \\(100\\) 到 \\(999\\)（含端点）之间，有多少个整数具有如下性质：它的数字经过某种排列后，是一个从 \\(100\\) 到 \\(999\\) 的 \\(11\\) 的倍数？例如，\\(121\\) 和 \\(211\\) 都具有这个性质。",
+      "choicesZh": [
+        "\\(226\\)",
+        "\\(243\\)",
+        "\\(270\\)",
+        "\\(469\\)",
+        "\\(486\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2017A"
 }
