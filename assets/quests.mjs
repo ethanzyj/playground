@@ -6,6 +6,14 @@ import { problemStatement, problemChoice } from "./problem-language.mjs?v=202610
 
 const concepts = allConcepts();
 const stages = ["learn", "checkpoint", "practice", "vocabulary", "finish"];
+const worldIcons = {
+  "advanced-algebra": '<path d="m7 6 10 12M17 6 7 18M5 12h14"/>',
+  "advanced-geometry": '<path d="m12 4 9 16H3Z"/><path d="M7 20v-4h4"/>',
+  "solid-geometry": '<path d="m12 3 9 5v8l-9 5-9-5V8Z"/><path d="m3 8 9 5 9-5M12 13v8"/>',
+  "number-theory": '<path d="m10 4-4 16M18 4l-4 16M4 9h16M3 15h16"/>',
+  combinatorics: '<rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/>',
+  review: '<path d="M4 10a8 8 0 1 1 1 9M4 4v6h6"/><path d="M12 7v5l3 2"/>'
+};
 const html = (value) => String(value).replace(/[&<>"']/g, (character) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
 })[character]);
@@ -638,8 +646,8 @@ export class QuestPanel {
       ${coverage.complete ? `<p class="quest-conquest" role="status">${this.pair("全课程完成：全部知识点已学习、500 道真题已正确作答、144 个词汇已通过测验。", "Course complete: all concepts studied, all 500 AMC problems answered correctly, and all 144 glossary checks passed.")}</p>` : ""}
       <nav class="quest-worlds" aria-label="${html(this.text("任务世界", "Mission worlds"))}">${missionWorlds.map((world) => {
         const completed = world.missions.filter((mission) => conquered.some((item) => item.id === mission.id)).length;
-        return `<button class="mastery" type="button" data-quest-world="${world.id}" aria-pressed="${world.missions.some((mission) => mission.id === this.active)}">${this.pair(world.zh, world.en)} <span>${completed} / ${world.missions.length}</span></button>`;
-      }).join("")}<button class="mastery" type="button" data-quest-world="review" aria-pressed="${!earnsBadge}">${this.pair("综合复习", "Review quests")}</button></nav>
+        return `<button class="mastery quest-world-card" type="button" data-quest-world="${world.id}" aria-pressed="${world.missions.some((mission) => mission.id === this.active)}"><span class="quest-world-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${worldIcons[world.id]}</svg></span><span class="quest-world-name">${this.pair(world.zh, world.en)}</span><span class="quest-world-meta"><strong>${completed} <span>/ ${world.missions.length}</span></strong>${this.pair("徽章已获得", "badges earned")}</span></button>`;
+      }).join("")}<button class="mastery quest-world-card" type="button" data-quest-world="review" aria-pressed="${!earnsBadge}"><span class="quest-world-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${worldIcons.review}</svg></span><span class="quest-world-name">${this.pair("综合复习", "Review quests")}</span><span class="quest-world-meta">${this.pair("巩固所学 · 不计徽章", "Extra practice · no badges")}</span></button></nav>
       ${!earnsBadge ? `<p class="muted">${this.pair("综合复习保留原有进度，不计入知识点徽章。", "Broad reviews keep your original progress and do not count toward skill badges.")}</p>` : ""}
       ${navigation}<div class="section-heading"><div>${missionHeading}
       <p class="muted">${this.getUserId() ? this.pair("任务进度按账户保存并同步至数据库；未同步的更改仍保留在本浏览器。", "Quest progress syncs to the database per account; unsynced changes remain in this browser.") : this.pair("访客任务进度仅保存在本浏览器。", "Guest quest progress is saved in this browser only.")}</p></div></div>
