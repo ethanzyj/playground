@@ -2359,32 +2359,267 @@ a.problem-chip {
 }
 
 .quest-coverage {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   padding: 1rem;
   margin-bottom: 1rem;
   border: 1px solid var(--line);
   border-radius: 0.75rem;
+  background: var(--panel);
+}
+
+.quest-coverage > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.quest-coverage strong {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.quest-worlds .mastery {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.85rem;
+  background: var(--panel);
+  padding: 0.7rem 0.85rem;
+}
+
+.quest-worlds .mastery > span:last-child:not(.bilingual-pair) {
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.5rem;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.quests .section-heading .muted {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.quest-session-collection {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--panel);
+}
+
+.quest-session-collection > strong .bilingual-pair,
+.quest-progress-caption .bilingual-pair,
+.quest-resource-link .bilingual-pair,
+.quest-task .quest-study-link .bilingual-pair {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.quest-session-collection .quest-metric {
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.65rem;
+  background: var(--accent-soft);
+  font-size: 0.85rem;
+}
+
+.quest-resource-link {
+  display: inline-flex;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  text-underline-offset: 4px;
+}
+
+.quest-progress-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin: 0.65rem 0 1.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.quest-progress-caption strong {
+  color: var(--accent);
+}
+
+.quest-task {
+  line-height: 1.6;
+}
+
+.quest-task .notice {
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  box-shadow: none;
+}
+
+.quest-task .quest-lesson {
+  padding: 1rem 0;
+}
+
+.quest-task .quest-question {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: var(--accent-soft);
+}
+
+.quest-trophy {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--panel);
+}
+
+.quest-conquest h4 .bilingual-pair {
+  margin-block: 0.4rem;
+}
+
+.quests > progress {
+  height: 8px;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  accent-color: var(--accent);
+}
+
+.quests > progress::-webkit-progress-bar {
+  background: var(--line);
+}
+
+.quests > progress::-webkit-progress-value {
+  background: var(--accent);
+}
+
+.quests > progress::-moz-progress-bar {
+  background: var(--accent);
 }
 
 .quest-budget {
-  padding: 1rem;
+  padding: 1.1rem;
   border: 1px solid var(--line);
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   margin-bottom: 1rem;
+  background: var(--panel);
 }
 
 .quest-budget summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  list-style: none;
   cursor: pointer;
   line-height: 1.5;
 }
 
-.quest-budget summary .bilingual-pair {
+.quest-budget summary::-webkit-details-marker {
+  display: none;
+}
+
+.quest-budget-heading {
   display: inline-flex;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+}
+
+.quest-budget-heading svg {
+  flex: none;
+  color: var(--accent);
+}
+
+.quest-budget-total {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.75rem;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.quest-budget-total strong {
+  font-size: 1.5rem;
+}
+
+.quest-budget-total .bilingual-pair {
+  font-size: 0.75rem;
+}
+
+.quest-budget-chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg);
+  flex: none;
+}
+
+.quest-budget[open] .quest-budget-chevron {
+  transform: rotate(225deg);
+}
+
+.quest-budget summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+  border-radius: 0.5rem;
+}
+
+.quest-budget .quest-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+
+.quest-budget .quest-metric {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.55rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.quest-budget .quest-metric strong {
+  font-size: 1.25rem;
+}
+
+.quest-budget-value {
+  display: inline-flex;
   align-items: baseline;
-  gap: 0.35rem;
+  gap: 0.3rem;
+}
+
+.quest-budget-value small {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+
+.quest-budget .quest-metric-empty {
+  color: var(--muted);
+}
+
+.quest-budget .quest-metric-empty strong {
+  color: var(--muted);
+}
+
+.quest-budget-note {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
 }
 
 .quest-metrics {
@@ -2713,10 +2948,137 @@ a.problem-chip {
   gap: 0.75rem;
   min-height: 44px;
   padding: 0.7rem 1.15rem;
-  border-radius: 0.85rem;
+  border-radius: 0.65rem;
   font-weight: 700;
   text-decoration: none;
   transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.quest-task form > .mastery .bilingual-pair,
+.quest-explorer-link .bilingual-pair {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.quest-answer-success {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--success-strong);
+  border-radius: 1rem;
+  color: var(--success-strong);
+  background: var(--panel);
+}
+
+.quest-task {
+  position: relative;
+}
+
+.quest-success-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: start center;
+  padding: 3rem 1rem;
+  border-radius: inherit;
+  background: var(--panel);
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+  pointer-events: none;
+}
+
+.quest-success-overlay .quest-answer-success {
+  flex-direction: column;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.quest-problem-navigation {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 1rem;
+  margin-block: 1rem;
+  text-align: center;
+}
+
+.quest-problem-navigation h4 {
+  margin: 0;
+}
+
+.quest-problem-navigation span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.quest-practice-correct {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--success-strong);
+  font-weight: 700;
+}
+
+.quest-practice-correct > span:first-child {
+  font-size: 2rem;
+}
+
+.quest-success-symbol {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--success-strong);
+  color: var(--success-contrast);
+}
+
+.quest-answer-success > div {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.quest-answer-success strong {
+  font-size: 1.15rem;
+}
+
+.quest-task-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.quest-task-heading h3 {
+  margin: 0;
+}
+
+.quest-study-link {
+  display: inline-flex;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.quest-study-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.quest-study-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .quest-task form > .mastery {
@@ -2742,7 +3104,7 @@ a.problem-chip {
 .quest-explorer-link {
   margin-top: 0.85rem;
   border: 1px solid var(--line);
-  background: var(--panel);
+  background: transparent;
   color: var(--accent);
 }
 

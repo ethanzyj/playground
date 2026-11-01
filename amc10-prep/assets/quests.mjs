@@ -2,6 +2,7 @@ import { allConcepts, GLOSSARY, PROBLEM_REFERENCES } from "./data.mjs?v=20261026
 import { problemKey } from "./progress.mjs?v=20261024-11";
 import { QUEST_COURSE, courseCoverage } from "./quest-course.mjs?v=20261030-1";
 import { CloudQuests, mergeQuestProgress } from "./cloud-quests.mjs?v=20261030-1";
+import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
 
 const concepts = allConcepts();
 const stages = ["learn", "checkpoint", "practice", "vocabulary", "finish"];
@@ -199,12 +200,13 @@ export function validateQuestProgress(data) {
 }
 
 export class QuestPanel {
-  constructor({ mount, storage, getUserId, getClient = () => null, getLanguage, typeset, onAchievements = () => {}, syncEnabled = true, fetchImpl = (...args) => fetch(...args) }) {
+  constructor({ mount, storage, getUserId, getClient = () => null, getLanguage, typeset, onAchievements = () => {}, onIncorrectAnswer = () => {}, syncEnabled = true, fetchImpl = (...args) => fetch(...args) }) {
     this.mount = mount;
     this.storage = storage;
     this.getUserId = getUserId;
     this.getClient = getClient;
     this.onAchievements = onAchievements;
+    this.onIncorrectAnswer = onIncorrectAnswer;
     this.syncEnabled = syncEnabled;
     this.getLanguage = getLanguage;
     this.typeset = typeset;
@@ -268,7 +270,10 @@ export class QuestPanel {
     const identity = this.getUserId() || "guest";
     if (identity === this.identity) return;
     this.identity = identity;
+    this.practiceIndex = null;
+    this.quizIndices = {};
     this.viewStage = null;
+    this.success = null;
     this.key = `amc10-quests:${identity}`;
     this.data = { version: 1, quests: {} };
     this.error = "";
@@ -298,7 +303,10 @@ export class QuestPanel {
   selectMission(id) {
     questContent(id);
     this.active = id;
+    this.practiceIndex = null;
+    this.quizIndices = {};
     this.viewStage = null;
+    this.success = null;
     this.feedback = null;
     this.practiceError = "";
     this.grading = null;
@@ -306,7 +314,7 @@ export class QuestPanel {
     this.render();
   }
 
-  save(update) {
+  save(update, success = null, stayInPractice = false) {
     const identity = this.identity;
     this.load();
     if (identity !== this.identity) {
@@ -320,15 +328,45 @@ export class QuestPanel {
       validateQuestProgress(next);
       this.storage.setItem(this.key, JSON.stringify(next));
       this.data = next;
-      this.viewStage = null;
+      this.success = success;
+      this.viewStage = stayInPractice === true ? "practice" : stayInPractice || null;
       this.error = "";
       this.onAchievements(next, this.getUserId() || null);
       if (this.syncEnabled) this.cloud.queue(this.active, progress);
+      if (success) this.scheduleAdvance();
     } catch (error) {
       console.error("Unable to save quest progress.", error);
+      this.success = null;
       this.error = this.text("未保存任务进度，请检查浏览器存储并重试。", "Quest progress was not saved. Check browser storage and retry.");
     }
     this.render();
+  }
+
+  scheduleAdvance() {
+    const token = {};
+    this.advanceToken = token;
+    const identity = this.identity;
+    const mission = this.active;
+    const stage = this.viewStage;
+    this.mount.ownerDocument.defaultView.setTimeout(() => {
+      if (this.advanceToken !== token || !this.success || this.identity !== identity ||
+        (this.getUserId() || "guest") !== identity || this.active !== mission || this.viewStage !== stage) return;
+      const content = questContent(mission);
+      const progress = this.progress();
+      const items = stage === "practice" ? content.problems
+        : stage === "vocabulary" ? content.terms : content.concept.formulas;
+      const current = stage === "practice" ? this.practiceIndex : this.quizIndices[stage];
+      const unfinished = (i) => stage === "practice" ? !progress.problems.includes(problemKey(items[i]))
+        : stage === "vocabulary" ? !progress.terms.includes(items[i].en) : !progress.formulas.includes(i);
+      const next = items.map((_, i) => (current + 1 + i) % items.length).find(unfinished);
+      this.success = null;
+      this.feedback = null;
+      this.practiceError = "";
+      if (next === undefined) this.viewStage = null;
+      else if (stage === "practice") this.practiceIndex = next;
+      else this.quizIndices[stage] = next;
+      this.render();
+    }, 3000);
   }
 
   async loadPractice(problem) {
@@ -341,7 +379,7 @@ export class QuestPanel {
     this.practiceError = "";
     try {
       const responses = await Promise.all([
-        this.fetch(`assets/exams/${paper}.json`),
+        this.fetch(`assets/exams/${paper}.json?v=20261031-zh`),
         remote || this.answers ? Promise.resolve(null) : this.fetch("assets/answer-key.json")
       ]);
       if (!responses[0].ok || (responses[1] && !responses[1].ok)) throw new Error("Unable to load quest problem or answer key.");
@@ -370,12 +408,13 @@ export class QuestPanel {
   }
 
   async gradePractice(problem, answer) {
-    if (this.grading || this.blocked) return;
+    if (this.grading || this.blocked || this.progress().problems.includes(problemKey(problem))) return;
     const identity = this.identity;
     const active = this.active;
     const userId = this.getUserId();
     const token = {};
     this.grading = token;
+    this.success = null;
     this.gradingError = "";
     this.render();
     try {
@@ -399,10 +438,25 @@ export class QuestPanel {
         || this.getUserId() !== userId) return;
       if (!correct) {
         this.feedback = { zh: "答案不正确。检查计算与思路后重试。", en: "Incorrect answer. Check your calculation and approach, then retry." };
+        try {
+          await this.onIncorrectAnswer(problemKey(problem), userId);
+          if (this.grading === token && this.getUserId() === userId) {
+            this.feedback = {
+              zh: "答案不正确。已加入错题集；检查计算与思路后重试。",
+              en: "Incorrect answer. Added to Review collection; check your calculation and approach, then retry."
+            };
+          }
+        } catch (error) {
+          console.error("Unable to add quest problem to review collection.", error);
+          if (this.grading === token && this.getUserId() === userId) {
+            this.gradingError = this.text("未能加入错题集。请检查存储设置并重试。", "Could not save to your review collection. Check storage settings and retry.");
+          }
+        }
         return;
       }
       this.feedback = null;
-      this.save((value) => ({ ...value, problems: [...value.problems, problemKey(problem)] }));
+      this.save((value) => ({ ...value, problems: [...value.problems, problemKey(problem)] }),
+        `${problem.year} ${problem.exam} #${problem.problemNumber}`, true);
     } catch (error) {
       console.error("Unable to grade quest practice.", error);
       if (this.grading !== token) return;
@@ -432,8 +486,16 @@ export class QuestPanel {
   }
 
   quiz(content, progress, vocabulary) {
-    const index = vocabulary ? content.terms.findIndex((term) => !progress.terms.includes(term.en))
-      : content.concept.formulas.findIndex((_, i) => !progress.formulas.includes(i));
+    const kind = vocabulary ? "vocabulary" : "checkpoint";
+    this.quizIndices ||= {};
+    if (this.quizIndices[kind] == null) {
+      const unfinished = vocabulary ? content.terms.findIndex((term) => !progress.terms.includes(term.en))
+        : content.concept.formulas.findIndex((_, i) => !progress.formulas.includes(i));
+      this.quizIndices[kind] = Math.max(0, unfinished);
+    }
+    const index = this.quizIndices[kind];
+    const total = vocabulary ? content.terms.length : content.concept.formulas.length;
+    const solved = vocabulary ? progress.terms.includes(content.terms[index].en) : progress.formulas.includes(index);
     const term = content.terms[index];
     const note = content.concept.formulaNotes[index];
     const correct = vocabulary
@@ -455,10 +517,15 @@ export class QuestPanel {
       index + content.concept.id.length);
     return `<p>${challenge ? content.concept.challenges ? this.pair("运用本关知识，选择正确答案。", "Apply this skill and choose the correct answer.") : this.pair("选择正确的因式分解。", "Choose the correct factorization.") : this.pair("选择正确的含义。", "Choose the correct meaning.")}</p>
       <p class="quest-question">${vocabulary ? this.pair(term.zh, term.en) : `\\(${html(challenge?.question || content.concept.formulas[index])}\\)`}</p>
-      <p class="muted">${index + 1} / ${vocabulary ? content.terms.length : content.concept.formulas.length}</p>
+      <div class="quest-problem-navigation">
+        <button id="questQuizPrevious" class="quest-nav-icon" type="button" aria-label="${html(this.text("上一题", "Previous question"))}" ${index === 0 ? "disabled" : ""}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button>
+        <span>${index + 1} / ${total}</span>
+        <button id="questQuizNext" class="quest-nav-icon" type="button" aria-label="${html(this.text("下一题", "Next question"))}" ${index === total - 1 ? "disabled" : ""}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button>
+      </div>
+      ${solved && !this.success ? `<p class="quest-practice-correct" role="status"><span aria-hidden="true">&#10003;</span>${this.pair("已完成此题", "You’ve completed this question")}</p>` : ""}
       <form id="questQuiz"><fieldset><legend>${this.pair("含义", "Meaning")}</legend>
-        ${options.map((option, i) => `<label class="quest-choice"><input type="radio" name="questAnswer" value="${i}" required ${this.blocked ? "disabled" : ""}>${option.math ? `\\(${html(option.math)}\\)` : this.pair(option.zh, option.en)}</label>`).join("")}
-      </fieldset><button class="mastery" ${this.blocked ? "disabled" : ""}>${this.pair("检查答案", "Check answer")}</button></form>
+        ${options.map((option, i) => `<label class="quest-choice"><input type="radio" name="questAnswer" value="${i}" required ${this.blocked || solved ? "disabled" : ""}>${option.math ? `\\(${html(option.math)}\\)` : this.pair(option.zh, option.en)}</label>`).join("")}
+      </fieldset><button class="mastery" ${this.blocked || solved ? "disabled" : ""}>${this.pair("检查答案", "Check answer")}</button></form>
       ${this.feedback ? `<p role="status" class="quest-feedback">${this.pair(this.feedback.zh, this.feedback.en)}</p>` : ""}`;
   }
 
@@ -500,41 +567,44 @@ export class QuestPanel {
         <p class="muted">${this.pair("阅读公式及其条件，再进入测验。", "Read each formula and its conditions, then take the checkpoint.")}</p>
         <button id="questLearned" class="mastery" ${this.blocked ? "disabled" : ""}>${this.pair("开始测验", "Start checkpoint")}</button>`;
     } else if (stage === "checkpoint" || stage === "vocabulary") {
-      const complete = stage === "checkpoint" ? progress.formulas.length === content.concept.formulas.length
-        : progress.terms.length === content.terms.length;
+      const complete = stage === "checkpoint" ? content.concept.formulas.length === 0
+        : content.terms.length === 0;
       body = complete ? `<p class="quest-feedback">${this.pair("本步骤已完成。可在这里复习，完成记录不会改变。", "This step is complete. Review it here without changing your progress.")}</p>
         ${stage === "checkpoint" ? content.concept.formulas.map((formula, i) => `<section class="quest-lesson"><p>\\(${html(formula)}\\)</p><p>${this.pair(content.concept.formulaNotes[i].explanationZh, content.concept.formulaNotes[i].explanationEn)}</p></section>`).join("")
           : content.terms.map((term) => `<section class="quest-lesson"><h4>${this.pair(term.zh, term.en)}</h4><p>${this.pair(term.noteZh, term.noteEn)}</p></section>`).join("")}`
         : this.quiz(content, progress, stage === "vocabulary");
     } else if (stage === "practice") {
-      if (progress.problems.length === content.problems.length) {
-        body = `<p class="quest-feedback">${this.pair("本关真题已全部正确作答。选择题目即可复习。", "All mission problems have been answered correctly. Open a problem to review it.")}</p>
-          <ul>${content.problems.map((problem) => `<li><a href="?problem=${problemKey(problem)}" target="_blank" rel="noopener">${html(`${problem.year} ${problem.exam} #${problem.problemNumber}`)}</a></li>`).join("")}</ul>`;
-      } else {
-      const problem = content.problems.find((item) => !progress.problems.includes(problemKey(item)));
+      if (this.practiceIndex == null) {
+        const unfinished = content.problems.findIndex((item) => !progress.problems.includes(problemKey(item)));
+        this.practiceIndex = unfinished < 0 ? 0 : unfinished;
+      }
+      const problem = content.problems[this.practiceIndex];
+      const solved = progress.problems.includes(problemKey(problem));
       const exam = this.papers.get(`${problem.year}${problem.exam.slice(-1)}`);
       const question = exam?.problems[problem.problemNumber - 1];
-      body = `<p class="notice">${this.pair("请先在纸上解题，再选择答案。答案来源：LIVE by Po-Shen Loh；不显示解析。题目版权归 MAA 所有。", "Solve on paper before choosing an answer. Answer key: LIVE by Po-Shen Loh; solutions are not shown. AMC problems © MAA.")}</p>
-        ${content.concept.bridgeEn ? `<details class="quest-lesson"><summary>${this.pair("需要一点提示？", "Need a bridge to the AMC problem?")}</summary><p>${this.pair(content.concept.bridgeZh, content.concept.bridgeEn)}</p></details>` : ""}
-        <h4>${html(`${problem.year} ${problem.exam} #${problem.problemNumber}`)}</h4>
-        <p>${progress.problems.length + 1} / ${content.problems.length}</p>
+      body = `${content.concept.bridgeEn ? `<details class="quest-lesson"><summary>${this.pair("需要一点提示？", "Need a bridge to the AMC problem?")}</summary><p>${this.pair(content.concept.bridgeZh, content.concept.bridgeEn)}</p></details>` : ""}
+        <div class="quest-problem-navigation">
+          <button type="button" id="questProblemPrevious" class="quest-nav-icon" aria-label="${html(this.text("上一题", "Previous problem"))}" ${this.practiceIndex === 0 ? "disabled" : ""}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button>
+          <div><h4>${html(`${problem.year} ${problem.exam} #${problem.problemNumber}`)}</h4><span>${this.practiceIndex + 1} / ${content.problems.length}</span></div>
+          <button type="button" id="questProblemNext" class="quest-nav-icon" aria-label="${html(this.text("下一题", "Next problem"))}" ${this.practiceIndex === content.problems.length - 1 ? "disabled" : ""}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button>
+        </div>
+        ${solved && !this.success ? `<p class="quest-practice-correct" role="status"><span aria-hidden="true">&#10003;</span>${this.pair("已完成此题", "You’ve completed this question")}</p>` : ""}
         ${this.practiceError ? `<p role="alert">${html(this.practiceError)}</p><button id="questRetry" class="mastery">${this.pair("重试", "Retry")}</button>`
-          : question && (this.getUserId() || this.answers) ? `<div class="quest-statement">${question.statementHtml}</div>
+          : question && (this.getUserId() || this.answers) ? `<div class="quest-statement">${problemStatement(question, this.getLanguage(), problem)}</div>
             <form id="questPractice"><fieldset><legend>${this.pair("选择答案", "Choose your answer")}</legend>
-              ${question.choices.map((choice, index) => `<label class="quest-choice"><input name="questPracticeAnswer" type="radio" required value="${"ABCDE"[index]}" ${this.blocked || this.grading ? "disabled" : ""}><span>${"ABCDE"[index]}. ${choice}</span></label>`).join("")}
-            </fieldset><button class="mastery" ${this.blocked || this.grading ? "disabled" : ""}>${this.grading ? this.pair("评分中……", "Checking…") : this.pair("检查答案", "Check answer")}</button></form>`
+              ${question.choices.map((_, index) => `<label class="quest-choice"><input name="questPracticeAnswer" type="radio" required value="${"ABCDE"[index]}" ${this.blocked || this.grading || solved ? "disabled" : ""}><span>${"ABCDE"[index]}.</span>${problemChoice(question, index, this.getLanguage())}</label>`).join("")}
+            </fieldset><button class="mastery" ${this.blocked || this.grading || solved ? "disabled" : ""}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>${this.grading ? this.pair("评分中……", "Checking…") : this.pair("检查答案", "Check answer")}</button></form>`
             : `<p role="status">${this.pair("加载题目中……", "Loading problem…")}</p>`}
         ${this.feedback ? `<p role="status" class="quest-feedback">${this.pair(this.feedback.zh, this.feedback.en)}</p>
           <a href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener">${this.pair("查看来源解析（含答案）", "Review source solution (reveals answer)")}</a>` : ""}
         ${this.gradingError ? `<p role="alert">${html(this.gradingError)}</p>` : ""}
         <a class="quest-explorer-link" href="?problem=${problemKey(problem)}" target="_blank" rel="noopener">${this.pair("在真题索引中查看", "Open in Problem Explorer")}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>`;
-      }
     } else {
       body = `<div class="quest-conquest" role="status">${earnsBadge ? '<span class="quest-badge" aria-hidden="true">&#9733;</span>' : ""}
         <h4>${earnsBadge ? this.pair("任务完成徽章", "Mission completion badge") : this.pair("综合复习完成", "Review complete")}: ${this.pair(content.concept.zh, content.concept.en)}</h4>
         <p>${this.pair("已通过本关挑战、所选真题及全部相关词汇测验。", "You cleared the checkpoints, selected AMC problems, and every vocabulary challenge in this mission.")}</p></div>
         <p class="muted">${earnsBadge ? this.pair("完成记录与其他页面联动：真题正确作答、词汇检查，以及整个知识点的全部任务完成后更新掌握标记。", "Completion is linked to the other tabs: correct AMC answers, glossary checks, and concept mastery after every session for that concept is complete.") : this.pair("这不是完整的数学能力认证，也不会自动修改掌握标记。", "This is not a complete assessment of mathematical mastery and does not automatically change your mastery marks.")}</p>
-        <a href="?concept=${content.concept.studyConceptId || content.concept.id}" target="_blank" rel="noopener">${this.pair("回到学习指南", "Return to Study Guide")}</a>`;
+        <a class="quest-study-link" href="?concept=${content.concept.studyConceptId || content.concept.id}" target="_blank" rel="noopener">${this.pair("回到学习指南", "Return to Study Guide")}</a>`;
     }
     const conquered = badgeMissions.filter((concept) => {
       const saved = this.data.quests[concept.id];
@@ -573,20 +643,20 @@ export class QuestPanel {
       ${!earnsBadge ? `<p class="muted">${this.pair("综合复习保留原有进度，不计入知识点徽章。", "Broad reviews keep your original progress and do not count toward skill badges.")}</p>` : ""}
       ${navigation}<div class="section-heading"><div>${missionHeading}
       <p class="muted">${this.getUserId() ? this.pair("任务进度按账户保存并同步至数据库；未同步的更改仍保留在本浏览器。", "Quest progress syncs to the database per account; unsynced changes remain in this browser.") : this.pair("访客任务进度仅保存在本浏览器。", "Guest quest progress is saved in this browser only.")}</p></div></div>
-      ${budget ? `<details class="quest-budget" open><summary>${this.pair("本关学习预算", "Session study budget")}: ${budget.total} ${this.pair("分钟（估计）", "minutes (estimated)")}</summary>
+      ${budget ? `<details class="quest-budget" open><summary><span class="quest-budget-heading"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>${this.pair("本关学习预算", "Session study budget")}</span><span class="quest-budget-total"><strong>${budget.total}</strong>${this.pair("分钟 · 预计", "min · estimated")}</span><span class="quest-budget-chevron" aria-hidden="true"></span></summary>
         <p class="quest-metrics">${[
           ["学习", "Lesson", budget.lesson], ["小测", "Checkpoint", budget.checkpoint],
           ["真题", "AMC practice", budget.practice], ["词汇", "Vocabulary", budget.vocabulary],
           ["复盘", "Review", budget.review]
-        ].map(([zh, en, value]) => `<span class="quest-metric">${this.pair(zh, en)}<strong>${value}</strong></span>`).join("")}</p>
-        <p class="muted">${this.pair("目标是一次 45–60 分钟的学习。难题或重试可能更久；没有倒计时，进度可保存。徽章要求通过所有任务，不要求等待一小时。", "Designed for a 45–60 minute sitting. Hard problems and retries may take longer; there is no timer and progress is saved. Earn the badge by passing every task, not by waiting an hour.")}</p></details>` : ""}
+        ].map(([zh, en, value]) => `<span class="quest-metric ${value === 0 ? "quest-metric-empty" : ""}">${this.pair(zh, en)}<span class="quest-budget-value"><strong>${value}</strong><small>${html(this.text("分钟", "mins"))}</small></span></span>`).join("")}</p>
+        <p class="quest-budget-note muted">${this.pair("建议一次学习 45–60 分钟，可随时暂停。通过任务即可获得徽章，无需等待计时结束；难题和重试可能需要更久。", "Designed for a 45–60 minute sitting. Pause anytime. Earn the badge by completing the tasks, not waiting out a timer; hard problems and retries may take longer.")}</p></details>` : ""}
       ${earnsBadge ? `<div class="quest-session-collection"><strong>${this.pair("本徽章已收集", "Collected for this badge")}</strong>
         <p class="quest-metrics">${[
           ["小测", "Checkpoints", progress.formulas.length, content.concept.formulas.length],
           ["真题", "AMC problems", progress.problems.length, content.problems.length],
           ["词汇", "Glossary", progress.terms.length, content.terms.length]
         ].map(([zh, en, value, total]) => `<span class="quest-metric">${this.pair(zh, en)}<strong>${value}/${total}</strong></span>`).join("")}</p></div>
-        <a href="?glossary-concept=${content.concept.studyConceptId}" target="_blank" rel="noopener">${this.pair("查看相关词汇", "Open related Glossary")}</a>` : ""}
+        <a class="quest-resource-link" href="?glossary-concept=${content.concept.studyConceptId}" target="_blank" rel="noopener">${this.pair("查看相关词汇", "Open related Glossary")}</a>` : ""}
       ${this.error ? `<p class="notice" role="alert">${html(this.error)}</p>` : ""}
       ${this.syncError ? `<p class="notice" role="alert">${html(this.syncError)}</p><button id="questSyncRetry" type="button" class="mastery">${this.pair("重试同步", "Retry sync")}</button>` : ""}
       <p role="status" data-quest-sync-status ${this.syncPending ? "" : "hidden"}>${this.pair("待同步任务", "Missions pending sync")}: ${this.syncPending}</p>
@@ -598,13 +668,18 @@ export class QuestPanel {
           ${this.pair(...labels[item])}</button></li>`;
       }).join("")}</ol>
       <progress max="${total}" value="${done}" aria-label="${html(this.text("任务进度", "Quest progress"))}"></progress>
-      <p>${done} / ${total} · ${this.pair("挑战完成", "challenges cleared")}</p><section class="card quest-task"><h3>${this.pair(...labels[stage])}</h3>${body}</section>`;
+      <p class="quest-progress-caption"><strong>${done} / ${total}</strong>${this.pair("挑战完成", "challenges cleared")}</p>
+      <section class="card quest-task">
+      ${this.success ? `<div class="quest-success-overlay"><div class="quest-answer-success" role="status"><span class="quest-success-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg></span><strong>${this.pair("回答正确！", "Correct answer!")}</strong></div></div>` : ""}
+      <div class="quest-task-heading"><h3>${this.pair(...labels[stage])}</h3>
+        ${stage === "learn" ? `<a class="quest-study-link" href="?concept=${content.concept.studyConceptId || content.concept.id}" target="_blank" rel="noopener">${this.pair("打开相关学习指南", "Open related Study Guide")}</a>` : ""}</div>${body}</section>`;
     this.mount.querySelector("#questConcept").addEventListener("change", (event) => {
       this.selectMission(event.target.value);
     });
     this.mount.querySelectorAll("[data-quest-stage]").forEach((button) => {
       button.addEventListener("click", () => {
         this.viewStage = button.dataset.questStage;
+        this.success = null;
         this.feedback = null;
         this.grading = null;
         this.gradingError = "";
@@ -640,8 +715,20 @@ export class QuestPanel {
       }
       this.save((value) => ({ ...value, learned: true }));
     });
-    if (stage === "practice" && progress.problems.length < content.problems.length) {
-      const problem = content.problems.find((item) => !progress.problems.includes(problemKey(item)));
+    if (stage === "practice") {
+      const problem = content.problems[this.practiceIndex];
+      for (const [id, offset] of [["questProblemPrevious", -1], ["questProblemNext", 1]]) {
+        this.mount.querySelector(`#${id}`).addEventListener("click", () => {
+          this.practiceIndex += offset;
+          this.feedback = null;
+          this.success = null;
+          this.practiceError = "";
+          this.gradingError = "";
+          this.grading = null;
+          this.render();
+          this.mount.querySelector(`#${id}:not(:disabled), #${offset > 0 ? "questProblemPrevious" : "questProblemNext"}`)?.focus();
+        });
+      }
       this.mount.querySelector("#questRetry")?.addEventListener("click", () => {
         this.practiceError = "";
         this.render();
@@ -649,7 +736,7 @@ export class QuestPanel {
       this.mount.querySelector("#questPractice")?.addEventListener("submit", (event) => {
         event.preventDefault();
         const selected = this.mount.querySelector('input[name="questPracticeAnswer"]:checked');
-        if (!selected || this.blocked) return;
+        if (!selected || this.blocked || progress.problems.includes(problemKey(problem))) return;
         this.gradePractice(problem, selected.value);
       });
       if (!this.practiceError) this.loadPractice(problem);
@@ -659,11 +746,12 @@ export class QuestPanel {
       const selected = this.mount.querySelector('input[name="questAnswer"]:checked');
       if (!selected || this.blocked) return;
       const vocabulary = stage === "vocabulary";
-      const index = vocabulary ? content.terms.findIndex((term) => !progress.terms.includes(term.en))
-        : content.concept.formulas.findIndex((_, i) => !progress.formulas.includes(i));
+      const index = this.quizIndices[stage];
+      if (vocabulary ? progress.terms.includes(content.terms[index].en) : progress.formulas.includes(index)) return;
       const count = this.mount.querySelectorAll('input[name="questAnswer"]').length;
       const correctIndex = (count - (index + content.concept.id.length) % count) % count;
       if (Number(selected.value) !== correctIndex) {
+        this.success = null;
         const explanation = vocabulary ? content.terms[index] : content.concept.formulaNotes[index];
         this.feedback = {
           zh: `还不正确。请回顾：${vocabulary ? explanation.noteZh : explanation.explanationZh}`,
@@ -675,8 +763,18 @@ export class QuestPanel {
       this.feedback = null;
       this.save((value) => vocabulary
         ? { ...value, terms: [...value.terms, content.terms[index].en] }
-        : { ...value, formulas: [...value.formulas, index] });
+        : { ...value, formulas: [...value.formulas, index] },
+      vocabulary ? content.terms[index].en : this.text("概念测验", "Checkpoint"), stage);
     });
+    for (const [id, offset] of [["questQuizPrevious", -1], ["questQuizNext", 1]]) {
+      this.mount.querySelector(`#${id}`)?.addEventListener("click", () => {
+        this.quizIndices[stage] += offset;
+        this.feedback = null;
+        this.success = null;
+        this.render();
+        this.mount.querySelector(`#${id}:not(:disabled), #${offset > 0 ? "questQuizPrevious" : "questQuizNext"}`)?.focus();
+      });
+    }
     this.typeset(this.mount);
   }
 }

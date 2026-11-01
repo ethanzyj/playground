@@ -13,12 +13,28 @@
         "\\(\\dfrac{33}{10}\\)",
         "\\(\\dfrac{109}{33}\\)",
         "\\(\\dfrac{15}{4}\\)"
+      ],
+      "statementZhHtml": "求下式的值：\\[3+\\dfrac{1}{3+\\dfrac{1}{3+\\dfrac{1}{3}}}\\text{？}\\]",
+      "choicesZh": [
+        "\\(\\dfrac{31}{10}\\)",
+        "\\(\\dfrac{49}{15}\\)",
+        "\\(\\dfrac{33}{10}\\)",
+        "\\(\\dfrac{109}{33}\\)",
+        "\\(\\dfrac{15}{4}\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "Mike cycled \\(15\\) laps in \\(57\\) minutes. Assume he cycled at a constant speed throughout. Approximately how many laps did he complete in the first \\(27\\) minutes?",
       "choices": [
+        "\\(5\\)",
+        "\\(7\\)",
+        "\\(9\\)",
+        "\\(11\\)",
+        "\\(13\\)"
+      ],
+      "statementZhHtml": "Mike 骑了 \\(15\\) 圈，用时 \\(57\\) 分钟。假设他全程速度不变，那么他在前 \\(27\\) 分钟大约骑了多少圈？",
+      "choicesZh": [
         "\\(5\\)",
         "\\(7\\)",
         "\\(9\\)",
@@ -35,12 +51,28 @@
         "\\(3\\)",
         "\\(4\\)",
         "\\(5\\)"
+      ],
+      "statementZhHtml": "三个数的和为 \\(96\\)。第一个数是第三个数的 \\(6\\) 倍，第三个数比第二个数少 \\(40\\)。第一个数与第二个数之差的绝对值是多少？",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "In some countries, automobile fuel efficiency is measured in liters per \\(100\\) kilometers while other countries use miles per gallon. Suppose that \\(1\\) kilometer equals \\(m\\) miles, and \\(1\\) gallon equals \\(l\\) liters. Which of the following gives the fuel efficiency in liters per \\(100\\) kilometers for a car that gets \\(x\\) miles per gallon?",
       "choices": [
+        "\\(\\dfrac{x}{100lm}\\)",
+        "\\(\\dfrac{xlm}{100}\\)",
+        "\\(\\dfrac{lm}{100x}\\)",
+        "\\(\\dfrac{100}{xlm}\\)",
+        "\\(\\dfrac{100lm}{x}\\)"
+      ],
+      "statementZhHtml": "在一些国家，汽车燃油效率用每 \\(100\\) 千米消耗多少升来衡量；另一些国家则用每加仑行驶多少英里来衡量。设 \\(1\\) 千米等于 \\(m\\) 英里，\\(1\\) 加仑等于 \\(l\\) 升。下列哪个式子给出每 \\(100\\) 千米的耗油升数，若汽车每加仑行驶 \\(x\\) 英里？",
+      "choicesZh": [
         "\\(\\dfrac{x}{100lm}\\)",
         "\\(\\dfrac{xlm}{100}\\)",
         "\\(\\dfrac{lm}{100x}\\)",
@@ -57,12 +89,28 @@
         "\\(2 - \\sqrt{2}\\)",
         "\\(1 - \\dfrac{\\sqrt{2}}{4}\\)",
         "\\(\\dfrac{2}{3}\\)"
+      ],
+      "statementZhHtml": "正方形 \\(ABCD\\) 的边长为 \\(1\\)。点 \\(P\\)、\\(Q\\)、\\(R\\)、\\(S\\) 分别在 \\(ABCD\\) 的边上，使得 \\(APQCRS\\) 是一个等边凸六边形，边长为 \\(s\\)。求 \\(s\\)。",
+      "choicesZh": [
+        "\\(\\dfrac{\\sqrt{2}}{3}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(2 - \\sqrt{2}\\)",
+        "\\(1 - \\dfrac{\\sqrt{2}}{4}\\)",
+        "\\(\\dfrac{2}{3}\\)"
       ]
     },
     {
       "problemNumber": 6,
       "statementHtml": "Which expression is equal to \\[\\left|a-2-\\sqrt{(a-1)^2}\\right|\\] for \\(a &lt; 0?\\)",
       "choices": [
+        "\\(3 - 2a\\)",
+        "\\(1 - a\\)",
+        "\\(1\\)",
+        "\\(a + 1\\)",
+        "\\(3\\)"
+      ],
+      "statementZhHtml": "当 \\(a &lt; 0\\) 时，下列表达式等于 \\[\\left|a-2-\\sqrt{(a-1)^2}\\right|\\] 中的哪一个？",
+      "choicesZh": [
         "\\(3 - 2a\\)",
         "\\(1 - a\\)",
         "\\(1\\)",
@@ -79,12 +127,28 @@
         "\\(8\\)",
         "\\(9\\)",
         "\\(12\\)"
+      ],
+      "statementZhHtml": "正整数 \\(n\\) 与 \\(18\\) 的最小公倍数为 \\(180\\)，且 \\(n\\) 与 \\(45\\) 的最大公因数为 \\(15\\)。求 \\(n\\) 的各位数字之和。",
+      "choicesZh": [
+        "\\(3\\)",
+        "\\(6\\)",
+        "\\(8\\)",
+        "\\(9\\)",
+        "\\(12\\)"
       ]
     },
     {
       "problemNumber": 8,
       "statementHtml": "A data set consists of \\(6\\) (not distinct) positive integers: \\(1,\\) \\(7,\\) \\(5,\\) \\(2,\\) \\(5,\\) and \\(X.\\) The average (arithmetic mean) of the \\(6\\) numbers equals a value in the data set. What is the sum of all possible values of \\(X?\\)",
       "choices": [
+        "\\(10\\)",
+        "\\(26\\)",
+        "\\(32\\)",
+        "\\(36\\)",
+        "\\(40\\)"
+      ],
+      "statementZhHtml": "一个数据集由 \\(6\\) 个不一定互异的正整数组成：\\(1\\)、\\(7\\)、\\(5\\)、\\(2\\)、\\(5\\)、\\(X\\)。这 \\(6\\) 个数的平均数等于数据集中的某个数。所有可能的 \\(X\\) 值之和是多少？",
+      "choicesZh": [
         "\\(10\\)",
         "\\(26\\)",
         "\\(32\\)",
@@ -101,12 +165,28 @@
         "\\(360\\)",
         "\\(540\\)",
         "\\(720\\)"
+      ],
+      "statementZhHtml": "如图，一个长方形被分成 \\(5\\) 个区域。每个区域要涂成纯色，可选颜色为红、橙、黄、蓝、绿。相邻接的区域颜色必须不同，颜色可以重复使用。共有多少种不同涂色方法？\n\n<img src=\"assets/exams/images/amc10/2022A/9.svg\" alt=\"Diagram for problem 9\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(120\\)",
+        "\\(270\\)",
+        "\\(360\\)",
+        "\\(540\\)",
+        "\\(720\\)"
       ]
     },
     {
       "problemNumber": 10,
       "statementHtml": "Daniel finds a rectangular index card and measures its diagonal to be \\(8\\) centimeters. Daniel then cuts out equal squares of side \\(1\\) cm at two opposite corners of the index card and measures the distance between the two closest vertices of these squares to be \\(4 \\sqrt{2}\\) centimeters, as shown below. What is the area of the original index card?\n\n<img src=\"assets/exams/images/amc10/2022A/10.svg\" alt=\"Diagram for problem 10\" loading=\"lazy\">",
       "choices": [
+        "\\(14\\)",
+        "\\(10 \\sqrt{2}\\)",
+        "\\(16\\)",
+        "\\(12 \\sqrt{2}\\)",
+        "\\(18\\)"
+      ],
+      "statementZhHtml": "Daniel 找到一张长方形索引卡片，量得其对角线为 \\(8\\) 厘米。然后他在卡片的两个相对角各剪去一个边长为 \\(1\\) 厘米的正方形，并量得这两个正方形最近的两个顶点之间的距离为 \\(4 \\sqrt{2}\\) 厘米，如下图所示。原索引卡片的面积是多少？\n\n<img src=\"assets/exams/images/amc10/2022A/10.svg\" alt=\"Diagram for problem 10\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(14\\)",
         "\\(10 \\sqrt{2}\\)",
         "\\(16\\)",
@@ -123,12 +203,28 @@
         "\\(7\\)",
         "\\(8\\)",
         "\\(9\\)"
+      ],
+      "statementZhHtml": "Ted 错把 \\[2^m\\cdot\\sqrt{\\dfrac{1}{4096}}\\] 写成了 \\[2\\cdot\\sqrt[m]{\\dfrac{1}{4096}}\\text{。}\\]\n\n求使这两个表达式值相等的所有实数 \\(m\\) 之和。",
+      "choicesZh": [
+        "\\(5\\)",
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)",
+        "\\(9\\)"
       ]
     },
     {
       "problemNumber": 12,
       "statementHtml": "On Halloween \\(31\\) children walked into the principal’s office asking for candy. They can be classified into three types: Some always lie; some always tell the truth; and some alternately lie and tell the truth. The alternaters arbitrarily choose their first response, either a lie or the truth, but each subsequent statement has the opposite truth value from its predecessor. The principal asked everyone the same three questions in this order.\n\n“Are you a truth-teller?” The principal gave a piece of candy to each of the \\(22\\) children who answered yes.\n\n“Are you an alternater?” The principal gave a piece of candy to each of the \\(15\\) children who answered yes.\n\n“Are you a liar?” The principal gave a piece of candy to each of the \\(9\\) children who answered yes.\n\nHow many pieces of candy in all did the principal give to the children who always tell the truth?",
       "choices": [
+        "\\(7\\)",
+        "\\(12\\)",
+        "\\(21\\)",
+        "\\(27\\)",
+        "\\(31\\)"
+      ],
+      "statementZhHtml": "万圣节时，\\(31\\) 个孩子走进校长办公室要糖果。他们可分为三类：有些总是说谎，有些总是说真话，还有些真话和谎话交替说。交替者可以任意选择第一次回答是真话还是谎话，但之后每次回答的真假都与前一次相反。校长按顺序问每个人同样的三个问题。\n\n“你是说真话者吗？”校长给每个回答“是”的孩子一颗糖，共有 \\(22\\) 人回答“是”。\n\n“你是交替者吗？”校长给每个回答“是”的孩子一颗糖，共有 \\(15\\) 人回答“是”。\n\n“你是说谎者吗？”校长给每个回答“是”的孩子一颗糖，共有 \\(9\\) 人回答“是”。\n\n校长总共给那些总是说真话的孩子多少颗糖？",
+      "choicesZh": [
         "\\(7\\)",
         "\\(12\\)",
         "\\(21\\)",
@@ -145,12 +241,28 @@
         "\\(10\\)",
         "\\(11\\)",
         "\\(12\\)"
+      ],
+      "statementZhHtml": "设 \\(\\triangle ABC\\) 是不等边三角形。点 \\(P\\) 在 \\(\\overline{BC}\\) 上，且 \\(\\overline{AP}\\) 平分 \\(\\angle BAC\\)。过 \\(B\\) 作垂直于 \\(\\overline{AP}\\) 的直线，与过 \\(A\\) 且平行于 \\(\\overline{BC}\\) 的直线交于点 \\(D\\)。若 \\(BP = 2\\) 且 \\(PC = 3\\)，求 \\(AD\\)。",
+      "choicesZh": [
+        "\\(8\\)",
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(11\\)",
+        "\\(12\\)"
       ]
     },
     {
       "problemNumber": 14,
       "statementHtml": "How many ways are there to split the integers \\(1\\) through \\(14\\) into \\(7\\) pairs such that in each pair, the greater number is at least \\(2\\) times the lesser number?",
       "choices": [
+        "\\(108\\)",
+        "\\(120\\)",
+        "\\(126\\)",
+        "\\(132\\)",
+        "\\(144\\)"
+      ],
+      "statementZhHtml": "有多少种方法可以把整数 \\(1\\) 到 \\(14\\) 分成 \\(7\\) 对，使得每一对中较大的数至少是较小的数的 \\(2\\) 倍？",
+      "choicesZh": [
         "\\(108\\)",
         "\\(120\\)",
         "\\(126\\)",
@@ -167,12 +279,28 @@
         "\\(1235\\)",
         "\\(1565\\)",
         "\\(1997\\)"
+      ],
+      "statementZhHtml": "四边形 \\(ABCD\\) 内接于圆，边长分别为 \\(AB = 7\\)，\\(BC = 24\\)，\\(CD = 20\\)，\\(DA = 15\\)。圆内部但四边形外部的面积可写成 \\(\\dfrac{a \\pi - b}{c}\\)，其中 \\(a\\)，\\(b\\) 和 \\(c\\) 为正整数，且 \\(a\\) 与 \\(c\\) 没有公共质因数。求 \\(a + b + c\\)。",
+      "choicesZh": [
+        "\\(260\\)",
+        "\\(855\\)",
+        "\\(1235\\)",
+        "\\(1565\\)",
+        "\\(1997\\)"
       ]
     },
     {
       "problemNumber": 16,
       "statementHtml": "The roots of the polynomial \\(10x^3 - 39x^2 + 29x - 6\\) are the height, length, and width of a rectangular box (right rectangular prism). A new rectangular box is formed by lengthening each edge of the original box by \\(2\\) units. What is the volume of the new box?",
       "choices": [
+        "\\(\\dfrac{24}{5}\\)",
+        "\\(\\dfrac{42}{5}\\)",
+        "\\(\\dfrac{81}{5}\\)",
+        "\\(30\\)",
+        "\\(48\\)"
+      ],
+      "statementZhHtml": "多项式 \\(10x^3 - 39x^2 + 29x - 6\\) 的三个根分别是一个长方体的高、长、宽。将原长方体的每条棱都增加 \\(2\\) 个单位，形成一个新的长方体。新长方体的体积是多少？",
+      "choicesZh": [
         "\\(\\dfrac{24}{5}\\)",
         "\\(\\dfrac{42}{5}\\)",
         "\\(\\dfrac{81}{5}\\)",
@@ -189,12 +317,28 @@
         "\\(11\\)",
         "\\(13\\)",
         "\\(14\\)"
+      ],
+      "statementZhHtml": "有多少个三位正整数 \\(\\underline{a} \\ \\underline{b} \\ \\underline{c}\\)，其非零数字 \\(a\\)、\\(b\\)、\\(c\\) 满足 \\[0.\\overline{\\underline{a}~\\underline{b}~\\underline{c}} = \\dfrac{1}{3} (0.\\overline{a} + 0.\\overline{b} + 0.\\overline{c})\\text{？}\\]（横线表示数字循环，因此 \\(0.\\overline{\\underline{a}~\\underline{b}~\\underline{c}}\\) 表示无限循环小数 \\(0.\\underline{a}~\\underline{b}~\\underline{c}~\\underline{a}~\\underline{b}~\\underline{c}~\\cdots\\)）",
+      "choicesZh": [
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(11\\)",
+        "\\(13\\)",
+        "\\(14\\)"
       ]
     },
     {
       "problemNumber": 18,
       "statementHtml": "Let \\(T_k\\) be the transformation of the coordinate plane that first rotates the plane \\(k\\) degrees counterclockwise around the origin and then reflects the plane across the \\(y\\)-axis. What is the least positive integer \\(n\\) such that performing the sequence of transformations \\(T_1,\\) \\(T_2,\\) \\(T_3,\\) \\(\\cdots,\\) \\(T_n\\) returns the point \\((1,0)\\) back to itself?",
       "choices": [
+        "\\(359\\)",
+        "\\(360\\)",
+        "\\(719\\)",
+        "\\(720\\)",
+        "\\(721\\)"
+      ],
+      "statementZhHtml": "设 \\(T_k\\) 是平面坐标变换：先将平面绕原点逆时针旋转 \\(k\\) 度，再关于 \\(y\\) 轴反射。求最小的正整数 \\(n\\)，使得依次执行变换 \\(T_1\\)，\\(T_2\\)，\\(T_3\\)，\\(\\cdots\\)，\\(T_n\\) 后，点 \\((1,0)\\) 回到自身。",
+      "choicesZh": [
         "\\(359\\)",
         "\\(360\\)",
         "\\(719\\)",
@@ -211,12 +355,28 @@
         "\\(5\\)",
         "\\(7\\)",
         "\\(9\\)"
+      ],
+      "statementZhHtml": "设 \\(L_n\\) 表示 \\(1\\)、\\(2\\)、\\(3\\)、\\(\\ldots\\)、\\(n\\) 这些数的最小公倍数，并设 \\(h\\) 为唯一的正整数，使得 \\[\\dfrac{1}{1} + \\dfrac{1}{2} + \\dfrac{1}{3} + \\cdots + \\dfrac{1}{17} = \\dfrac{h}{L_{17}}\\] 求 \\(h\\) 除以 \\(17\\) 的余数。",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(7\\)",
+        "\\(9\\)"
       ]
     },
     {
       "problemNumber": 20,
       "statementHtml": "A four-term sequence is formed by adding each term of a four-term arithmetic sequence of positive integers to the corresponding term of a four-term geometric sequence of positive integers. The first three terms of the resulting four-term sequence are \\(57,\\) \\(60,\\) and \\(91.\\) What is the fourth term of this sequence?",
       "choices": [
+        "\\(190\\)",
+        "\\(194\\)",
+        "\\(198\\)",
+        "\\(202\\)",
+        "\\(206\\)"
+      ],
+      "statementZhHtml": "一个四项数列由一个正整数四项等差数列与一个正整数四项等比数列对应项相加得到。所得四项数列的前三项为 \\(57\\)、\\(60\\)、\\(91\\)。这个数列的第四项是多少？",
+      "choicesZh": [
         "\\(190\\)",
         "\\(194\\)",
         "\\(198\\)",
@@ -233,12 +393,28 @@
         "\\(5 + 2 \\sqrt{2}\\)",
         "\\(8\\)",
         "\\(9\\)"
+      ],
+      "statementZhHtml": "一个碗由四个边长为 \\(1\\) 的正六边形连接到一个边长为 \\(1\\) 的正方形上形成。相邻六边形的边重合，如图所示。连接这四个六边形顶部边缘上的八个顶点得到一个八边形。求这个八边形的面积。\n\n<img src=\"assets/exams/images/amc10/2022A/21.svg\" alt=\"Diagram for problem 21\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(5 + 2 \\sqrt{2}\\)",
+        "\\(8\\)",
+        "\\(9\\)"
       ]
     },
     {
       "problemNumber": 22,
       "statementHtml": "Suppose that \\(13\\) cards numbered \\(1,\\) \\(2,\\) \\(3,\\) \\(\\cdots,\\) \\(13\\) are arranged in a row. The task is to pick them up in numerically increasing order, working repeatedly from left to right. In the example below, cards \\(1,\\) \\(2,\\) \\(3\\) are picked up on the first pass, \\(4\\) and \\(5\\) on the second pass, \\(6\\) on the third pass, \\(7,\\) \\(8,\\) \\(9,\\) \\(10\\) on the fourth pass, and \\(11,\\) \\(12,\\) \\(13\\) on the fifth pass. For how many of the \\(13!\\) possible orderings of the cards will the \\(13\\) cards be picked up in exactly two passes?\n\n<img src=\"assets/exams/images/amc10/2022A/22.svg\" alt=\"Diagram for problem 22\" loading=\"lazy\">",
       "choices": [
+        "\\(4082\\)",
+        "\\(4095\\)",
+        "\\(4096\\)",
+        "\\(8178\\)",
+        "\\(8191\\)"
+      ],
+      "statementZhHtml": "有 \\(13\\) 张编号为 \\(1\\)，\\(2\\)，\\(3\\)，\\(\\cdots\\)，\\(13\\) 的卡片排成一行。任务是按数字从小到大的顺序拿起这些卡片，并且反复从左到右扫描。在下面例子中，第一次扫描拿起 \\(1\\)，\\(2\\)，\\(3\\)，第二次拿起 \\(4\\)、\\(5\\)，第三次拿起 \\(6\\)，第四次拿起 \\(7\\)，\\(8\\)，\\(9\\)，\\(10\\)，第五次拿起 \\(11\\)，\\(12\\)，\\(13\\)。在所有 \\(13!\\) 种排列中，有多少种排列会使 \\(13\\) 张卡片恰好用两次扫描拿完？\n\n<img src=\"assets/exams/images/amc10/2022A/22.svg\" alt=\"Diagram for problem 22\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(4082\\)",
         "\\(4095\\)",
         "\\(4096\\)",
@@ -255,12 +431,28 @@
         "\\(\\dfrac{1}{2}\\)",
         "\\(\\dfrac{2}{3}\\)",
         "\\(\\dfrac{3}{4}\\)"
+      ],
+      "statementZhHtml": "等腰梯形 \\(ABCD\\) 的平行边为 \\(\\overline{AD}\\) 与 \\(\\overline{BC}\\)，其中 \\(BC &lt; AD\\)，且 \\(AB = CD\\)。平面上有一点 \\(P\\)，使得 \\(PA=1\\)，\\(PB=2\\)，\\(PC=3\\)、\\(PD=4\\)。求 \\(\\tfrac{BC}{AD}\\)。",
+      "choicesZh": [
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{1}{3}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(\\dfrac{2}{3}\\)",
+        "\\(\\dfrac{3}{4}\\)"
       ]
     },
     {
       "problemNumber": 24,
       "statementHtml": "How many strings of length \\(5\\) formed from the digits \\(0,\\) \\(1,\\) \\(2,\\) \\(3,\\) \\(4,\\) are there such that for each \\(j \\in \\{1,2,3,4\\},\\) at least \\(j\\) of the digits are less than \\(j?\\)\n\n(For example, \\(02214\\) satisfies this condition because it contains at least \\(1\\) digit less than \\(1,\\) at least \\(2\\) digits less than \\(2,\\) at least \\(3\\) digits less than \\(3,\\) and at least \\(4\\) digits less than \\(4.\\) The string \\(23404\\) does not satisfy the condition because it does not contain at least \\(2\\) digits less than \\(2.\\))",
       "choices": [
+        "\\(500\\)",
+        "\\(625\\)",
+        "\\(1089\\)",
+        "\\(1199\\)",
+        "\\(1296\\)"
+      ],
+      "statementZhHtml": "长度为 \\(5\\) 的字符串由数字 \\(0\\)、\\(1\\)、\\(2\\)、\\(3\\)、\\(4\\) 组成。有多少个这样的字符串满足：对每个 \\(j \\in \\{1,2,3,4\\}\\)，至少有 \\(j\\) 个数字小于 \\(j\\)？\n\n例如，\\(02214\\) 满足条件，因为它至少有 \\(1\\) 个数字小于 \\(1\\)，至少有 \\(2\\) 个数字小于 \\(2\\)，至少有 \\(3\\) 个数字小于 \\(3\\)，至少有 \\(4\\) 个数字小于 \\(4\\)。字符串 \\(23404\\) 不满足条件，因为它没有至少 \\(2\\) 个数字小于 \\(2\\)。",
+      "choicesZh": [
         "\\(500\\)",
         "\\(625\\)",
         "\\(1089\\)",
@@ -277,7 +469,16 @@
         "\\(338\\)",
         "\\(339\\)",
         "\\(340\\)"
+      ],
+      "statementZhHtml": "设 \\(R\\)、\\(S\\)、\\(T\\) 是坐标平面中的正方形，它们的顶点都在格点上，即两个坐标都是整数的点，并且包含各自内部。\n\n每个正方形的底边都在 \\(x\\) 轴上。\\(R\\) 的左边和 \\(S\\) 的右边都在 \\(y\\) 轴上，且 \\(R\\) 中格点数是 \\(S\\) 中格点数的 \\(\\dfrac{9}{4}\\) 倍。\\(T\\) 的顶部两个顶点在 \\(R \\cup S\\) 中，且 \\(T\\) 中格点数是 \\(R \\cup S\\) 中格点数的 \\(\\dfrac{1}{4}\\)。见图，图未按比例绘制。\n\n<img src=\"assets/exams/images/amc10/2022A/25.svg\" alt=\"Diagram for problem 25\" loading=\"lazy\">\n\n\\(S\\) 中属于 \\(S \\cap T\\) 的格点所占比例，是 \\(R\\) 中属于 \\(R \\cap T\\) 的格点所占比例的 \\(27\\) 倍。求 \\(R\\)、\\(S\\)、\\(T\\) 的边长之和的最小可能值。",
+      "choicesZh": [
+        "\\(336\\)",
+        "\\(337\\)",
+        "\\(338\\)",
+        "\\(339\\)",
+        "\\(340\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2022A"
 }

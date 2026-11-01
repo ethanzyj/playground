@@ -13,12 +13,28 @@
         "\\(25\\)",
         "\\(26\\)",
         "\\(27\\)"
+      ],
+      "statementZhHtml": "城市 \\(A\\) 和 \\(B\\) 相距 \\(45\\) 英里。Alicia 住在 \\(A\\)，Beth 住在 \\(B\\)。Alicia 以每小时 \\(18\\) 英里的速度骑向 \\(B\\)。Beth 同时出发，以每小时 \\(12\\) 英里的速度骑向 \\(A\\)。她们相遇时距离城市 \\(A\\) 多少英里？",
+      "choicesZh": [
+        "\\(20\\)",
+        "\\(24\\)",
+        "\\(25\\)",
+        "\\(26\\)",
+        "\\(27\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "The weight of \\(\\frac{1}{3}\\) of a large pizza together with \\(3\\frac{1}{2}\\) cups of orange slices is the same as the weight of \\(\\frac{3}{4}\\) of a large pizza together with \\(\\frac{1}{2}\\) cup of orange slices. A cup of orange slices weighs \\(\\frac{1}{4}\\) of a pound. What is the weight, in pounds, of a large pizza?",
       "choices": [
+        "\\(1\\frac{4}{5}\\)",
+        "\\(2\\)",
+        "\\(2\\frac{2}{5}\\)",
+        "\\(3\\)",
+        "\\(3\\frac{3}{5}\\)"
+      ],
+      "statementZhHtml": "一个大披萨的 \\(\\frac{1}{3}\\) 加上 \\(3\\frac{1}{2}\\) 杯橙子片的重量，等于同一个大披萨的 \\(\\frac{3}{4}\\) 加上 \\(\\frac{1}{2}\\) 杯橙子片的重量。一杯橙子片重 \\(\\frac{1}{4}\\) 磅。一个大披萨重多少磅？",
+      "choicesZh": [
         "\\(1\\frac{4}{5}\\)",
         "\\(2\\)",
         "\\(2\\frac{2}{5}\\)",
@@ -35,12 +51,28 @@
         "\\(10\\)",
         "\\(11\\)",
         "\\(12\\)"
+      ],
+      "statementZhHtml": "小于 \\(2023\\) 且能被 \\(5\\) 整除的正完全平方数有多少个？",
+      "choicesZh": [
+        "\\(8\\)",
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(11\\)",
+        "\\(12\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "A quadrilateral has all integer side lengths, a perimeter of \\(26,\\) and one side of length \\(4.\\) What is the greatest possible length of one side of this quadrilateral?",
       "choices": [
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(11\\)",
+        "\\(12\\)",
+        "\\(13\\)"
+      ],
+      "statementZhHtml": "一个四边形的所有边长都是整数，周长为 \\(26\\)，其中一条边长为 \\(4\\)。这个四边形的一条边的最大可能长度是多少？",
+      "choicesZh": [
         "\\(9\\)",
         "\\(10\\)",
         "\\(11\\)",
@@ -57,12 +89,28 @@
         "\\(16\\)",
         "\\(17\\)",
         "\\(18\\)"
+      ],
+      "statementZhHtml": "\\(8^5 \\cdot 5^{10} \\cdot 15^5\\) 的十进位表示有多少位数字？",
+      "choicesZh": [
+        "\\(14\\)",
+        "\\(15\\)",
+        "\\(16\\)",
+        "\\(17\\)",
+        "\\(18\\)"
       ]
     },
     {
       "problemNumber": 6,
       "statementHtml": "An integer is assigned to each vertex of a cube. The value of an edge is defined to be the sum of the values of the two vertices it touches, and the value of a face is defined to be the sum of the values of the four edges surrounding it. The value of the cube is defined as the sum of the values of its six faces. Suppose the sum of the integers assigned to the vertices is \\(21.\\) What is the value of the cube?",
       "choices": [
+        "\\(42\\)",
+        "\\(63\\)",
+        "\\(84\\)",
+        "\\(126\\)",
+        "\\(252\\)"
+      ],
+      "statementZhHtml": "一个整数被分配给立方体的每个顶点。一条边的值定义为它所连接的两个顶点的值之和，一个面的值定义为围成该面的四条边的值之和。立方体的值定义为六个面的值之和。若分配给各顶点的整数之和为 \\(21\\)，这个立方体的值是多少？",
+      "choicesZh": [
         "\\(42\\)",
         "\\(63\\)",
         "\\(84\\)",
@@ -79,12 +127,28 @@
         "\\(\\dfrac{25}{108}\\)",
         "\\(\\dfrac{17}{72}\\)",
         "\\(\\dfrac{13}{54}\\)"
+      ],
+      "statementZhHtml": "Janet 掷一个标准的 \\(6\\) 面骰子 \\(4\\) 次，并持续记录掷出点数的累加和。她的累加和在某一时刻等于 \\(3\\) 的概率是多少？",
+      "choicesZh": [
+        "\\(\\dfrac{2}{9}\\)",
+        "\\(\\dfrac{49}{216}\\)",
+        "\\(\\dfrac{25}{108}\\)",
+        "\\(\\dfrac{17}{72}\\)",
+        "\\(\\dfrac{13}{54}\\)"
       ]
     },
     {
       "problemNumber": 8,
       "statementHtml": "Barb the baker creates a new temperature system for baking bread, Breadus, which is linearly based on Fahrenheit. Bread rises at \\(110\\text{ F}^{\\circ},\\) which is \\(0\\) on the Breadus scale. Bread bakes at \\(350\\text{ F}^{\\circ},\\) which is \\(100\\) on the Breadus scale. Bread is done when its internal temperature is \\(200\\text{ F}^{\\circ}.\\) What is this temperature on the Breadus scale?",
       "choices": [
+        "\\(33\\)",
+        "\\(34.5\\)",
+        "\\(36\\)",
+        "\\(37.5\\)",
+        "\\(39\\)"
+      ],
+      "statementZhHtml": "面包师 Barb 为烤面包设计了一种新的温度体系，叫作 Breadus，它与华氏温度成线性关系。面包在 \\(110\\text{ F}^{\\circ}\\) 时发酵，这对应 Breadus 刻度上的 \\(0\\)。面包在 \\(350\\text{ F}^{\\circ}\\) 时烘烤，这对应 Breadus 刻度上的 \\(100\\)。面包烤好时内部温度为 \\(200\\text{ F}^{\\circ}\\)。这个温度在 Breadus 刻度上是多少？",
+      "choicesZh": [
         "\\(33\\)",
         "\\(34.5\\)",
         "\\(36\\)",
@@ -101,6 +165,14 @@
         "\\(7\\)",
         "\\(8\\)",
         "\\(9\\)"
+      ],
+      "statementZhHtml": "一个电子显示屏把当前日期显示为一个 \\(8\\) 位整数，依次由 \\(4\\) 位年份、\\(2\\) 位月份和该月内的 \\(2\\) 位日期组成。例如，今年的植树节显示为 \\(20230428\\)。在 \\(2023\\) 年中，有多少个日期的 \\(8\\) 位显示中每个数字都出现偶数次？",
+      "choicesZh": [
+        "\\(5\\)",
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)",
+        "\\(9\\)"
       ]
     },
     {
@@ -112,12 +184,28 @@
         "\\(6\\)",
         "\\(7\\)",
         "\\(8\\)"
+      ],
+      "statementZhHtml": "Maureen 在记录她这学期小测成绩的平均分。如果 Maureen 下一次小测得 \\(11\\) 分，她的平均分会增加 \\(1\\)。如果接下来三次小测她每次都得 \\(11\\) 分，她的平均分会增加 \\(2\\)。她当前的小测平均分是多少？",
+      "choicesZh": [
+        "\\(4\\)",
+        "\\(5\\)",
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)"
       ]
     },
     {
       "problemNumber": 11,
+      "statementZhHtml": "一个面积为 \\(2\\) 的正方形内接于一个面积为 \\(3\\) 的正方形，如下图所示，从而形成四个全等的三角形。阴影直角三角形中，较短直角边与较长直角边的比是多少？\n\n<img src=\"assets/exams/images/amc10/2023A/11.svg\" alt=\"Diagram for problem 11\" loading=\"lazy\">",
       "statementHtml": "A square of area \\(2\\) is inscribed in a square of area \\(3,\\) creating four congruent triangles, as shown below. What is the ratio of the shorter leg to the longer leg in the shaded right triangle?\n\n<img src=\"assets/exams/images/amc10/2023A/11.svg\" alt=\"Diagram for problem 11\" loading=\"lazy\">",
       "choices": [
+        "\\(\\dfrac{1}{5}\\)",
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(2 - \\sqrt{3}\\)",
+        "\\(\\sqrt{3} - \\sqrt{2}\\)",
+        "\\(\\sqrt{2} - 1\\)"
+      ],
+      "choicesZh": [
         "\\(\\dfrac{1}{5}\\)",
         "\\(\\dfrac{1}{4}\\)",
         "\\(2 - \\sqrt{3}\\)",
@@ -134,12 +222,28 @@
         "\\(15\\)",
         "\\(16\\)",
         "\\(17\\)"
+      ],
+      "statementZhHtml": "有多少个三位正整数 \\(N\\) 同时满足下面两个性质？\n\n• 数 \\(N\\) 能被 \\(7\\) 整除。\n\n• 把 \\(N\\) 的数字倒序后形成的数能被 \\(5\\) 整除。",
+      "choicesZh": [
+        "\\(13\\)",
+        "\\(14\\)",
+        "\\(15\\)",
+        "\\(16\\)",
+        "\\(17\\)"
       ]
     },
     {
       "problemNumber": 13,
       "statementHtml": "Abdul and Chiang are standing \\(48\\) feet apart in a field. Bharat is standing in the same field as far from Abdul as possible so that the angle formed by his lines of sight to Abdul and Chiang measures \\(60^\\circ.\\) What is the square of the distance (in feet) between Abdul and Bharat?",
       "choices": [
+        "\\(1728\\)",
+        "\\(2601\\)",
+        "\\(3072\\)",
+        "\\(4608\\)",
+        "\\(6912\\)"
+      ],
+      "statementZhHtml": "Abdul 和 Chiang 站在一片田野中，相距 \\(48\\) 英尺。Bharat 也站在同一片田野中，并且在使他看向 Abdul 和 Chiang 的两条视线所成角为 \\(60^\\circ\\) 的条件下，尽可能远离 Abdul。Abdul 与 Bharat 之间距离的平方是多少（单位为平方英尺）？",
+      "choicesZh": [
         "\\(1728\\)",
         "\\(2601\\)",
         "\\(3072\\)",
@@ -156,12 +260,28 @@
         "\\(\\dfrac{1}{20}\\)",
         "\\(\\dfrac{11}{200}\\)",
         "\\(\\dfrac{3}{50}\\)"
+      ],
+      "statementZhHtml": "从前 \\(100\\) 个正整数中随机选一个数，然后从该数的正整数因数中随机选一个。所选因数能被 \\(11\\) 整除的概率是多少？",
+      "choicesZh": [
+        "\\(\\dfrac{4}{100}\\)",
+        "\\(\\dfrac{9}{200}\\)",
+        "\\(\\dfrac{1}{20}\\)",
+        "\\(\\dfrac{11}{200}\\)",
+        "\\(\\dfrac{3}{50}\\)"
       ]
     },
     {
       "problemNumber": 15,
       "statementHtml": "An even number of circles are nested, starting with a radius of \\(1\\) and increasing by \\(1\\) each time, all sharing a common point. The region between every other circle is shaded, starting with the region inside the circle of radius \\(2\\) but outside the circle of radius \\(1.\\) An example showing \\(8\\) circles is displayed below. What is the least number of circles needed to make the total shaded area at least \\(2023\\pi?\\)\n\n<img src=\"assets/exams/images/amc10/2023A/15.svg\" alt=\"Diagram for problem 15\" loading=\"lazy\">",
       "choices": [
+        "\\(46\\)",
+        "\\(48\\)",
+        "\\(56\\)",
+        "\\(60\\)",
+        "\\(64\\)"
+      ],
+      "statementZhHtml": "偶数个圆相互嵌套，第一个半径为 \\(1\\)，之后每次半径增加 \\(1\\)，并且所有圆共享一个公共点。从半径为 \\(2\\) 的圆内但半径为 \\(1\\) 的圆外的区域开始，每隔一圈给区域涂色。下面显示的是 \\(8\\) 个圆的例子。至少需要多少个圆，才能使总阴影面积至少为 \\(2023\\pi\\)？\n\n<img src=\"assets/exams/images/amc10/2023A/15.svg\" alt=\"Diagram for problem 15\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(46\\)",
         "\\(48\\)",
         "\\(56\\)",
@@ -178,12 +298,28 @@
         "\\(45\\)",
         "\\(48\\)",
         "\\(66\\)"
+      ],
+      "statementZhHtml": "在一场乒乓球锦标赛中，每位参赛者都与其他每位参赛者恰好比赛一次。虽然右手选手的人数是左手选手的两倍，但左手选手赢得的场数比右手选手赢得的场数多 \\(40\\%\\)。（没有平局，也没有左右手都用的选手。）总共进行了多少场比赛？",
+      "choicesZh": [
+        "\\(15\\)",
+        "\\(36\\)",
+        "\\(45\\)",
+        "\\(48\\)",
+        "\\(66\\)"
       ]
     },
     {
       "problemNumber": 17,
       "statementHtml": "Let \\(ABCD\\) be a rectangle with \\(AB = 30\\) and \\(BC = 28.\\) Points \\(P\\) and \\(Q\\) lie on \\(BC\\) and \\(CD\\) respectively so that all sides of \\(\\triangle ABP,\\) \\(\\triangle PCQ,\\) and \\(\\triangle QDA\\) have integer lengths. What is the perimeter of \\(\\triangle APQ?\\)",
       "choices": [
+        "\\(84\\)",
+        "\\(86\\)",
+        "\\(88\\)",
+        "\\(90\\)",
+        "\\(92\\)"
+      ],
+      "statementZhHtml": "设 \\(ABCD\\) 是一个矩形，且 \\(AB = 30\\)、\\(BC = 28\\)。点 \\(P\\) 和 \\(Q\\) 分别在 \\(BC\\) 和 \\(CD\\) 上，使得 \\(\\triangle ABP\\)、\\(\\triangle PCQ\\) 和 \\(\\triangle QDA\\) 的所有边长都是整数。\\(\\triangle APQ\\) 的周长是多少？",
+      "choicesZh": [
         "\\(84\\)",
         "\\(86\\)",
         "\\(88\\)",
@@ -200,12 +336,28 @@
         "\\(7\\)",
         "\\(8\\)",
         "\\(9\\)"
+      ],
+      "statementZhHtml": "菱形十二面体是一个有 \\(12\\) 个全等菱形面的立体。在每个顶点处，根据顶点不同，会有 \\(3\\) 条或 \\(4\\) 条棱相交。恰有 \\(3\\) 条棱相交的顶点有多少个？",
+      "choicesZh": [
+        "\\(5\\)",
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)",
+        "\\(9\\)"
       ]
     },
     {
       "problemNumber": 19,
       "statementHtml": "The line segment formed by \\(A(1, 2)\\) and \\(B(3, 3)\\) is rotated to the line segment formed by \\(A'(3, 1)\\) and \\(B'(4, 3)\\) about the point \\(P(r, s).\\) What is \\(|r - s|?\\)",
       "choices": [
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(\\dfrac{3}{4}\\)",
+        "\\(\\dfrac{2}{3}\\)",
+        "\\(1\\)"
+      ],
+      "statementZhHtml": "由 \\(A(1, 2)\\) 和 \\(B(3, 3)\\) 形成的线段，绕点 \\(P(r, s)\\) 旋转后变成由 \\(A'(3, 1)\\) 和 \\(B'(4, 3)\\) 形成的线段。求 \\(|r - s|\\)。",
+      "choicesZh": [
         "\\(\\dfrac{1}{4}\\)",
         "\\(\\dfrac{1}{2}\\)",
         "\\(\\dfrac{3}{4}\\)",
@@ -222,12 +374,28 @@
         "\\(60\\)",
         "\\(72\\)",
         "\\(96\\)"
+      ],
+      "statementZhHtml": "一个 \\(3 \\times 3\\) 方格中的每个小正方形都涂成红、白、蓝、绿中的一种颜色，使得每个 \\(2 \\times 2\\) 正方形都包含四种颜色各一个。下图显示了一种这样的涂色（字母表示颜色，中心格为白色）。有多少种不同的涂色方式？\n\n<img src=\"assets/exams/images/amc10/2023A/20.svg\" alt=\"Diagram for problem 20\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(24\\)",
+        "\\(48\\)",
+        "\\(60\\)",
+        "\\(72\\)",
+        "\\(96\\)"
       ]
     },
     {
       "problemNumber": 21,
       "statementHtml": "There is a unique polynomial \\(P(x)\\) of least degree with leading coefficient \\(1\\) satisfying all of the following:\n\n\\(1\\) is a root of \\(P(x) - 1,\\) \\(2\\) is a root of \\(P(x - 2),\\) \\(3\\) is a root of \\(P(3x),\\) and \\(4\\) is a root of \\(4P(x).\\)\n\nAll the roots of \\(P(x)\\) except one are integers. If the one non-integer root can be written as \\(\\frac{m}{n},\\) where \\(m\\) and \\(n\\) are relatively prime positive integers, what is \\(m + n?\\)",
       "choices": [
+        "\\(41\\)",
+        "\\(43\\)",
+        "\\(45\\)",
+        "\\(47\\)",
+        "\\(49\\)"
+      ],
+      "statementZhHtml": "存在一个首项系数为 \\(1\\)、次数最小且唯一的多项式 \\(P(x)\\)，满足以下所有条件：\n\n\\(1\\) 是 \\(P(x) - 1\\) 的一个根，\\(2\\) 是 \\(P(x - 2)\\) 的一个根，\\(3\\) 是 \\(P(3x)\\) 的一个根，且 \\(4\\) 是 \\(4P(x)\\) 的一个根。\n\n除一个根外，\\(P(x)\\) 的所有根都是整数。若唯一的非整数根可写成 \\(\\frac{m}{n}\\)，其中 \\(m\\) 和 \\(n\\) 是互质正整数，求 \\(m + n\\)。",
+      "choicesZh": [
         "\\(41\\)",
         "\\(43\\)",
         "\\(45\\)",
@@ -244,12 +412,28 @@
         "\\(\\dfrac{1}{10}\\)",
         "\\(\\dfrac{3}{28}\\)",
         "\\(\\dfrac{1}{9}\\)"
+      ],
+      "statementZhHtml": "圆 \\(C_1\\) 和 \\(C_2\\) 的半径都是 \\(1\\)，两圆圆心距离为 \\(\\frac{1}{2}\\)。圆 \\(C_3\\) 是同时内切于 \\(C_1\\) 和 \\(C_2\\) 的最大圆。圆 \\(C_4\\) 同时内切于 \\(C_1\\) 和 \\(C_2\\)，并且外切于 \\(C_3\\)。\\(C_4\\) 的半径是多少？\n\n<img src=\"assets/exams/images/amc10/2023A/22.svg\" alt=\"Diagram for problem 22\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(\\dfrac{1}{14}\\)",
+        "\\(\\dfrac{1}{12}\\)",
+        "\\(\\dfrac{1}{10}\\)",
+        "\\(\\dfrac{3}{28}\\)",
+        "\\(\\dfrac{1}{9}\\)"
       ]
     },
     {
       "problemNumber": 23,
       "statementHtml": "Positive integer divisors \\(a\\) and \\(b\\) of \\(N\\) are called complementary if \\(ab = N.\\) Given that \\(N\\) has a pair of complementary divisors that differ by \\(20\\) and a pair of complementary divisors that differ by \\(23,\\) find the sum of the digits of \\(N.\\)",
       "choices": [
+        "\\(11\\)",
+        "\\(13\\)",
+        "\\(15\\)",
+        "\\(17\\)",
+        "\\(19\\)"
+      ],
+      "statementZhHtml": "\\(N\\) 的正整数因数 \\(a\\) 和 \\(b\\) 称为互补的，如果 \\(ab = N\\)。已知 \\(N\\) 有一对相差 \\(20\\) 的互补因数，也有一对相差 \\(23\\) 的互补因数，求 \\(N\\) 的各位数字之和。",
+      "choicesZh": [
         "\\(11\\)",
         "\\(13\\)",
         "\\(15\\)",
@@ -266,6 +450,14 @@
         "\\(\\dfrac{9\\sqrt{3}}{2}\\)",
         "\\(\\dfrac{14\\sqrt{3}}{3}\\)",
         "\\(\\dfrac{243\\sqrt{3}}{49}\\)"
+      ],
+      "statementZhHtml": "六个边长为 \\(1\\) 单位的正六边形积木排列在一个正六边形框架内。每个积木都沿着框架的一条内边放置，并与另外两个积木对齐，如下图所示。从框架任意顶点到最近的积木顶点的距离都是 \\(\\frac{3}{7}\\) 单位。框架内未被积木占据的区域面积是多少？\n\n<img src=\"assets/exams/images/amc10/2023A/24.svg\" alt=\"Diagram for problem 24\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(\\dfrac{13\\sqrt{3}}{3}\\)",
+        "\\(\\dfrac{216\\sqrt{3}}{49}\\)",
+        "\\(\\dfrac{9\\sqrt{3}}{2}\\)",
+        "\\(\\dfrac{14\\sqrt{3}}{3}\\)",
+        "\\(\\dfrac{243\\sqrt{3}}{49}\\)"
       ]
     },
     {
@@ -277,7 +469,16 @@
         "\\(\\dfrac{3}{8}\\)",
         "\\(\\dfrac{5}{12}\\)",
         "\\(\\dfrac{1}{2}\\)"
+      ],
+      "statementZhHtml": "如果 \\(A\\) 和 \\(B\\) 是一个多面体的顶点，定义距离 \\(d(A, B)\\) 为沿该多面体的棱从 \\(A\\) 连接到 \\(B\\) 所需经过的最少棱数。例如，如果 \\(AB\\) 是多面体的一条棱，则 \\(d(A, B) = 1\\)；但如果 \\(AC\\) 和 \\(CB\\) 是棱而 \\(AB\\) 不是棱，则 \\(d(A, B) = 2\\)。设 \\(Q\\)、\\(R\\)、\\(S\\) 是从一个正二十面体（由 \\(20\\) 个等边三角形组成的正多面体）的顶点中随机选出的三个不同顶点。求 \\(d(Q, R) \\gt d(R, S)\\) 的概率。",
+      "choicesZh": [
+        "\\(\\dfrac{7}{22}\\)",
+        "\\(\\dfrac{1}{3}\\)",
+        "\\(\\dfrac{3}{8}\\)",
+        "\\(\\dfrac{5}{12}\\)",
+        "\\(\\dfrac{1}{2}\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2023A"
 }

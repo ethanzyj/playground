@@ -59,7 +59,23 @@ course badge count. Previous/Next follows the grouped dropdown order and stops
 at either end. The mission selector is directly above the current mission title.
 Circular chevron buttons flank the title, with localized accessible names/tooltips.
 The workflow icons let you revisit unlocked steps; completed checkpoints, problems,
-and vocabulary remain available for review without resetting badge evidence. LIVE's catalog informed
+and vocabulary remain available for review without resetting badge evidence.
+An incorrect AMC practice answer automatically adds the problem to Review collection.
+Correcting it on a retry does not remove that bookmark; remove it manually when ready.
+Correct answers show one checkmark overlay for three seconds, then advance to the next
+unanswered item (or the next step when all items are complete). Wrong answers stay
+for retry. Previous/Next arrows and workflow steps still support manual review;
+previously completed items show a saved checkmark.
+All 500 problem statements and 2,500 answer choices include Chinese versions from
+LIVE by Po-Shen Loh, imported with user-confirmed permission. Quests and Problem
+Explorer share language-aware rendering; identical math-only choices appear once.
+Run `npm run import:chinese` to refresh translations. The importer verifies each
+source problem against the unchanged local English statement and choices, sanitizes
+HTML, reuses local diagrams, and writes only after the whole collection validates.
+It does not import hints or solutions. Each exam records its Chinese source URL.
+If you rerun the English statement importer, run `npm run import:chinese` afterward
+to restore the translated fields.
+LIVE's catalog informed
 the pilot categories; explanations and
 mini-challenges are authored for this app, not copied source solutions.
 

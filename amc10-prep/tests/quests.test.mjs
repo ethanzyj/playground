@@ -33,10 +33,124 @@ function page(storageOverride, fetchOverride, clientOverride) {
   return { panel, mount, dom, setUser: (id) => { userId = id; }, setLanguage: (value) => { language = value; } };
 }
 
+test("incorrect AMC answers add review evidence before retry and correct answers do not remove it", async () => {
+  const p = page();
+  try {
+    const content = questContent("polynomials");
+    p.panel.save(() => ({ ...empty(), learned: true, formulas: content.concept.formulas.map((_, i) => i) }));
+    const review = new Set();
+    p.panel.onIncorrectAnswer = async (key, userId) => {
+      assert.equal(userId, "user-a");
+      review.add(key);
+    };
+    const problem = content.problems[0];
+    const key = problemKey(problem);
+    const wrong = answerKey.answers[key] === "A" ? "B" : "A";
+    await p.panel.gradePractice(problem, wrong);
+    assert.equal(review.has(key), true);
+    assert.equal(p.panel.progress().problems.includes(key), false);
+    assert.match(p.mount.textContent, /Added to Review collection/);
+    assert.equal(p.mount.querySelector(".quest-answer-success"), null);
+    await p.panel.gradePractice(problem, answerKey.answers[key]);
+    assert.equal(review.has(key), true);
+    assert.equal(p.panel.progress().problems.includes(key), true);
+    assert.match(p.mount.querySelector(".quest-answer-success").textContent, /Correct answer!/);
+    assert.ok(p.mount.querySelector(".quest-success-symbol svg"));
+    assert.equal(p.panel.practiceIndex, 0);
+    assert.ok(p.mount.querySelector(".quest-success-overlay"));
+    assert.equal(p.mount.querySelector("#questPractice button").disabled, true);
+    p.mount.querySelector("#questProblemNext").click();
+    assert.equal(p.panel.practiceIndex, 1);
+    assert.equal(p.mount.querySelector(".quest-practice-correct"), null);
+    p.mount.querySelector("#questProblemPrevious").click();
+    assert.equal(p.panel.practiceIndex, 0);
+    assert.ok(p.mount.querySelector(".quest-practice-correct"));
+    assert.match(p.mount.querySelector(".quest-practice-correct").textContent, /completed this question/);
+  } finally { p.dom.window.close(); }
+});
+
+test("correct overlay advances after exactly three seconds and ignores navigation away", async () => {
+  const p = page();
+  try {
+    const timers = [];
+    p.dom.window.setTimeout = (callback, delay) => { timers.push({ callback, delay }); return timers.length; };
+    p.panel.selectMission(QUEST_COURSE.missions[0].concept.id);
+    const content = questContent(p.panel.active);
+    for (const stage of ["checkpoint", "practice", "vocabulary"]) {
+      p.panel.quizIndices = {};
+      p.panel.practiceIndex = null;
+      p.panel.save(() => ({
+        learned: true,
+        formulas: stage === "checkpoint" ? [] : content.concept.formulas.map((_, i) => i),
+        problems: stage === "vocabulary" ? content.problems.map(problemKey) : [],
+        terms: []
+      }));
+      if (stage === "practice") {
+        await p.panel.gradePractice(content.problems[0], answerKey.answers[problemKey(content.problems[0])]);
+      } else {
+        const count = p.mount.querySelectorAll('input[name="questAnswer"]').length;
+        const correct = (count - content.concept.id.length % count) % count;
+        p.mount.querySelector(`input[value="${correct}"]`).checked = true;
+        p.mount.querySelector("#questQuiz").dispatchEvent(new p.dom.window.Event("submit", { cancelable: true }));
+      }
+      assert.equal(p.mount.querySelectorAll(".quest-answer-success").length, 1);
+      assert.equal(p.mount.querySelector(".quest-practice-correct"), null);
+      const timer = timers.at(-1);
+      assert.equal(timer.delay, 3000);
+      assert.equal(stage === "practice" ? p.panel.practiceIndex : p.panel.quizIndices[stage], 0);
+      timer.callback();
+      assert.equal(p.mount.querySelector(".quest-success-overlay"), null);
+      assert.equal(stage === "practice" ? p.panel.practiceIndex : p.panel.quizIndices[stage], 1);
+    }
+    p.panel.selectMission(QUEST_COURSE.missions[1].concept.id);
+    timers.at(-1).callback();
+    assert.equal(p.panel.active, QUEST_COURSE.missions[1].concept.id);
+  } finally { p.dom.window.close(); }
+});
+
+test("checkpoint and vocabulary grading stay on the question until explicitly navigated", () => {
+  const p = page();
+  try {
+    p.panel.selectMission(QUEST_COURSE.missions[0].concept.id);
+    const content = questContent(p.panel.active);
+    p.panel.save(() => ({ ...empty(), learned: true }));
+    const answer = (index) => {
+      const count = p.mount.querySelectorAll('input[name="questAnswer"]').length;
+      return (count - (index + content.concept.id.length) % count) % count;
+    };
+    const grade = (value) => {
+      p.mount.querySelector(`input[name="questAnswer"][value="${value}"]`).checked = true;
+      p.mount.querySelector("#questQuiz").dispatchEvent(new p.dom.window.Event("submit", { bubbles: true, cancelable: true }));
+    };
+    for (const kind of ["checkpoint", "vocabulary"]) {
+      if (kind === "vocabulary") {
+        p.panel.save(() => ({
+          learned: true, formulas: content.concept.formulas.map((_, i) => i),
+          problems: content.problems.map(problemKey), terms: []
+        }));
+      }
+      const question = p.mount.querySelector(".quest-question").textContent;
+      grade((answer(0) + 1) % p.mount.querySelectorAll('input[name="questAnswer"]').length);
+      assert.equal(p.mount.querySelector(".quest-question").textContent, question);
+      assert.match(p.mount.querySelector(".quest-feedback").textContent, /Not quite/);
+      grade(answer(0));
+      assert.equal(p.mount.querySelector(".quest-question").textContent, question);
+      assert.equal(p.mount.querySelector('[aria-current="step"] button').dataset.questStage, kind);
+      assert.ok(p.mount.querySelector(".quest-success-overlay"));
+      p.mount.querySelector("#questQuizNext").click();
+      assert.equal(p.panel.quizIndices[kind], 1);
+      p.mount.querySelector("#questQuizPrevious").click();
+      assert.ok(p.mount.querySelector(".quest-practice-correct"));
+    }
+  } finally { p.dom.window.close(); }
+});
+
 test("workflow navigation reviews completed steps without changing badge evidence", () => {
   const p = page();
   try {
     p.panel.selectMission(QUEST_COURSE.missions[0].concept.id);
+    assert.equal(p.mount.querySelector(".quest-study-link").getAttribute("href"), "?concept=polynomials");
+    assert.equal(p.mount.querySelector(".quest-study-link").target, "_blank");
     assert.equal(p.mount.querySelector('[data-quest-stage="practice"]').disabled, true);
     const content = questContent(p.panel.active);
     p.panel.save(() => ({
@@ -171,6 +285,23 @@ async function waitFor(condition) {
 function submit(p, selector, value) {
   p.mount.querySelector(`${selector} input[value="${value}"]`).checked = true;
   p.mount.querySelector(selector).dispatchEvent(new p.dom.window.Event("submit", { bubbles: true, cancelable: true }));
+  if (selector === "#questQuiz" && p.mount.querySelector("#questQuiz button.mastery")?.disabled) {
+    const next = p.mount.querySelector("#questQuizNext");
+    if (!next.disabled) next.click();
+    else {
+      const stage = questStage(questContent(p.panel.active), p.panel.progress());
+      p.mount.querySelector(`[data-quest-stage="${stage}"]`).click();
+    }
+  }
+}
+
+function advancePractice(p) {
+  const next = p.mount.querySelector("#questProblemNext");
+  if (next && !next.disabled) next.click();
+  else {
+    const stage = questStage(questContent(p.panel.active), p.panel.progress());
+    p.mount.querySelector(`[data-quest-stage="${stage}"]`).click();
+  }
 }
 
 test("every concept has a quest and all 500 answer keys have provenance and valid identities", () => {
@@ -199,6 +330,8 @@ test("course badges show their workload, collected items, and full-course covera
     assert.match(p.mount.querySelector(".quest-budget").textContent, /45–60 minute sitting/);
     assert.match(p.mount.querySelector(".quest-session-collection").textContent, /Collected for this badge/);
     assert.equal(p.mount.querySelectorAll(".quest-budget .quest-metric").length, 5);
+    assert.equal(p.mount.querySelectorAll(".quest-budget-value small").length, 5);
+    assert.equal(p.mount.querySelector(".quest-budget-value small").textContent, "mins");
     assert.equal(p.mount.querySelectorAll(".quest-session-collection .quest-metric").length, 3);
     assert.equal(p.mount.querySelector(".quest-session-collection .quest-metric strong").textContent,
       `0/${content.concept.formulas.length}`);
@@ -210,6 +343,7 @@ test("course badges show their workload, collected items, and full-course covera
       await waitFor(() => p.mount.querySelector("#questPractice"));
       submit(p, "#questPractice", answerKey.answers[problemKey(problem)]);
       await waitFor(() => !p.panel.grading);
+      advancePractice(p);
     }
     for (let i = 0; i < content.terms.length; i++) {
       submit(p, "#questQuiz", (4 - (i + content.concept.id.length) % 4) % 4);
@@ -255,6 +389,7 @@ test("Factoring review preserves completed work without inflating course badges"
       await waitFor(() => p.mount.querySelector("#questPractice"));
       submit(p, "#questPractice", answerKey.answers[problemKey(problem)]);
       await waitFor(() => !p.panel.grading);
+      advancePractice(p);
     }
     assert.equal(p.mount.querySelector(".quest-conquest"), null);
     for (let index = 0; index < content.terms.length; index++) {
@@ -299,6 +434,7 @@ test("a quest requires correct formula answers, graded AMC practice, and every r
       assert.ok(solution.href.endsWith(`/problem/${problem.problemNumber}`));
       submit(p, "#questPractice", answer);
       await waitFor(() => !p.panel.grading);
+      advancePractice(p);
     }
     for (let index = 0; index < content.terms.length; index++) {
       const correct = (4 - (index + content.concept.id.length) % 4) % 4;
@@ -404,6 +540,7 @@ test("small Algebra missions each conquer one technique and preserve separate ba
       assert.ok(p.mount.querySelector(".quest-lesson summary"));
       submit(p, "#questPractice", answerKey.answers[problemKey(content.problems[0])]);
       await waitFor(() => !p.panel.grading);
+      advancePractice(p);
       for (let index = 0; index < content.terms.length; index++) {
         submit(p, "#questQuiz", (4 - (index + id.length) % 4) % 4);
       }
@@ -448,6 +585,7 @@ test("original focused missions remain playable as reviews without awarding cour
         await waitFor(() => p.mount.querySelector("#questPractice"));
         submit(p, "#questPractice", answerKey.answers[problemKey(problem)]);
         await waitFor(() => !p.panel.grading);
+        advancePractice(p);
       }
       for (let index = 0; index < content.terms.length; index++) {
         submit(p, "#questQuiz", (4 - (index + id.length) % 4) % 4);

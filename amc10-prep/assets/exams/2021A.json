@@ -13,12 +13,28 @@
         "\\(5\\)",
         "\\(8\\)",
         "\\(12\\)"
+      ],
+      "statementZhHtml": "求下式的值：\\[(2^2-2)-(3^2-3)+(4^2-4)\\text{？}\\]",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(5\\)",
+        "\\(8\\)",
+        "\\(12\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "Portia’s high school has \\(3\\) times as many students as Lara’s high school. The two high schools have a total of \\(2600\\) students. How many students does Portia’s high school have?",
       "choices": [
+        "\\(600\\)",
+        "\\(650\\)",
+        "\\(1950\\)",
+        "\\(2000\\)",
+        "\\(2050\\)"
+      ],
+      "statementZhHtml": "Portia 的高中学生数是 Lara 的高中的 \\(3\\) 倍。两所高中一共有 \\(2600\\) 名学生。Portia 的高中有多少名学生？",
+      "choicesZh": [
         "\\(600\\)",
         "\\(650\\)",
         "\\(1950\\)",
@@ -35,12 +51,28 @@
         "\\(13{,}362\\)",
         "\\(14{,}238\\)",
         "\\(15{,}426\\)"
+      ],
+      "statementZhHtml": "两个自然数的和为 \\(17{,}402\\)。其中一个数能被 \\(10\\) 整除。如果擦去这个数的个位数字，就得到另一个数。这两个数的差是多少？",
+      "choicesZh": [
+        "\\(10{,}272\\)",
+        "\\(11{,}700\\)",
+        "\\(13{,}362\\)",
+        "\\(14{,}238\\)",
+        "\\(15{,}426\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "A cart rolls down a hill, traveling \\(5\\) inches the first second and accelerating so that during each successive \\(1\\)-second time interval, it travels \\(7\\) inches more than during the previous \\(1\\)-second interval. The cart takes \\(30\\) seconds to reach the bottom of the hill. How far, in inches, does it travel?",
       "choices": [
+        "\\(215\\)",
+        "\\(360\\)",
+        "\\(2992\\)",
+        "\\(3195\\)",
+        "\\(3242\\)"
+      ],
+      "statementZhHtml": "一辆小车沿山坡向下滚动，第一秒行驶 \\(5\\) 英寸，并且不断加速，使得之后每个连续的 \\(1\\) 秒时间段内，它都比前一个 \\(1\\) 秒时间段多行驶 \\(7\\) 英寸。小车用 \\(30\\) 秒到达山脚。它一共行驶了多少英寸？",
+      "choicesZh": [
         "\\(215\\)",
         "\\(360\\)",
         "\\(2992\\)",
@@ -57,12 +89,28 @@
         "\\(\\dfrac{14}{12} - \\dfrac{8}{k}\\)",
         "\\(\\dfrac{14(k-12)}{k^2}\\)",
         "\\(\\dfrac{14(k-12)}{8k}\\)"
+      ],
+      "statementZhHtml": "一个有 \\(k &gt; 12\\) 名学生的班级，测验分数的平均数为 \\(8\\)。其中 \\(12\\) 个测验分数的平均数为 \\(14\\)。其余测验分数的平均数用 \\(k\\) 表示是多少？",
+      "choicesZh": [
+        "\\(\\dfrac{14-8}{k-12}\\)",
+        "\\(\\dfrac{8k-168}{k-12}\\)",
+        "\\(\\dfrac{14}{12} - \\dfrac{8}{k}\\)",
+        "\\(\\dfrac{14(k-12)}{k^2}\\)",
+        "\\(\\dfrac{14(k-12)}{8k}\\)"
       ]
     },
     {
       "problemNumber": 6,
       "statementHtml": "Chantal and Jean start hiking from a trailhead toward a fire tower. Jean is wearing a heavy backpack and walks slower. Chantal starts walking at \\(4\\) miles per hour. Halfway to the tower, the trail becomes really steep, and Chantal slows down to \\(2\\) miles per hour. After reaching the tower, she immediately turns around and descends the steep part of the trail at \\(3\\) miles per hour. She meets Jean at the halfway point. What was Jean’s average speed, in miles per hour, until they meet?",
       "choices": [
+        "\\(\\dfrac{12}{13}\\)",
+        "\\(1\\)",
+        "\\(\\dfrac{13}{12}\\)",
+        "\\(\\dfrac{24}{13}\\)",
+        "\\(2\\)"
+      ],
+      "statementZhHtml": "Chantal 和 Jean 从登山口出发，沿小路走向一座消防塔。Jean 背着很重的背包，走得较慢。Chantal 开始时以每小时 \\(4\\) 英里的速度行走。到消防塔的一半路程处，小路变得很陡，她放慢到每小时 \\(2\\) 英里。到达消防塔后，她立即掉头，并以每小时 \\(3\\) 英里的速度下行陡峭的那一段。她在半程点遇到 Jean。到他们相遇为止，Jean 的平均速度是多少英里每小时？",
+      "choicesZh": [
         "\\(\\dfrac{12}{13}\\)",
         "\\(1\\)",
         "\\(\\dfrac{13}{12}\\)",
@@ -79,12 +127,28 @@
         "Snakes that can add are purple.",
         "Happy snakes are not purple.",
         "Happy snakes can’t subtract."
+      ],
+      "statementZhHtml": "Tom 收藏了 \\(13\\) 条蛇，其中 \\(4\\) 条是紫色的，\\(5\\) 条是开心的。他观察到\n\n• 所有开心的蛇都会加法，\n\n• 没有紫色的蛇会减法，并且\n\n• 所有不会减法的蛇也不会加法。\n\n关于 Tom 的蛇，可以推出下列哪个结论？",
+      "choicesZh": [
+        "紫色的蛇会加法。",
+        "紫色的蛇是开心的。",
+        "会加法的蛇是紫色的。",
+        "开心的蛇不是紫色的。",
+        "开心的蛇不会减法。"
       ]
     },
     {
       "problemNumber": 8,
       "statementHtml": "When a student multiplied the number \\(66\\) by the repeating decimal, \\[\\underline{1}.\\underline{a} \\ \\underline{b} \\ \\underline{a} \\ \\underline{b}\\ldots=\\underline{1}.\\overline{\\underline{a} \\ \\underline{b}},\\] where \\(a\\) and \\(b\\) are digits, he did not notice the notation and just multiplied \\(66\\) times \\(\\underline{1}.\\underline{a} \\ \\underline{b}.\\) Later he found that his answer is \\(0.5\\) less than the correct answer. What is the \\(2\\)-digit integer \\(\\underline{a} \\ \\underline{b}?\\)",
       "choices": [
+        "\\(15\\)",
+        "\\(30\\)",
+        "\\(45\\)",
+        "\\(60\\)",
+        "\\(75\\)"
+      ],
+      "statementZhHtml": "一名学生把数 \\(66\\) 乘以循环小数 \\[\\underline{1}.\\underline{a} \\ \\underline{b} \\ \\underline{a} \\ \\underline{b}\\ldots=\\underline{1}.\\overline{\\underline{a} \\ \\underline{b}}\\text{，}\\] 其中 \\(a\\) 和 \\(b\\) 是数字。他没有注意到循环记号，只是计算了 \\(66\\) 乘以 \\(\\underline{1}.\\underline{a} \\ \\underline{b}\\)。后来他发现自己的答案比正确答案小 \\(0.5\\)。\\(2\\) 位数 \\(\\underline{a} \\ \\underline{b}\\) 是多少？",
+      "choicesZh": [
         "\\(15\\)",
         "\\(30\\)",
         "\\(45\\)",
@@ -101,14 +165,30 @@
         "\\(\\dfrac{1}{2}\\)",
         "\\(1\\)",
         "\\(2\\)"
+      ],
+      "statementZhHtml": "对实数 \\(x\\) 和 \\(y\\)，\\((xy-1)^2+(x+y)^2\\) 的最小可能值是多少？",
+      "choicesZh": [
+        "\\(0\\)",
+        "\\(\\dfrac{1}{4}\\)",
+        "\\(\\dfrac{1}{2}\\)",
+        "\\(1\\)",
+        "\\(2\\)"
       ]
     },
     {
       "problemNumber": 10,
+      "statementZhHtml": "下列表达式等价于哪一个？\\[ \\begin{aligned} &amp;(2+3)(2^2+3^2)\\\\ &amp;\\quad\\cdot(2^4+3^4)(2^8+3^8)\\\\ &amp;\\quad\\cdot(2^{16}+3^{16})(2^{32}+3^{32})\\\\ &amp;\\quad\\cdot(2^{64}+3^{64}) \\end{aligned}\\text{？}\\]",
       "statementHtml": "Which of the following is equivalent to \\[ \\begin{aligned} &amp;(2+3)(2^2+3^2)\\\\ &amp;\\quad\\cdot(2^4+3^4)(2^8+3^8)\\\\ &amp;\\quad\\cdot(2^{16}+3^{16})(2^{32}+3^{32})\\\\ &amp;\\quad\\cdot(2^{64}+3^{64})? \\end{aligned} \\]",
       "choices": [
         "\\(3^{127} + 2^{127}\\)",
         "\\(3^{127} + 2^{127} + 2 \\cdot 3^{63}\\)\\( + 3 \\cdot\n2^{63}\\)",
+        "\\(3^{128} - 2^{128}\\)",
+        "\\(3^{128} + 2^{128}\\)",
+        "\\(5^{127}\\)"
+      ],
+      "choicesZh": [
+        "\\(3^{127} + 2^{127}\\)",
+        "\\(3^{127} + 2^{127} + 2 \\cdot 3^{63}\\) \\(+ 3 \\cdot\n2^{63}\\)​",
         "\\(3^{128} - 2^{128}\\)",
         "\\(3^{128} + 2^{128}\\)",
         "\\(5^{127}\\)"
@@ -118,6 +198,14 @@
       "problemNumber": 11,
       "statementHtml": "For which of the following integers \\(b\\) is the base-\\(b\\) number \\(2021_b - 221_b\\) not divisible by \\(3?\\)",
       "choices": [
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(8\\)"
+      ],
+      "statementZhHtml": "对下列哪个整数 \\(b\\)，\\(b\\) 进制数 \\(2021_b - 221_b\\) 不能被 \\(3\\) 整除？",
+      "choicesZh": [
         "\\(3\\)",
         "\\(4\\)",
         "\\(6\\)",
@@ -134,12 +222,28 @@
         "\\(2:1\\)",
         "\\(40:13\\)",
         "\\(4:1\\)"
+      ],
+      "statementZhHtml": "如下图所示，两个顶点朝下的直圆锥中装有相同体积的液体。两个液面的顶部半径分别为 \\(3\\) cm 和 \\(6\\) cm。向每个圆锥中投入一个半径为 \\(1\\) cm 的球形弹珠，弹珠沉到底部且完全浸没，并且没有液体溢出。窄圆锥中液面上升高度与宽圆锥中液面上升高度的比是多少？\n\n<img src=\"assets/exams/images/amc10/2021A/12.svg\" alt=\"Diagram for problem 12\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(1:1\\)",
+        "\\(47:43\\)",
+        "\\(2:1\\)",
+        "\\(40:13\\)",
+        "\\(4:1\\)"
       ]
     },
     {
       "problemNumber": 13,
       "statementHtml": "What is the volume of tetrahedron \\(ABCD\\) with edge lengths \\(AB = 2,\\) \\(AC = 3,\\) \\(AD = 4,\\) \\(BC = \\sqrt{13},\\) \\(BD = 2\\sqrt{5},\\) and \\(CD = 5?\\)",
       "choices": [
+        "\\(3\\)",
+        "\\(2\\sqrt{3}\\)",
+        "\\(4\\)",
+        "\\(3\\sqrt{3}\\)",
+        "\\(6\\)"
+      ],
+      "statementZhHtml": "四面体 \\(ABCD\\) 的边长为 \\(AB = 2\\)、\\(AC = 3\\)、\\(AD = 4\\)、\\(BC = \\sqrt{13}\\)、\\(BD = 2\\sqrt{5}\\)、\\(CD = 5\\)。它的体积是多少？",
+      "choicesZh": [
         "\\(3\\)",
         "\\(2\\sqrt{3}\\)",
         "\\(4\\)",
@@ -156,12 +260,28 @@
         "\\(-64\\)",
         "\\(-41\\)",
         "\\(-40\\)"
+      ],
+      "statementZhHtml": "多项式 \\[ \\begin{aligned} &amp;z^6-10z^5+Az^4+Bz^3\\\\ &amp;\\quad+Cz^2+Dz+16 \\end{aligned} \\] 的所有根都是正整数，且可以重复。求 \\(B\\) 的值。",
+      "choicesZh": [
+        "\\(-88\\)",
+        "\\(-80\\)",
+        "\\(-64\\)",
+        "\\(-41\\)",
+        "\\(-40\\)"
       ]
     },
     {
       "problemNumber": 15,
       "statementHtml": "Values for \\(A,\\) \\(B,\\) \\(C,\\) and \\(D\\) are to be selected from \\(\\{1, 2, 3, 4, 5, 6\\}\\) without replacement (i.e., no two letters have the same value). How many ways are there to make such choices so that the two curves \\(y=Ax^2+B\\) and \\(y=Cx^2+D\\) intersect?\n\n(The order in which the curves are listed does not matter; for example, the choices \\(A=3,\\)\\(B=2,\\)\\(C=4, \\)\\(D=1\\) is considered the same as the choices \\(A=4,\\)\\( B=1,\\) \\(C=3,\\) \\(D=2.\\))",
       "choices": [
+        "\\(30\\)",
+        "\\(60\\)",
+        "\\(90\\)",
+        "\\(180\\)",
+        "\\(360\\)"
+      ],
+      "statementZhHtml": "\\(A\\)，\\(B\\)，\\(C\\) 和 \\(D\\) 的值要从 \\(\\{1, 2, 3, 4, 5, 6\\}\\) 中不重复地选出。共有多少种选择，使得两条曲线 \\(y=Ax^2+B\\) 和 \\(y=Cx^2+D\\) 相交？\n\n两条曲线列出的顺序不重要；例如选择 \\(A=3\\)、\\(B=2\\)、\\(C=4\\)、\\(D=1\\) 与选择 \\(A=4\\)、\\(B=1\\)、\\(C=3\\)、\\(D=2\\) 视为相同。",
+      "choicesZh": [
         "\\(30\\)",
         "\\(60\\)",
         "\\(90\\)",
@@ -178,12 +298,28 @@
         "\\(142\\)",
         "\\(150.5\\)",
         "\\(167\\)"
+      ],
+      "statementZhHtml": "在下面的数列中，对每个 \\(1\\leq n\\leq200\\)，整数 \\(n\\) 都出现 \\(n\\) 次：\\[ \\begin{aligned} &amp;1,2,2,3,3,3,4,4,4,4,\\ldots,\\\\ &amp;200,200,\\ldots,200 \\end{aligned} \\] 这个数列的中位数是多少？",
+      "choicesZh": [
+        "\\(100.5\\)",
+        "\\(134\\)",
+        "\\(142\\)",
+        "\\(150.5\\)",
+        "\\(167\\)"
       ]
     },
     {
       "problemNumber": 17,
       "statementHtml": "Trapezoid \\(ABCD\\) has \\(\\overline{AB}\\parallel\\overline{CD},\\) \\(BC=CD=43,\\) and \\(\\overline{AD}\\perp\\overline{BD}.\\) Let \\(O\\) be the intersection of the diagonals \\(\\overline{AC}\\) and \\(\\overline{BD},\\) and let \\(P\\) be the midpoint of \\(\\overline{BD}.\\)\n\nGiven that \\(OP=11,\\) the length of \\(AD\\) can be written in the form \\(m\\sqrt{n},\\) where \\(m\\) and \\(n\\) are positive integers and \\(n\\) is not divisible by the square of any prime. What is \\(m+n?\\)",
       "choices": [
+        "\\(65\\)",
+        "\\(132\\)",
+        "\\(157\\)",
+        "\\(194\\)",
+        "\\(215\\)"
+      ],
+      "statementZhHtml": "梯形 \\(ABCD\\) 满足 \\(\\overline{AB}\\parallel\\overline{CD}\\)，\\(BC=CD=43\\)，且 \\(\\overline{AD}\\perp\\overline{BD}\\)。设 \\(O\\) 为对角线 \\(\\overline{AC}\\) 与 \\(\\overline{BD}\\) 的交点，\\(P\\) 为 \\(\\overline{BD}\\) 的中点。\n\n已知 \\(OP=11\\)，线段 \\(AD\\) 的长度可写成 \\(m\\sqrt{n}\\)，其中 \\(m\\) 和 \\(n\\) 为正整数，且 \\(n\\) 不被任何质数的平方整除。\\(m+n\\) 是多少？",
+      "choicesZh": [
         "\\(65\\)",
         "\\(132\\)",
         "\\(157\\)",
@@ -200,12 +336,28 @@
         "\\(\\dfrac{7}{9}\\)",
         "\\(\\dfrac{7}{6}\\)",
         "\\(\\dfrac{25}{11}\\)"
+      ],
+      "statementZhHtml": "设 \\(f\\) 是定义在正有理数集上的函数，并且 \\(f(a\\cdot b)=f(a)+f(b)\\) 对所有正有理数 \\(a\\) 和 \\(b\\) 都成立。又假设 \\(f\\) 还满足：对每个质数都有 \\(f(p)=p\\)，其中 \\(p\\) 为质数。下列哪个数 \\(x\\) 满足 \\(f(x) &lt; 0\\)？",
+      "choicesZh": [
+        "\\(\\dfrac{17}{32}\\)",
+        "\\(\\dfrac{11}{16}\\)",
+        "\\(\\dfrac{7}{9}\\)",
+        "\\(\\dfrac{7}{6}\\)",
+        "\\(\\dfrac{25}{11}\\)"
       ]
     },
     {
       "problemNumber": 19,
       "statementHtml": "The area of the region bounded by the graph of \\[x^2+y^2 = 3|x-y| + 3|x+y|\\] is \\(m+n\\pi,\\) where \\(m\\) and \\(n\\) are integers. What is \\(m + n?\\)",
       "choices": [
+        "\\(18\\)",
+        "\\(27\\)",
+        "\\(36\\)",
+        "\\(45\\)",
+        "\\(54\\)"
+      ],
+      "statementZhHtml": "由图像 \\[x^2+y^2 = 3|x-y| + 3|x+y|\\] 围成的区域面积为 \\(m+n\\pi\\)，其中 \\(m\\)、\\(n\\) 是整数。求 \\(m + n\\)。",
+      "choicesZh": [
         "\\(18\\)",
         "\\(27\\)",
         "\\(36\\)",
@@ -222,12 +374,28 @@
         "\\(24\\)",
         "\\(32\\)",
         "\\(44\\)"
+      ],
+      "statementZhHtml": "将数列 \\(1\\)，\\(2\\)，\\(3\\)，\\(4\\)，\\(5\\) 重新排列，有多少种排列使得不存在连续三项递增，也不存在连续三项递减？",
+      "choicesZh": [
+        "\\(10\\)",
+        "\\(18\\)",
+        "\\(24\\)",
+        "\\(32\\)",
+        "\\(44\\)"
       ]
     },
     {
       "problemNumber": 21,
       "statementHtml": "Let \\(ABCDEF\\) be an equiangular hexagon. The lines \\(AB,\\) \\(CD,\\) and \\(EF\\) determine a triangle with area \\(192\\sqrt{3},\\) and the lines \\(BC,\\) \\(DE,\\) and \\(FA\\) determine a triangle with area \\(324\\sqrt{3}.\\) The perimeter of hexagon \\(ABCDEF\\) can be expressed as \\(m +n\\sqrt{p},\\) where \\(m,\\) \\(n,\\) and \\(p\\) are positive integers and \\(p\\) is not divisible by the square of any prime. What is \\(m + n + p?\\)",
       "choices": [
+        "\\(47\\)",
+        "\\(52\\)",
+        "\\(55\\)",
+        "\\(58\\)",
+        "\\(63\\)"
+      ],
+      "statementZhHtml": "设 \\(ABCDEF\\) 是一个等角六边形。直线 \\(AB\\)，\\(CD\\) 和 \\(EF\\) 确定一个面积为 \\(192\\sqrt{3}\\) 的三角形，直线 \\(BC\\)，\\(DE\\) 和 \\(FA\\) 确定一个面积为 \\(324\\sqrt{3}\\) 的三角形。六边形 \\(ABCDEF\\) 的周长可表示为 \\(m +n\\sqrt{p}\\)，其中 \\(m\\)，\\(n\\) 和 \\(p\\) 为正整数，且 \\(p\\) 不被任何质数的平方整除。\\(m + n + p\\) 是多少？",
+      "choicesZh": [
         "\\(47\\)",
         "\\(52\\)",
         "\\(55\\)",
@@ -244,12 +412,28 @@
         "\\(15\\)",
         "\\(17\\)",
         "\\(20\\)"
+      ],
+      "statementZhHtml": "Hiram 的代数笔记共有 \\(50\\) 页，印在 \\(25\\) 张纸上；第一张纸含第 \\(1\\) 页和第 \\(2\\) 页，第二张纸含第 \\(3\\) 页和第 \\(4\\) 页，依此类推。有一天他午饭前把笔记留在桌上，室友决定从笔记中间借走一些页。Hiram 回来时发现，室友拿走的是连续若干张纸，并且所有剩余纸张上的页码平均数恰好为 \\(19\\)。室友借走了多少张纸？",
+      "choicesZh": [
+        "\\(10\\)",
+        "\\(13\\)",
+        "\\(15\\)",
+        "\\(17\\)",
+        "\\(20\\)"
       ]
     },
     {
       "problemNumber": 23,
       "statementHtml": "Frieda the frog begins a sequence of hops on a \\(3 \\times 3\\) grid of squares, moving one square on each hop and choosing at random the direction of each hop—up, down, left, or right. She does not hop diagonally. When the direction of a hop would take Frieda off the grid, she “wraps around” and jumps to the opposite edge. For example if Frieda begins in the center square and makes two hops “up”, the first hop would place her in the top row middle square, and the second hop would cause Frieda to jump to the opposite edge, landing in the bottom row middle square.\n\nSuppose Frieda starts from the center square, makes at most four hops at random, and stops hopping if she lands on a corner square. What is the probability that she reaches a corner square on one of the four hops?",
       "choices": [
+        "\\(\\dfrac{9}{16}\\)",
+        "\\(\\dfrac{5}{8}\\)",
+        "\\(\\dfrac{3}{4}\\)",
+        "\\(\\dfrac{25}{32}\\)",
+        "\\(\\dfrac{13}{16}\\)"
+      ],
+      "statementZhHtml": "青蛙 Frieda 在一个 \\(3 \\times 3\\) 方格网中开始一串跳跃，每次跳一格，并随机选择跳跃方向：上、下、左、右。她不斜着跳。如果某次跳跃方向会让 Frieda 跳出方格网，她会“绕回”并跳到相对的边。例如，如果 Frieda 从中心格开始并连续向上跳两次，第一次会到达上排中间格，第二次会让她跳到相对边，落在下排中间格。\n\n假设 Frieda 从中心格开始，最多随机跳四次，并且一旦落在角格就停止。她在四次跳跃中的某一次到达角格的概率是多少？",
+      "choicesZh": [
         "\\(\\dfrac{9}{16}\\)",
         "\\(\\dfrac{5}{8}\\)",
         "\\(\\dfrac{3}{4}\\)",
@@ -266,6 +450,14 @@
         "\\(\\dfrac{8a}{a+1}\\)",
         "\\(\\dfrac{8a^2}{a^2+1}\\)",
         "\\(\\dfrac{8a}{a^2+1}\\)"
+      ],
+      "statementZhHtml": "一个四边形的内部由图像 \\((x+ay)^2=4a^2\\) 和 \\((ax-y)^2=a^2\\) 围成，其中 \\(a\\) 是正实数。对所有 \\(a &gt; 0\\)，这个区域的面积用 \\(a\\) 表示是多少？",
+      "choicesZh": [
+        "\\(\\dfrac{8a^2}{(a+1)^2}\\)",
+        "\\(\\dfrac{4a}{a+1}\\)",
+        "\\(\\dfrac{8a}{a+1}\\)",
+        "\\(\\dfrac{8a^2}{a^2+1}\\)",
+        "\\(\\dfrac{8a}{a^2+1}\\)"
       ]
     },
     {
@@ -277,7 +469,16 @@
         "\\(24\\)",
         "\\(30\\)",
         "\\(36\\)"
+      ],
+      "statementZhHtml": "有多少种方法把 \\(3\\) 枚不可区分的红色筹码、\\(3\\) 枚不可区分的蓝色筹码和 \\(3\\) 枚不可区分的绿色筹码放入一个 \\(3 \\times 3\\) 方格的格子中，使得任意两个同色筹码都不在上下或左右方向相邻？",
+      "choicesZh": [
+        "\\(12\\)",
+        "\\(18\\)",
+        "\\(24\\)",
+        "\\(30\\)",
+        "\\(36\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2021A"
 }

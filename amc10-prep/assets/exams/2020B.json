@@ -13,12 +13,28 @@
         "\\(3\\)",
         "\\(5\\)",
         "\\(21\\)"
+      ],
+      "statementZhHtml": "下式的值是多少 \\[ \\begin{aligned} &amp;1 - (-2) - 3 - (-4) \\\\ &amp;\\quad {}- 5 - (-6) \\end{aligned}\\text{？}\\]",
+      "choicesZh": [
+        "\\(-20\\)",
+        "\\(-3\\)",
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(21\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "Carl has \\(5\\) cubes each having side length \\(1,\\) and Kate has \\(5\\) cubes each having side length \\(2.\\) What is the total volume of these \\(10\\) cubes?",
       "choices": [
+        "\\(24\\)",
+        "\\(25\\)",
+        "\\(28\\)",
+        "\\(40\\)",
+        "\\(45\\)"
+      ],
+      "statementZhHtml": "Carl 有 \\(5\\) 个边长为 \\(1\\) 的立方体，Kate 有 \\(5\\) 个边长为 \\(2\\) 的立方体。这 \\(10\\) 个立方体的总体积是多少？",
+      "choicesZh": [
         "\\(24\\)",
         "\\(25\\)",
         "\\(28\\)",
@@ -35,12 +51,28 @@
         "\\(8:3\\)",
         "\\(4:1\\)",
         "\\(16:3\\)"
+      ],
+      "statementZhHtml": "\\(w\\) 与 \\(x\\) 的比为 \\(4:3\\)，\\(y\\) 与 \\(z\\) 的比为 \\(3:2\\)，\\(z\\) 与 \\(x\\) 的比为 \\(1:6\\)。\\(w\\) 与 \\(y\\) 的比是多少？",
+      "choicesZh": [
+        "\\(4:3\\)",
+        "\\(3:2\\)",
+        "\\(8:3\\)",
+        "\\(4:1\\)",
+        "\\(16:3\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "The acute angles of a right triangle are \\(a^{\\circ}\\) and \\(b^{\\circ},\\) where \\(a&gt;b\\) and both \\(a\\) and \\(b\\) are prime numbers. What is the least possible value of \\(b?\\)",
       "choices": [
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(7\\)",
+        "\\(11\\)"
+      ],
+      "statementZhHtml": "一个直角三角形的两个锐角分别为 \\(a^{\\circ}\\) 和 \\(b^{\\circ}\\)，其中 \\(a&gt;b\\)，且 \\(a\\) 和 \\(b\\) 都是质数。\\(b\\) 的最小可能值是多少？",
+      "choicesZh": [
         "\\(2\\)",
         "\\(3\\)",
         "\\(5\\)",
@@ -57,12 +89,28 @@
         "\\(630\\)",
         "\\(840\\)",
         "\\(1050\\)"
+      ],
+      "statementZhHtml": "将 \\(1\\) 块棕色砖、\\(1\\) 块紫色砖、\\(2\\) 块绿色砖和 \\(3\\) 块黄色砖从左到右排成一行，有多少种可区分的排列？同色砖不可区分。",
+      "choicesZh": [
+        "\\(210\\)",
+        "\\(420\\)",
+        "\\(630\\)",
+        "\\(840\\)",
+        "\\(1050\\)"
       ]
     },
     {
       "problemNumber": 6,
       "statementHtml": "Driving along a highway, Megan noticed that her odometer showed \\(15951\\) (miles). This number is a palindrome—it reads the same forward and backward. Then \\(2\\) hours later, the odometer displayed the next higher palindrome. What was her average speed, in miles per hour, during this \\(2\\)-hour period?",
       "choices": [
+        "\\(50\\)",
+        "\\(55\\)",
+        "\\(60\\)",
+        "\\(65\\)",
+        "\\(70\\)"
+      ],
+      "statementZhHtml": "Megan 在高速公路上开车时，注意到里程表显示 \\(15951\\) 英里。这个数是回文数，也就是正读倒读相同。\\(2\\) 小时后，里程表显示下一个更大的回文数。在这 \\(2\\) 小时内，她的平均速度是多少英里每小时？",
+      "choicesZh": [
         "\\(50\\)",
         "\\(55\\)",
         "\\(60\\)",
@@ -79,12 +127,28 @@
         "\\(9\\)",
         "\\(10\\)",
         "\\(12\\)"
+      ],
+      "statementZhHtml": "小于 \\(2020\\) 的正偶数且为 \\(3\\) 的倍数的数中，有多少个是完全平方数？",
+      "choicesZh": [
+        "\\(7\\)",
+        "\\(8\\)",
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(12\\)"
       ]
     },
     {
       "problemNumber": 8,
       "statementHtml": "Points \\(P\\) and \\(Q\\) lie in a plane with \\(PQ=8.\\) How many locations for point \\(R\\) in this plane are there such that the triangle with vertices \\(P,\\) \\(Q,\\) and \\(R\\) is a right triangle with area \\(12\\) square units?",
       "choices": [
+        "\\(2\\)",
+        "\\(4\\)",
+        "\\(6\\)",
+        "\\(8\\)",
+        "\\(12\\)"
+      ],
+      "statementZhHtml": "平面内点 \\(P\\) 和 \\(Q\\) 满足 \\(PQ=8\\)。平面内有多少个点 \\(R\\)，使得以 \\(P\\)、\\(Q\\)、\\(R\\) 为顶点的三角形是直角三角形，且面积为 \\(12\\) 平方单位？",
+      "choicesZh": [
         "\\(2\\)",
         "\\(4\\)",
         "\\(6\\)",
@@ -101,12 +165,28 @@
         "\\(3\\)",
         "\\(4\\)",
         "infinitely many"
+      ],
+      "statementZhHtml": "有多少个整数有序对 \\((x, y)\\) 满足下面的方程 \\[x^{2020}+y^2=2y\\text{？}\\]",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "无限多个"
       ]
     },
     {
       "problemNumber": 10,
       "statementHtml": "A three-quarter sector of a circle of radius \\(4\\) inches together with its interior can be rolled up to form the lateral surface of a right circular cone by taping together along the two radii shown. What is the volume of the cone in cubic inches?\n\n<img src=\"assets/exams/images/amc10/2020B/10.svg\" alt=\"Diagram for problem 10\" loading=\"lazy\">",
       "choices": [
+        "\\(3\\pi\\sqrt{5}\\)",
+        "\\(4\\pi\\sqrt{3}\\)",
+        "\\(3\\pi\\sqrt{7}\\)",
+        "\\(6\\pi\\sqrt{3}\\)",
+        "\\(6\\pi\\sqrt{7}\\)"
+      ],
+      "statementZhHtml": "一个半径为 \\(4\\) 英寸的圆的四分之三扇形连同内部，可以沿图中所示的两条半径粘合卷成一个直圆锥的侧面。这个圆锥的体积是多少立方英寸？\n\n<img src=\"assets/exams/images/amc10/2020B/10.svg\" alt=\"Diagram for problem 10\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(3\\pi\\sqrt{5}\\)",
         "\\(4\\pi\\sqrt{3}\\)",
         "\\(3\\pi\\sqrt{7}\\)",
@@ -123,12 +203,28 @@
         "\\(\\dfrac{14}{45}\\)",
         "\\(\\dfrac{25}{63}\\)",
         "\\(\\dfrac{1}{2}\\)"
+      ],
+      "statementZhHtml": "Carr 老师要求学生阅读书单上 \\(10\\) 本书中的任意 \\(5\\) 本。Harold 从书单中随机选 \\(5\\) 本，Betty 也随机选五本。他们恰好有 \\(2\\) 本书都选中的概率是多少？",
+      "choicesZh": [
+        "\\(\\dfrac{1}{8}\\)",
+        "\\(\\dfrac{5}{36}\\)",
+        "\\(\\dfrac{14}{45}\\)",
+        "\\(\\dfrac{25}{63}\\)",
+        "\\(\\dfrac{1}{2}\\)"
       ]
     },
     {
       "problemNumber": 12,
       "statementHtml": "The decimal representation of \\[\\frac{1}{20^{20}}\\] consists of a string of zeros after the decimal point, followed by a \\(9\\) and then several more digits. How many zeros are in that initial string of zeros after the decimal point?",
       "choices": [
+        "\\(23\\)",
+        "\\(24\\)",
+        "\\(25\\)",
+        "\\(26\\)",
+        "\\(27\\)"
+      ],
+      "statementZhHtml": "数 \\[\\frac{1}{20^{20}}\\] 的小数表示在小数点后先出现一串零，然后是一个 \\(9\\)，后面还有若干数字。小数点后最初的一串零有多少个？",
+      "choicesZh": [
         "\\(23\\)",
         "\\(24\\)",
         "\\(25\\)",
@@ -145,12 +241,28 @@
         "\\((-1026,-994)\\)",
         "\\((-1026,-990)\\)",
         "\\((-1022,-994)\\)"
+      ],
+      "statementZhHtml": "蚂蚁 Andy 生活在坐标平面上，目前位于 \\((-20, 20)\\)，面朝东方，也就是 \\(x\\) 轴正方向。Andy 先移动 \\(1\\) 个单位，然后向左转 \\(90^{\\circ}\\)。接着他向北移动 \\(2\\) 个单位，再向左转 \\(90^{\\circ}\\)。然后他向西移动 \\(3\\) 个单位，再向左转 \\(90^{\\circ}\\)。Andy 继续这样移动，每次移动距离增加 \\(1\\) 个单位，并且总是左转。他第 \\(2020\\text{次}\\) 左转所在点的坐标是什么？",
+      "choicesZh": [
+        "\\((-1030,-994)\\)",
+        "\\((-1030,-990)\\)",
+        "\\((-1026,-994)\\)",
+        "\\((-1026,-990)\\)",
+        "\\((-1022,-994)\\)"
       ]
     },
     {
       "problemNumber": 14,
       "statementHtml": "As shown in the figure below, six semicircles lie in the interior of a regular hexagon with side length \\(2\\) so that the diameters of the semicircles coincide with the sides of the hexagon. What is the area of the shaded region—inside the hexagon but outside all of the semicircles?\n\n<img src=\"assets/exams/images/amc10/2020B/14.svg\" alt=\"Diagram for problem 14\" loading=\"lazy\">",
       "choices": [
+        "\\(6\\sqrt3-3\\pi\\)",
+        "\\(\\dfrac{9\\sqrt3}{2}-2\\pi\\)",
+        "\\(\\dfrac{3\\sqrt3}{2}-\\dfrac{\\pi}{3}\\)",
+        "\\(3\\sqrt3-\\pi\\)",
+        "\\(\\dfrac{9\\sqrt3}{2}-\\pi\\)"
+      ],
+      "statementZhHtml": "如下图所示，六个半圆位于边长为 \\(2\\) 的正六边形内部，并且这些半圆的直径分别与正六边形的边重合。阴影区域，也就是六边形内但所有半圆外的区域，面积是多少？\n\n<img src=\"assets/exams/images/amc10/2020B/14.svg\" alt=\"Diagram for problem 14\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(6\\sqrt3-3\\pi\\)",
         "\\(\\dfrac{9\\sqrt3}{2}-2\\pi\\)",
         "\\(\\dfrac{3\\sqrt3}{2}-\\dfrac{\\pi}{3}\\)",
@@ -167,6 +279,14 @@
         "\\(10\\)",
         "\\(11\\)",
         "\\(12\\)"
+      ],
+      "statementZhHtml": "Steve 从左到右反复写数字 \\(1\\)、\\(2\\)、\\(3\\)、\\(4\\) 和 \\(5\\)，形成一个有 \\(10{,}000\\) 位数字的列表，开头为 \\(123451234512\\ldots\\)。然后他擦掉列表中每第三个数字，也就是从左数第 \\(3\\)、\\(6\\)、\\(9\\)、\\(\\ldots\\) 个数字；接着在剩下的列表中擦掉每第四个数字，也就是剩余列表中第 \\(4\\)、\\(8\\)、\\(12\\)、\\(\\ldots\\) 个数字；然后在此时剩下的列表中擦掉每第五个数字。此后位于第 \\(2019\\)、\\(2020\\)、\\(2021\\) 位的三个数字之和是多少？",
+      "choicesZh": [
+        "\\(7\\)",
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(11\\)",
+        "\\(12\\)"
       ]
     },
     {
@@ -178,12 +298,28 @@
         "Bela will win if and only if \\(n\\) is odd.",
         "Jenn will win if and only if \\(n\\) is odd.",
         "Jenn will win if and only if \\(n\\gt8.\\)"
+      ],
+      "statementZhHtml": "Bela 和 Jenn 在实数轴的闭区间 \\([0, n]\\) 上玩如下游戏，其中 \\(n\\) 是一个大于 \\(4\\) 的固定整数。他们轮流操作，Bela 先手。Bela 第一次可以在区间 \\([0, n]\\) 中选择任意实数。此后，轮到的玩家必须选择一个实数，且它与此前任一玩家选择过的所有数的距离都大于一。无法选择这样一个数的玩家输。若双方都采取最优策略，谁会赢？",
+      "choicesZh": [
+        "Bela 总会赢。",
+        "Jenn 总会赢。",
+        "当且仅当 \\(n\\) 为奇数时 Bela 会赢。",
+        "当且仅当 \\(n\\) 为奇数时 Jenn 会赢。",
+        "当且仅当 \\(n\\gt8\\) 时 Jenn 会赢。"
       ]
     },
     {
       "problemNumber": 17,
       "statementHtml": "There are \\(10\\) people standing equally spaced around a circle. Each person knows exactly \\(3\\) of the other \\(9\\) people: the \\(2\\) people standing next to her or him, as well as the person directly across the circle. How many ways are there for the \\(10\\) people to split up into \\(5\\) pairs so that the members of each pair know each other?",
       "choices": [
+        "\\(11\\)",
+        "\\(12\\)",
+        "\\(13\\)",
+        "\\(14\\)",
+        "\\(15\\)"
+      ],
+      "statementZhHtml": "\\(10\\) 个人等间距站在一个圆周上。每个人恰好认识另外 \\(9\\) 人中的 \\(3\\) 人：站在自己两旁的 \\(2\\) 人，以及圆周正对面的那个人。有多少种方法把这 \\(10\\) 人分成 \\(5\\) 对，使每一对中的两人互相认识？",
+      "choicesZh": [
         "\\(11\\)",
         "\\(12\\)",
         "\\(13\\)",
@@ -200,12 +336,28 @@
         "\\(\\dfrac14\\)",
         "\\(\\dfrac13\\)",
         "\\(\\dfrac12\\)"
+      ],
+      "statementZhHtml": "一个瓮中有一个红球和一个蓝球。旁边有一盒额外的红球和蓝球。George 进行下面的操作四次：从瓮中随机抽一个球，然后从盒中取一个相同颜色的球，把这两个同色球一起放回瓮中。四次操作后，瓮中有六个球。瓮中红球和蓝球各三个的概率是多少？",
+      "choicesZh": [
+        "\\(\\dfrac16\\)",
+        "\\(\\dfrac15\\)",
+        "\\(\\dfrac14\\)",
+        "\\(\\dfrac13\\)",
+        "\\(\\dfrac12\\)"
       ]
     },
     {
       "problemNumber": 19,
       "statementHtml": "In a certain card game, a player is dealt a hand of \\(10\\) cards from a deck of \\(52\\) distinct cards. The number of distinct (unordered) hands that can be dealt to the player can be written as \\(158A00A4AA0.\\) What is the digit \\(A?\\)",
       "choices": [
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(6\\)",
+        "\\(7\\)"
+      ],
+      "statementZhHtml": "在某种纸牌游戏中，一名玩家从 \\(52\\) 张互不相同的牌组成的牌堆中拿到 \\(10\\) 张牌。可以发给该玩家的不同无序手牌数可写成 \\(158A00A4AA0\\)。数字 \\(A\\) 是多少？",
+      "choicesZh": [
         "\\(2\\)",
         "\\(3\\)",
         "\\(4\\)",
@@ -222,12 +374,28 @@
         "\\(24\\)",
         "\\(26\\)",
         "\\(38\\)"
+      ],
+      "statementZhHtml": "设 \\(B\\) 为一个边长分别为 \\(1\\)、\\(3\\) 和 \\(4\\) 的长方体盒子，连同其内部一起考虑。对实数 \\(r\\geq0\\)，令 \\(S(r)\\) 为 \\(3\\) 维空间中距离 \\(B\\) 中某点不超过 \\(r\\) 的所有点组成的集合。\\(S(r)\\) 的体积可表示为 \\[ar^{3} + br^{2} + cr +d\\text{，}\\] 其中 \\(a\\)、\\(b\\)、\\(c\\) 和 \\(d\\) 为正实数。\\(\\dfrac{bc}{ad}\\) 是多少？",
+      "choicesZh": [
+        "\\(6\\)",
+        "\\(19\\)",
+        "\\(24\\)",
+        "\\(26\\)",
+        "\\(38\\)"
       ]
     },
     {
       "problemNumber": 21,
       "statementHtml": "In square \\(ABCD,\\) points \\(E\\) and \\(H\\) lie on \\(\\overline{AB}\\) and \\(\\overline{DA},\\) respectively, so that \\(AE=AH.\\) Points \\(F\\) and \\(G\\) lie on \\(\\overline{BC}\\) and \\(\\overline{CD},\\) respectively, and points \\(I\\) and \\(J\\) lie on \\(\\overline{EH}\\) so that \\(\\overline{FI} \\perp \\overline{EH}\\) and \\(\\overline{GJ} \\perp \\overline{EH}.\\) See the figure below. Triangle \\(AEH,\\) quadrilateral \\(BFIE,\\) quadrilateral \\(DHJG,\\) and pentagon \\(FCGJI\\) each has area \\(1.\\) What is \\(FI^2?\\)\n\n<img src=\"assets/exams/images/amc10/2020B/21.svg\" alt=\"Diagram for problem 21\" loading=\"lazy\">",
       "choices": [
+        "\\(\\dfrac73\\)",
+        "\\(8-4\\sqrt2\\)",
+        "\\(1+\\sqrt2\\)",
+        "\\(\\dfrac74\\sqrt2\\)",
+        "\\(2\\sqrt2\\)"
+      ],
+      "statementZhHtml": "在正方形 \\(ABCD\\) 中，点 \\(E\\) 和 \\(H\\) 分别在线段 \\(\\overline{AB}\\) 和 \\(\\overline{DA}\\) 上，且 \\(AE=AH\\)。点 \\(F\\) 和 \\(G\\) 分别在线段 \\(\\overline{BC}\\) 和 \\(\\overline{CD}\\) 上，点 \\(I\\) 和 \\(J\\) 在线段 \\(\\overline{EH}\\) 上，使得 \\(\\overline{FI} \\perp \\overline{EH}\\)，且 \\(\\overline{GJ} \\perp \\overline{EH}\\)。如下图所示。三角形 \\(AEH\\)、四边形 \\(BFIE\\)、四边形 \\(DHJG\\) 和五边形 \\(FCGJI\\) 的面积都为 \\(1\\)。\\(FI^2\\) 是多少？\n\n<img src=\"assets/exams/images/amc10/2020B/21.svg\" alt=\"Diagram for problem 21\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(\\dfrac73\\)",
         "\\(8-4\\sqrt2\\)",
         "\\(1+\\sqrt2\\)",
@@ -244,12 +412,28 @@
         "\\(200\\)",
         "\\(201\\)",
         "\\(202\\)"
+      ],
+      "statementZhHtml": "\\(2^{202} +202\\) 除以 \\(2^{101}+2^{51}+1\\) 的余数是多少？",
+      "choicesZh": [
+        "\\(100\\)",
+        "\\(101\\)",
+        "\\(200\\)",
+        "\\(201\\)",
+        "\\(202\\)"
       ]
     },
     {
       "problemNumber": 23,
       "statementHtml": "Square \\(ABCD\\) in the coordinate plane has vertices at the points \\(A(1,1),\\) \\(B(-1,1),\\) \\(C(-1,-1),\\) and \\(D(1,-1).\\) Consider the following four transformations:\n\n• \\(L,\\) a rotation of \\(90^{\\circ}\\) counterclockwise around the origin;\n\n• \\(R,\\) a rotation of \\(90^{\\circ}\\) clockwise around the origin;\n\n• \\(H,\\) a reflection across the \\(x\\)-axis; and\n\n• \\(V,\\) a reflection across the \\(y\\)-axis.\n\nEach of these transformations maps the square onto itself, but the positions of the labeled vertices will change. For example, applying \\(R\\) and then \\(V\\) would send the vertex \\(A\\) at \\((1,1)\\) to \\((-1,-1)\\) and would send the vertex \\(B\\) at \\((-1,1)\\) to itself. How many sequences of \\(20\\) transformations chosen from \\(\\{L, R, H, V\\}\\) will send all of the labeled vertices back to their original positions? (For example, \\(R,\\) \\(R,\\) \\(V,\\) \\(H\\) is one sequence of \\(4\\) transformations that will send the vertices back to their original positions.)",
       "choices": [
+        "\\(2^{37}\\)",
+        "\\(3\\cdot 2^{36}\\)",
+        "\\(2^{38}\\)",
+        "\\(3\\cdot2^{37}\\)",
+        "\\(2^{39}\\)"
+      ],
+      "statementZhHtml": "坐标平面中的正方形 \\(ABCD\\) 的顶点为 \\(A(1,1)\\)，\\(B(-1,1)\\)，\\(C(-1,-1)\\) 以及 \\(D(1,-1)\\)。考虑下面四个变换：\n\n• \\(L\\)：绕原点逆时针旋转 \\(90^{\\circ}\\)；\n\n• \\(R\\)：绕原点顺时针旋转 \\(90^{\\circ}\\)；\n\n• \\(H\\)：关于 \\(x\\) 轴反射；\n\n• \\(V\\)：关于 \\(y\\) 轴反射。\n\n每个变换都把正方形映到自身，但标记顶点的位置会改变。例如，先应用 \\(R\\) 再应用 \\(V\\)，会把顶点 \\(A\\) 从 \\((1,1)\\) 送到 \\((-1,-1)\\)，并把 \\((-1,1)\\) 处的顶点 \\(B\\) 送回自身。从 \\(\\{L, R, H, V\\}\\) 中选择 \\(20\\) 个变换组成序列，有多少个序列会把所有标记顶点送回原来的位置？例如，\\(R\\)，\\(R\\)，\\(V\\)，\\(H\\) 是一个长度为 \\(4\\) 的序列，会把顶点送回原位。",
+      "choicesZh": [
         "\\(2^{37}\\)",
         "\\(3\\cdot 2^{36}\\)",
         "\\(2^{38}\\)",
@@ -266,6 +450,14 @@
         "\\(6\\)",
         "\\(30\\)",
         "\\(32\\)"
+      ],
+      "statementZhHtml": "有多少个正整数 \\(n\\) 满足下面的等式 \\[\\dfrac{n+1000}{70} = \\lfloor \\sqrt{n} \\rfloor\\text{？}\\]\n\n（这里 \\(\\lfloor x\\rfloor\\) 表示不超过 \\(x\\) 的最大整数。）",
+      "choicesZh": [
+        "\\(2\\)",
+        "\\(4\\)",
+        "\\(6\\)",
+        "\\(30\\)",
+        "\\(32\\)"
       ]
     },
     {
@@ -277,7 +469,16 @@
         "\\(144\\)",
         "\\(172\\)",
         "\\(184\\)"
+      ],
+      "statementZhHtml": "令 \\(D(n)\\) 表示把正整数 \\(n\\) 写成乘积 \\[n = f_1\\cdot f_2\\cdots f_k\\] 的方式数，其中 \\(k\\ge1\\)，每个 \\(f_i\\) 都是严格大于 \\(1\\) 的整数，并且因子的排列顺序有区别，也就是说仅因因子顺序不同的表示也算不同。例如，\\(6\\) 可写为 \\(6\\)、\\(2\\cdot 3\\) 和 \\(3\\cdot2\\)，所以 \\(D(6) = 3\\)。\\(D(96)\\) 是多少？",
+      "choicesZh": [
+        "\\(112\\)",
+        "\\(128\\)",
+        "\\(144\\)",
+        "\\(172\\)",
+        "\\(184\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2020B"
 }

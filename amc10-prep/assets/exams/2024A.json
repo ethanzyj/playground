@@ -13,12 +13,28 @@
         "\\(21\\)",
         "\\(200\\)",
         "\\(2020\\)"
+      ],
+      "statementZhHtml": "求 \\(9901 \\cdot 101 - 99 \\cdot 10101\\) 的值。",
+      "choicesZh": [
+        "\\(2\\)",
+        "\\(20\\)",
+        "\\(21\\)",
+        "\\(200\\)",
+        "\\(2020\\)"
       ]
     },
     {
       "problemNumber": 2,
       "statementHtml": "A model used to estimate the time it will take to hike to the top of the mountain on a trail is of the form \\(T = aL + bG,\\) where \\(a\\) and \\(b\\) are constants, \\(T\\) is the time in minutes, \\(L\\) is the length of the trail in miles, and \\(G\\) is the altitude gain in feet. The model estimates that it will take \\(69\\) minutes to hike to the top if a trail is \\(1.5\\) miles long and ascends \\(800\\) feet, as well as if a trail is \\(1.2\\) miles long and ascends \\(1100\\) feet. How many minutes does the model estimate it will take to hike to the top if the trail is \\(4.2\\) miles long and ascends \\(4000\\) feet?",
       "choices": [
+        "\\(240\\)",
+        "\\(246\\)",
+        "\\(252\\)",
+        "\\(258\\)",
+        "\\(264\\)"
+      ],
+      "statementZhHtml": "一个用于估计沿小路登上山顶所需时间的模型形如 \\(T = aL + bG\\)，其中 \\(a\\) 和 \\(b\\) 为常数，\\(T\\) 是分钟数，\\(L\\) 是小路长度，单位为英里，\\(G\\) 是海拔上升高度，单位为英尺。模型估计，若小路长 \\(1.5\\) 英里并上升 \\(800\\) 英尺，或小路长 \\(1.2\\) 英里并上升 \\(1100\\) 英尺，到达山顶都需要 \\(69\\) 分钟。若小路长 \\(4.2\\) 英里并上升 \\(4000\\) 英尺，模型估计需要多少分钟？",
+      "choicesZh": [
         "\\(240\\)",
         "\\(246\\)",
         "\\(252\\)",
@@ -35,12 +51,28 @@
         "\\(9\\)",
         "\\(10\\)",
         "\\(11\\)"
+      ],
+      "statementZhHtml": "能写成 \\(5\\) 个不同质数之和的最小质数，其各位数字之和是多少？",
+      "choicesZh": [
+        "\\(5\\)",
+        "\\(7\\)",
+        "\\(9\\)",
+        "\\(10\\)",
+        "\\(11\\)"
       ]
     },
     {
       "problemNumber": 4,
       "statementHtml": "The number \\(2024\\) is written as the sum of not necessarily distinct two-digit numbers. What is the least number of two-digit numbers needed to write this sum?",
       "choices": [
+        "\\(20\\)",
+        "\\(21\\)",
+        "\\(22\\)",
+        "\\(23\\)",
+        "\\(24\\)"
+      ],
+      "statementZhHtml": "数 \\(2024\\) 被写成若干个不一定互不相同的两位数之和。至少需要多少个两位数？",
+      "choicesZh": [
         "\\(20\\)",
         "\\(21\\)",
         "\\(22\\)",
@@ -57,12 +89,28 @@
         "\\(22\\)",
         "\\(23\\)",
         "\\(253\\)"
+      ],
+      "statementZhHtml": "使 \\(n!\\) 是 \\(2024\\) 的倍数的最小 \\(n\\) 是多少？",
+      "choicesZh": [
+        "\\(11\\)",
+        "\\(21\\)",
+        "\\(22\\)",
+        "\\(23\\)",
+        "\\(253\\)"
       ]
     },
     {
       "problemNumber": 6,
       "statementHtml": "What is the minimum number of successive swaps of adjacent letters in the string ABCDEF that are needed to change the string to FEDCBA?\n\n(For example, \\(3\\) swaps are required to change ABC to CBA; one such sequence of swaps is ABC \\(\\to\\) BAC \\(\\to\\) BCA \\(\\to\\) CBA.)",
       "choices": [
+        "\\(6\\)",
+        "\\(10\\)",
+        "\\(12\\)",
+        "\\(15\\)",
+        "\\(24\\)"
+      ],
+      "statementZhHtml": "将字符串 ABCDEF 变成 FEDCBA，最少需要多少次连续交换相邻字母？\n\n例如，将 ABC 变成 CBA 需要 \\(3\\) 次交换；一种交换序列是 ABC \\(\\to\\) BAC \\(\\to\\) BCA \\(\\to\\) CBA。",
+      "choicesZh": [
         "\\(6\\)",
         "\\(10\\)",
         "\\(12\\)",
@@ -79,6 +127,14 @@
         "\\(5\\)",
         "\\(6\\)",
         "\\(13\\)"
+      ],
+      "statementZhHtml": "三个整数的乘积为 \\(60\\)。这三个整数的正的和的最小可能值是多少？",
+      "choicesZh": [
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(5\\)",
+        "\\(6\\)",
+        "\\(13\\)"
       ]
     },
     {
@@ -90,12 +146,28 @@
         "\\(1{:}45\\) PM",
         "\\(1{:}55\\) PM",
         "\\(2{:}05\\) PM"
+      ],
+      "statementZhHtml": "Amy、Bomani、Charlie 和 Daria 在一家巧克力工厂工作。星期一下午 \\(1{:}00\\)，Amy、Bomani 和 Charlie 开始工作，他们每 \\(3\\) 分钟分别能包装 \\(4\\)、\\(3\\) 和 \\(3\\) 包。稍晚，Daria 加入了他们。Daria 每 \\(4\\) 分钟能包装 \\(5\\) 包。他们在下午 \\(2{:}45\\) 整完成了 \\(450\\) 包包装。Daria 是什么时候加入的？",
+      "choicesZh": [
+        "下午 \\(1{:}25\\)",
+        "下午 \\(1{:}35\\)",
+        "下午 \\(1{:}45\\)",
+        "下午 \\(1{:}55\\)",
+        "下午 \\(2{:}05\\)"
       ]
     },
     {
       "problemNumber": 9,
       "statementHtml": "In how many ways can \\(6\\) juniors and \\(6\\) seniors form \\(3\\) disjoint teams of \\(4\\) people so that each team has \\(2\\) juniors and \\(2\\) seniors?",
       "choices": [
+        "\\(720\\)",
+        "\\(1350\\)",
+        "\\(2700\\)",
+        "\\(3280\\)",
+        "\\(8100\\)"
+      ],
+      "statementZhHtml": "有 \\(6\\) 名十一年级生和 \\(6\\) 名十二年级生，要组成 \\(3\\) 个互不重叠的 \\(4\\) 人队伍，每队有 \\(2\\) 名十一年级生和 \\(2\\) 名十二年级生。有多少种方法？",
+      "choicesZh": [
         "\\(720\\)",
         "\\(1350\\)",
         "\\(2700\\)",
@@ -112,6 +184,14 @@
         "\\(30\\)",
         "\\(40\\)",
         "\\(50\\)"
+      ],
+      "statementZhHtml": "考虑如下操作。给定正整数 \\(n\\)，若 \\(n\\) 是 \\(3\\) 的倍数，就把 \\(n\\) 替换为 \\(\\tfrac{n}{3}\\)。若 \\(n\\) 不是 \\(3\\) 的倍数，就把 \\(n\\) 替换为 \\(n + 10\\)。然后继续这个过程。例如，从 \\(n = 4\\) 开始，得到 \\(4 \\to 14 \\to 24 \\to 8\\) \\(\\to 18 \\to 6 \\to 2 \\to 12 \\to \\cdots\\)。\n\n如果从 \\(n = 100\\) 开始，恰好执行这个操作 \\(100\\) 次后得到什么值？",
+      "choicesZh": [
+        "\\(10\\)",
+        "\\(20\\)",
+        "\\(30\\)",
+        "\\(40\\)",
+        "\\(50\\)"
       ]
     },
     {
@@ -123,12 +203,28 @@
         "\\(3\\)",
         "\\(4\\)",
         "Infinitely many"
+      ],
+      "statementZhHtml": "有多少个整数有序对 \\((m, n)\\) 满足\n\n\\[\\sqrt{n^2 - 49} = m\\text{？}\\]",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "无限多个"
       ]
     },
     {
       "problemNumber": 12,
       "statementHtml": "Zelda played the <em>Adventures of Math</em> game on August \\(1\\) and scored \\(1700\\) points. She continued to play daily over the next \\(5\\) days. The bar chart below shows the daily change in her score compared to the day before. (For example, Zelda’s score on August \\(2\\) was \\(1700 + 80 = 1780\\) points.) What was Zelda’s average score in points over the \\(6\\) days?\n\n<img src=\"assets/exams/images/amc10/2024A/12.svg\" alt=\"Diagram for problem 12\" loading=\"lazy\">",
       "choices": [
+        "\\(1700\\)",
+        "\\(1702\\)",
+        "\\(1703\\)",
+        "\\(1713\\)",
+        "\\(1715\\)"
+      ],
+      "statementZhHtml": "Zelda 在八月 \\(1\\) 日玩 <em>Adventures of Math</em> 游戏并得了 \\(1700\\) 分。接下来的 \\(5\\) 天她每天都继续玩。下方柱状图显示了每天得分相比前一天的变化量。例如，Zelda 在八月 \\(2\\) 日的得分是 \\(1700 + 80 = 1780\\) 分。Zelda 在这 \\(6\\) 天中的平均得分是多少？\n\n<img src=\"assets/exams/images/amc10/2024A/12.svg\" alt=\"Diagram for problem 12\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(1700\\)",
         "\\(1702\\)",
         "\\(1703\\)",
@@ -145,12 +241,28 @@
         "\\(3\\)",
         "\\(4\\)",
         "\\(5\\)"
+      ],
+      "statementZhHtml": "如果先做一个变换再做另一个变换，与先做第二个再做第一个得到同样结果，则称这两个变换可交换。考虑坐标平面的以下四个变换：\n\n• 向右平移 \\(2\\) 个单位；\n\n• 绕原点逆时针旋转 \\(90^\\circ\\)；\n\n• 关于 \\(x\\) 轴反射；\n\n• 以原点为中心、比例因子为 \\(2\\) 的伸缩。\n\n从这四个变换中选取两个不同变换，共有 \\(6\\) 对，其中有多少对可交换？",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(4\\)",
+        "\\(5\\)"
       ]
     },
     {
       "problemNumber": 14,
       "statementHtml": "One side of an equilateral triangle of height \\(24\\) lies on line \\(\\ell.\\) A circle of radius \\(12\\) is tangent to \\(\\ell\\) and is externally tangent to the triangle. The area of the region exterior to the triangle and the circle and bounded by the triangle, the circle, and line \\(\\ell\\) can be written as \\(a\\sqrt{b} - c\\pi,\\) where \\(a,\\) \\(b,\\) and \\(c\\) are positive integers and \\(b\\) is not divisible by the square of any prime. What is \\(a + b + c?\\)",
       "choices": [
+        "\\(72\\)",
+        "\\(73\\)",
+        "\\(74\\)",
+        "\\(75\\)",
+        "\\(76\\)"
+      ],
+      "statementZhHtml": "一个高为 \\(24\\) 的等边三角形的一边在直线 \\(\\ell\\) 上。一个半径为 \\(12\\) 的圆与 \\(\\ell\\) 相切，并且与该三角形外切。位于三角形和圆外部、并由三角形、圆和直线 \\(\\ell\\) 围成的区域面积可写成 \\(a\\sqrt{b} - c\\pi\\)，其中 \\(a\\)、\\(b\\) 和 \\(c\\) 为正整数，且 \\(b\\) 不被任何质数的平方整除。求 \\(a + b + c\\)。",
+      "choicesZh": [
         "\\(72\\)",
         "\\(73\\)",
         "\\(74\\)",
@@ -167,12 +279,28 @@
         "\\(3\\)",
         "\\(6\\)",
         "\\(8\\)"
+      ],
+      "statementZhHtml": "设 \\(M\\) 为最大的整数，使得 \\(M + 1213\\) 和 \\(M + 3773\\) 都是完全平方数。\\(M\\) 的个位数字是多少？",
+      "choicesZh": [
+        "\\(1\\)",
+        "\\(2\\)",
+        "\\(3\\)",
+        "\\(6\\)",
+        "\\(8\\)"
       ]
     },
     {
       "problemNumber": 16,
       "statementHtml": "All of the rectangles in the figure below, which is drawn to scale, are similar to the enclosing rectangle. Each number represents the area of the rectangle. What is length \\(AB?\\)\n\n<img src=\"assets/exams/images/amc10/2024A/16.svg\" alt=\"Diagram for problem 16\" loading=\"lazy\">",
       "choices": [
+        "\\(4 + 4\\sqrt5\\)",
+        "\\(10\\sqrt2\\)",
+        "\\(5 + 5\\sqrt5\\)",
+        "\\(10\\sqrt[4]{8}\\)",
+        "\\(20\\)"
+      ],
+      "statementZhHtml": "下图中所有矩形都与外接矩形相似，且图按比例绘制。每个数字表示对应矩形的面积。求长度 \\(AB\\)？\n\n<img src=\"assets/exams/images/amc10/2024A/16.svg\" alt=\"Diagram for problem 16\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(4 + 4\\sqrt5\\)",
         "\\(10\\sqrt2\\)",
         "\\(5 + 5\\sqrt5\\)",
@@ -189,12 +317,28 @@
         "\\(12\\)",
         "\\(13\\)",
         "\\(14\\)"
+      ],
+      "statementZhHtml": "两支队伍进行三局两胜制季后赛：最多打 \\(3\\) 场，先赢 \\(2\\) 场的队伍获胜。第一场在 A 队主场进行，剩余场次在 B 队主场进行。A 队主场获胜概率为 \\(\\tfrac23\\)，客场获胜概率为 \\(p\\)。各场结果相互独立。A 队赢得系列赛的概率为 \\(\\tfrac12\\)。此时 \\(p\\) 可写成 \\(\\tfrac12\\!\\left(m - \\sqrt{n}\\right)\\)，其中 \\(m\\)、\\(n\\) 为正整数。求 \\(m + n\\)？",
+      "choicesZh": [
+        "\\(10\\)",
+        "\\(11\\)",
+        "\\(12\\)",
+        "\\(13\\)",
+        "\\(14\\)"
       ]
     },
     {
       "problemNumber": 18,
       "statementHtml": "There are exactly \\(K\\) positive integers \\(b\\) with \\(5 \\le b \\le 2024\\) such that the base-\\(b\\) integer \\(2024_b\\) is divisible by \\(16\\) (where \\(16\\) is in base ten). What is the sum of the digits of \\(K?\\)",
       "choices": [
+        "\\(16\\)",
+        "\\(17\\)",
+        "\\(18\\)",
+        "\\(20\\)",
+        "\\(21\\)"
+      ],
+      "statementZhHtml": "恰有 \\(K\\) 个正整数 \\(b\\) 满足 \\(5 \\le b \\le 2024\\)，使得 \\(b\\) 进制整数 \\(2024_b\\) 能被 \\(16\\) 整除（这里的 \\(16\\) 用十进制表示）。求 \\(K\\) 的各位数字之和。",
+      "choicesZh": [
         "\\(16\\)",
         "\\(17\\)",
         "\\(18\\)",
@@ -211,12 +355,28 @@
         "\\(16\\)",
         "\\(18\\)",
         "\\(21\\)"
+      ],
+      "statementZhHtml": "一个等比数列的前三项是整数 \\(a\\)、\\(720\\)、\\(b\\)，且 \\(a \\lt 720 \\lt b\\)。\\(b\\) 的最小可能值的各位数字之和是多少？",
+      "choicesZh": [
+        "\\(9\\)",
+        "\\(12\\)",
+        "\\(16\\)",
+        "\\(18\\)",
+        "\\(21\\)"
       ]
     },
     {
       "problemNumber": 20,
       "statementHtml": "Let \\(S\\) be a subset of \\(\\{1, 2, 3, \\ldots, 2024\\}\\) such that the following two conditions hold:\n\n• If \\(x\\) and \\(y\\) are distinct elements of \\(S,\\) then \\(|x - y| \\gt 2.\\)\n\n• If \\(x\\) and \\(y\\) are distinct odd elements of \\(S,\\) then \\(|x - y| \\gt 6.\\)\n\nWhat is the maximum possible number of elements in \\(S?\\)",
       "choices": [
+        "\\(436\\)",
+        "\\(506\\)",
+        "\\(608\\)",
+        "\\(654\\)",
+        "\\(675\\)"
+      ],
+      "statementZhHtml": "设 \\(S\\) 为 \\(\\{1, 2, 3, \\ldots, 2024\\}\\) 的一个子集，满足以下两个条件：\n\n• 若 \\(x\\) 和 \\(y\\) 是 \\(S\\) 中不同元素，则 \\(|x - y| \\gt 2\\)。\n\n• 若 \\(x\\) 和 \\(y\\) 是 \\(S\\) 中不同的奇数元素，则 \\(|x - y| \\gt 6\\)。\n\n\\(S\\) 最多可能有多少个元素？",
+      "choicesZh": [
         "\\(436\\)",
         "\\(506\\)",
         "\\(608\\)",
@@ -233,12 +393,28 @@
         "\\(29\\)",
         "\\(34\\)",
         "\\(39\\)"
+      ],
+      "statementZhHtml": "一个 \\(5 \\times 5\\) 整数数组中，每一行从左到右的数以及每一列从上到下的数都构成长度为 \\(5\\) 的等差数列。位置 \\((5, 5)\\)、\\((2, 4)\\)、\\((4, 3)\\)、\\((3, 1)\\) 上的数分别为 \\(0\\)、\\(48\\)、\\(16\\)、\\(12\\)。位置 \\((1, 2)\\) 上的数是多少？\n\n\\[\\begin{bmatrix} \\cdot &amp; ? &amp; \\cdot &amp; \\cdot &amp; \\cdot \\\\ \\cdot &amp; \\cdot &amp; \\cdot &amp; 48 &amp; \\cdot \\\\ 12 &amp; \\cdot &amp; \\cdot &amp; \\cdot &amp; \\cdot \\\\ \\cdot &amp; \\cdot &amp; 16 &amp; \\cdot &amp; \\cdot \\\\ \\cdot &amp; \\cdot &amp; \\cdot &amp; \\cdot &amp; 0 \\end{bmatrix}\\]",
+      "choicesZh": [
+        "\\(19\\)",
+        "\\(24\\)",
+        "\\(29\\)",
+        "\\(34\\)",
+        "\\(39\\)"
       ]
     },
     {
       "problemNumber": 22,
       "statementHtml": "Let \\(\\mathcal{K}\\) be the kite formed by joining two right triangles with legs \\(1\\) and \\(\\sqrt3\\) along a common hypotenuse. Eight copies of \\(\\mathcal{K}\\) are used to form the polygon shown below. What is the area of \\(\\triangle ABC?\\)\n\n<img src=\"assets/exams/images/amc10/2024A/22.svg\" alt=\"Diagram for problem 22\" loading=\"lazy\">",
       "choices": [
+        "\\(2 + 3\\sqrt3\\)",
+        "\\(\\dfrac{9}{2}\\sqrt3\\)",
+        "\\(\\dfrac{10 + 8\\sqrt3}{3}\\)",
+        "\\(8\\)",
+        "\\(5\\sqrt3\\)"
+      ],
+      "statementZhHtml": "令 \\(\\mathcal{K}\\) 为由两个直角边分别为 \\(1\\) 和 \\(\\sqrt3\\) 的直角三角形沿公共斜边拼成的风筝形。用八个 \\(\\mathcal{K}\\) 的副本拼成下图所示多边形。求三角形 \\(\\triangle ABC\\) 的面积。\n\n<img src=\"assets/exams/images/amc10/2024A/22.svg\" alt=\"Diagram for problem 22\" loading=\"lazy\">",
+      "choicesZh": [
         "\\(2 + 3\\sqrt3\\)",
         "\\(\\dfrac{9}{2}\\sqrt3\\)",
         "\\(\\dfrac{10 + 8\\sqrt3}{3}\\)",
@@ -255,12 +431,28 @@
         "\\(258\\)",
         "\\(276\\)",
         "\\(284\\)"
+      ],
+      "statementZhHtml": "整数 \\(a\\)、\\(b\\)、\\(c\\) 满足\n\n\\[ \\begin{aligned} ab + c &amp;= 100, \\\\ bc + a &amp;= 87, \\\\ ca + b &amp;= 60 \\end{aligned}\\text{。}\\]\n\n求 \\(ab + bc + ca\\)。",
+      "choicesZh": [
+        "\\(212\\)",
+        "\\(247\\)",
+        "\\(258\\)",
+        "\\(276\\)",
+        "\\(284\\)"
       ]
     },
     {
       "problemNumber": 24,
       "statementHtml": "A bee is moving in three-dimensional space. A fair six-sided die with faces labeled \\(A^+,\\) \\(A^-,\\) \\(B^+,\\) \\(B^-,\\) \\(C^+,\\) and \\(C^-\\) is rolled. Suppose the bee occupies the point \\((a, b, c).\\) If the die shows \\(A^+,\\) then the bee moves to the point \\((a + 1, b, c),\\) and if the die shows \\(A^-,\\) then the bee moves to the point \\((a - 1, b, c).\\) Analogous moves are made with the other four outcomes.\n\nSuppose the bee starts at the point \\((0, 0, 0)\\) and the die is rolled four times. What is the probability that the bee traverses four distinct edges of some unit cube?",
       "choices": [
+        "\\(\\dfrac{1}{54}\\)",
+        "\\(\\dfrac{7}{54}\\)",
+        "\\(\\dfrac{1}{6}\\)",
+        "\\(\\dfrac{5}{18}\\)",
+        "\\(\\dfrac{2}{5}\\)"
+      ],
+      "statementZhHtml": "一只蜜蜂在三维空间中移动。掷一个公平六面骰，其面标为 \\(A^+\\)，\\(A^-\\)，\\(B^+\\)，\\(B^-\\)，\\(C^+\\)、\\(C^-\\)。若蜜蜂位于点 \\((a, b, c)\\)，骰子显示 \\(A^+\\) 时蜜蜂移动到 \\((a + 1, b, c)\\)，显示 \\(A^-\\) 时移动到 \\((a - 1, b, c)\\)。其余四种结果作类似移动。\n\n假设蜜蜂从 \\((0, 0, 0)\\) 出发，骰子掷四次。蜜蜂走过某个单位立方体的四条不同边的概率是多少？",
+      "choicesZh": [
         "\\(\\dfrac{1}{54}\\)",
         "\\(\\dfrac{7}{54}\\)",
         "\\(\\dfrac{1}{6}\\)",
@@ -277,7 +469,16 @@
         "\\(146\\)",
         "\\(162\\)",
         "\\(196\\)"
+      ],
+      "statementZhHtml": "下图显示一个点状网格，由 \\(8\\) 格宽、\\(3\\) 格高的 \\(1'' \\times 1''\\) 正方形组成。Carl 沿一些小正方形的边放置 \\(1\\) 英寸牙签，形成一条不自交的闭合回路。格子中的数字表示该正方形有多少条边要被牙签覆盖；若格子中没有数字，则允许任意数量的牙签。Carl 有多少种放置牙签的方法？\n\n<img src=\"assets/exams/images/amc10/2024A/25.svg\" alt=\"Diagram for problem 25\" loading=\"lazy\">",
+      "choicesZh": [
+        "\\(130\\)",
+        "\\(144\\)",
+        "\\(146\\)",
+        "\\(162\\)",
+        "\\(196\\)"
       ]
     }
-  ]
+  ],
+  "chineseSourceUrl": "https://live.poshenloh.com/zh/past-contests/amc10/2024A"
 }
