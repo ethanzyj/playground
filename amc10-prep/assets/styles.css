@@ -2436,6 +2436,8 @@ a.problem-chip {
   border-radius: 0.6rem;
   background: #fff;
 }
+.practice-chinese { margin-top: 0.75rem; }
+.practice-solution-link { font-size: 0.85rem; }
 
 .practice-image-link {
   display: block;

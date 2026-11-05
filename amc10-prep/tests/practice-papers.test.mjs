@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { readFileSync, existsSync } from "node:fs";
-import { PRACTICE_PAPER, PRACTICE_PROBLEMS, practiceStatement, isPracticeKey } from "../assets/practice-papers.mjs";
+import { PRACTICE_PAPER, PRACTICE_PROBLEMS, practiceStatement, practiceSolution, isPracticeKey } from "../assets/practice-papers.mjs";
 import { GLOSSARY, PROBLEM_REFERENCES, allConcepts } from "../assets/data.mjs";
 import { QUEST_COURSE } from "../assets/quest-course.mjs";
 import { problemKey, exportProgress, progressScope } from "../assets/progress.mjs";
@@ -57,4 +57,28 @@ test("practice answer key preserves the supplied PDF's 25 matched answers and pr
   assert.equal(PRACTICE_PROBLEMS.map((p) => key.answers[problemKey(p)]).join(""), "BADACAACDCDDCBBDCDCCCADDB");
   assert.match(key.sourceName, /AMC10A_2026_/);
   assert.equal(key.sourceSha256, "469c4675bc2f68ba6ec55a8019fcdd9c656a9042c7563c9d23d80261f0d3748a");
+});
+
+test("all Chinese statements and solutions exist; language modes never leak solutions in statements", () => {
+  for (const p of PRACTICE_PROBLEMS) {
+    for (const path of [p.chineseImageUrl, p.solutionImageUrl]) {
+      const bytes = readFileSync(new URL(path, root));
+      assert.equal(bytes.subarray(1, 4).toString(), "PNG");
+      assert.ok(bytes.length > 1000);
+    }
+    const english = practiceStatement(p, "en");
+    const chinese = practiceStatement(p, "zh");
+    const both = practiceStatement(p, "both");
+    assert.equal(english.includes("chinese-"), false);
+    assert.match(chinese, /lang="zh"/);
+    assert.ok(chinese.includes(p.chineseImageUrl));
+    assert.ok(both.includes(p.imageUrl) && both.includes(p.chineseImageUrl));
+    assert.ok(chinese.indexOf(p.chineseImageUrl) < chinese.indexOf(p.imageUrl));
+    for (const html of [english, chinese, both]) {
+      assert.equal(html.includes("solution-"), false);
+      assert.equal(html.includes("solutions.pdf"), false);
+    }
+    assert.ok(practiceSolution(p, "both").includes(`solutions.pdf#page=${p.problemNumber + 1}`));
+  }
+  assert.equal(readFileSync(new URL(PRACTICE_PAPER.solutionPdfUrl, root)).subarray(0, 5).toString(), "%PDF-");
 });

@@ -27,6 +27,7 @@ export const PRACTICE_PAPER = {
   year: 2026,
   exam: "practice-1",
   answerKeyUrl: "assets/practice/2026-practice-1/answer-key.json",
+  solutionPdfUrl: "assets/practice/2026-practice-1/solutions.pdf",
   sourceUrl: "assets/practice/2026-practice-1/booklet.pdf"
 };
 export const PRACTICE_PROBLEMS = tags.map((conceptIds, i) => ({
@@ -38,6 +39,9 @@ export const PRACTICE_PROBLEMS = tags.map((conceptIds, i) => ({
   vocabulary: vocabulary[i],
   bookletPage: i < 7 ? 2 : i < 14 ? 3 : i < 17 ? 4 : i < 21 ? 5 : 6,
   imageUrl: `assets/practice/2026-practice-1/problem-${i + 1}.png`,
+  chineseImageUrl: `assets/practice/2026-practice-1/chinese-${i + 1}.png`,
+  solutionImageUrl: `assets/practice/2026-practice-1/solution-${i + 1}.png`,
+  solutionPage: i + 2,
   practice: true
 }));
 
@@ -46,7 +50,18 @@ export const isPracticeKey = (key) => /^2026-practice-1-([1-9]|1[0-9]|2[0-5])$/.
 export function practiceStatement(problem, language) {
   const label = language === "zh" ? `打开原卷，第 ${problem.problemNumber} 题`
     : `Open original booklet, problem ${problem.problemNumber}`;
-  return `<a class="practice-image-link" href="${problem.sourceUrl}#page=${problem.bookletPage}" target="_blank" rel="noopener" aria-label="${label}">
+  const original = `<a class="practice-image-link" href="${problem.sourceUrl}#page=${problem.bookletPage}" target="_blank" rel="noopener" aria-label="${label}">
       <img class="practice-problem-image" src="${problem.imageUrl}" alt="2026-practice-1, problem ${problem.problemNumber}: original question, diagram and answer choices. Open the booklet for selectable text." loading="lazy">
     </a>`;
+  const chinese = `<div class="practice-chinese" lang="zh"><img class="practice-problem-image" src="${problem.chineseImageUrl}" alt="第 ${problem.problemNumber} 题：用户提供的中文译题（不含答案）" loading="lazy"></div>`;
+  if (language === "en") return original;
+  if (language === "zh") return `${chinese}<p class="muted" lang="zh">原题图示与选项：</p>${original}`;
+  return `${original}${chinese}`;
+}
+
+export function practiceSolution(problem, language) {
+  const label = language === "zh" ? "中文解析 PDF（含答案）"
+    : language === "en" ? "Chinese worked-solution PDF (reveals answer)"
+      : "Chinese worked-solution PDF (reveals answer) / 中文解析 PDF（含答案）";
+  return `<a class="practice-solution-link" href="${problem.solutionPdfUrl}#page=${problem.solutionPage}" target="_blank" rel="noopener">${label}</a>`;
 }
