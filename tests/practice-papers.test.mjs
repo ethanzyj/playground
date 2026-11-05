@@ -49,3 +49,12 @@ test("practice filtering and progress exports distinguish supplemental papers", 
   assert.equal(exported.summary.total, 525);
   assert.equal(exported.summary.marked, 1);
 });
+
+test("practice answer key preserves the supplied PDF's 25 matched answers and provenance", () => {
+  const key = JSON.parse(readFileSync(new URL(PRACTICE_PAPER.answerKeyUrl, root)));
+  assert.equal(key.paperId, "2026-practice-1");
+  assert.equal(Object.keys(key.answers).length, 25);
+  assert.equal(PRACTICE_PROBLEMS.map((p) => key.answers[problemKey(p)]).join(""), "BADACAACDCDDCBBDCDCCCADDB");
+  assert.match(key.sourceName, /AMC10A_2026_/);
+  assert.equal(key.sourceSha256, "469c4675bc2f68ba6ec55a8019fcdd9c656a9042c7563c9d23d80261f0d3748a");
+});

@@ -1,12 +1,12 @@
 import { TOPICS, PROBLEM_REFERENCES as COURSE_PROBLEMS, GLOSSARY, allConcepts } from "./data.mjs?v=20261026-6";
-import { PRACTICE_PROBLEMS, isPracticeKey, practiceStatement } from "./practice-papers.mjs?v=20261104-1";
+import { PRACTICE_PROBLEMS, isPracticeKey, practiceStatement } from "./practice-papers.mjs?v=20261104-3";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261104-1";
 import { AccountPanel } from "./account.mjs?v=20261026-6";
 import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-6";
 import { QuestPanel } from "./quests.mjs?v=20261103-3";
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
 import { QUEST_COURSE } from "./quest-course.mjs?v=20261030-1";
-import { TestMode } from "./test-mode.mjs?v=20261104-2";
+import { TestMode } from "./test-mode.mjs?v=20261104-3";
 
 let problemProgressStorageError = false;
 let reviewStorageError = false;
@@ -368,7 +368,7 @@ const UI_TEXT = {
   problems: { en: "problems", zh: "题" },
   fullExamSummary: { en: "Original English statements and answer choices matching your filters. Answers and solutions are not shown.", zh: "阅读符合筛选条件的英文原题及选项，不显示答案或解析。" },
   examAttribution: { en: "AMC problems © Mathematical Association of America.", zh: "AMC 题目版权归美国数学协会（MAA）所有。" },
-  practiceAttribution: { en: "2026-practice-1 is the user-supplied booklet, catalogued as practice, not as an official AMC 10A exam. Original English questions, diagrams and choices are preserved; no answers or solutions were supplied. Click a question to open the original PDF and zoom. Practice progress is saved per account in this browser only.", zh: "2026-practice-1 为用户提供的练习卷，不作为官方 AMC 10A 真题收录。保留英文题目、图示及选项；未提供答案或解析。点击题目可打开原卷放大查看。练习进度按账户仅保存在当前浏览器。" },
+  practiceAttribution: { en: "2026-practice-1 is the user-supplied booklet, catalogued as practice, not as an official AMC 10A exam. Original English questions, diagrams and choices are preserved. Test mode uses the separately supplied answer key. Click a question to open the original PDF and zoom. Practice progress is saved per account in this browser only.", zh: "2026-practice-1 为用户提供的练习卷，不作为官方 AMC 10A 真题收录。保留英文题目、图示及选项；测试模式使用另行提供的答案评分。点击题目可打开原卷放大查看。练习进度按账户仅保存在当前浏览器。" },
   loadingExam: { en: "Loading problem statements…", zh: "正在加载题目……" },
   examLoadError: { en: "Unable to load problem statements. Please retry or open the source page.", zh: "无法加载题目，请重试或打开来源页面。" },
   retry: { en: "Retry", zh: "重试" },

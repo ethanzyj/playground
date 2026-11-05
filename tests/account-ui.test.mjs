@@ -62,20 +62,18 @@ async function page(configured, client, method = "password", search = "", fetchI
   return { window, $, $$, waitFor, errors, close: () => window.close() };
 }
 
-test("Test mode selects Explorer questions, saves answers and locks at the 75-minute deadline", async () => {
+test("Test mode selects a complete paper, saves answers and locks at the 75-minute deadline", async () => {
   const p = await page(false, null, "password", "?problem=2026-practice-1-1");
   try {
     await p.waitFor(() => p.$$("#problemList .problem-card").length === 25);
     p.$('[data-test-action="setup"]').click();
-    assert.equal(p.$$("[data-test-select]:checked").length, 25);
-    p.$('[data-test-action="none"]').click();
-    const select = p.$('[data-test-select="2026-practice-1-1"]');
-    select.checked = true;
-    select.dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$("[data-test-year]").value, "2026");
+    assert.equal(p.$("[data-test-exam]").value, "practice-1");
+    assert.equal(p.$$('[data-test-select]').length, 0);
     p.$('[data-test-action="start"]').click();
     assert.equal(p.$("[data-test-clock]").textContent, "75:00");
     assert.ok(p.$("#problemsPanel").classList.contains("test-mode-active"));
-    assert.equal(p.$$(".test-question").length, 1);
+    assert.equal(p.$$(".test-question").length, 25);
     const answer = p.$('[data-test-answer="2026-practice-1-1"][value="B"]');
     answer.checked = true;
     answer.dispatchEvent(new p.window.Event("change"));
@@ -89,10 +87,32 @@ test("Test mode selects Explorer questions, saves answers and locks at the 75-mi
     p.window.document.dispatchEvent(new p.window.Event("visibilitychange"));
     assert.match(p.$("#testModePanel").textContent, /Time is up/);
     assert.equal(p.$(".test-question fieldset").disabled, true);
+    await p.waitFor(() => p.$("[data-test-score]"));
+    assert.equal(p.$("[data-test-score]").textContent, "42 / 150");
+    assert.match(p.$("[data-test-result-count]").textContent, /Correct.*1.*Wrong.*0.*Blank.*24/);
+    assert.equal(p.$$("[data-test-result]").length, 25);
     assert.equal(p.window.localStorage.getItem("amc10-practice-progress:guest"), null);
     p.$('[data-test-action="clear"]').click();
     assert.equal(p.$("#problemsPanel").classList.contains("test-mode-active"), false);
     assert.equal(p.$$("#problemList .problem-card").length, 25);
+    p.$('[data-test-action="setup"]').click();
+    const year = p.$("[data-test-year]");
+    year.value = "2025"; year.dispatchEvent(new p.window.Event("change"));
+    const exam = p.$("[data-test-exam]");
+    exam.value = "AMC 10B"; exam.dispatchEvent(new p.window.Event("change"));
+    p.$('[data-test-action="start"]').click();
+    await p.waitFor(() => !p.$(".test-question fieldset").disabled);
+    assert.equal(p.$$(".test-question").length, 25);
+    assert.match(p.$(".test-question h4").textContent, /2025 AMC 10B/);
+    assert.equal(p.$("[data-test-result]"), null);
+    const key = JSON.parse(readFileSync(new URL("assets/answer-key.json", root))).answers["2025-AMC10B-1"];
+    const correct = p.$(`[data-test-answer="2025-AMC10B-1"][value="${key}"]`);
+    correct.checked = true; correct.dispatchEvent(new p.window.Event("change"));
+    p.$('[data-test-action="finish"]').click();
+    await p.waitFor(() => p.$("[data-test-score]"));
+    assert.equal(p.$("[data-test-score]").textContent, "42 / 150");
+    assert.equal(p.$$("[data-test-result]").length, 25);
+    p.$('[data-test-action="clear"]').click();
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });

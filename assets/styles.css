@@ -2358,7 +2358,7 @@ a.problem-chip {
   border-radius: 1rem;
   background: var(--panel);
 }
-.test-mode-intro, .test-mode-header, .test-mode-actions {
+.test-mode-intro, .test-mode-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2372,17 +2372,16 @@ a.problem-chip {
 .test-mode-panel [data-test-action="start"],
 .test-mode-panel [data-test-action="setup"] { background: var(--accent-soft); color: var(--accent); }
 .test-setup { margin-top: 1rem; border-top: 1px solid var(--line); padding-top: 1rem; }
-.test-selection {
+.test-paper-selection {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0.5rem;
-  max-height: 260px;
-  overflow: auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  max-width: 32rem;
   padding: 0.75rem 0;
-  margin-top: 0.75rem;
 }
-.test-selection label { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem; border: 1px solid var(--line); border-radius: 0.6rem; cursor: pointer; }
-.test-mode-panel input[type="checkbox"], .test-mode-panel input[type="radio"] { width: auto; margin: 0; flex: 0 0 auto; }
+.test-paper-selection label { display: grid; gap: 0.5rem; min-width: 0; }
+.test-paper-selection select { width: 100%; min-width: 0; }
+.test-mode-panel input[type="radio"] { width: auto; margin: 0; flex: 0 0 auto; }
 #problemsPanel.test-mode-active > :not(#testModePanel) { display: none; }
 .test-mode-header {
   position: sticky;
@@ -2408,6 +2407,9 @@ a.problem-chip {
 .test-answer-options label:has(input:checked) { background: var(--accent-soft); border-color: var(--accent); }
 .test-mode-panel button:focus-visible, .test-answer-options label:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
 .test-complete { padding: 1rem; background: var(--accent-soft); border-radius: 0.75rem; }
+.test-answer-result { padding: 0.75rem; border: 1px solid var(--line); border-radius: 0.65rem; }
+.test-result-correct { color: var(--success-strong); }
+.test-result-wrong { border-left: 4px solid #dc5728; }
 .test-practice-statement .practice-image-link { pointer-events: none; }
 @media (max-width: 440px) {
   .test-mode-panel { padding: 0.85rem; }
