@@ -6,7 +6,64 @@ installing dependencies. Development and tests require Node.js 20 or later:
 run `npm ci`, then `npm run build` after SDK dependency changes.
 Math rendering uses MathJax from a CDN and requires internet access.
 
+## Test mode
+
+In Problem Explorer, choose **Test mode → Choose test questions**. The current
+filtered questions are preselected; uncheck individual questions or use select-all
+and clear-selection, then **Start 75-minute test**. The question set is frozen
+for that attempt, with a sticky 75:00 countdown and A–E answer choices for both
+official and uploaded practice papers. There is no pause: the saved deadline is
+based on wall-clock time, so refreshes, background tabs, and closing the browser
+do not reset it. At zero, answers lock automatically. **Finish & submit** ends
+early. The completed attempt keeps saved choices for review until you return to
+the Explorer/new test; tests do not automatically grade or alter quest badges,
+mastery, progress marks, or Review collection.
+
+The current attempt is saved per account (or guest) in this browser only, including
+answers and deadline. It is not uploaded or synchronized across devices. A missing
+question or storage failure is reported with a retry option; neither pauses the
+timer. Avoid clearing browser storage during a test. Test mode is a study aid,
+not a proctored exam or tamper-resistant timing system.
+
+## Supplemental practice papers
+
+Problem Explorer includes **2026-practice-1**, imported from the user-supplied
+`2026 AMC 10A Booklet.pdf`. Select year **2026** and paper **2026-practice-1**,
+or open `?problem=2026-practice-1-1`. The 25 problems preserve the exact English
+questions, choices and diagrams as images; click a question to open the original
+PDF with selectable text. Question 17 combines its two-page original. No Chinese
+translation, answer key or solution was supplied, so none is invented or linked
+to an unrelated official paper. Topic tags and difficulty bands are study aids.
+
+The supplemental paper is separate from the 500 official archived problems and
+does not change the 153-mission course or badge requirements. Practice status is
+saved per account in this browser (guest status has its own local store), not
+sent to the official-exam progress RPC. Review bookmarks use the existing Review
+collection. Progress exports and Explorer totals include supplemental problems.
+
+To reproduce the question images on macOS, run
+`swift scripts/import-practice.swift /path/to/booklet.pdf assets/practice/2026-practice-1`.
+The importer is specific to this six-page booklet and preserves the original
+source PDF alongside its question images.
+
 ## Learning quests
+
+Each quest has a **Share quest PDF** action. Choose English, Chinese, or bilingual
+content and whether to include the answer key at the end, then create the PDF.
+The pack includes the full lesson and examples, every checkpoint, all assigned AMC
+problems and diagrams, vocabulary definitions and checks, and a review worksheet.
+Available checkpoint explanations and source links accompany the optional answer
+key; official worked solutions are not copied. No account data or personal progress
+is exported. PDF generation runs locally in the browser, with MathJax and image
+loading required. Pages are rendered as images to preserve Chinese and typeset math;
+the resulting PDF text is not selectable.
+
+Use **Share file** on browsers supporting Web Share file attachments to send it to
+available mail, messaging, or other apps. Otherwise download the PDF and attach it
+manually. **Open email** creates a draft but cannot automatically attach files:
+the downloaded PDF must be attached by the user. Nothing is sent automatically.
+PDF libraries are checked in; after changing their dependencies run
+`npm run build:pdf` to rebuild `assets/vendor/quest-pdf.mjs` and its license notices.
 
 The **Quests / 学习任务** tab organizes the entire collection into **153 course
 sessions**, each with an estimated **45–60 minute** lesson/checkpoint/practice/

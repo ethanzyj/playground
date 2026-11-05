@@ -1,13 +1,31 @@
-import { TOPICS, PROBLEM_REFERENCES, GLOSSARY, allConcepts } from "./data.mjs?v=20261026-6";
-import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261024-11";
+import { TOPICS, PROBLEM_REFERENCES as COURSE_PROBLEMS, GLOSSARY, allConcepts } from "./data.mjs?v=20261026-6";
+import { PRACTICE_PROBLEMS, isPracticeKey, practiceStatement } from "./practice-papers.mjs?v=20261104-1";
+import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261104-1";
 import { AccountPanel } from "./account.mjs?v=20261026-6";
 import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-6";
-import { QuestPanel } from "./quests.mjs?v=20261101-1";
+import { QuestPanel } from "./quests.mjs?v=20261103-3";
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
 import { QUEST_COURSE } from "./quest-course.mjs?v=20261030-1";
+import { TestMode } from "./test-mode.mjs?v=20261104-2";
 
 let problemProgressStorageError = false;
 let reviewStorageError = false;
+const PROBLEM_REFERENCES = [...COURSE_PROBLEMS, ...PRACTICE_PROBLEMS];
+
+function loadPracticeProgress(userId) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(`amc10-practice-progress:${userId || "guest"}`) || "{}");
+    if (!saved || typeof saved !== "object" || Array.isArray(saved)
+      || !Object.entries(saved).every(([key, status]) => isPracticeKey(key) && PROBLEM_PROGRESS_OPTIONS.includes(status))) {
+      throw new Error("Invalid saved practice progress.");
+    }
+    return saved;
+  } catch (error) {
+    console.error("Unable to read practice progress.", error);
+    problemProgressStorageError = true;
+    return {};
+  }
+}
 
 function loadReviewCollection() {
   try {
@@ -41,7 +59,7 @@ function loadProblemProgress() {
 }
 
 const state = {
-  problemProgress: loadProblemProgress(),
+  problemProgress: { ...loadProblemProgress(), ...loadPracticeProgress(null) },
   problemProgressFilter: "all",
   language: localStorage.getItem("amc10-language") || "both",
   activeView: "study",
@@ -67,6 +85,14 @@ const conceptById = new Map(allConcepts().map((concept) => [concept.id, concept]
 
 const $ = (selector) => document.querySelector(selector);
 let accountPanel;
+const testMode = new TestMode({
+  mount: document.querySelector("#testModePanel"),
+  problems: PROBLEM_REFERENCES,
+  storage: localStorage,
+  getUserId: () => accountPanel?.controller?.user?.id,
+  getLanguage: () => state.language,
+  typeset: typesetMath
+});
 let questSolved = new Set();
 let achievementSync = Promise.resolve();
 const questPanel = new QuestPanel({
@@ -307,7 +333,7 @@ const UI_TEXT = {
   topicNavigation: { en: "Topic navigation", zh: "知识点导航" },
   studyGuide: { en: "Study Guide", zh: "学习指南" },
   studyProgress: { en: "Study progress", zh: "学习进度" },
-  wholeCollection: { en: "Whole collection · 2016–2025", zh: "全部题库 · 2016–2025" },
+  wholeCollection: { en: "Whole collection · including practice papers", zh: "全部题库 · 含练习卷" },
   conceptsMastered: { en: "Concepts mastered", zh: "已掌握知识点" },
   vocabularyMastered: { en: "Vocabulary mastered", zh: "已掌握词汇" },
   conceptProgress: { en: "Practice in this concept", zh: "本知识点练习进度" },
@@ -342,6 +368,7 @@ const UI_TEXT = {
   problems: { en: "problems", zh: "题" },
   fullExamSummary: { en: "Original English statements and answer choices matching your filters. Answers and solutions are not shown.", zh: "阅读符合筛选条件的英文原题及选项，不显示答案或解析。" },
   examAttribution: { en: "AMC problems © Mathematical Association of America.", zh: "AMC 题目版权归美国数学协会（MAA）所有。" },
+  practiceAttribution: { en: "2026-practice-1 is the user-supplied booklet, catalogued as practice, not as an official AMC 10A exam. Original English questions, diagrams and choices are preserved; no answers or solutions were supplied. Click a question to open the original PDF and zoom. Practice progress is saved per account in this browser only.", zh: "2026-practice-1 为用户提供的练习卷，不作为官方 AMC 10A 真题收录。保留英文题目、图示及选项；未提供答案或解析。点击题目可打开原卷放大查看。练习进度按账户仅保存在当前浏览器。" },
   loadingExam: { en: "Loading problem statements…", zh: "正在加载题目……" },
   examLoadError: { en: "Unable to load problem statements. Please retry or open the source page.", zh: "无法加载题目，请重试或打开来源页面。" },
   retry: { en: "Retry", zh: "重试" },
@@ -866,13 +893,13 @@ function problemCard(problem, statement = null) {
   return `
     <article class="problem-card" data-problem-key="${problemKey(problem)}" tabindex="-1">
       <h3 class="problem-topline">
-        <strong>${problem.year} ${problem.exam} #${problem.problemNumber}</strong>
+        <strong>${problem.paperId || `${problem.year} ${problem.exam}`} #${problem.problemNumber}</strong>
         <span>${difficultyText(problem.difficulty)}</span>
       </h3>
       ${problemProgressControl(problemKey(problem))}
       ${questSolved.has(problemKey(problem)) ? `<p class="quest-solved">${textPair("任务中已正确作答", "Answered correctly in Quests")}</p>` : ""}
       ${mission ? `<a href="${deepLink("quest", mission.concept.id)}" target="_blank" rel="noopener">${textPair("进入对应任务", "Open this problem's mission")}</a>` : ""}
-      ${statement ? `
+      ${problem.practice ? `<div class="problem-statement">${practiceStatement(problem, state.language)}</div>` : statement ? `
         <div class="problem-statement">${problemStatement(statement, state.language, problem)}</div>
         <ol class="problem-choices" type="A">
           ${statement.choices.map((_, index) => `<li>${problemChoice(statement, index, state.language)}</li>`).join("")}
@@ -881,16 +908,16 @@ function problemCard(problem, statement = null) {
       <div class="tags">${tags.map((tag) => `<a class="concept-tag" href="${deepLink("concept", tag.id)}" target="_blank" rel="noopener">${textPair(tag.zh, tag.en)}</a>`).join("")}</div>
       ${problemVocabulary(problem)}
       <div class="card-actions">
-        <a class="icon-action" href="${problem.sourceUrl}" target="_blank" rel="noreferrer" aria-label="${uiText("openReference")}" title="${uiText("openReference")}">
+        <a class="icon-action" href="${problem.sourceUrl}${problem.practice ? `#page=${problem.bookletPage}` : ""}" target="_blank" rel="noreferrer" aria-label="${uiText("openReference")}" title="${uiText("openReference")}">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5" />
           </svg>
         </a>
-        <a class="icon-action" href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener" aria-label="${uiText("openSolution")}" title="${uiText("openSolution")}">
+        ${problem.practice ? "" : `<a class="icon-action" href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener" aria-label="${uiText("openSolution")}" title="${uiText("openSolution")}">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
           </svg>
-        </a>
+        </a>`}
       </div>
     </article>
   `;
@@ -932,7 +959,7 @@ function populateFilters() {
   `;
   glossaryMasteryFilter.value = state.glossaryMastery;
   yearFilter.innerHTML = `<option value="all">${uiText("allYears")}</option>${years.map((year) => `<option value="${year}">${year}</option>`).join("")}`;
-  examFilter.innerHTML = `<option value="all">${uiText("allExams")}</option>${exams.map((exam) => `<option value="${exam}">${exam}</option>`).join("")}`;
+  examFilter.innerHTML = `<option value="all">${uiText("allExams")}</option>${exams.map((exam) => `<option value="${exam}">${exam === "practice-1" ? "2026-practice-1" : exam}</option>`).join("")}`;
   difficultyFilter.innerHTML = `<option value="all">${uiText("allDifficulties")}</option>${difficulties.map((difficulty) => `<option value="${difficulty}">${difficultyText(difficulty)}</option>`).join("")}`;
   yearFilter.value = state.year;
   examFilter.value = state.exam;
@@ -1000,10 +1027,13 @@ async function renderExamStatements(problems, version) {
   const list = $("#problemList");
   list.setAttribute("aria-busy", "true");
   list.insertAdjacentHTML("afterbegin", `<p class="empty-state" role="status">${uiText("loadingExam")}</p>`);
-  $("#examAttribution").textContent = uiText("examAttribution");
+  $("#examAttribution").textContent = [
+    problems.some((problem) => !problem.practice) ? uiText("examAttribution") : "",
+    problems.some((problem) => problem.practice) ? uiText("practiceAttribution") : ""
+  ].filter(Boolean).join(" ");
   let sourceUrl = "https://live.poshenloh.com/past-contests/amc10";
   try {
-    const papers = new Map(problems.map((problem) => [`${problem.year}${problem.exam.slice(-1)}`, problem]));
+    const papers = new Map(problems.filter((problem) => !problem.practice).map((problem) => [`${problem.year}${problem.exam.slice(-1)}`, problem]));
     await Promise.all([...papers].map(async ([paper, { year, exam }]) => {
       if (!examStatements.has(paper)) {
         const response = await fetch(`assets/exams/${paper}.json?v=20261031-zh`);
@@ -1025,7 +1055,7 @@ async function renderExamStatements(problems, version) {
     window.MathJax?.typesetClear?.([list]);
     list.innerHTML = problems.map((problem) => {
       const data = examStatements.get(`${problem.year}${problem.exam.slice(-1)}`);
-      return problemCard(problem, data.problems[problem.problemNumber - 1]);
+      return problemCard(problem, data?.problems[problem.problemNumber - 1]);
     }).join("");
     wireProblemAndGlossaryLinks(list);
     typesetMath(list);
@@ -1065,8 +1095,12 @@ function renderProblems() {
       && (state.difficulty === "all" || problem.difficulty === state.difficulty);
   });
   problems.sort((a, b) => b.year - a.year || a.exam.localeCompare(b.exam) || a.problemNumber - b.problemNumber);
+  testMode.update(problems);
   $("#examAttribution").hidden = !problems.length;
-  $("#examAttribution").textContent = uiText("examAttribution");
+  $("#examAttribution").textContent = [
+    problems.some((problem) => !problem.practice) ? uiText("examAttribution") : "",
+    problems.some((problem) => problem.practice) ? uiText("practiceAttribution") : ""
+  ].filter(Boolean).join(" ");
   $("#problemCount").textContent = isExam
     ? `${state.year} ${state.exam} · ${problems.length} / 25 ${uiText("problems")}`
     : `${problems.length} / ${PROBLEM_REFERENCES.length}`;
@@ -1080,7 +1114,7 @@ function renderProblems() {
   wireProblemAndGlossaryLinks($("#problemList"));
   typesetMath($("#problemList"));
   if (state.activeView === "problems"
-    && problems.some((problem) => !examStatements.has(`${problem.year}${problem.exam.slice(-1)}`))) {
+    && problems.some((problem) => !problem.practice && !examStatements.has(`${problem.year}${problem.exam.slice(-1)}`))) {
     return renderExamStatements(problems, version);
   }
 }
@@ -1090,7 +1124,7 @@ function deepLink(name, value) {
 }
 
 function problemVocabulary(problem) {
-  const terms = (PROBLEM_VOCABULARY[problemKey(problem)] || []).map((name) => glossaryByName.get(name)).filter(Boolean);
+  const terms = (problem.vocabulary || PROBLEM_VOCABULARY[problemKey(problem)] || []).map((name) => glossaryByName.get(name)).filter(Boolean);
   if (!terms.length) return "";
   return `
     <div class="problem-vocab">
@@ -1301,17 +1335,31 @@ function wireProblemAndGlossaryLinks(container) {
     input.addEventListener("change", () => {
       const control = input.closest("[data-progress-key]");
       const key = control.dataset.progressKey;
-      if (accountPanel?.signedIn) {
+      if (accountPanel?.signedIn && !isPracticeKey(key)) {
         accountPanel.mark(key, input.value);
         return;
       }
       const updated = { ...state.problemProgress, [key]: input.value };
       try {
-        localStorage.setItem("amc10-problem-progress", JSON.stringify(updated));
+        if (isPracticeKey(key)) {
+          const userId = accountPanel?.controller?.user?.id;
+          const practice = { ...loadPracticeProgress(userId), [key]: input.value };
+          if (problemProgressStorageError) throw new Error("Practice progress storage is unavailable.");
+          localStorage.setItem(`amc10-practice-progress:${userId || "guest"}`, JSON.stringify(practice));
+        } else {
+          localStorage.setItem("amc10-problem-progress", JSON.stringify(Object.fromEntries(
+            Object.entries(updated).filter(([item]) => !isPracticeKey(item))
+          )));
+        }
         problemProgressStorageError = false;
       } catch (error) {
         console.error("Unable to save problem progress.", error);
         problemProgressStorageError = true;
+        if (isPracticeKey(key)) {
+          updateProgressControl(control, state.problemProgress[key]);
+          renderProblemProgressError();
+          return;
+        }
       }
       state.problemProgress = updated;
       document.querySelectorAll("[data-progress-key]").forEach((instance) => {
@@ -1597,7 +1645,7 @@ function render() {
 wireControls();
 accountPanel = new AccountPanel({
   getLanguage: () => state.language,
-  validKeys: PROBLEM_REFERENCES.map(problemKey),
+  validKeys: COURSE_PROBLEMS.map(problemKey),
   readMastery: () => ({ concept: [...state.mastered], glossary: [...state.masteredGlossary], review: [...loadReviewCollection()] }),
   onMastery: (sets) => {
     const same = (a, b) => a.size === b.size && [...a].every((item) => b.has(item));
@@ -1619,6 +1667,8 @@ accountPanel = new AccountPanel({
     } else refreshReviewCollection();
   },
   onProgress: (selections) => {
+    if (testMode.syncIdentity()) testMode.render();
+    selections = { ...selections, ...loadPracticeProgress(accountPanel?.controller?.user?.id) };
     if (questPanel.identity !== (accountPanel?.controller?.user?.id || "guest")) questPanel.load();
     const changed = Object.keys(state.problemProgress).length !== Object.keys(selections).length
       || Object.entries(selections).some(([key, value]) => state.problemProgress[key] !== value);
