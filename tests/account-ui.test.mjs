@@ -143,8 +143,17 @@ test("uploaded practice paper opens all 25 questions, filters independently and 
     await p.waitFor(() => p.$('[data-problem-key="2026-practice-1-25"]') && !p.$(`[data-progress-key="${key}"] input`).disabled);
     assert.equal(p.$$("#problemList .problem-card").length, 25);
     assert.equal(p.$("#yearFilter").value, "2026");
+    assert.equal(p.$$("#problemList .practice-chinese").length, 25);
+    assert.equal(p.$$("#problemList .practice-solution-link").length, 25);
+    assert.match(p.$('[data-problem-key="2026-practice-1-17"] .practice-solution-link').href, /solutions\.pdf#page=18$/);
+    p.$('[data-language="en"]').click();
+    assert.equal(p.$$("#problemList .practice-chinese").length, 0);
+    p.$('[data-language="zh"]').click();
+    assert.equal(p.$$("#problemList .practice-chinese").length, 25);
+    assert.ok(p.$('[data-problem-key="2026-practice-1-17"] .practice-chinese img').src.includes("chinese-17.png"));
+    p.$('[data-language="both"]').click();
     assert.equal(p.$("#examFilter").value, "practice-1");
-    assert.match(p.$("#examAttribution").textContent, /user-supplied booklet/);
+    assert.match(p.$("#examAttribution").textContent, /user-supplied practice booklet/);
     assert.ok(p.$(`[data-problem-key="${key}"] img[src$="problem-17.png"]`));
     assert.equal(p.$$('#problemList a[href*="live.poshenloh.com"]').length, 0);
     assert.equal(requests.some((url) => /exams\/20261/.test(url)), false);

@@ -1,5 +1,6 @@
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
 import { problemKey } from "./progress.mjs?v=20261024-11";
+import { practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261105-1";
 
 const escape = (value) => String(value).replace(/[&<>"']/g, (c) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -68,6 +69,12 @@ export async function questPdfSections({ content, language, includeAnswers, quiz
   add(heading("真题练习", "AMC practice"));
   const papers = new Map();
   for (const reference of problems) {
+    if (reference.practice) {
+      add(`<h3>${escape(`${reference.paperId} #${reference.problemNumber}`)}</h3>
+        ${practiceStatement(reference, language)}
+        <div class="pdf-work">${text("解题过程：", "Working:")}<br><br><br><br></div>`);
+      continue;
+    }
     const paper = `${reference.year}${reference.exam.slice(-1)}`;
     if (!papers.has(paper)) {
       const response = await fetchImpl(`assets/exams/${paper}.json?v=20261031-zh`);
@@ -96,14 +103,25 @@ export async function questPdfSections({ content, language, includeAnswers, quiz
     <p>${text("用自己的话解释每个词汇，然后重做不确定的题目。", "Explain each vocabulary term in your own words, then retry any uncertain questions.")}</p>
     <p>${text("自查：已复习公式 ____  已重做错题 ____  已检查词汇 ____", "Self-check: Formulas reviewed ____  Mistakes retried ____  Vocabulary checked ____")}</p>`);
   if (includeAnswers) {
-    const response = await fetchImpl("assets/answer-key.json");
-    if (!response.ok) throw new Error("Unable to load the answer key");
-    const { answers } = await response.json();
+    const sources = [...new Set(problems.map((p) => p.answerKeyUrl || "assets/answer-key.json"))];
+    const answerSets = await Promise.all(sources.map(async (source) => {
+      const response = await fetchImpl(source);
+      if (!response.ok) throw new Error("Unable to load the answer key");
+      return (await response.json()).answers;
+    }));
+    const answers = Object.assign({}, ...answerSets);
     add(heading("答案与复习提示", "Answer key & review notes"));
     keys.forEach(add);
     for (const reference of problems) {
       const key = problemKey(reference);
       if (!/^[A-E]$/.test(answers?.[key])) throw new Error(`Missing answer for ${key}`);
+      if (reference.practice) {
+        add(`<h3>${escape(`${reference.paperId} #${reference.problemNumber}`)}: ${answers[key]}</h3>
+          <p>${text("用户提供的中文完整解析（原文保留）。", "Supplied Chinese worked solution, preserved as provided.")}</p>
+          <img src="${reference.solutionImageUrl}" alt="${escape(`${reference.paperId} #${reference.problemNumber} Chinese worked solution`)}">
+          <p>${practiceSolution(reference, language)}</p>`);
+        continue;
+      }
       const paper = `${reference.year}${reference.exam.slice(-1)}`;
       const source = `https://live.poshenloh.com/${language === "zh" ? "zh/" : ""}past-contests/amc10/${paper}/problem/${reference.problemNumber}`;
       add(`<h3>${escape(`${reference.year} ${reference.exam} #${reference.problemNumber}`)}: ${answers[key]}</h3>
@@ -111,8 +129,9 @@ export async function questPdfSections({ content, language, includeAnswers, quiz
         <p class="pdf-small">${source}</p>`);
     }
   }
-  add(`<h2>${text("来源", "Sources")}</h2><p>${text("AMC 题目版权归美国数学协会所有。中文题目来自 LIVE by Po-Shen Loh。学习包未复制来源解析。", "AMC problems © Mathematical Association of America. Chinese statements from LIVE by Po-Shen Loh. Source solutions are not reproduced in this pack.")}</p>
+  add(`<h2>${text("来源", "Sources")}</h2><p>${text("AMC 题目版权归美国数学协会所有。历年真题中文题目来自 LIVE by Po-Shen Loh，未复制其来源解析。", "AMC problems © Mathematical Association of America. Archived Chinese statements from LIVE by Po-Shen Loh; its source solutions are not reproduced in this pack.")}</p>
     ${[...papers.values()].map((exam) => `<p class="pdf-small">${escape(exam.sourceUrl)}<br>${escape(exam.chineseSourceUrl || "")}</p>`).join("")}
+    ${problems.some((p) => p.practice) ? `<p>${text("2026-practice-1 中文译题与解析来自用户提供的 AMC10A_2026_高质量.pdf，不是官方 MAA 解析。", "2026-practice-1 Chinese statements and worked solutions are from the user-supplied AMC10A_2026_高质量.pdf, not official MAA solutions.")}</p>` : ""}
     <p>${text("本文件不包含账户信息、作答记录或个人学习进度。", "This document contains no account information, submitted answers, or personal learning progress.")}</p>`);
   return blocks;
 }
@@ -135,7 +154,7 @@ export async function createQuestPdf({ document, content, language, includeAnswe
     exportDocument.head.append(base);
     const stylesheet = exportDocument.createElement("link");
     stylesheet.rel = "stylesheet";
-    stylesheet.href = new URL("assets/styles.css?v=20261103-3", document.baseURI).href;
+    stylesheet.href = new URL("assets/styles.css?v=20261105-1", document.baseURI).href;
     const styled = new Promise((resolve, reject) => {
       stylesheet.onload = resolve;
       stylesheet.onerror = () => reject(new Error("PDF styles could not be loaded."));

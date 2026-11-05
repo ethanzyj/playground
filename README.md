@@ -46,6 +46,20 @@ notes are preserved in `assets/practice/2026-practice-1/answer-key.json`. The
 English question images remain unchanged. Topic tags and difficulty bands are
 study aids; no unrelated official paper is used as a source.
 
+Chinese and bilingual modes include all 25 Chinese statements from the supplied
+`AMC10A_2026_高质量.pdf`. Faithful images retain the document's mathematical notation;
+Chinese mode also keeps the original diagrams and A–E choices below the translation.
+Translation images exclude answers and solutions. Each Explorer problem has a
+**Chinese worked-solution PDF (reveals answer)** link to its corresponding page
+in the complete supplied bilingual PDF. Timed tests reveal these links only after
+submission. PDF packets containing practice problems include the supplied worked
+solutions in the optional answer section, never in worksheet-only exports.
+
+To reproduce the translations and solution images on macOS, run
+`swift scripts/import-practice-translations.swift /path/to/AMC10A_2026.pdf assets/practice/2026-practice-1`.
+The importer checks each answer against the saved key and is specific to the
+supplied 26-page document. It preserves the complete source as `solutions.pdf`.
+
 The supplemental paper is separate from the 500 official archived problems and
 does not change the 153-mission course or badge requirements. Practice status is
 saved per account in this browser (guest status has its own local store), not

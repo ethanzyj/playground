@@ -6,11 +6,32 @@ import { QuestPanel, questContent } from "../assets/quests.mjs";
 import { QUEST_COURSE } from "../assets/quest-course.mjs";
 import { allConcepts } from "../assets/data.mjs";
 import { questPdfSections, openQuestShare } from "../assets/quest-pdf.mjs";
+import { PRACTICE_PROBLEMS } from "../assets/practice-papers.mjs";
 
 const root = new URL("../", import.meta.url);
 const quizQuestion = (...args) => QuestPanel.prototype.quizQuestion.call({ choices: QuestPanel.prototype.choices }, ...args);
 const fetchImpl = async (path) => ({ ok: true, json: async () => JSON.parse(readFileSync(new URL(path, root))) });
 
+test("practice PDF packets include Chinese statements and optional supplied solutions without official exam lookups", async () => {
+  const content = { ...questContent("course-v1-polynomials-1"), problems: PRACTICE_PROBLEMS };
+  for (const language of ["en", "zh", "both"]) {
+    for (const includeAnswers of [false, true]) {
+      const paths = [];
+      const html = (await questPdfSections({
+        content, language, includeAnswers, quizQuestion,
+        fetchImpl: (path) => { paths.push(path); return fetchImpl(path); }
+      })).join("");
+      assert.equal(paths.some((path) => path.includes("assets/exams/")), false);
+      assert.equal(html.includes("chinese-1.png"), language !== "en");
+      assert.equal(html.includes("solution-1.png"), includeAnswers);
+      assert.equal(html.includes("solutions.pdf#page=26"), includeAnswers);
+      assert.equal(paths.includes("assets/practice/2026-practice-1/answer-key.json"), includeAnswers);
+      if (includeAnswers) {
+        for (const p of PRACTICE_PROBLEMS) assert.ok(html.includes(p.solutionImageUrl));
+      }
+    }
+  }
+});
 test("every course PDF contains the entire lesson, checkpoints, problems, vocabulary, review and answer key", async () => {
   for (const mission of QUEST_COURSE.missions) {
     const content = questContent(mission.concept.id);

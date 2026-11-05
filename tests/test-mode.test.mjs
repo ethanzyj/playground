@@ -78,6 +78,9 @@ test("answers persist, refresh uses the same deadline, and exact expiration lock
   const p = fixture();
   try {
     p.click("setup"); p.click("start");
+    p.setLanguage("both"); p.panel.render();
+    assert.equal(p.mount.querySelectorAll(".practice-chinese").length, 25);
+    assert.equal(p.mount.querySelector(".practice-solution-link"), null);
     const deadline = p.panel.session.deadline;
     p.panel.answer("2026-practice-1-1", "C");
     const saved = JSON.parse(p.dom.window.localStorage.getItem("amc10-test:a"));
@@ -329,6 +332,7 @@ test("practice expiration uses the supplied PDF's key and next official attempt 
     assert.equal(p.panel.session.status, "expired");
     assert.match(p.mount.textContent, /Automatically submitted/);
     assert.equal(p.mount.querySelector("[data-test-score]").textContent, "42 / 150");
+    assert.equal(p.mount.querySelectorAll(".practice-solution-link").length, 25);
     assert.match(p.mount.querySelector('[data-test-result="2026-practice-1-25"]').textContent, /Correct answer: B/);
     p.click("clear"); p.click("setup"); p.select("year", 2025); p.click("start");
     assert.equal(p.mount.querySelector("[data-test-score]"), null);

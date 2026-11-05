@@ -1,12 +1,12 @@
 import { TOPICS, PROBLEM_REFERENCES as COURSE_PROBLEMS, GLOSSARY, allConcepts } from "./data.mjs?v=20261026-6";
-import { PRACTICE_PROBLEMS, isPracticeKey, practiceStatement } from "./practice-papers.mjs?v=20261104-3";
+import { PRACTICE_PROBLEMS, isPracticeKey, practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261105-1";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261104-1";
 import { AccountPanel } from "./account.mjs?v=20261026-6";
 import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-6";
-import { QuestPanel } from "./quests.mjs?v=20261103-3";
+import { QuestPanel } from "./quests.mjs?v=20261105-1";
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
 import { QUEST_COURSE } from "./quest-course.mjs?v=20261030-1";
-import { TestMode } from "./test-mode.mjs?v=20261104-3";
+import { TestMode } from "./test-mode.mjs?v=20261105-1";
 
 let problemProgressStorageError = false;
 let reviewStorageError = false;
@@ -368,7 +368,7 @@ const UI_TEXT = {
   problems: { en: "problems", zh: "题" },
   fullExamSummary: { en: "Original English statements and answer choices matching your filters. Answers and solutions are not shown.", zh: "阅读符合筛选条件的英文原题及选项，不显示答案或解析。" },
   examAttribution: { en: "AMC problems © Mathematical Association of America.", zh: "AMC 题目版权归美国数学协会（MAA）所有。" },
-  practiceAttribution: { en: "2026-practice-1 is the user-supplied booklet, catalogued as practice, not as an official AMC 10A exam. Original English questions, diagrams and choices are preserved. Test mode uses the separately supplied answer key. Click a question to open the original PDF and zoom. Practice progress is saved per account in this browser only.", zh: "2026-practice-1 为用户提供的练习卷，不作为官方 AMC 10A 真题收录。保留英文题目、图示及选项；测试模式使用另行提供的答案评分。点击题目可打开原卷放大查看。练习进度按账户仅保存在当前浏览器。" },
+  practiceAttribution: { en: "2026-practice-1 is the user-supplied practice booklet. English questions, diagrams and choices are preserved; Chinese mode adds the supplied translations. The worked-solution PDF reveals answers. Test mode uses the supplied key and hides solution links until submission. Practice progress stays per account in this browser.", zh: "2026-practice-1 为用户提供的练习卷。保留英文原题、图示及选项；中文模式加入用户提供的译题。解析 PDF 含答案，测试中仅提交后显示解析链接。练习进度按账户保存在当前浏览器。" },
   loadingExam: { en: "Loading problem statements…", zh: "正在加载题目……" },
   examLoadError: { en: "Unable to load problem statements. Please retry or open the source page.", zh: "无法加载题目，请重试或打开来源页面。" },
   retry: { en: "Retry", zh: "重试" },
@@ -913,7 +913,7 @@ function problemCard(problem, statement = null) {
             <path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5" />
           </svg>
         </a>
-        ${problem.practice ? "" : `<a class="icon-action" href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener" aria-label="${uiText("openSolution")}" title="${uiText("openSolution")}">
+        ${problem.practice ? practiceSolution(problem, state.language) : `<a class="icon-action" href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener" aria-label="${uiText("openSolution")}" title="${uiText("openSolution")}">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
           </svg>

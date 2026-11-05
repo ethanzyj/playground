@@ -1,6 +1,6 @@
 import { problemKey } from "./progress.mjs?v=20261104-1";
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
-import { practiceStatement } from "./practice-papers.mjs?v=20261104-3";
+import { practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261105-1";
 
 export const TEST_DURATION = 75 * 60 * 1000;
 const escape = (value) => String(value).replace(/[&<>"']/g, (c) =>
@@ -369,7 +369,8 @@ export class TestMode {
                 : `<p role="status">${t("正在加载题目…", "Loading question…")}</p>`}
             <fieldset ${!running || this.error || (!p.practice && !question) ? "disabled" : ""}><legend>${t("选择答案", "Choose your answer")}</legend>
             <div class="test-answer-options">${[..."ABCDE"].map((letter) => `<label><input type="radio" name="test-${key}" data-test-answer="${key}" value="${letter}" ${session.answers[key] === letter ? "checked" : ""}>${letter}</label>`).join("")}</div></fieldset>
-            ${graded ? `<p class="test-answer-result test-result-${graded.status}" data-test-result="${key}"><strong>${graded.status === "correct" ? t("正确", "Correct") : graded.status === "wrong" ? t("错误", "Wrong") : t("未作答", "Blank")}</strong> · ${t("你的答案", "Your answer")}: ${graded.answer || "—"} · ${t("正确答案", "Correct answer")}: ${graded.correctAnswer}</p>` : ""}</article>`;
+            ${graded ? `<p class="test-answer-result test-result-${graded.status}" data-test-result="${key}"><strong>${graded.status === "correct" ? t("正确", "Correct") : graded.status === "wrong" ? t("错误", "Wrong") : t("未作答", "Blank")}</strong> · ${t("你的答案", "Your answer")}: ${graded.answer || "—"} · ${t("正确答案", "Correct answer")}: ${graded.correctAnswer}</p>` : ""}
+            ${!running && p.practice ? practiceSolution(p, this.getLanguage()) : ""}</article>`;
         }).join("")}</div>`;
       if (!this.loadError) void this.loadQuestions();
       if (!running) void this.loadResults();
