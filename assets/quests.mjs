@@ -493,17 +493,7 @@ export class QuestPanel {
     return [...values.slice(offset), ...values.slice(0, offset)];
   }
 
-  quiz(content, progress, vocabulary) {
-    const kind = vocabulary ? "vocabulary" : "checkpoint";
-    this.quizIndices ||= {};
-    if (this.quizIndices[kind] == null) {
-      const unfinished = vocabulary ? content.terms.findIndex((term) => !progress.terms.includes(term.en))
-        : content.concept.formulas.findIndex((_, i) => !progress.formulas.includes(i));
-      this.quizIndices[kind] = Math.max(0, unfinished);
-    }
-    const index = this.quizIndices[kind];
-    const total = vocabulary ? content.terms.length : content.concept.formulas.length;
-    const solved = vocabulary ? progress.terms.includes(content.terms[index].en) : progress.formulas.includes(index);
+  quizQuestion(content, index, vocabulary) {
     const term = content.terms[index];
     const note = content.concept.formulaNotes[index];
     const correct = vocabulary
@@ -523,6 +513,21 @@ export class QuestPanel {
     const options = this.choices(challenge ? { ...correct, math: challenge.options[0] } : correct,
       challenge ? challenge.options.slice(1).map((math, i) => ({ id: `distractor:${i}`, math })) : alternatives,
       index + content.concept.id.length);
+    return { term, note, correct, challenge, options };
+  }
+
+  quiz(content, progress, vocabulary) {
+    const kind = vocabulary ? "vocabulary" : "checkpoint";
+    this.quizIndices ||= {};
+    if (this.quizIndices[kind] == null) {
+      const unfinished = vocabulary ? content.terms.findIndex((term) => !progress.terms.includes(term.en))
+        : content.concept.formulas.findIndex((_, i) => !progress.formulas.includes(i));
+      this.quizIndices[kind] = Math.max(0, unfinished);
+    }
+    const index = this.quizIndices[kind];
+    const total = vocabulary ? content.terms.length : content.concept.formulas.length;
+    const solved = vocabulary ? progress.terms.includes(content.terms[index].en) : progress.formulas.includes(index);
+    const { term, challenge, options } = this.quizQuestion(content, index, vocabulary);
     return `<p>${challenge ? content.concept.challenges ? this.pair("运用本关知识，选择正确答案。", "Apply this skill and choose the correct answer.") : this.pair("选择正确的因式分解。", "Choose the correct factorization.") : this.pair("选择正确的含义。", "Choose the correct meaning.")}</p>
       <p class="quest-question">${vocabulary ? this.pair(term.zh, term.en) : `\\(${html(challenge?.question || content.concept.formulas[index])}\\)`}</p>
       <div class="quest-problem-navigation">
@@ -625,6 +630,7 @@ export class QuestPanel {
     ].map((group) => `<optgroup label="${html(this.text(group.zh, group.en))}">${group.missions.map((concept) =>
       `<option value="${concept.id}" ${this.active === concept.id ? "selected" : ""}>${html(this.text(concept.zh, concept.en))}${conquered.some((item) => item.id === concept.id) ? " ★" : ""}</option>`).join("")}</optgroup>`).join("")}</select></label>
       </div>`;
+    const shareLabel = this.pair("分享任务 PDF", "Share quest PDF");
     const missionHeading = `<div class="quest-mission-title">
         <button id="questPrevious" type="button" class="quest-nav-icon" aria-label="${html(this.text("上一任务", "Previous mission"))}" title="${html(this.text("上一任务", "Previous mission"))}" ${missionIndex === 0 ? "disabled" : ""}>
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
@@ -649,7 +655,7 @@ export class QuestPanel {
         return `<button class="mastery quest-world-card" type="button" data-quest-world="${world.id}" aria-pressed="${world.missions.some((mission) => mission.id === this.active)}"><span class="quest-world-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${worldIcons[world.id]}</svg></span><span class="quest-world-name">${this.pair(world.zh, world.en)}</span><span class="quest-world-meta"><strong>${completed} <span>/ ${world.missions.length}</span></strong>${this.pair("徽章已获得", "badges earned")}</span></button>`;
       }).join("")}<button class="mastery quest-world-card" type="button" data-quest-world="review" aria-pressed="${!earnsBadge}"><span class="quest-world-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${worldIcons.review}</svg></span><span class="quest-world-name">${this.pair("综合复习", "Review quests")}</span><span class="quest-world-meta">${this.pair("巩固所学 · 不计徽章", "Extra practice · no badges")}</span></button></nav>
       ${!earnsBadge ? `<p class="muted">${this.pair("综合复习保留原有进度，不计入知识点徽章。", "Broad reviews keep your original progress and do not count toward skill badges.")}</p>` : ""}
-      ${navigation}<div class="section-heading"><div>${missionHeading}
+      ${navigation}<div class="section-heading"><div><button id="questShare" class="mastery quest-share-button" type="button"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5M5 13v7h14v-7"/></svg>${shareLabel}</button>${missionHeading}
       <p class="muted">${this.getUserId() ? this.pair("任务进度按账户保存并同步至数据库；未同步的更改仍保留在本浏览器。", "Quest progress syncs to the database per account; unsynced changes remain in this browser.") : this.pair("访客任务进度仅保存在本浏览器。", "Guest quest progress is saved in this browser only.")}</p></div></div>
       ${budget ? `<details class="quest-budget" open><summary><span class="quest-budget-heading"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>${this.pair("本关学习预算", "Session study budget")}</span><span class="quest-budget-total"><strong>${budget.total}</strong>${this.pair("分钟 · 预计", "min · estimated")}</span><span class="quest-budget-chevron" aria-hidden="true"></span></summary>
         <p class="quest-metrics">${[
@@ -783,6 +789,26 @@ export class QuestPanel {
         this.mount.querySelector(`#${id}:not(:disabled), #${offset > 0 ? "questQuizPrevious" : "questQuizNext"}`)?.focus();
       });
     }
+    this.mount.querySelector("#questShare").addEventListener("click", async () => {
+      const content = questContent(this.active);
+      const language = this.getLanguage();
+      try {
+        const { openQuestShare } = await import("./quest-pdf.mjs?v=20261103-3");
+        openQuestShare({
+          document: this.mount.ownerDocument,
+          content,
+          language,
+          fetchImpl: this.fetch,
+          quizQuestion: (content, index, vocabulary) => this.quizQuestion(content, index, vocabulary)
+        });
+      } catch (error) {
+        console.error("Unable to open quest sharing.", error);
+        const status = this.mount.ownerDocument.createElement("p");
+        status.setAttribute("role", "alert");
+        status.textContent = this.text("无法打开分享，请刷新后重试。", "Unable to open sharing. Please reload and retry.");
+        this.mount.querySelector("#questShare").after(status);
+      }
+    });
     this.typeset(this.mount);
   }
 }

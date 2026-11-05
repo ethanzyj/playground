@@ -33,7 +33,9 @@ export function exportProgress(problems, selections, concepts, exportedAt = new 
   return {
     schemaVersion: 1,
     exportedAt,
-    scope: "AMC 10A/10B 2016-2025",
+    scope: problems.some((problem) => problem.practice)
+      ? "AMC 10A/10B 2016-2025 and supplemental practice papers"
+      : "AMC 10A/10B 2016-2025",
     statusDefinitions: {
       needUnderstanding: "Need help understanding",
       needStartingPoint: "Understand, but need a starting point",
