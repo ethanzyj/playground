@@ -26,6 +26,7 @@ export const PRACTICE_PAPER = {
   id: "2026-practice-1",
   year: 2026,
   exam: "practice-1",
+  answerKeyUrl: "assets/practice/2026-practice-1/answer-key.json",
   sourceUrl: "assets/practice/2026-practice-1/booklet.pdf"
 };
 export const PRACTICE_PROBLEMS = tags.map((conceptIds, i) => ({

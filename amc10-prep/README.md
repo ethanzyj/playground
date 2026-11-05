@@ -8,16 +8,25 @@ Math rendering uses MathJax from a CDN and requires internet access.
 
 ## Test mode
 
-In Problem Explorer, choose **Test mode → Choose test questions**. The current
-filtered questions are preselected; uncheck individual questions or use select-all
-and clear-selection, then **Start 75-minute test**. The question set is frozen
+In Problem Explorer, choose **Test mode → Choose test paper**, select a **year**
+and **A or B** (or an available supplemental practice paper), then **Start
+75-minute test**. All 25 questions from that paper are included in question-number
+order, regardless of other Explorer filters; there is no per-question selection.
+The question set is frozen
 for that attempt, with a sticky 75:00 countdown and A–E answer choices for both
 official and uploaded practice papers. There is no pause: the saved deadline is
 based on wall-clock time, so refreshes, background tabs, and closing the browser
-do not reset it. At zero, answers lock automatically. **Finish & submit** ends
-early. The completed attempt keeps saved choices for review until you return to
-the Explorer/new test; tests do not automatically grade or alter quest badges,
-mastery, progress marks, or Review collection.
+do not reset it. At zero, the test **submits automatically**, locks answers, and
+displays the results without requiring a click. **Finish & submit** ends
+early. Submission or expiration calculates the AMC 10 score (6 points correct,
+1.5 blank, 0 wrong), correct/wrong/blank totals, and each question's correct answer.
+Answer keys are loaded only after the test ends. All 2016–2025 A/B papers have
+verified keys. `2026-practice-1` uses the 25 answers from the separately supplied
+`AMC10A_2026_高质量.pdf`, matched to the imported English questions. These answers
+are independently derived in the supplied document, not an official MAA key.
+Failed key loads can be retried without losing saved answers. The completed attempt
+keeps choices and results for review until you return to the Explorer/new test.
+Tests do not alter quest badges, mastery, progress marks, or Review collection.
 
 The current attempt is saved per account (or guest) in this browser only, including
 answers and deadline. It is not uploaded or synchronized across devices. A missing
@@ -31,9 +40,11 @@ Problem Explorer includes **2026-practice-1**, imported from the user-supplied
 `2026 AMC 10A Booklet.pdf`. Select year **2026** and paper **2026-practice-1**,
 or open `?problem=2026-practice-1-1`. The 25 problems preserve the exact English
 questions, choices and diagrams as images; click a question to open the original
-PDF with selectable text. Question 17 combines its two-page original. No Chinese
-translation, answer key or solution was supplied, so none is invented or linked
-to an unrelated official paper. Topic tags and difficulty bands are study aids.
+PDF with selectable text. Question 17 combines its two-page original. Test scoring
+uses the separately supplied answer-key PDF; its filename, checksum and source
+notes are preserved in `assets/practice/2026-practice-1/answer-key.json`. The
+English question images remain unchanged. Topic tags and difficulty bands are
+study aids; no unrelated official paper is used as a source.
 
 The supplemental paper is separate from the 500 official archived problems and
 does not change the 153-mission course or badge requirements. Practice status is

@@ -1,6 +1,6 @@
 import { problemKey } from "./progress.mjs?v=20261104-1";
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
-import { practiceStatement } from "./practice-papers.mjs?v=20261104-1";
+import { practiceStatement } from "./practice-papers.mjs?v=20261104-3";
 
 export const TEST_DURATION = 75 * 60 * 1000;
 const escape = (value) => String(value).replace(/[&<>"']/g, (c) =>
@@ -24,18 +24,40 @@ export function validateTestSession(value, validKeys) {
   return value;
 }
 
+export function scoreTestSession(session, answers) {
+  if (session.status === "running") throw new Error("Cannot score a running test.");
+  if (!session.keys.every((key) => typeof answers?.[key] === "string" && /^[A-E]$/.test(answers[key]))) {
+    throw new Error("The answer key is incomplete for this test.");
+  }
+  const questions = session.keys.map((key) => ({
+    key,
+    answer: session.answers[key] || null,
+    correctAnswer: answers[key],
+    status: !session.answers[key] ? "blank" : session.answers[key] === answers[key] ? "correct" : "wrong"
+  }));
+  const correct = questions.filter((q) => q.status === "correct").length;
+  const wrong = questions.filter((q) => q.status === "wrong").length;
+  const blank = questions.length - correct - wrong;
+  return { correct, wrong, blank, score: correct * 6 + blank * 1.5, maximum: questions.length * 6, questions };
+}
+
 export class TestMode {
   constructor({ mount, problems, storage, getUserId, getLanguage, typeset, fetchImpl = (...args) => fetch(...args), now = () => Date.now() }) {
     Object.assign(this, { mount, problems, storage, getUserId, getLanguage, typeset, fetch: fetchImpl, now });
     this.byKey = new Map(problems.map((problem) => [problemKey(problem), problem]));
     this.validKeys = new Set(this.byKey.keys());
     this.filtered = [];
-    this.selected = new Set();
+    this.years = [...new Set(problems.map((p) => p.year))].sort((a, b) => b - a);
+    this.selectedYear = null;
+    this.selectedExam = null;
     this.papers = new Map();
     this.generation = 0;
     this.identity = undefined;
     this.error = "";
     this.loadError = "";
+    this.answerKey = null;
+    this.grading = false;
+    this.gradingError = "";
     this.session = null;
     this.win = mount.ownerDocument.defaultView;
     this.onStorage = (event) => {
@@ -54,15 +76,27 @@ export class TestMode {
 
   get storageKey() { return `amc10-test:${this.identity}`; }
 
+  examsForYear(year) {
+    return [...new Set(this.problems.filter((p) => p.year === year).map((p) => p.exam))].sort();
+  }
+
+  get selectedProblems() {
+    return this.problems.filter((p) => p.year === this.selectedYear && p.exam === this.selectedExam)
+      .sort((a, b) => a.problemNumber - b.problemNumber);
+  }
+
   syncIdentity() {
     const identity = this.getUserId() || "guest";
     if (identity === this.identity) return false;
     this.identity = identity;
     this.generation++;
     this.setup = false;
-    this.selected.clear();
+    this.selectedYear = null;
+    this.selectedExam = null;
     this.loading = false;
     this.loadError = "";
+    this.gradingError = "";
+    this.answerKey = null;
     this.restore();
     return true;
   }
@@ -70,6 +104,9 @@ export class TestMode {
   restore() {
     this.generation++;
     this.loading = false;
+    this.grading = false;
+    this.answerKey = null;
+    this.gradingError = "";
     this.session = null;
     this.error = "";
     try {
@@ -97,7 +134,6 @@ export class TestMode {
 
   update(problems) {
     this.filtered = problems;
-    this.selected = new Set([...this.selected].filter((key) => problems.some((p) => problemKey(p) === key)));
     this.syncIdentity();
     this.render();
   }
@@ -141,7 +177,7 @@ export class TestMode {
 
   start() {
     this.syncIdentity();
-    if (this.session || this.error || !this.selected.size) return;
+    if (this.session || this.error) return;
     try {
       if (this.storage.getItem(this.storageKey)) { this.restore(); this.render(); return; }
     } catch (error) {
@@ -151,11 +187,18 @@ export class TestMode {
       return;
     }
     const startedAt = this.now();
-    const keys = this.filtered.map(problemKey).filter((key) => this.selected.has(key));
+    const keys = this.selectedProblems.map(problemKey);
     if (!keys.length) return;
     const next = { version: 1, id: `${startedAt}-${this.win.crypto.randomUUID()}`, startedAt,
       deadline: startedAt + TEST_DURATION, keys, answers: {}, status: "running" };
-    if (this.persist(next)) { this.setup = false; this.generation++; this.loadError = ""; }
+    if (this.persist(next)) {
+      this.setup = false;
+      this.generation++;
+      this.loadError = "";
+      this.answerKey = null;
+      this.grading = false;
+      this.gradingError = "";
+    }
     this.render();
   }
 
@@ -205,10 +248,14 @@ export class TestMode {
       this.session = null;
       this.error = "";
       this.loadError = "";
+      this.gradingError = "";
       this.loading = false;
+      this.grading = false;
+      this.answerKey = null;
       this.generation++;
       this.setup = false;
-      this.selected.clear();
+      this.selectedYear = null;
+      this.selectedExam = null;
     } catch (error) {
       console.error("Unable to clear timed test.", error);
       this.error = this.text("无法清除测试记录，请重试。", "Unable to clear the saved test. Please retry.");
@@ -248,6 +295,36 @@ export class TestMode {
     }
   }
 
+  async loadResults() {
+    if (!this.session || this.session.status === "running" || this.answerKey || this.grading || this.gradingError) return;
+    const generation = this.generation, identity = this.identity;
+    this.grading = true;
+    try {
+      const sources = [...new Set(this.session.keys.map((key) => this.byKey.get(key).answerKeyUrl || "assets/answer-key.json"))];
+      const keys = await Promise.all(sources.map(async (source) => {
+        const response = await this.fetch(`${source}?v=20261104-3`);
+        if (!response.ok) throw new Error("Unable to load the test answer key.");
+        const data = await response.json();
+        if (!data.answers || typeof data.answers !== "object" || Array.isArray(data.answers)
+          || !Object.keys(data.answers).length
+          || !Object.values(data.answers).every((answer) => typeof answer === "string" && /^[A-E]$/.test(answer))) {
+          throw new Error("Invalid test answer key.");
+        }
+        return data.answers;
+      }));
+      if (generation === this.generation && identity === (this.getUserId() || "guest")) this.answerKey = Object.assign({}, ...keys);
+    } catch (error) {
+      if (generation !== this.generation || identity !== (this.getUserId() || "guest")) return;
+      console.error("Unable to score timed test.", error);
+      this.gradingError = this.text("无法加载答案，暂时无法评分。已保存的选择不受影响，请重试。", "Unable to load the answer key for scoring. Your saved choices are safe. Please retry.");
+    } finally {
+      if (generation === this.generation && identity === (this.getUserId() || "guest")) {
+        this.grading = false;
+        this.render();
+      }
+    }
+  }
+
   render() {
     this.mount.closest("#problemsPanel")?.classList.toggle("test-mode-active", Boolean(this.session));
     const t = (zh, en) => escape(this.text(zh, en));
@@ -255,51 +332,76 @@ export class TestMode {
     const error = this.error ? `<p role="alert">${escape(this.error)}</p>${button("retry-save", "重试保存", "Retry saving")}${button("clear", "清除该测试", "Clear this test")}` : "";
     if (!this.session) {
       this.mount.innerHTML = `<div class="test-mode-intro"><div><h3>${t("测试模式", "Test mode")}</h3>
-        <p>${t("选择题目，开始 75 分钟测试。", "Choose questions for a 75-minute test.")}</p></div>
-        ${button("setup", this.setup ? "关闭选题" : "选择测试题目", this.setup ? "Close selection" : "Choose test questions", Boolean(this.error))}</div>${error}
-        ${this.setup ? `<div class="test-setup"><p>${t("使用当前筛选结果，或取消勾选不需要的题目。开始后不会暂停；刷新页面仍会继续倒计时。测试记录只保存在当前浏览器。", "Use the current filtered results, or uncheck questions. Once started, there is no pause; refreshing does not reset the countdown. Test records stay in this browser.")}</p>
-        <div class="test-mode-actions">${button("all", "全选当前结果", "Select all filtered")}${button("none", "清空选择", "Clear selection")}</div>
-        <div class="test-selection">${this.filtered.map((p) => `<label><input type="checkbox" data-test-select="${problemKey(p)}" ${this.selected.has(problemKey(p)) ? "checked" : ""}><span>${escape(p.paperId || `${p.year} ${p.exam}`)} #${p.problemNumber}</span></label>`).join("")}</div>
-        <p data-test-selection-count>${this.selected.size} ${t("题已选", "questions selected")}</p>${button("start", "开始 75 分钟测试", "Start 75-minute test", !this.selected.size || Boolean(this.error))}</div>` : ""}`;
+        <p>${t("选择年份和试卷，开始 75 分钟整卷测试。", "Choose a year and paper for a full 75-minute test.")}</p></div>
+        ${button("setup", this.setup ? "关闭选卷" : "选择测试试卷", this.setup ? "Close selection" : "Choose test paper", Boolean(this.error))}</div>${error}
+        ${this.setup ? `<div class="test-setup"><p>${t("自动包含所选试卷的全部 25 道题，不受题库其他筛选条件影响。开始后不会暂停；刷新页面仍会继续倒计时。测试记录只保存在当前浏览器。", "All 25 questions from the selected paper are included, regardless of Explorer filters. There is no pause; refreshing does not reset the countdown. Test records stay in this browser.")}</p>
+        <div class="test-paper-selection">
+          <label>${t("年份", "Year")}<select data-test-year>${this.years.map((year) => `<option value="${year}" ${year === this.selectedYear ? "selected" : ""}>${year}</option>`).join("")}</select></label>
+          <label>${t("试卷", "Paper")}<select data-test-exam>${this.examsForYear(this.selectedYear).map((exam) => `<option value="${escape(exam)}" ${exam === this.selectedExam ? "selected" : ""}>${escape(exam === "AMC 10A" ? "A" : exam === "AMC 10B" ? "B" : `${this.selectedYear}-${exam}`)}</option>`).join("")}</select></label>
+        </div>
+        <p data-test-selection-count>${this.selectedProblems.length} ${t("题 · 完整试卷", "questions · Full paper")}</p>${button("start", "开始 75 分钟测试", "Start 75-minute test", !this.selectedProblems.length || Boolean(this.error))}</div>` : ""}`;
     } else {
       const session = this.session;
       const running = session.status === "running";
       const answered = Object.keys(session.answers).length;
+      const missingAnswers = this.answerKey ? session.keys.filter((key) => !this.answerKey[key]).length : 0;
+      const result = !running && this.answerKey && !missingAnswers ? scoreTestSession(session, this.answerKey) : null;
       this.mount.innerHTML = `<div class="test-mode-header"><div><p class="test-eyebrow">${t("75 分钟 · 测试模式", "75 minutes · Test mode")}</p>
-        <h3>${t(running ? "测试进行中" : session.status === "expired" ? "时间到" : "测试已提交", running ? "Test in progress" : session.status === "expired" ? "Time is up" : "Test submitted")}</h3>
+        <h3>${t(running ? "测试进行中" : session.status === "expired" ? "时间到 · 已自动提交" : "测试已提交", running ? "Test in progress" : session.status === "expired" ? "Time is up · Automatically submitted" : "Test submitted")}</h3>
         <p data-test-answer-count>${answered} / ${session.keys.length} ${t("题已作答", "answered")}</p></div>
         ${running ? `<div class="test-clock-wrap"><span>${t("剩余时间", "Time remaining")}</span><strong data-test-clock role="timer" aria-live="off">${testTime(session.deadline - this.now())}</strong></div>` : ""}
         ${running ? button("finish", "结束并提交", "Finish & submit", Boolean(this.error)) : button("clear", "返回题库 · 新测试", "Back to Explorer · New test")}</div>
-        ${error}${!running ? `<p role="status" class="test-complete">${t("答案已锁定。下方可查看已保存的选择。本测试不自动评分，也不会修改任务或掌握进度。", "Answers are locked. Review your saved choices below. This test is not automatically graded and does not change quest or mastery progress.")}</p>` : `<p class="muted">${t("测试仅限当前浏览器；关闭或切换页面不会暂停。答案与计时按账户保存，不上传。", "This browser only. Leaving the page does not pause the timer. Answers and timing are saved per account locally, not uploaded.")}</p>`}
+        ${error}${!running ? `<div class="test-complete" role="status"><p>${t("答案已锁定。下方可查看已保存的选择。测试不会修改任务或掌握进度。", "Answers are locked. Review your saved choices below. Tests do not change quest or mastery progress.")}</p>
+        ${result ? `<h3 data-test-score>${result.score} / ${result.maximum}</h3>
+          <p data-test-result-count>${t("正确", "Correct")}: ${result.correct} · ${t("错误", "Wrong")}: ${result.wrong} · ${t("未作答", "Blank")}: ${result.blank}</p>
+          <p class="muted">${t("AMC 10 计分：答对 6 分，未作答 1.5 分，答错 0 分。", "AMC 10 scoring: 6 points correct, 1.5 blank, 0 wrong.")}</p>`
+          : this.gradingError ? `<p role="alert">${escape(this.gradingError)}</p>${button("retry-score", "重新评分", "Retry scoring")}`
+            : missingAnswers ? `<p role="alert" data-test-missing-key>${t("此试卷尚无完整、已验证的答案，暂不评分；不会将缺失答案判错。已保存的选择仍可查看。", "A complete verified answer key is not available for this paper, so it has not been scored. Missing keys are not counted as wrong; your saved choices remain available.")}</p>${button("retry-score", "重新检查答案", "Check for answer key again")}`
+              : `<p>${t("正在计算成绩…", "Calculating results…")}</p>`}</div>` : `<p class="muted">${t("测试仅限当前浏览器；关闭或切换页面不会暂停。答案与计时按账户保存，不上传。", "This browser only. Leaving the page does not pause the timer. Answers and timing are saved per account locally, not uploaded.")}</p>`}
         ${this.loadError ? `<p role="alert">${escape(this.loadError)}</p>${button("retry-load", "重新加载题目", "Retry loading questions")}` : ""}
         <div class="test-questions">${session.keys.map((key, index) => {
           const p = this.byKey.get(key);
           const question = this.papers.get(`${p.year}${p.exam.slice(-1)}`)?.problems[p.problemNumber - 1];
+          const graded = result?.questions[index];
           return `<article class="test-question"><h4>${index + 1}. ${escape(p.paperId || `${p.year} ${p.exam}`)} #${p.problemNumber}</h4>
             ${p.practice ? `<div class="test-practice-statement">${practiceStatement(p, this.getLanguage())}</div>`
               : question ? problemStatement(question, this.getLanguage()) + `<ol type="A">${question.choices.map((_, i) => `<li>${problemChoice(question, i, this.getLanguage())}</li>`).join("")}</ol>`
                 : `<p role="status">${t("正在加载题目…", "Loading question…")}</p>`}
             <fieldset ${!running || this.error || (!p.practice && !question) ? "disabled" : ""}><legend>${t("选择答案", "Choose your answer")}</legend>
-            <div class="test-answer-options">${[..."ABCDE"].map((letter) => `<label><input type="radio" name="test-${key}" data-test-answer="${key}" value="${letter}" ${session.answers[key] === letter ? "checked" : ""}>${letter}</label>`).join("")}</div></fieldset></article>`;
+            <div class="test-answer-options">${[..."ABCDE"].map((letter) => `<label><input type="radio" name="test-${key}" data-test-answer="${key}" value="${letter}" ${session.answers[key] === letter ? "checked" : ""}>${letter}</label>`).join("")}</div></fieldset>
+            ${graded ? `<p class="test-answer-result test-result-${graded.status}" data-test-result="${key}"><strong>${graded.status === "correct" ? t("正确", "Correct") : graded.status === "wrong" ? t("错误", "Wrong") : t("未作答", "Blank")}</strong> · ${t("你的答案", "Your answer")}: ${graded.answer || "—"} · ${t("正确答案", "Correct answer")}: ${graded.correctAnswer}</p>` : ""}</article>`;
         }).join("")}</div>`;
       if (!this.loadError) void this.loadQuestions();
+      if (!running) void this.loadResults();
     }
-    this.mount.querySelectorAll("[data-test-select]").forEach((input) => input.addEventListener("change", () => {
-      const key = input.dataset.testSelect;
-      if (input.checked) this.selected.add(key); else this.selected.delete(key);
-      this.mount.querySelector("[data-test-selection-count]").textContent = `${this.selected.size} ${this.text("题已选", "questions selected")}`;
-      this.mount.querySelector('[data-test-action="start"]').disabled = !this.selected.size;
-    }));
+    this.mount.querySelector("[data-test-year]")?.addEventListener("change", (event) => {
+      this.selectedYear = Number(event.target.value);
+      const exams = this.examsForYear(this.selectedYear);
+      if (!exams.includes(this.selectedExam)) this.selectedExam = exams[0];
+      this.render();
+      this.mount.querySelector("[data-test-year]")?.focus({ preventScroll: true });
+    });
+    this.mount.querySelector("[data-test-exam]")?.addEventListener("change", (event) => {
+      this.selectedExam = event.target.value;
+      this.render();
+      this.mount.querySelector("[data-test-exam]")?.focus({ preventScroll: true });
+    });
     this.mount.querySelectorAll("[data-test-answer]").forEach((input) => input.addEventListener("change", () => this.answer(input.dataset.testAnswer, input.value)));
     this.mount.querySelectorAll("[data-test-action]").forEach((b) => b.addEventListener("click", () => {
       switch (b.dataset.testAction) {
-        case "setup": this.setup = !this.setup; this.selected = new Set(this.filtered.map(problemKey)); this.render(); break;
-        case "all": this.selected = new Set(this.filtered.map(problemKey)); this.render(); break;
-        case "none": this.selected.clear(); this.render(); break;
+        case "setup":
+          this.setup = !this.setup;
+          if (this.selectedYear === null) {
+            const initial = this.filtered[0];
+            this.selectedYear = initial?.year ?? this.years[0];
+            this.selectedExam = initial?.exam ?? this.examsForYear(this.selectedYear)[0];
+          }
+          this.render(); break;
         case "start": this.start(); break;
         case "finish": this.finish(); break;
         case "clear": this.clear(); break;
         case "retry-load": this.loadError = ""; this.render(); break;
+        case "retry-score": this.answerKey = null; this.gradingError = ""; this.render(); break;
         case "retry-save":
           if (this.session) this.persist(this.session); else this.restore();
           this.render(); break;
