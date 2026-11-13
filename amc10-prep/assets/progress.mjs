@@ -1,7 +1,7 @@
 export const PROBLEM_PROGRESS_OPTIONS = ["needUnderstanding", "needStartingPoint", "haveApproach"];
 
 export function problemKey(problem) {
-  return `${problem.year}-${problem.exam.replace(" ", "")}-${problem.problemNumber}`;
+  return problem.progressKey || `${problem.year}-${problem.exam.replace(" ", "")}-${problem.problemNumber}`;
 }
 
 export function progressScope(problems, year = "all", exam = "all") {

@@ -1,6 +1,6 @@
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
-import { problemKey } from "./progress.mjs?v=20261024-11";
-import { practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261105-1";
+import { problemKey } from "./progress.mjs?v=20261112-2";
+import { practiceStatement } from "./practice-papers.mjs?v=20261112-2";
 
 const escape = (value) => String(value).replace(/[&<>"']/g, (c) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -118,8 +118,7 @@ export async function questPdfSections({ content, language, includeAnswers, quiz
       if (reference.practice) {
         add(`<h3>${escape(`${reference.paperId} #${reference.problemNumber}`)}: ${answers[key]}</h3>
           <p>${text("用户提供的中文完整解析（原文保留）。", "Supplied Chinese worked solution, preserved as provided.")}</p>
-          <img src="${reference.solutionImageUrl}" alt="${escape(`${reference.paperId} #${reference.problemNumber} Chinese worked solution`)}">
-          <p>${practiceSolution(reference, language)}</p>`);
+          <img src="${reference.solutionImageUrl}" alt="${escape(`${reference.paperId} #${reference.problemNumber} Chinese worked solution`)}">`);
         continue;
       }
       const paper = `${reference.year}${reference.exam.slice(-1)}`;
@@ -131,14 +130,19 @@ export async function questPdfSections({ content, language, includeAnswers, quiz
   }
   add(`<h2>${text("来源", "Sources")}</h2><p>${text("AMC 题目版权归美国数学协会所有。历年真题中文题目来自 LIVE by Po-Shen Loh，未复制其来源解析。", "AMC problems © Mathematical Association of America. Archived Chinese statements from LIVE by Po-Shen Loh; its source solutions are not reproduced in this pack.")}</p>
     ${[...papers.values()].map((exam) => `<p class="pdf-small">${escape(exam.sourceUrl)}<br>${escape(exam.chineseSourceUrl || "")}</p>`).join("")}
-    ${problems.some((p) => p.practice) ? `<p>${text("2026-practice-1 中文译题与解析来自用户提供的 AMC10A_2026_高质量.pdf，不是官方 MAA 解析。", "2026-practice-1 Chinese statements and worked solutions are from the user-supplied AMC10A_2026_高质量.pdf, not official MAA solutions.")}</p>` : ""}
+    ${problems.some((p) => p.practice) ? `<p>${text("2026 AMC 10A 中文译题与解析来自用户提供的 AMC10A_2026_高质量.pdf，不是官方 MAA 解析。", "2026 AMC 10A Chinese statements and worked solutions are from the user-supplied AMC10A_2026_高质量.pdf, not official MAA solutions.")}</p>` : ""}
     <p>${text("本文件不包含账户信息、作答记录或个人学习进度。", "This document contains no account information, submitted answers, or personal learning progress.")}</p>`);
   return blocks;
 }
 
 export async function createQuestPdf({ document, content, language, includeAnswers, quizQuestion, fetchImpl, onProgress = () => {}, signal }) {
-  const win = document.defaultView;
   const sections = await questPdfSections({ content, language, includeAnswers, quizQuestion, fetchImpl });
+  return createPdfFromSections({ document, sections, language, title: content.concept.en,
+    filename: `AMC10-${content.concept.id}-${language}.pdf`, onProgress, signal });
+}
+
+export async function createPdfFromSections({ document, sections, language, title, filename, onProgress = () => {}, signal }) {
+  const win = document.defaultView;
   signal?.throwIfAborted();
   const { jsPDF, html2canvas } = await import("./vendor/quest-pdf.mjs");
   const frame = document.createElement("iframe");
@@ -154,7 +158,7 @@ export async function createQuestPdf({ document, content, language, includeAnswe
     exportDocument.head.append(base);
     const stylesheet = exportDocument.createElement("link");
     stylesheet.rel = "stylesheet";
-    stylesheet.href = new URL("assets/styles.css?v=20261105-1", document.baseURI).href;
+    stylesheet.href = new URL("assets/styles.css?v=20261105-2", document.baseURI).href;
     const styled = new Promise((resolve, reject) => {
       stylesheet.onload = resolve;
       stylesheet.onerror = () => reject(new Error("PDF styles could not be loaded."));
@@ -197,7 +201,7 @@ export async function createQuestPdf({ document, content, language, includeAnswe
       if (!image.naturalWidth) throw new Error("A problem diagram could not be loaded.");
     }));
     const pdf = new jsPDF({ unit: "mm", format: "a4", compress: true });
-    pdf.setProperties({ title: `AMC 10 - ${content.concept.en}`, subject: "Quest study pack", creator: "AMC 10 Prep" });
+    pdf.setProperties({ title: `AMC 10 - ${title}`, creator: "AMC 10 Prep" });
     const margin = 14, width = 182, bottom = 278;
     let y = margin;
     const blocks = [...host.children];
@@ -267,13 +271,13 @@ export async function createQuestPdf({ document, content, language, includeAnswe
       pdf.setTextColor(100);
       pdf.text(`AMC 10 Prep | ${i} / ${pageCount}`, margin, 288);
     }
-    return new win.File([pdf.output("blob")], `AMC10-${content.concept.id}-${language}.pdf`, { type: "application/pdf" });
+    return new win.File([pdf.output("blob")], filename, { type: "application/pdf" });
   } finally {
     frame.remove();
   }
 }
 
-export function openQuestShare({ document, content, language, fetchImpl, quizQuestion, createPdf = createQuestPdf }) {
+export function openQuestShare({ document, content, language, fetchImpl, quizQuestion, createPdf = createQuestPdf, explorer = false }) {
   const existing = document.querySelector("#questShareDialog");
   if (existing) { existing.focus(); return; }
   const win = document.defaultView;
@@ -284,11 +288,11 @@ export function openQuestShare({ document, content, language, fetchImpl, quizQue
   dialog.className = "quest-share-dialog";
   dialog.setAttribute("aria-labelledby", "questShareTitle");
   dialog.innerHTML = `<form method="dialog"><button class="mastery quest-share-close" aria-label="${t("关闭", "Close")}">×</button></form>
-    <h2 id="questShareTitle">${t("分享任务学习包", "Share a quest study pack")}</h2>
+    <h2 id="questShareTitle">${explorer ? t("导出题目 PDF", "Export problems PDF") : t("分享任务学习包", "Share a quest study pack")}</h2>
     <p>${escape(zh ? content.concept.zh : content.concept.en)}</p>
-    <p>${t("包含学习、全部测验、真题、词汇及复习。不包含个人进度。", "Includes the lesson, every checkpoint, practice problem, vocabulary check, and review. No personal progress is included.")}</p>
+    <p>${explorer ? t("导出当前筛选的题目、图示和选项，不包含个人进度。练习卷可附完整解析；历年真题附答案和解析来源链接。", "Exports the current filtered problems, diagrams and choices, without personal progress. Practice papers include available worked solutions; archived exams include answer keys and links to source solutions.") : t("包含学习、全部测验、真题、词汇及复习。不包含个人进度。", "Includes the lesson, every checkpoint, practice problem, vocabulary check, and review. No personal progress is included.")}</p>
     <label>${t("PDF 语言", "PDF language")}<select id="questPdfLanguage"><option value="both">English + 中文</option><option value="en">English</option><option value="zh">中文</option></select></label>
-    <label class="quest-pdf-answer-option"><input id="questPdfAnswers" type="checkbox" checked>${t("在文末加入答案与复习提示", "Include an answer key and review notes at the end")}</label>
+    <label class="quest-pdf-answer-option"><input id="questPdfAnswers" type="checkbox" ${explorer ? "" : "checked"}>${explorer ? t("在文末加入答案与可用解析", "Include answers and available solutions at the end") : t("在文末加入答案与复习提示", "Include an answer key and review notes at the end")}</label>
     <button id="questPdfGenerate" class="mastery" type="button">${t("生成 PDF", "Create PDF")}</button>
     <p id="questPdfStatus" role="status" aria-live="polite"></p>
     <div class="quest-share-actions" hidden>
@@ -318,7 +322,7 @@ export function openQuestShare({ document, content, language, fetchImpl, quizQue
     controller = new win.AbortController();
     generate.disabled = select.disabled = answers.disabled = true;
     status.setAttribute("role", "status");
-    status.textContent = t("正在准备所有任务内容…", "Preparing all quest content…");
+    status.textContent = explorer ? t("正在准备筛选的题目…", "Preparing filtered problems…") : t("正在准备所有任务内容…", "Preparing all quest content…");
     try {
       file = await createPdf({
         document, content, language: select.value, includeAnswers: answers.checked, quizQuestion, fetchImpl, signal: controller.signal,
@@ -329,7 +333,7 @@ export function openQuestShare({ document, content, language, fetchImpl, quizQue
       const download = dialog.querySelector("#questPdfDownload");
       download.href = objectUrl;
       download.download = file.name;
-      dialog.querySelector("#questPdfEmail").href = `mailto:?subject=${encodeURIComponent(`AMC 10: ${content.concept.en}`)}&body=${encodeURIComponent(t("请将下载的任务 PDF 添加到此邮件附件。", "Please attach the downloaded quest PDF to this email."))}`;
+      dialog.querySelector("#questPdfEmail").href = `mailto:?subject=${encodeURIComponent(`AMC 10: ${content.concept.en}`)}&body=${encodeURIComponent(t("请将下载的 PDF 添加到此邮件附件。", "Please attach the downloaded PDF to this email."))}`;
       const canShare = Boolean(win.navigator.share && win.navigator.canShare?.({ files: [file] }));
       dialog.querySelector("#questPdfShare").hidden = !canShare;
       actions.hidden = false;

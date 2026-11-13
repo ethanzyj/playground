@@ -24,7 +24,8 @@ test("practice PDF packets include Chinese statements and optional supplied solu
       assert.equal(paths.some((path) => path.includes("assets/exams/")), false);
       assert.equal(html.includes("chinese-1.png"), language !== "en");
       assert.equal(html.includes("solution-1.png"), includeAnswers);
-      assert.equal(html.includes("solutions.pdf#page=26"), includeAnswers);
+      assert.equal(html.includes("solutions.pdf#page="), false);
+      assert.equal(html.includes('class="practice-solution"'), false);
       assert.equal(paths.includes("assets/practice/2026-practice-1/answer-key.json"), includeAnswers);
       if (includeAnswers) {
         for (const p of PRACTICE_PROBLEMS) assert.ok(html.includes(p.solutionImageUrl));

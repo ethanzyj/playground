@@ -7,7 +7,7 @@ import { JSDOM, VirtualConsole } from "jsdom";
 import { allConcepts, PROBLEM_REFERENCES } from "../assets/data.mjs";
 import { problemKey } from "../assets/progress.mjs";
 import { QUEST_COURSE } from "../assets/quest-course.mjs";
-import { PRACTICE_PROBLEMS } from "../assets/practice-papers.mjs";
+import { ALL_PRACTICE_PROBLEMS } from "../assets/practice-papers.mjs";
 
 const root = new URL("../", import.meta.url);
 const html = readFileSync(new URL("index.html", root), "utf8");
@@ -68,7 +68,7 @@ test("Test mode selects a complete paper, saves answers and locks at the 75-minu
     await p.waitFor(() => p.$$("#problemList .problem-card").length === 25);
     p.$('[data-test-action="setup"]').click();
     assert.equal(p.$("[data-test-year]").value, "2026");
-    assert.equal(p.$("[data-test-exam]").value, "practice-1");
+    assert.equal(p.$("[data-test-exam]").value, "AMC 10A");
     assert.equal(p.$$('[data-test-select]').length, 0);
     p.$('[data-test-action="start"]').click();
     assert.equal(p.$("[data-test-clock]").textContent, "75:00");
@@ -145,15 +145,36 @@ test("uploaded practice paper opens all 25 questions, filters independently and 
     assert.equal(p.$("#yearFilter").value, "2026");
     assert.equal(p.$$("#problemList .practice-chinese").length, 25);
     assert.equal(p.$$("#problemList .practice-solution-link").length, 25);
-    assert.match(p.$('[data-problem-key="2026-practice-1-17"] .practice-solution-link').href, /solutions\.pdf#page=18$/);
+    const solution = p.$('[data-problem-key="2026-practice-1-17"] .practice-solution');
+    assert.equal(solution.open, false);
+    solution.querySelector("summary").click();
+    assert.equal(solution.open, true);
+    assert.equal(solution.querySelectorAll("img").length, 1);
+    assert.match(solution.querySelector("img").src, /solution-17\.png$/);
+    assert.equal(p.$('[data-problem-key="2026-practice-1-18"] .practice-solution').open, false);
+    assert.equal(solution.querySelector("a"), null);
     p.$('[data-language="en"]').click();
     assert.equal(p.$$("#problemList .practice-chinese").length, 0);
     p.$('[data-language="zh"]').click();
     assert.equal(p.$$("#problemList .practice-chinese").length, 25);
     assert.ok(p.$('[data-problem-key="2026-practice-1-17"] .practice-chinese img').src.includes("chinese-17.png"));
     p.$('[data-language="both"]').click();
-    assert.equal(p.$("#examFilter").value, "practice-1");
-    assert.match(p.$("#examAttribution").textContent, /user-supplied practice booklet/);
+    assert.equal(p.$("#exportProblemsPdf").disabled, false);
+    p.$("#conceptFilter").value = "polynomials";
+    p.$("#conceptFilter").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$$("#problemList .problem-card").length, 1);
+    assert.equal(p.$("#exportProblemsPdf").disabled, false);
+    p.$("#yearFilter").value = "2025";
+    p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$$("#problemList .problem-card").length,
+      PROBLEM_REFERENCES.filter((problem) => problem.year === 2025 && problem.exam === "AMC 10A" && problem.conceptIds.includes("polynomials")).length);
+    assert.equal(p.$("#exportProblemsPdf").disabled, false);
+    p.$("#yearFilter").value = "2026";
+    p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
+    p.$("#conceptFilter").value = "all";
+    p.$("#conceptFilter").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$("#examFilter").value, "AMC 10A");
+    assert.match(p.$("#examAttribution").textContent, /user-supplied booklet/);
     assert.ok(p.$(`[data-problem-key="${key}"] img[src$="problem-17.png"]`));
     assert.equal(p.$$('#problemList a[href*="live.poshenloh.com"]').length, 0);
     assert.equal(requests.some((url) => /exams\/20261/.test(url)), false);
@@ -165,6 +186,28 @@ test("uploaded practice paper opens all 25 questions, filters independently and 
     p.$("#accountSignOut").click();
     await p.waitFor(() => !p.$("#accountPasswordForm").hidden);
     assert.equal(p.$(`[data-progress-key="${key}"] input:checked`), null);
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
+
+test("the second booklet opens independently with localized missing-translation notice", async () => {
+  const p = await page(false, null, "password", "?problem=2026-practice-2-21");
+  try {
+    await p.waitFor(() => p.$('[data-problem-key="2026-practice-2-25"]'));
+    assert.equal(p.$("#examFilter").value, "AMC 10B");
+    assert.deepEqual([...p.$("#examFilter").options].map((o) => o.value), ["all", "AMC 10A", "AMC 10B"]);
+    assert.match(p.$('[data-problem-key="2026-practice-2-21"] strong').textContent, /2026 AMC 10B #21/);
+    assert.equal(p.$("#yearFilter").value, "2026");
+    assert.equal(p.$$("#problemList .problem-card").length, 25);
+    assert.ok(p.$('[data-problem-key="2026-practice-2-21"] img[src$="problem-21.png"]'));
+    assert.equal(p.$$("#problemList .practice-solution").length, 0);
+    assert.match(p.$("#examAttribution").textContent, /answer key and solutions were not supplied/);
+    const progress = p.$('[data-progress-key="2026-practice-2-21"] input[value="haveApproach"]');
+    progress.checked = true;
+    progress.dispatchEvent(new p.window.Event("change", { bubbles: true }));
+    assert.equal(JSON.parse(p.window.localStorage.getItem("amc10-practice-progress:guest"))["2026-practice-2-21"], "haveApproach");
+    p.$('[data-language="zh"]').click();
+    assert.match(p.$('[data-problem-key="2026-practice-2-21"]').textContent, /此题暂未提供中文翻译/);
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
@@ -296,10 +339,10 @@ test("compact explorer header keeps labeled filters, localized counts, and progr
     for (const select of p.$$("#problemFilters select")) {
       assert.ok(select.closest("label").textContent.trim());
     }
-    assert.equal(p.$("#problemCount").textContent, "525 / 525");
+    assert.equal(p.$("#problemCount").textContent, "550 / 550");
     p.$("#yearFilter").value = "2025";
     p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
-    assert.equal(p.$("#problemCount").textContent, "50 / 525");
+    assert.equal(p.$("#problemCount").textContent, "50 / 550");
     assert.match(p.$("#progressScope").textContent, /2025/);
     assert.equal(p.$("#progressMeter").max, 50);
     assert.equal(p.$(".progress-help").open, false);
@@ -341,10 +384,10 @@ test("compact explorer header keeps labeled filters, localized counts, and progr
     await p.waitFor(() => p.$$("#problemList .problem-statement").length === 50);
     assert.equal(p.$("#problemFilters").hidden, false);
     assert.equal(p.$("#yearFilter").value, "2025");
-    assert.equal(p.$("#problemCount").textContent, "50 / 525");
+    assert.equal(p.$("#problemCount").textContent, "50 / 550");
     p.$("#yearFilter").value = "all";
     p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
-    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 525);
+    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 550);
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
@@ -395,7 +438,7 @@ test("review bookmarks are independent of progress, filterable, localized, and p
     p.$("#reviewOnly").value = "saved";
     p.$("#reviewOnly").dispatchEvent(new p.window.Event("change"));
     assert.equal(p.$$("#problemList .problem-card").length, 1);
-    assert.equal(p.$("#progressMeter").max, 525);
+    assert.equal(p.$("#progressMeter").max, 550);
     p.$('[data-language="zh"]').click();
     assert.equal(p.$("[data-review-key]").getAttribute("aria-pressed"), "true");
     assert.equal(p.$("[data-review-key]").getAttribute("aria-label"), "移出错题集");
@@ -404,7 +447,7 @@ test("review bookmarks are independent of progress, filterable, localized, and p
     assert.equal(p.$("#reviewCollectionCount").textContent, "0");
     p.$("#reviewOnly").value = "all";
     p.$("#reviewOnly").dispatchEvent(new p.window.Event("change"));
-    assert.equal(p.$$("#problemList .problem-card").length, 525);
+    assert.equal(p.$$("#problemList .problem-card").length, 550);
     const storage = p.window.Storage.prototype.setItem;
     p.window.Storage.prototype.setItem = () => { throw new Error("Storage full"); };
     p.$("[data-review-key]").click();
@@ -412,7 +455,7 @@ test("review bookmarks are independent of progress, filterable, localized, and p
     assert.equal(p.$("[data-review-key]").getAttribute("aria-pressed"), "false");
     p.window.Storage.prototype.setItem = storage;
     await p.waitFor(() => p.$("#problemList").getAttribute("aria-busy") === "false"
-      && p.$$("#problemList .problem-statement").length === 525);
+      && p.$$("#problemList .problem-statement").length === 550);
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
@@ -825,16 +868,16 @@ test("study dashboard counts the whole collection once and scopes practice to th
     const metric = (key) => p.$(`[data-study-metric="${key}"] progress`);
     assert.equal(metric("concepts").max, 18);
     assert.equal(metric("vocabulary").max, 144);
-    assert.equal(metric("problems").max, 525);
+    assert.equal(metric("problems").max, 550);
     assert.equal(metric("problems").value, 0);
     p.$('#topicNav [data-concept="numbers-operations"]').click();
-    const related = [...PROBLEM_REFERENCES, ...PRACTICE_PROBLEMS].filter((problem) => problem.conceptIds.includes("numbers-operations"));
+    const related = [...PROBLEM_REFERENCES, ...ALL_PRACTICE_PROBLEMS].filter((problem) => problem.conceptIds.includes("numbers-operations"));
     const unrelated = PROBLEM_REFERENCES.find((problem) => !problem.conceptIds.includes("numbers-operations"));
-    assert.equal(related.length, 208);
-    assert.equal(new Set(related.map(problemKey)).size, 208);
-    assert.equal(p.$("#relatedProblemCount").textContent, "208 / 525");
+    assert.equal(related.length, 211);
+    assert.equal(new Set(related.map(problemKey)).size, 211);
+    assert.equal(p.$("#relatedProblemCount").textContent, "211 / 550");
     assert.match(p.$("#referenceCountHelp").textContent, /must not be added together/);
-    assert.equal(p.$("#conceptProgress > progress").max, 208);
+    assert.equal(p.$("#conceptProgress > progress").max, 211);
     const key = problemKey(related[0]);
     p.$(`#problemList [data-progress-key="${key}"] input[value="haveApproach"]`).click();
     p.$(`#problemList [data-progress-key="${problemKey(unrelated)}"] input[value="needUnderstanding"]`).click();
@@ -850,12 +893,12 @@ test("study dashboard counts the whole collection once and scopes practice to th
     assert.equal(metric("vocabulary").value, 1);
     p.$("#yearFilter").value = "2025";
     p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
-    assert.equal(metric("problems").max, 525);
+    assert.equal(metric("problems").max, 550);
     assert.equal(metric("problems").value, 2);
-    assert.equal(p.$("#conceptProgress > progress").max, 208);
+    assert.equal(p.$("#conceptProgress > progress").max, 211);
     p.$('[data-language="zh"]').click();
     assert.equal(p.$("#studyProgressHeading").textContent, "学习进度");
-    assert.equal(p.$("#relatedProblemCount").textContent, "208 / 525");
+    assert.equal(p.$("#relatedProblemCount").textContent, "211 / 550");
     assert.equal(metric("problems").value, 2);
     assert.equal(metric("concepts").value, 1);
     assert.equal(metric("vocabulary").value, 1);

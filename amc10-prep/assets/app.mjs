@@ -1,16 +1,16 @@
 import { TOPICS, PROBLEM_REFERENCES as COURSE_PROBLEMS, GLOSSARY, allConcepts } from "./data.mjs?v=20261026-6";
-import { PRACTICE_PROBLEMS, isPracticeKey, practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261105-1";
-import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261104-1";
+import { ALL_PRACTICE_PROBLEMS, isPracticeKey, practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261112-2";
+import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261112-2";
 import { AccountPanel } from "./account.mjs?v=20261026-6";
 import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-6";
-import { QuestPanel } from "./quests.mjs?v=20261105-1";
+import { QuestPanel } from "./quests.mjs?v=20261112-2";
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
 import { QUEST_COURSE } from "./quest-course.mjs?v=20261030-1";
-import { TestMode } from "./test-mode.mjs?v=20261105-1";
+import { TestMode } from "./test-mode.mjs?v=20261112-2";
 
 let problemProgressStorageError = false;
 let reviewStorageError = false;
-const PROBLEM_REFERENCES = [...COURSE_PROBLEMS, ...PRACTICE_PROBLEMS];
+const PROBLEM_REFERENCES = [...COURSE_PROBLEMS, ...ALL_PRACTICE_PROBLEMS];
 
 function loadPracticeProgress(userId) {
   try {
@@ -368,7 +368,10 @@ const UI_TEXT = {
   problems: { en: "problems", zh: "题" },
   fullExamSummary: { en: "Original English statements and answer choices matching your filters. Answers and solutions are not shown.", zh: "阅读符合筛选条件的英文原题及选项，不显示答案或解析。" },
   examAttribution: { en: "AMC problems © Mathematical Association of America.", zh: "AMC 题目版权归美国数学协会（MAA）所有。" },
-  practiceAttribution: { en: "2026-practice-1 is the user-supplied practice booklet. English questions, diagrams and choices are preserved; Chinese mode adds the supplied translations. The worked-solution PDF reveals answers. Test mode uses the supplied key and hides solution links until submission. Practice progress stays per account in this browser.", zh: "2026-practice-1 为用户提供的练习卷。保留英文原题、图示及选项；中文模式加入用户提供的译题。解析 PDF 含答案，测试中仅提交后显示解析链接。练习进度按账户保存在当前浏览器。" },
+  practiceAttribution: { en: "2026 AMC 10A uses the user-supplied booklet. English questions, diagrams and choices are preserved; Chinese mode adds the supplied translations. Expand a problem's solution to see only its worked answer. Test mode hides solutions until submission. Progress stays per account in this browser.", zh: "2026 AMC 10A 来自用户提供的试卷。保留英文原题、图示及选项；中文模式加入用户提供的译题。展开解析仅显示当前题的答案与解题过程，测试中仅提交后可查看。进度按账户保存在当前浏览器。" },
+  practice2Attribution: { en: "2026 AMC 10B uses the user-supplied booklet. Chinese translations, answer key and solutions were not supplied. Its progress is saved per account in this browser.", zh: "2026 AMC 10B 来自用户提供的试卷，尚未提供中文译题、答案或解析。进度按账户保存在当前浏览器。" },
+  exportProblemsPdf: { en: "Export problems PDF", zh: "导出题目 PDF" },
+  problemPdfError: { en: "Unable to open PDF export. Check your connection and retry.", zh: "无法打开 PDF 导出，请检查网络后重试。" },
   loadingExam: { en: "Loading problem statements…", zh: "正在加载题目……" },
   examLoadError: { en: "Unable to load problem statements. Please retry or open the source page.", zh: "无法加载题目，请重试或打开来源页面。" },
   retry: { en: "Retry", zh: "重试" },
@@ -913,12 +916,13 @@ function problemCard(problem, statement = null) {
             <path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5" />
           </svg>
         </a>
-        ${problem.practice ? practiceSolution(problem, state.language) : `<a class="icon-action" href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener" aria-label="${uiText("openSolution")}" title="${uiText("openSolution")}">
+        ${problem.practice ? "" : `<a class="icon-action" href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener" aria-label="${uiText("openSolution")}" title="${uiText("openSolution")}">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
           </svg>
         </a>`}
       </div>
+      ${problem.solutionImageUrl ? practiceSolution(problem, state.language) : ""}
     </article>
   `;
 }
@@ -959,7 +963,7 @@ function populateFilters() {
   `;
   glossaryMasteryFilter.value = state.glossaryMastery;
   yearFilter.innerHTML = `<option value="all">${uiText("allYears")}</option>${years.map((year) => `<option value="${year}">${year}</option>`).join("")}`;
-  examFilter.innerHTML = `<option value="all">${uiText("allExams")}</option>${exams.map((exam) => `<option value="${exam}">${exam === "practice-1" ? "2026-practice-1" : exam}</option>`).join("")}`;
+  examFilter.innerHTML = `<option value="all">${uiText("allExams")}</option>${exams.map((exam) => `<option value="${exam}">${exam}</option>`).join("")}`;
   difficultyFilter.innerHTML = `<option value="all">${uiText("allDifficulties")}</option>${difficulties.map((difficulty) => `<option value="${difficulty}">${difficultyText(difficulty)}</option>`).join("")}`;
   yearFilter.value = state.year;
   examFilter.value = state.exam;
@@ -1029,7 +1033,8 @@ async function renderExamStatements(problems, version) {
   list.insertAdjacentHTML("afterbegin", `<p class="empty-state" role="status">${uiText("loadingExam")}</p>`);
   $("#examAttribution").textContent = [
     problems.some((problem) => !problem.practice) ? uiText("examAttribution") : "",
-    problems.some((problem) => problem.practice) ? uiText("practiceAttribution") : ""
+    problems.some((problem) => problem.id === "2026-practice-1") ? uiText("practiceAttribution") : "",
+    problems.some((problem) => problem.id === "2026-practice-2") ? uiText("practice2Attribution") : ""
   ].filter(Boolean).join(" ");
   let sourceUrl = "https://live.poshenloh.com/past-contests/amc10";
   try {
@@ -1096,10 +1101,28 @@ function renderProblems() {
   });
   problems.sort((a, b) => b.year - a.year || a.exam.localeCompare(b.exam) || a.problemNumber - b.problemNumber);
   testMode.update(problems);
+  const exportButton = $("#exportProblemsPdf");
+  exportButton.disabled = !problems.length;
+  exportButton.textContent = uiText("exportProblemsPdf");
+  exportButton.onclick = async () => {
+    const selected = [...problems];
+    const language = state.language;
+    exportButton.disabled = true;
+    $("#problemPdfError").hidden = true;
+    try {
+      const { openExplorerExport } = await import("./explorer-pdf.mjs?v=20261112-2");
+      openExplorerExport({ document, problems: selected, language });
+    } catch (error) {
+      console.error("Unable to open problem PDF export.", error);
+      $("#problemPdfError").textContent = uiText("problemPdfError");
+      $("#problemPdfError").hidden = false;
+    } finally { exportButton.disabled = !problems.length; }
+  };
   $("#examAttribution").hidden = !problems.length;
   $("#examAttribution").textContent = [
     problems.some((problem) => !problem.practice) ? uiText("examAttribution") : "",
-    problems.some((problem) => problem.practice) ? uiText("practiceAttribution") : ""
+    problems.some((problem) => problem.id === "2026-practice-1") ? uiText("practiceAttribution") : "",
+    problems.some((problem) => problem.id === "2026-practice-2") ? uiText("practice2Attribution") : ""
   ].filter(Boolean).join(" ");
   $("#problemCount").textContent = isExam
     ? `${state.year} ${state.exam} · ${problems.length} / 25 ${uiText("problems")}`

@@ -1,12 +1,34 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { readFileSync, existsSync } from "node:fs";
-import { PRACTICE_PAPER, PRACTICE_PROBLEMS, practiceStatement, practiceSolution, isPracticeKey } from "../assets/practice-papers.mjs";
+import { PRACTICE_PAPER, PRACTICE_PROBLEMS, PRACTICE_2_PROBLEMS, ALL_PRACTICE_PROBLEMS, practiceStatement, practiceSolution, isPracticeKey } from "../assets/practice-papers.mjs";
 import { GLOSSARY, PROBLEM_REFERENCES, allConcepts } from "../assets/data.mjs";
 import { QUEST_COURSE } from "../assets/quest-course.mjs";
 import { problemKey, exportProgress, progressScope } from "../assets/progress.mjs";
 
 const root = new URL("../", import.meta.url);
+test("2026-practice-2 supplies 25 independent English problems without invented keys or translations", () => {
+  assert.equal(PRACTICE_2_PROBLEMS.length, 25);
+  assert.equal(new Set([...PROBLEM_REFERENCES, ...ALL_PRACTICE_PROBLEMS].map(problemKey)).size, 550);
+  for (const [i, p] of PRACTICE_2_PROBLEMS.entries()) {
+    assert.equal(problemKey(p), `2026-practice-2-${i + 1}`);
+    assert.ok(isPracticeKey(problemKey(p)));
+    assert.ok(p.conceptIds.every((id) => allConcepts().some((c) => c.id === id)));
+    assert.equal(p.bookletPage, i < 5 ? 2 : i < 12 ? 3 : i < 20 ? 4 : i < 23 ? 5 : 6);
+    assert.equal(readFileSync(new URL(p.imageUrl, root)).subarray(1, 4).toString(), "PNG");
+    assert.equal(p.answerKeyUrl, undefined);
+    assert.equal(p.solutionImageUrl, undefined);
+    for (const language of ["en", "zh", "both"]) {
+      const html = practiceStatement(p, language);
+      assert.ok(html.includes(p.imageUrl));
+      assert.equal(html.includes("undefined"), false);
+      assert.equal(html.includes("此题暂未提供中文翻译"), language !== "en");
+    }
+  }
+  assert.equal(readFileSync(new URL(PRACTICE_2_PROBLEMS[0].sourceUrl, root)).subarray(0, 5).toString(), "%PDF-");
+  assert.equal(isPracticeKey("2026-practice-2-26"), false);
+  assert.equal(progressScope([...PROBLEM_REFERENCES, ...ALL_PRACTICE_PROBLEMS], 2026, "AMC 10B").length, 25);
+});
 test("2026-practice-1 supplies 25 independent problems with intact original assets", () => {
   assert.equal(PRACTICE_PAPER.id, "2026-practice-1");
   assert.equal(PRACTICE_PROBLEMS.length, 25);
@@ -42,8 +64,8 @@ test("practice statements preserve the English original without fabricated solut
 
 test("practice filtering and progress exports distinguish supplemental papers", () => {
   const problems = [...PROBLEM_REFERENCES, ...PRACTICE_PROBLEMS];
-  assert.equal(progressScope(problems, 2026, "practice-1").length, 25);
-  assert.equal(progressScope(problems, 2026, "AMC 10A").length, 0);
+  assert.equal(progressScope(problems, 2026, "AMC 10A").length, 25);
+  assert.equal(progressScope(problems, 2026, "AMC 10B").length, 0);
   const exported = exportProgress(problems, { "2026-practice-1-17": "haveApproach" }, allConcepts());
   assert.match(exported.scope, /supplemental practice/);
   assert.equal(exported.summary.total, 525);
@@ -78,7 +100,14 @@ test("all Chinese statements and solutions exist; language modes never leak solu
       assert.equal(html.includes("solution-"), false);
       assert.equal(html.includes("solutions.pdf"), false);
     }
-    assert.ok(practiceSolution(p, "both").includes(`solutions.pdf#page=${p.problemNumber + 1}`));
+    const solution = practiceSolution(p, "both");
+    assert.ok(solution.includes(p.solutionImageUrl));
+    assert.match(solution, /<details class="practice-solution">/);
+    assert.equal(solution.includes("solutions.pdf"), false);
+    assert.equal(solution.includes(" open"), false);
+    for (const other of PRACTICE_PROBLEMS) {
+      if (other !== p) assert.equal(solution.includes(`src="${other.solutionImageUrl}"`), false);
+    }
   }
   assert.equal(readFileSync(new URL(PRACTICE_PAPER.solutionPdfUrl, root)).subarray(0, 5).toString(), "%PDF-");
 });

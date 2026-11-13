@@ -1,6 +1,6 @@
-import { problemKey } from "./progress.mjs?v=20261104-1";
+import { problemKey } from "./progress.mjs?v=20261112-2";
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
-import { practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261105-1";
+import { practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261112-2";
 
 export const TEST_DURATION = 75 * 60 * 1000;
 const escape = (value) => String(value).replace(/[&<>"']/g, (c) =>
@@ -300,6 +300,13 @@ export class TestMode {
     const generation = this.generation, identity = this.identity;
     this.grading = true;
     try {
+      if (this.session.keys.some((key) => {
+        const problem = this.byKey.get(key);
+        return problem.practice && !problem.answerKeyUrl;
+      })) {
+        this.answerKey = {};
+        return;
+      }
       const sources = [...new Set(this.session.keys.map((key) => this.byKey.get(key).answerKeyUrl || "assets/answer-key.json"))];
       const keys = await Promise.all(sources.map(async (source) => {
         const response = await this.fetch(`${source}?v=20261104-3`);
@@ -339,7 +346,9 @@ export class TestMode {
           <label>${t("年份", "Year")}<select data-test-year>${this.years.map((year) => `<option value="${year}" ${year === this.selectedYear ? "selected" : ""}>${year}</option>`).join("")}</select></label>
           <label>${t("试卷", "Paper")}<select data-test-exam>${this.examsForYear(this.selectedYear).map((exam) => `<option value="${escape(exam)}" ${exam === this.selectedExam ? "selected" : ""}>${escape(exam === "AMC 10A" ? "A" : exam === "AMC 10B" ? "B" : `${this.selectedYear}-${exam}`)}</option>`).join("")}</select></label>
         </div>
-        <p data-test-selection-count>${this.selectedProblems.length} ${t("题 · 完整试卷", "questions · Full paper")}</p>${button("start", "开始 75 分钟测试", "Start 75-minute test", !this.selectedProblems.length || Boolean(this.error))}</div>` : ""}`;
+        <p data-test-selection-count>${this.selectedProblems.length} ${t("题 · 完整试卷", "questions · Full paper")}</p>
+        ${this.selectedProblems.some((p) => p.practice && !p.answerKeyUrl) ? `<p class="muted" data-test-no-key>${t("此试卷尚未提供答案，提交后无法评分。", "No answer key was supplied for this paper, so it cannot be scored after submission.")}</p>` : ""}
+        ${button("start", "开始 75 分钟测试", "Start 75-minute test", !this.selectedProblems.length || Boolean(this.error))}</div>` : ""}`;
     } else {
       const session = this.session;
       const running = session.status === "running";
@@ -370,7 +379,7 @@ export class TestMode {
             <fieldset ${!running || this.error || (!p.practice && !question) ? "disabled" : ""}><legend>${t("选择答案", "Choose your answer")}</legend>
             <div class="test-answer-options">${[..."ABCDE"].map((letter) => `<label><input type="radio" name="test-${key}" data-test-answer="${key}" value="${letter}" ${session.answers[key] === letter ? "checked" : ""}>${letter}</label>`).join("")}</div></fieldset>
             ${graded ? `<p class="test-answer-result test-result-${graded.status}" data-test-result="${key}"><strong>${graded.status === "correct" ? t("正确", "Correct") : graded.status === "wrong" ? t("错误", "Wrong") : t("未作答", "Blank")}</strong> · ${t("你的答案", "Your answer")}: ${graded.answer || "—"} · ${t("正确答案", "Correct answer")}: ${graded.correctAnswer}</p>` : ""}
-            ${!running && p.practice ? practiceSolution(p, this.getLanguage()) : ""}</article>`;
+            ${!running && p.solutionImageUrl ? practiceSolution(p, this.getLanguage()) : ""}</article>`;
         }).join("")}</div>`;
       if (!this.loadError) void this.loadQuestions();
       if (!running) void this.loadResults();
