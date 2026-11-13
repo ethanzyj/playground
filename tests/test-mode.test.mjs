@@ -3,8 +3,9 @@ import { test } from "node:test";
 import { readFileSync } from "node:fs";
 import { JSDOM } from "jsdom";
 import { TestMode, TEST_DURATION, testTime, validateTestSession, scoreTestSession } from "../assets/test-mode.mjs";
-import { PRACTICE_PROBLEMS } from "../assets/practice-papers.mjs";
+import { PRACTICE_PROBLEMS, ALL_PRACTICE_PROBLEMS } from "../assets/practice-papers.mjs";
 import { PROBLEM_REFERENCES } from "../assets/data.mjs";
+import { problemKey } from "../assets/progress.mjs";
 
 const root = new URL("../", import.meta.url);
 const answerKey = JSON.parse(readFileSync(new URL("assets/answer-key.json", root))).answers;
@@ -14,7 +15,7 @@ function fixture({ storage, fetchImpl } = {}) {
   const dom = new JSDOM('<section id="problemsPanel"><div id="testModePanel"></div><div id="problemList"></div></section>', { url: "https://example.test/" });
   let time = 100000, user = "a", language = "en";
   const mount = dom.window.document.querySelector("#testModePanel");
-  const problems = [...PROBLEM_REFERENCES, ...PRACTICE_PROBLEMS];
+  const problems = [...PROBLEM_REFERENCES, ...ALL_PRACTICE_PROBLEMS];
   const panel = new TestMode({
     mount, problems, storage: storage || dom.window.localStorage,
     getUserId: () => user, getLanguage: () => language, now: () => time, typeset() {},
@@ -38,7 +39,7 @@ test("year and paper selection starts a complete ordered paper for exactly 75 mi
     assert.equal(p.panel.session, null);
     assert.equal(p.mount.querySelectorAll('input[type="checkbox"]').length, 0);
     assert.equal(p.mount.querySelector("[data-test-year]").value, "2026");
-    assert.equal(p.mount.querySelector("[data-test-exam]").value, "practice-1");
+    assert.equal(p.mount.querySelector("[data-test-exam]").value, "AMC 10A");
     assert.match(p.mount.querySelector("[data-test-selection-count]").textContent, /25 questions/);
     p.click("start");
     assert.deepEqual(p.panel.session.keys, Array.from({ length: 25 }, (_, i) => `2026-practice-1-${i + 1}`));
@@ -52,7 +53,27 @@ test("year and paper selection starts a complete ordered paper for exactly 75 mi
   } finally { p.close(); }
 });
 
-test("A/B papers use all questions regardless of Explorer filters and reset unavailable paper choices", () => {
+test("practice-2 test retains choices without requesting an unrelated key or assigning a score", async () => {
+  const paths = [];
+  const p = fixture({ fetchImpl: async (path) => { paths.push(path); throw new Error("Unexpected fetch"); } });
+  try {
+    p.click("setup");
+    p.select("exam", "AMC 10B");
+    assert.match(p.mount.querySelector("[data-test-no-key]").textContent, /cannot be scored/);
+    p.click("start");
+    assert.deepEqual(p.panel.session.keys, Array.from({ length: 25 }, (_, i) => `2026-practice-2-${i + 1}`));
+    p.panel.answer("2026-practice-2-1", "C");
+    p.click("finish");
+    await settle();
+    assert.match(p.mount.querySelector("[data-test-missing-key]").textContent, /not available/);
+    assert.equal(p.mount.querySelector("[data-test-score]"), null);
+    assert.equal(p.panel.session.answers["2026-practice-2-1"], "C");
+    assert.equal(p.mount.querySelector(".practice-solution"), null);
+    assert.deepEqual(paths, []);
+  } finally { p.close(); }
+});
+
+test("A/B papers use all questions regardless of Explorer filters and preserve the paper across years", () => {
   const p = fixture();
   try {
     p.click("setup");
@@ -67,10 +88,10 @@ test("A/B papers use all questions regardless of Explorer filters and reset unav
     p.click("finish"); p.click("clear"); p.click("setup");
     p.select("year", 2025); p.select("exam", "AMC 10B");
     p.select("year", 2026);
-    assert.equal(p.mount.querySelector("[data-test-exam]").value, "practice-1");
-    assert.equal(p.mount.querySelector("[data-test-exam]").options.length, 1);
+    assert.equal(p.mount.querySelector("[data-test-exam]").value, "AMC 10B");
+    assert.equal(p.mount.querySelector("[data-test-exam]").options.length, 2);
     p.select("year", 2025);
-    assert.equal(p.mount.querySelector("[data-test-exam]").value, "AMC 10A");
+    assert.equal(p.mount.querySelector("[data-test-exam]").value, "AMC 10B");
   } finally { p.close(); }
 });
 
@@ -279,7 +300,7 @@ test("all 525 problems have keys and AMC scoring covers correct, wrong and blank
   const keys = { ...answerKey, ...practiceKey };
   assert.equal(Object.keys(keys).length, 525);
   for (const p of [...PROBLEM_REFERENCES, ...PRACTICE_PROBLEMS]) {
-    const key = `${p.year}-${p.exam.replace(" ", "")}-${p.problemNumber}`;
+    const key = problemKey(p);
     assert.match(keys[key], /^[A-E]$/);
   }
   const selected = Array.from({ length: 25 }, (_, i) => `2025-AMC10A-${i + 1}`);

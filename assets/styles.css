@@ -2438,6 +2438,10 @@ a.problem-chip {
 }
 .practice-chinese { margin-top: 0.75rem; }
 .practice-solution-link { font-size: 0.85rem; }
+.practice-solution { margin-top: 0.75rem; min-width: 0; }
+.practice-solution-link { cursor: pointer; color: var(--accent); }
+.practice-solution-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.practice-solution-content { margin-top: 0.75rem; }
 
 .practice-image-link {
   display: block;

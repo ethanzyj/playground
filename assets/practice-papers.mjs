@@ -25,14 +25,15 @@ const vocabulary = [
 export const PRACTICE_PAPER = {
   id: "2026-practice-1",
   year: 2026,
-  exam: "practice-1",
+  exam: "AMC 10A",
   answerKeyUrl: "assets/practice/2026-practice-1/answer-key.json",
   solutionPdfUrl: "assets/practice/2026-practice-1/solutions.pdf",
   sourceUrl: "assets/practice/2026-practice-1/booklet.pdf"
 };
 export const PRACTICE_PROBLEMS = tags.map((conceptIds, i) => ({
   ...PRACTICE_PAPER,
-  paperId: PRACTICE_PAPER.id,
+  paperId: "2026 AMC 10A",
+  progressKey: `2026-practice-1-${i + 1}`,
   problemNumber: i + 1,
   difficulty: i < 8 ? "early" : i < 15 ? "medium" : i < 20 ? "medium-hard" : i < 23 ? "hard" : "challenge",
   conceptIds,
@@ -45,14 +46,36 @@ export const PRACTICE_PROBLEMS = tags.map((conceptIds, i) => ({
   practice: true
 }));
 
-export const isPracticeKey = (key) => /^2026-practice-1-([1-9]|1[0-9]|2[0-5])$/.test(key);
+const secondTags = [
+  ["numbers-operations"], ["special-solids"], ["special-solids"], ["algebraic-techniques"], ["combinatorics-methods", "circles-quadrilaterals"],
+  ["integer-equations"], ["coordinate-geometry", "circles-quadrilaterals"], ["sequences"], ["combinatorics-methods"], ["coordinate-geometry", "inequalities"],
+  ["triangles"], ["permutations-combinations-probability"], ["permutations-combinations-probability", "circles-quadrilaterals"], ["algebraic-techniques"], ["permutations-combinations-probability", "polynomials"],
+  ["combinatorics-methods"], ["combinatorics-methods"], ["numbers-operations"], ["permutations-combinations-probability"], ["numbers-operations", "combinatorics-methods"],
+  ["circles-quadrilaterals"], ["combinatorics-methods"], ["permutations-combinations-probability", "solids-polyhedra"], ["sequences"], ["triangles", "combinatorics-methods"]
+];
+export const PRACTICE_2_PROBLEMS = secondTags.map((conceptIds, i) => ({
+  id: "2026-practice-2", paperId: "2026 AMC 10B", year: 2026, exam: "AMC 10B",
+  progressKey: `2026-practice-2-${i + 1}`,
+  problemNumber: i + 1,
+  difficulty: i < 8 ? "early" : i < 15 ? "medium" : i < 20 ? "medium-hard" : i < 23 ? "hard" : "challenge",
+  conceptIds, vocabulary: [],
+  bookletPage: i < 5 ? 2 : i < 12 ? 3 : i < 20 ? 4 : i < 23 ? 5 : 6,
+  sourceUrl: "assets/practice/2026-practice-2/booklet.pdf",
+  imageUrl: `assets/practice/2026-practice-2/problem-${i + 1}.png`,
+  practice: true
+}));
+export const ALL_PRACTICE_PROBLEMS = [...PRACTICE_PROBLEMS, ...PRACTICE_2_PROBLEMS];
+const practiceKeys = new Set(ALL_PRACTICE_PROBLEMS.map((p) => p.progressKey));
+export const isPracticeKey = (key) => practiceKeys.has(key);
 
 export function practiceStatement(problem, language) {
   const label = language === "zh" ? `打开原卷，第 ${problem.problemNumber} 题`
     : `Open original booklet, problem ${problem.problemNumber}`;
   const original = `<a class="practice-image-link" href="${problem.sourceUrl}#page=${problem.bookletPage}" target="_blank" rel="noopener" aria-label="${label}">
-      <img class="practice-problem-image" src="${problem.imageUrl}" alt="2026-practice-1, problem ${problem.problemNumber}: original question, diagram and answer choices. Open the booklet for selectable text." loading="lazy">
+      <img class="practice-problem-image" src="${problem.imageUrl}" alt="${problem.paperId}, problem ${problem.problemNumber}: original question, diagram and answer choices. Open the booklet for selectable text." loading="lazy">
     </a>`;
+  if (!problem.chineseImageUrl) return language === "en" ? original
+    : `${original}<p class="muted">${language === "both" ? "Chinese translation not supplied. / " : ""}<span lang="zh">此题暂未提供中文翻译。</span></p>`;
   const chinese = `<div class="practice-chinese" lang="zh"><img class="practice-problem-image" src="${problem.chineseImageUrl}" alt="第 ${problem.problemNumber} 题：用户提供的中文译题（不含答案）" loading="lazy"></div>`;
   if (language === "en") return original;
   if (language === "zh") return `${chinese}<p class="muted" lang="zh">原题图示与选项：</p>${original}`;
@@ -60,8 +83,13 @@ export function practiceStatement(problem, language) {
 }
 
 export function practiceSolution(problem, language) {
-  const label = language === "zh" ? "中文解析 PDF（含答案）"
-    : language === "en" ? "Chinese worked-solution PDF (reveals answer)"
-      : "Chinese worked-solution PDF (reveals answer) / 中文解析 PDF（含答案）";
-  return `<a class="practice-solution-link" href="${problem.solutionPdfUrl}#page=${problem.solutionPage}" target="_blank" rel="noopener">${label}</a>`;
+  const label = language === "zh" ? "查看本题中文解析（含答案）"
+    : language === "en" ? "Show this problem's Chinese solution (reveals answer)"
+      : "Show this problem's Chinese solution (reveals answer) / 查看本题中文解析（含答案）";
+  return `<details class="practice-solution">
+    <summary class="practice-solution-link">${label}</summary>
+    <div class="practice-solution-content" lang="zh">
+      <img class="practice-problem-image" src="${problem.solutionImageUrl}" alt="第 ${problem.problemNumber} 题的中文解析与答案" loading="lazy">
+    </div>
+  </details>`;
 }

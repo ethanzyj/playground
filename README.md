@@ -6,10 +6,21 @@ installing dependencies. Development and tests require Node.js 20 or later:
 run `npm ci`, then `npm run build` after SDK dependency changes.
 Math rendering uses MathJax from a CDN and requires internet access.
 
+## Problem Explorer PDF export
+
+Problem Explorer has **Export problems PDF** for the current filtered results
+(including Review and progress filters). Choose English, Chinese or both and
+optionally include answers and available solutions at the end. Exports contain
+questions, diagrams, choices and working space, not quest lessons or personal
+progress. Practice problems include the supplied worked solutions; official
+archive problems include verified answers and links to their source solutions,
+not copied solution text. Empty results cannot be exported. The selection is
+snapshotted when the dialog opens. Download or share the generated PDF.
+
 ## Test mode
 
 In Problem Explorer, choose **Test mode → Choose test paper**, select a **year**
-and **A or B** (or an available supplemental practice paper), then **Start
+and **A or B**, then **Start
 75-minute test**. All 25 questions from that paper are included in question-number
 order, regardless of other Explorer filters; there is no per-question selection.
 The question set is frozen
@@ -21,9 +32,11 @@ displays the results without requiring a click. **Finish & submit** ends
 early. Submission or expiration calculates the AMC 10 score (6 points correct,
 1.5 blank, 0 wrong), correct/wrong/blank totals, and each question's correct answer.
 Answer keys are loaded only after the test ends. All 2016–2025 A/B papers have
-verified keys. `2026-practice-1` uses the 25 answers from the separately supplied
+verified keys. **2026 AMC 10A** uses the 25 answers from the separately supplied
 `AMC10A_2026_高质量.pdf`, matched to the imported English questions. These answers
 are independently derived in the supplied document, not an official MAA key.
+**2026 AMC 10B** has no supplied answer key, so its submitted tests retain
+your choices but cannot be scored.
 Failed key loads can be retried without losing saved answers. The completed attempt
 keeps choices and results for review until you return to the Explorer/new test.
 Tests do not alter quest badges, mastery, progress marks, or Review collection.
@@ -34,10 +47,18 @@ question or storage failure is reported with a retry option; neither pauses the
 timer. Avoid clearing browser storage during a test. Test mode is a study aid,
 not a proctored exam or tamper-resistant timing system.
 
-## Supplemental practice papers
+## Uploaded 2026 papers
 
-Problem Explorer includes **2026-practice-1**, imported from the user-supplied
-`2026 AMC 10A Booklet.pdf`. Select year **2026** and paper **2026-practice-1**,
+Problem Explorer includes **2026 AMC 10B**, imported from the user-supplied
+`2026 AMC 10B Booklet.pdf`. Select year **2026** and paper **AMC 10B**,
+or open `?problem=2026-practice-2-1`. Its 25 original questions, diagrams and
+choices are preserved as images, with links to the source booklet. No Chinese
+translation, answer key or worked solutions were supplied for this paper.
+Chinese and bilingual views show the English original and note the missing
+translation; exports with answers note the missing key and solutions.
+
+Problem Explorer also includes **2026 AMC 10A**, imported from the user-supplied
+`2026 AMC 10A Booklet.pdf`. Select year **2026** and paper **AMC 10A**,
 or open `?problem=2026-practice-1-1`. The 25 problems preserve the exact English
 questions, choices and diagrams as images; click a question to open the original
 PDF with selectable text. Question 17 combines its two-page original. Test scoring
@@ -50,9 +71,11 @@ Chinese and bilingual modes include all 25 Chinese statements from the supplied
 `AMC10A_2026_高质量.pdf`. Faithful images retain the document's mathematical notation;
 Chinese mode also keeps the original diagrams and A–E choices below the translation.
 Translation images exclude answers and solutions. Each Explorer problem has a
-**Chinese worked-solution PDF (reveals answer)** link to its corresponding page
-in the complete supplied bilingual PDF. Timed tests reveal these links only after
-submission. PDF packets containing practice problems include the supplied worked
+**Show this problem's Chinese solution (reveals answer)** expandable section.
+It shows only that problem's cropped answer and worked solution inline, without
+opening the complete PDF or displaying other problems' solutions. Sections are
+collapsed by default. Timed tests reveal these sections only after submission.
+PDF packets containing practice problems include the supplied worked
 solutions in the optional answer section, never in worksheet-only exports.
 
 To reproduce the translations and solution images on macOS, run
@@ -60,8 +83,12 @@ To reproduce the translations and solution images on macOS, run
 The importer checks each answer against the saved key and is specific to the
 supplied 26-page document. It preserves the complete source as `solutions.pdf`.
 
-The supplemental paper is separate from the 500 official archived problems and
-does not change the 153-mission course or badge requirements. Practice status is
+The uploaded papers retain their legacy `2026-practice-1` (A) and
+`2026-practice-2` (B) storage keys, asset directories and problem links for
+compatibility with saved progress, Review bookmarks and test attempts. Only
+AMC 10A and AMC 10B appear as paper names in the interface and exported PDFs.
+These papers are separate from the 500 official archived problems and
+do not change the 153-mission course or badge requirements. Practice status is
 saved per account in this browser (guest status has its own local store), not
 sent to the official-exam progress RPC. Review bookmarks use the existing Review
 collection. Progress exports and Explorer totals include supplemental problems.
@@ -70,6 +97,7 @@ To reproduce the question images on macOS, run
 `swift scripts/import-practice.swift /path/to/booklet.pdf assets/practice/2026-practice-1`.
 The importer is specific to this six-page booklet and preserves the original
 source PDF alongside its question images.
+For the second booklet use `swift scripts/import-practice.swift /path/to/10B-booklet.pdf assets/practice/2026-practice-2 practice-2`, then copy the supplied PDF to `assets/practice/2026-practice-2/booklet.pdf`.
 
 ## Learning quests
 

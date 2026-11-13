@@ -1,5 +1,5 @@
 import { allConcepts, GLOSSARY, PROBLEM_REFERENCES } from "./data.mjs?v=20261026-6";
-import { problemKey } from "./progress.mjs?v=20261024-11";
+import { problemKey } from "./progress.mjs?v=20261112-2";
 import { QUEST_COURSE, courseCoverage } from "./quest-course.mjs?v=20261030-1";
 import { CloudQuests, mergeQuestProgress } from "./cloud-quests.mjs?v=20261030-1";
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
@@ -793,7 +793,7 @@ export class QuestPanel {
       const content = questContent(this.active);
       const language = this.getLanguage();
       try {
-        const { openQuestShare } = await import("./quest-pdf.mjs?v=20261105-1");
+        const { openQuestShare } = await import("./quest-pdf.mjs?v=20261112-2");
         openQuestShare({
           document: this.mount.ownerDocument,
           content,
