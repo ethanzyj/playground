@@ -1,7 +1,7 @@
 import { problemKey } from "./progress.mjs?v=20261112-2";
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
-import { practiceStatement } from "./practice-papers.mjs?v=20261112-2";
-import { createPdfFromSections, openQuestShare } from "./quest-pdf.mjs?v=20261112-2";
+import { practiceStatement } from "./practice-papers.mjs?v=20261113-2";
+import { createPdfFromSections, openQuestShare } from "./quest-pdf.mjs?v=20261113-2";
 
 const escape = (value) => String(value).replace(/[&<>"']/g, (c) =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -51,7 +51,7 @@ export async function explorerPdfSections({ problems, language, includeAnswers, 
       }
       if (!/^[A-E]$/.test(answers[key])) throw new Error(`Missing answer ${key}`);
       blocks.push(`<h3>${label(p)}: ${answers[key]}</h3>`);
-      if (p.solutionImageUrl) blocks.push(`<p>${t("用户提供的中文解析", "Supplied Chinese worked solution")}</p><img src="${p.solutionImageUrl}" alt="${label(p)} solution">`);
+      if (p.solutionImageUrl) blocks.push(`<p>${p.solutionLanguage === "both" ? t("用户提供的双语解析", "Supplied bilingual worked solution") : t("用户提供的中文解析", "Supplied Chinese worked solution")}</p><img src="${p.solutionImageUrl}" alt="${label(p)} solution">`);
       else {
         const source = `https://live.poshenloh.com/${language === "zh" ? "zh/" : ""}past-contests/amc10/${p.year}${p.exam.slice(-1)}/problem/${p.problemNumber}`;
         blocks.push(`<p>${t("完整解析请查看来源（含答案）；未复制来源解析。", "For the full worked solution, see the source (reveals answers). Source solutions are not reproduced.")}</p><p class="pdf-small">${source}</p>`);

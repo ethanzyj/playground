@@ -35,8 +35,9 @@ Answer keys are loaded only after the test ends. All 2016–2025 A/B papers have
 verified keys. **2026 AMC 10A** uses the 25 answers from the separately supplied
 `AMC10A_2026_高质量.pdf`, matched to the imported English questions. These answers
 are independently derived in the supplied document, not an official MAA key.
-**2026 AMC 10B** has no supplied answer key, so its submitted tests retain
-your choices but cannot be scored.
+**2026 AMC 10B** uses the 25 answers from the supplied
+`10B_Bilingual_Illustrated_Solutions.pdf`, whose index agrees with every
+individual solution page. These are also independently derived, unofficial answers.
 Failed key loads can be retried without losing saved answers. The completed attempt
 keeps choices and results for review until you return to the Explorer/new test.
 Tests do not alter quest badges, mastery, progress marks, or Review collection.
@@ -52,10 +53,18 @@ not a proctored exam or tamper-resistant timing system.
 Problem Explorer includes **2026 AMC 10B**, imported from the user-supplied
 `2026 AMC 10B Booklet.pdf`. Select year **2026** and paper **AMC 10B**,
 or open `?problem=2026-practice-2-1`. Its 25 original questions, diagrams and
-choices are preserved as images, with links to the source booklet. No Chinese
-translation, answer key or worked solutions were supplied for this paper.
-Chinese and bilingual views show the English original and note the missing
-translation; exports with answers note the missing key and solutions.
+choices are preserved as images, with links to the source booklet. Chinese and
+bilingual modes include all 25 questions from the supplied
+`2026 AMC 10B Booklet Chinese.pdf`, including its diagrams and choices.
+Click a Chinese question to open its page in the Chinese booklet. Chinese mode
+also retains the English original below the translation. Timed tests and PDF
+exports use the same language modes. Each question also has a collapsed bilingual
+solution from `10B_Bilingual_Illustrated_Solutions.pdf`, retaining its worked
+reasoning and diagrams. Expanding it displays only that question; a link opens
+its individual one-page PDF, not the complete answer booklet. Tests hide these
+solutions until submission. Exports include them only when answers are selected.
+Each problem's action row also links to its English booklet page, Chinese
+booklet page, and individual solution PDF, with localized icon tooltips.
 
 Problem Explorer also includes **2026 AMC 10A**, imported from the user-supplied
 `2026 AMC 10A Booklet.pdf`. Select year **2026** and paper **AMC 10A**,
@@ -98,6 +107,15 @@ To reproduce the question images on macOS, run
 The importer is specific to this six-page booklet and preserves the original
 source PDF alongside its question images.
 For the second booklet use `swift scripts/import-practice.swift /path/to/10B-booklet.pdf assets/practice/2026-practice-2 practice-2`, then copy the supplied PDF to `assets/practice/2026-practice-2/booklet.pdf`.
+For its seven-page Chinese booklet use
+`swift scripts/import-practice.swift /path/to/10B-Chinese.pdf assets/practice/2026-practice-2 practice-2-chinese`.
+This creates `chinese-1.png` through `chinese-25.png` and preserves the complete
+source as `chinese-booklet.pdf`, without changing the English question images.
+To split the supplied 26-page bilingual solutions document, run
+`swift scripts/import-practice-bilingual-solutions.swift /path/to/10B_Bilingual_Illustrated_Solutions.pdf assets/practice/2026-practice-2`.
+The importer checks page numbers and answer badges against the answer index,
+creates 25 solution images and individual PDFs, and retains `solutions.pdf`
+alongside `answer-key.json` with source provenance and checksum.
 
 ## Learning quests
 

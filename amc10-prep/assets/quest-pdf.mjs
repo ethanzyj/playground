@@ -1,6 +1,6 @@
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
 import { problemKey } from "./progress.mjs?v=20261112-2";
-import { practiceStatement } from "./practice-papers.mjs?v=20261112-2";
+import { practiceStatement } from "./practice-papers.mjs?v=20261113-2";
 
 const escape = (value) => String(value).replace(/[&<>"']/g, (c) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -117,8 +117,8 @@ export async function questPdfSections({ content, language, includeAnswers, quiz
       if (!/^[A-E]$/.test(answers?.[key])) throw new Error(`Missing answer for ${key}`);
       if (reference.practice) {
         add(`<h3>${escape(`${reference.paperId} #${reference.problemNumber}`)}: ${answers[key]}</h3>
-          <p>${text("用户提供的中文完整解析（原文保留）。", "Supplied Chinese worked solution, preserved as provided.")}</p>
-          <img src="${reference.solutionImageUrl}" alt="${escape(`${reference.paperId} #${reference.problemNumber} Chinese worked solution`)}">`);
+          <p>${reference.solutionLanguage === "both" ? text("用户提供的双语完整解析（原文保留）。", "Supplied bilingual worked solution, preserved as provided.") : text("用户提供的中文完整解析（原文保留）。", "Supplied Chinese worked solution, preserved as provided.")}</p>
+          <img src="${reference.solutionImageUrl}" alt="${escape(`${reference.paperId} #${reference.problemNumber} worked solution`)}">`);
         continue;
       }
       const paper = `${reference.year}${reference.exam.slice(-1)}`;
@@ -130,7 +130,8 @@ export async function questPdfSections({ content, language, includeAnswers, quiz
   }
   add(`<h2>${text("来源", "Sources")}</h2><p>${text("AMC 题目版权归美国数学协会所有。历年真题中文题目来自 LIVE by Po-Shen Loh，未复制其来源解析。", "AMC problems © Mathematical Association of America. Archived Chinese statements from LIVE by Po-Shen Loh; its source solutions are not reproduced in this pack.")}</p>
     ${[...papers.values()].map((exam) => `<p class="pdf-small">${escape(exam.sourceUrl)}<br>${escape(exam.chineseSourceUrl || "")}</p>`).join("")}
-    ${problems.some((p) => p.practice) ? `<p>${text("2026 AMC 10A 中文译题与解析来自用户提供的 AMC10A_2026_高质量.pdf，不是官方 MAA 解析。", "2026 AMC 10A Chinese statements and worked solutions are from the user-supplied AMC10A_2026_高质量.pdf, not official MAA solutions.")}</p>` : ""}
+    ${problems.some((p) => p.id === "2026-practice-1") ? `<p>${text("2026 AMC 10A 中文译题与解析来自用户提供的 AMC10A_2026_高质量.pdf，不是官方 MAA 解析。", "2026 AMC 10A Chinese statements and worked solutions are from the user-supplied AMC10A_2026_高质量.pdf, not official MAA solutions.")}</p>` : ""}
+    ${problems.some((p) => p.id === "2026-practice-2") ? `<p>${text("2026 AMC 10B 译题来自用户提供的中文试卷，双语解析来自 10B_Bilingual_Illustrated_Solutions.pdf，不是官方 MAA 解析。", "2026 AMC 10B translations are from the supplied Chinese booklet. Bilingual worked solutions are from 10B_Bilingual_Illustrated_Solutions.pdf, not official MAA solutions.")}</p>` : ""}
     <p>${text("本文件不包含账户信息、作答记录或个人学习进度。", "This document contains no account information, submitted answers, or personal learning progress.")}</p>`);
   return blocks;
 }
