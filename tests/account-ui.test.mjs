@@ -190,7 +190,7 @@ test("uploaded practice paper opens all 25 questions, filters independently and 
   } finally { p.close(); }
 });
 
-test("the second booklet opens independently with localized missing-translation notice", async () => {
+test("the second booklet opens independently with Chinese translations and unchanged progress", async () => {
   const p = await page(false, null, "password", "?problem=2026-practice-2-21");
   try {
     await p.waitFor(() => p.$('[data-problem-key="2026-practice-2-25"]'));
@@ -200,14 +200,38 @@ test("the second booklet opens independently with localized missing-translation 
     assert.equal(p.$("#yearFilter").value, "2026");
     assert.equal(p.$$("#problemList .problem-card").length, 25);
     assert.ok(p.$('[data-problem-key="2026-practice-2-21"] img[src$="problem-21.png"]'));
-    assert.equal(p.$$("#problemList .practice-solution").length, 0);
-    assert.match(p.$("#examAttribution").textContent, /answer key and solutions were not supplied/);
+    assert.equal(p.$$("#problemList .practice-solution").length, 25);
+    const solution = p.$('[data-problem-key="2026-practice-2-21"] .practice-solution');
+    assert.equal(solution.open, false);
+    solution.querySelector("summary").click();
+    assert.equal(solution.open, true);
+    assert.equal(solution.querySelectorAll("img").length, 1);
+    assert.match(solution.querySelector("img").src, /solution-21\.png$/);
+    assert.match(solution.querySelector("a").href, /solution-21\.pdf$/);
+    assert.equal(p.$('[data-problem-key="2026-practice-2-22"] .practice-solution').open, false);
+    assert.match(p.$("#examAttribution").textContent, /supplied bilingual worked answer/);
     const progress = p.$('[data-progress-key="2026-practice-2-21"] input[value="haveApproach"]');
     progress.checked = true;
     progress.dispatchEvent(new p.window.Event("change", { bubbles: true }));
     assert.equal(JSON.parse(p.window.localStorage.getItem("amc10-practice-progress:guest"))["2026-practice-2-21"], "haveApproach");
     p.$('[data-language="zh"]').click();
-    assert.match(p.$('[data-problem-key="2026-practice-2-21"]').textContent, /此题暂未提供中文翻译/);
+    assert.equal(p.$$("#problemList .practice-chinese img").length, 25);
+    assert.ok(p.$('[data-problem-key="2026-practice-2-21"] .practice-chinese img[src$="chinese-21.png"]'));
+    assert.ok(p.$('[data-problem-key="2026-practice-2-21"] a[href$="chinese-booklet.pdf#page=5"]'));
+    for (const language of ["en", "zh", "both"]) {
+      p.$(`[data-language="${language}"]`).click();
+      const actions = [...p.$('[data-problem-key="2026-practice-2-21"]').querySelectorAll(".card-actions .icon-action")];
+      assert.equal(actions.length, 3);
+      assert.match(actions[0].href, /\/booklet\.pdf#page=5$/);
+      assert.match(actions[1].href, /\/chinese-booklet\.pdf#page=5$/);
+      assert.match(actions[2].href, /\/solution-21\.pdf$/);
+      assert.match(actions[1].title, language === "zh" ? /中文原卷/ : /Chinese booklet/);
+      assert.match(actions[2].title, language === "zh" ? /含答案/ : /reveals answer/);
+      for (const action of actions) {
+        assert.equal(action.target, "_blank");
+        assert.equal(action.getAttribute("aria-label"), action.title);
+      }
+    }
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });

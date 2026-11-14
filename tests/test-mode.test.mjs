@@ -10,12 +10,12 @@ import { problemKey } from "../assets/progress.mjs";
 const root = new URL("../", import.meta.url);
 const answerKey = JSON.parse(readFileSync(new URL("assets/answer-key.json", root))).answers;
 const practiceKey = JSON.parse(readFileSync(new URL("assets/practice/2026-practice-1/answer-key.json", root))).answers;
+const practiceBKey = JSON.parse(readFileSync(new URL("assets/practice/2026-practice-2/answer-key.json", root))).answers;
 const settle = () => new Promise((resolve) => setTimeout(resolve, 0));
-function fixture({ storage, fetchImpl } = {}) {
+function fixture({ storage, fetchImpl, problems = [...PROBLEM_REFERENCES, ...ALL_PRACTICE_PROBLEMS] } = {}) {
   const dom = new JSDOM('<section id="problemsPanel"><div id="testModePanel"></div><div id="problemList"></div></section>', { url: "https://example.test/" });
   let time = 100000, user = "a", language = "en";
   const mount = dom.window.document.querySelector("#testModePanel");
-  const problems = [...PROBLEM_REFERENCES, ...ALL_PRACTICE_PROBLEMS];
   const panel = new TestMode({
     mount, problems, storage: storage || dom.window.localStorage,
     getUserId: () => user, getLanguage: () => language, now: () => time, typeset() {},
@@ -55,13 +55,19 @@ test("year and paper selection starts a complete ordered paper for exactly 75 mi
 
 test("practice-2 test retains choices without requesting an unrelated key or assigning a score", async () => {
   const paths = [];
-  const p = fixture({ fetchImpl: async (path) => { paths.push(path); throw new Error("Unexpected fetch"); } });
+  const p = fixture({
+    problems: [...PROBLEM_REFERENCES, ...ALL_PRACTICE_PROBLEMS.map((p) => p.exam === "AMC 10B" ? { ...p, answerKeyUrl: undefined, solutionImageUrl: undefined } : p)],
+    fetchImpl: async (path) => { paths.push(path); throw new Error("Unexpected fetch"); }
+  });
   try {
     p.click("setup");
     p.select("exam", "AMC 10B");
     assert.match(p.mount.querySelector("[data-test-no-key]").textContent, /cannot be scored/);
     p.click("start");
     assert.deepEqual(p.panel.session.keys, Array.from({ length: 25 }, (_, i) => `2026-practice-2-${i + 1}`));
+    p.setLanguage("both"); p.panel.render();
+    assert.equal(p.mount.querySelectorAll(".practice-chinese img").length, 25);
+    assert.ok(p.mount.querySelector('a[href$="chinese-booklet.pdf#page=7"] img[src$="chinese-25.png"]'));
     p.panel.answer("2026-practice-2-1", "C");
     p.click("finish");
     await settle();
@@ -70,6 +76,25 @@ test("practice-2 test retains choices without requesting an unrelated key or ass
     assert.equal(p.panel.session.answers["2026-practice-2-1"], "C");
     assert.equal(p.mount.querySelector(".practice-solution"), null);
     assert.deepEqual(paths, []);
+  } finally { p.close(); }
+});
+
+test("2026 AMC 10B reveals only individual bilingual solutions and scores with the supplied key after submission", async () => {
+  const p = fixture();
+  try {
+    p.click("setup"); p.select("exam", "AMC 10B"); p.click("start");
+    assert.equal(p.mount.querySelector(".practice-solution"), null);
+    p.panel.answer("2026-practice-2-1", "D");
+    p.click("finish");
+    await settle();
+    assert.equal(p.mount.querySelector("[data-test-score]").textContent, "42 / 150");
+    assert.equal(p.mount.querySelectorAll(".practice-solution").length, 25);
+    const solution = p.mount.querySelector(".test-question .practice-solution");
+    assert.equal(solution.open, false);
+    assert.equal(solution.querySelectorAll("img").length, 1);
+    assert.match(solution.querySelector("img").src, /solution-1\.png$/);
+    assert.match(solution.querySelector("a").href, /solution-1\.pdf$/);
+    assert.match(solution.textContent, /bilingual solution/);
   } finally { p.close(); }
 });
 
@@ -296,10 +321,10 @@ test("timer formatting, persisted session validation, and localization", () => {
   } finally { p.close(); }
 });
 
-test("all 525 problems have keys and AMC scoring covers correct, wrong and blank answers", () => {
-  const keys = { ...answerKey, ...practiceKey };
-  assert.equal(Object.keys(keys).length, 525);
-  for (const p of [...PROBLEM_REFERENCES, ...PRACTICE_PROBLEMS]) {
+test("all 550 problems have keys and AMC scoring covers correct, wrong and blank answers", () => {
+  const keys = { ...answerKey, ...practiceKey, ...practiceBKey };
+  assert.equal(Object.keys(keys).length, 550);
+  for (const p of [...PROBLEM_REFERENCES, ...ALL_PRACTICE_PROBLEMS]) {
     const key = problemKey(p);
     assert.match(keys[key], /^[A-E]$/);
   }

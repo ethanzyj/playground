@@ -793,7 +793,7 @@ export class QuestPanel {
       const content = questContent(this.active);
       const language = this.getLanguage();
       try {
-        const { openQuestShare } = await import("./quest-pdf.mjs?v=20261112-2");
+        const { openQuestShare } = await import("./quest-pdf.mjs?v=20261113-2");
         openQuestShare({
           document: this.mount.ownerDocument,
           content,

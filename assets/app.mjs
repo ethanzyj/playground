@@ -1,12 +1,12 @@
 import { TOPICS, PROBLEM_REFERENCES as COURSE_PROBLEMS, GLOSSARY, allConcepts } from "./data.mjs?v=20261026-6";
-import { ALL_PRACTICE_PROBLEMS, isPracticeKey, practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261112-2";
+import { ALL_PRACTICE_PROBLEMS, isPracticeKey, practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261113-2";
 import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261112-2";
 import { AccountPanel } from "./account.mjs?v=20261026-6";
 import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-6";
-import { QuestPanel } from "./quests.mjs?v=20261112-2";
+import { QuestPanel } from "./quests.mjs?v=20261113-2";
 import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
 import { QUEST_COURSE } from "./quest-course.mjs?v=20261030-1";
-import { TestMode } from "./test-mode.mjs?v=20261112-2";
+import { TestMode } from "./test-mode.mjs?v=20261113-2";
 
 let problemProgressStorageError = false;
 let reviewStorageError = false;
@@ -369,7 +369,9 @@ const UI_TEXT = {
   fullExamSummary: { en: "Original English statements and answer choices matching your filters. Answers and solutions are not shown.", zh: "阅读符合筛选条件的英文原题及选项，不显示答案或解析。" },
   examAttribution: { en: "AMC problems © Mathematical Association of America.", zh: "AMC 题目版权归美国数学协会（MAA）所有。" },
   practiceAttribution: { en: "2026 AMC 10A uses the user-supplied booklet. English questions, diagrams and choices are preserved; Chinese mode adds the supplied translations. Expand a problem's solution to see only its worked answer. Test mode hides solutions until submission. Progress stays per account in this browser.", zh: "2026 AMC 10A 来自用户提供的试卷。保留英文原题、图示及选项；中文模式加入用户提供的译题。展开解析仅显示当前题的答案与解题过程，测试中仅提交后可查看。进度按账户保存在当前浏览器。" },
-  practice2Attribution: { en: "2026 AMC 10B uses the user-supplied booklet. Chinese translations, answer key and solutions were not supplied. Its progress is saved per account in this browser.", zh: "2026 AMC 10B 来自用户提供的试卷，尚未提供中文译题、答案或解析。进度按账户保存在当前浏览器。" },
+  practice2Attribution: { en: "2026 AMC 10B uses the user-supplied English and Chinese booklets. Expand a problem's solution to see its supplied bilingual worked answer and diagrams, or open its individual PDF. Answers are independently derived in the supplied document, not official MAA solutions. Test mode hides solutions until submission. Progress stays per account in this browser.", zh: "2026 AMC 10B 来自用户提供的中英文试卷。展开解析可查看本题所提供的双语解答与图示，或打开本题单独的 PDF。答案为所提供文档独立推导，非官方 MAA 解析。测试中仅提交后可查看解析，进度按账户保存在当前浏览器。" },
+  openChineseReference: { en: "Open Chinese booklet at this problem", zh: "打开中文原卷中的本题" },
+  openProblemSolutionPdf: { en: "Open this problem's solution PDF (reveals answer)", zh: "打开本题解析 PDF（含答案）" },
   exportProblemsPdf: { en: "Export problems PDF", zh: "导出题目 PDF" },
   problemPdfError: { en: "Unable to open PDF export. Check your connection and retry.", zh: "无法打开 PDF 导出，请检查网络后重试。" },
   loadingExam: { en: "Loading problem statements…", zh: "正在加载题目……" },
@@ -916,6 +918,16 @@ function problemCard(problem, statement = null) {
             <path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5" />
           </svg>
         </a>
+        ${problem.chineseSourceUrl ? `<a class="icon-action" href="${problem.chineseSourceUrl}#page=${problem.chineseBookletPage}" target="_blank" rel="noopener" aria-label="${uiText("openChineseReference")}" title="${uiText("openChineseReference")}">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M2 5h12M7 2v3M4 5c0 5 4 8 8 10M11 5c0 5-4 8-8 10M13 21l4-10 4 10M15 17h4" />
+          </svg>
+        </a>` : ""}
+        ${problem.individualSolutionPdfUrl ? `<a class="icon-action" href="${problem.individualSolutionPdfUrl}" target="_blank" rel="noopener" aria-label="${uiText("openProblemSolutionPdf")}" title="${uiText("openProblemSolutionPdf")}">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
+          </svg>
+        </a>` : ""}
         ${problem.practice ? "" : `<a class="icon-action" href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener" aria-label="${uiText("openSolution")}" title="${uiText("openSolution")}">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
@@ -1110,7 +1122,7 @@ function renderProblems() {
     exportButton.disabled = true;
     $("#problemPdfError").hidden = true;
     try {
-      const { openExplorerExport } = await import("./explorer-pdf.mjs?v=20261112-2");
+      const { openExplorerExport } = await import("./explorer-pdf.mjs?v=20261113-2");
       openExplorerExport({ document, problems: selected, language });
     } catch (error) {
       console.error("Unable to open problem PDF export.", error);

@@ -39,18 +39,43 @@ test("solution export combines practice worked solutions with official answer ke
   assert.ok(html.indexOf("solution-24.png") > html.indexOf("Answers &amp; solutions"));
 });
 
-test("mixed export retains available answers and clearly marks practice-2 as unavailable", async () => {
+test("mixed export includes each supplied practice answer and its own worked solution", async () => {
   const paths = [];
   const html = (await explorerPdfSections({
     problems: [PRACTICE_2_PROBLEMS[0], PRACTICE_PROBLEMS[0]], language: "both", includeAnswers: true,
     fetchImpl: (path) => { paths.push(path); return fetchImpl(path); }
   })).join("");
-  assert.match(html, /No answer key or worked solution was supplied/);
+  assert.equal(html.includes("No answer key or worked solution was supplied"), false);
   assert.match(html, /2026 AMC 10A #1: B/);
   assert.match(html, /solution-1\.png/);
   assert.equal(html.includes("undefined"), false);
-  assert.equal(html.includes("2026 AMC 10B #1: "), false);
+  assert.ok(html.includes("2026 AMC 10B #1: D"));
+  assert.ok(html.includes(PRACTICE_2_PROBLEMS[0].solutionImageUrl));
+  assert.match(html, /Supplied bilingual worked solution/);
   assert.equal(paths.some((path) => path === "assets/answer-key.json"), false);
+});
+
+test("missing supplemental keys are explicitly reported instead of borrowing official answers", async () => {
+  const html = (await explorerPdfSections({
+    problems: [{ ...PRACTICE_2_PROBLEMS[0], answerKeyUrl: undefined }], language: "en", includeAnswers: true,
+    fetchImpl: async () => { throw new Error("Must not request an unrelated key"); }
+  })).join("");
+  assert.match(html, /No answer key or worked solution was supplied/);
+});
+
+test("2026 AMC 10B worksheets export the supplied Chinese diagrams and choices in the selected language", async () => {
+  for (const language of ["en", "zh", "both"]) {
+    const problem = PRACTICE_2_PROBLEMS[21];
+    const html = (await explorerPdfSections({
+      problems: [problem], language, includeAnswers: false,
+      fetchImpl: async () => { throw new Error("Image-only worksheet should not fetch answers"); }
+    })).join("");
+    assert.ok(html.includes(problem.imageUrl));
+    assert.equal(html.includes(problem.chineseImageUrl), language !== "en");
+    assert.equal(html.includes("chinese-23.png"), false);
+    assert.equal(html.includes("solution-"), false);
+    assert.equal(html.includes("undefined"), false);
+  }
 });
 
 test("empty selections, failed exams and missing keys fail explicitly", async () => {
