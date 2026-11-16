@@ -200,7 +200,7 @@ assert(app.includes("bilingualListItems(concept.methodsZh, concept.methodsEn)"),
 assert(app.includes("bilingualListItems(concept.checklistZh, concept.checklistEn)"), "Bilingual checklists must use the stacked layout.");
 assert(app.includes("renderStaticInterface();"), "Language changes must update the complete static interface.");
 assert(app.includes("document.title ="), "Language changes must update the browser page title.");
-assert(app.includes('setActiveView("study")'), "Problem concept tags must navigate to the Study Guide.");
+assert(app.includes('state.activeView = "study"'), "Problem concept tags must navigate to the Study Guide.");
 assert(app.includes('state.problemConcept === "current"'), "Problem Explorer must support filtering by the current concept.");
 assert(!app.includes("state.problemMode"), "Problem Explorer must not retain separate browsing modes.");
 assert(app.includes("a.problemNumber - b.problemNumber"), "Year/exam mode must order problems numerically.");

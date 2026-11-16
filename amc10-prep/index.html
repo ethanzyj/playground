@@ -16,7 +16,7 @@
         console.error("Unable to read the saved theme.", error);
       }
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20261105-2" />
+    <link rel="stylesheet" href="assets/styles.css?v=20261113-4" />
     <script>
       window.MathJax = {
         tex: {
@@ -234,6 +234,11 @@
           <p id="reviewCollectionError" role="alert" hidden></p>
           <p id="examSummary" class="exam-summary" hidden></p>
           <p id="examAttribution" class="problem-metadata-note" hidden></p>
+          <nav id="problemPagination" class="problem-pagination" data-i18n-aria-label="problemPages" aria-label="Problem pages" hidden>
+            <button id="previousProblemPage" type="button" data-i18n="previousPage" aria-controls="problemList">Previous</button>
+            <span id="problemPageRange" aria-live="polite"></span>
+            <button id="nextProblemPage" type="button" data-i18n="nextPage" aria-controls="problemList">Next</button>
+          </nav>
           <div id="problemList" class="problem-grid"></div>
         </section>
 
@@ -276,6 +281,6 @@
       </section>
     </main>
 
-    <script type="module" src="assets/app.mjs?v=20261113-3"></script>
+    <script type="module" src="assets/app.mjs?v=20261113-4"></script>
   </body>
 </html>
