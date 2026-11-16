@@ -228,11 +228,15 @@ It follows your device preference until you choose a theme, then saves that choi
 in this browser.
 
 **Problem Explorer** has one view with concept, year, exam, difficulty, and progress
-filters—no mode buttons or duplicate selectors. All matching problems show their
+filters—no mode buttons or duplicate selectors. Matching problems show their
 original English statements, A-E choices, and local diagrams, including with
 **All years / All exams** selected. Problems are grouped by year (newest first)
-and paper, then ordered numerically. Exam files are loaded on entering the
-explorer and cached for subsequent filtering.
+and paper, then ordered numerically, with 25 problems per page. Previous/Next
+loads only the current page's exam statements, which are cached for subsequent
+filtering. Changing a filter returns to the first page. Result counts, PDF
+exports, and test-paper selection still use all matching problems, not just the
+visible page. Direct problem links open the complete 25-question paper.
+Hidden tabs are not rendered at startup; their content is built when selected.
 Answers and solutions are not imported or displayed.
 The Study Guide dashboard shows whole-collection concept mastery, vocabulary
 mastery, and marked-problem counts, plus the selected concept's progress and

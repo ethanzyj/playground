@@ -14,6 +14,7 @@ const html = readFileSync(new URL("index.html", root), "utf8");
 
 async function page(configured, client, method = "password", search = "", fetchImpl = null, questProgress = null) {
   const errors = [];
+  const requests = [];
   const virtualConsole = new VirtualConsole();
   virtualConsole.on("jsdomError", (error) => errors.push(error));
   const dom = new JSDOM(html, {
@@ -28,9 +29,13 @@ async function page(configured, client, method = "password", search = "", fetchI
   window.__testClient = client;
   if (questProgress) window.localStorage.setItem("amc10-quests:guest", JSON.stringify(questProgress));
   window.document.querySelector("#accountLoginMethod").value = method;
-  window.fetch = fetchImpl || (async (url) => ({
+  const fetchResource = fetchImpl || (async (url) => ({
     ok: true, json: async () => JSON.parse(readFileSync(new URL(url, root), "utf8"))
   }));
+  window.fetch = (url, ...args) => {
+    requests.push(url);
+    return fetchResource(url, ...args);
+  };
   const bundle = await build({
     entryPoints: [fileURLToPath(new URL("assets/app.mjs", root))],
     bundle: true, write: false, format: "iife", platform: "browser",
@@ -59,8 +64,76 @@ async function page(configured, client, method = "password", search = "", fetchI
       await new Promise((resolve) => setTimeout(resolve, 10));
     }
   };
-  return { window, $, $$, waitFor, errors, close: () => window.close() };
+  return { window, $, $$, waitFor, errors, requests, close: () => window.close() };
 }
+
+function showPaper(p, year, exam) {
+  p.$("#yearFilter").value = String(year);
+  p.$("#examFilter").value = exam;
+  p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
+  p.$("#examFilter").dispatchEvent(new p.window.Event("change"));
+  p.$("#problemsTab").click();
+}
+
+test("hidden tabs stay unrendered and Explorer pages load only their statements", async () => {
+  const p = await page(false);
+  try {
+    assert.equal(p.$$("#problemList .problem-card").length, 0);
+    assert.equal(p.$$("#glossaryList .glossary-card").length, 0);
+    assert.equal(p.$$("#topicMapTree .map-node").length, 0);
+    assert.equal(p.requests.length, 0);
+    p.$('[data-language="en"]').click();
+    assert.equal(p.$$("#problemList .problem-card").length, 0);
+    p.$("#problemsTab").click();
+    assert.equal(p.$$("#problemList .problem-card").length, 25);
+    assert.ok(p.$('[data-problem-key="2026-practice-1-1"]'));
+    assert.match(p.$("#problemPageRange").textContent, /1–25 of 550/);
+    assert.equal(p.$("#previousProblemPage").disabled, true);
+    assert.equal(p.$("#nextProblemPage").disabled, false);
+    assert.equal(p.requests.length, 0);
+    p.$("#nextProblemPage").click();
+    assert.ok(p.$('[data-problem-key="2026-practice-2-1"]'));
+    assert.match(p.$("#problemPageRange").textContent, /26–50 of 550/);
+    p.$("#nextProblemPage").click();
+    await p.waitFor(() => p.$("#problemList").getAttribute("aria-busy") === "false");
+    assert.equal(p.$$("#problemList .problem-statement").length, 25);
+    assert.ok(p.$('[data-problem-key="2025-AMC10A-1"] .problem-statement'));
+    assert.deepEqual(p.requests.map((url) => url.split("?")[0]), ["assets/exams/2025A.json"]);
+    p.$("#nextProblemPage").click();
+    await p.waitFor(() => p.$("#problemList").getAttribute("aria-busy") === "false");
+    assert.ok(p.$('[data-problem-key="2025-AMC10B-25"] .problem-statement'));
+    assert.equal(p.requests.length, 2);
+    p.$("#previousProblemPage").click();
+    assert.ok(p.$('[data-problem-key="2025-AMC10A-1"] .problem-statement'));
+    assert.equal(p.requests.length, 2);
+    p.$('[data-language="zh"]').click();
+    assert.match(p.$("#problemPageRange").textContent, /第 51–75 题，共 550 题/);
+    assert.equal(p.$("#nextProblemPage").textContent, "下一页");
+    assert.equal(p.$$("#problemList .problem-card").length, 25);
+    p.$("#exportProblemsPdf").click();
+    await p.waitFor(() => p.$("#questShareDialog"));
+    assert.match(p.$("#questShareDialog").textContent, /550 道筛选题目/);
+    p.$("#questShareDialog").dispatchEvent(new p.window.Event("close"));
+    p.$("#yearFilter").value = "2025";
+    p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
+    assert.match(p.$("#problemPageRange").textContent, /第 1–25 题，共 50 题/);
+    p.$("#nextProblemPage").click();
+    assert.equal(p.$("#nextProblemPage").disabled, true);
+    assert.equal(p.$("#previousProblemPage").disabled, false);
+    p.$("#examFilter").value = "AMC 10B";
+    p.$("#examFilter").dispatchEvent(new p.window.Event("change"));
+    assert.equal(p.$("#problemPagination").hidden, true);
+    assert.equal(p.$("#previousProblemPage").disabled, true);
+    assert.equal(p.$("#nextProblemPage").disabled, true);
+    assert.equal(p.requests.length, 2);
+    p.$("#glossaryTab").click();
+    assert.equal(p.$$("#glossaryList .glossary-card").length, 144);
+    assert.equal(p.$$("#topicMapTree .map-node").length, 0);
+    p.$("#mapTab").click();
+    assert.ok(p.$$("#topicMapTree .map-node").length > 0);
+    assert.equal(p.errors.length, 0);
+  } finally { p.close(); }
+});
 
 test("Test mode selects a complete paper, saves answers and locks at the 75-minute deadline", async () => {
   const p = await page(false, null, "password", "?problem=2026-practice-1-1");
@@ -315,7 +388,7 @@ test("Quests launch from their tab and problem cards link to both AoPS and LIVE 
     assert.ok(p.$("#questQuiz"));
     p.$('[data-language="zh"]').click();
     assert.match(p.$("#questPanel").textContent, /概念测验/);
-    p.$("#problemsTab").click();
+    showPaper(p, 2025, "AMC 10A");
     const card = p.$('[data-problem-key="2025-AMC10A-1"]');
     assert.ok(card.querySelector('a[href*="artofproblemsolving.com"]'));
     const solution = card.querySelector('a[href="https://live.poshenloh.com/past-contests/amc10/2025A/problem/1"]');
@@ -339,12 +412,20 @@ test("completed course evidence updates Explorer, Glossary, Study Guide and map 
     p.$("#questTab").click();
     const problem = missions.flatMap((mission) => mission.problems)[0];
     const term = missions.flatMap((mission) => mission.terms)[0];
+    await p.waitFor(() => JSON.parse(p.window.localStorage.getItem("amc10-problem-progress") || "{}")[problemKey(problem)] === "haveApproach");
+    await p.waitFor(() => JSON.parse(p.window.localStorage.getItem("amc10-mastered") || "[]").includes(concept.id));
+    showPaper(p, problem.year, problem.exam);
     await p.waitFor(() => p.$(`[data-problem-key="${problemKey(problem)}"] .quest-solved`));
     assert.ok(p.$(`[data-problem-key="${problemKey(problem)}"] input[value="haveApproach"]`).checked);
     assert.ok(p.$(`[data-problem-key="${problemKey(problem)}"] a[href*="?quest="]`));
-    if (term) assert.equal(p.$(`[data-glossary-mastery="${term.en}"]`).getAttribute("aria-pressed"), "true");
+    if (term) {
+      p.$("#glossaryTab").click();
+      assert.equal(p.$(`[data-glossary-mastery="${term.en}"]`).getAttribute("aria-pressed"), "true");
+    }
+    p.$("#studyTab").click();
     p.$(`[data-concept="${concept.id}"]`).click();
     assert.equal(p.$("#masteryToggle").getAttribute("aria-pressed"), "true");
+    p.$("#mapTab").click();
     assert.ok(p.$(`.map-concept.mastered[data-map-node="concept:${concept.id}"]`));
     const coverage = p.$(".quest-coverage").textContent;
     assert.match(coverage, /500/);
@@ -405,13 +486,13 @@ test("compact explorer header keeps labeled filters, localized counts, and progr
     assert.equal(p.$(".progress-status-label").textContent, "待理解题意");
     p.$("#examFilter").value = "all";
     p.$("#examFilter").dispatchEvent(new p.window.Event("change"));
-    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 50);
+    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 25);
     assert.equal(p.$("#problemFilters").hidden, false);
     assert.equal(p.$("#yearFilter").value, "2025");
     assert.equal(p.$("#problemCount").textContent, "50 / 550");
     p.$("#yearFilter").value = "all";
     p.$("#yearFilter").dispatchEvent(new p.window.Event("change"));
-    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 550);
+    await p.waitFor(() => p.$$("#problemList .problem-statement").length === 25);
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
@@ -421,7 +502,7 @@ test("statement failures are explicit, retryable, and cannot replace newer filte
   let fail = true;
   const p = await page(false, undefined, "password", "?problem=2025-AMC10A-1", async (url) => {
     if (fail) return { ok: false, status: 503 };
-    if (url.endsWith("2025B.json")) await new Promise((resolve) => { release = resolve; });
+    if (url.split("?")[0].endsWith("2025B.json")) await new Promise((resolve) => { release = resolve; });
     return { ok: true, json: async () => JSON.parse(readFileSync(new URL(url, root), "utf8")) };
   });
   try {
@@ -433,6 +514,7 @@ test("statement failures are explicit, retryable, and cannot replace newer filte
     await p.waitFor(() => p.$$("#problemList .problem-statement").length === 25);
     p.$("#examFilter").value = "all";
     p.$("#examFilter").dispatchEvent(new p.window.Event("change"));
+    p.$("#nextProblemPage").click();
     await p.waitFor(() => release);
     p.$("#yearFilter").value = "2024";
     p.$("#examFilter").value = "AMC 10A";
@@ -471,7 +553,7 @@ test("review bookmarks are independent of progress, filterable, localized, and p
     assert.equal(p.$("#reviewCollectionCount").textContent, "0");
     p.$("#reviewOnly").value = "all";
     p.$("#reviewOnly").dispatchEvent(new p.window.Event("change"));
-    assert.equal(p.$$("#problemList .problem-card").length, 550);
+    assert.equal(p.$$("#problemList .problem-card").length, 25);
     const storage = p.window.Storage.prototype.setItem;
     p.window.Storage.prototype.setItem = () => { throw new Error("Storage full"); };
     p.$("[data-review-key]").click();
@@ -479,7 +561,7 @@ test("review bookmarks are independent of progress, filterable, localized, and p
     assert.equal(p.$("[data-review-key]").getAttribute("aria-pressed"), "false");
     p.window.Storage.prototype.setItem = storage;
     await p.waitFor(() => p.$("#problemList").getAttribute("aria-busy") === "false"
-      && p.$$("#problemList .problem-statement").length === 550);
+      && p.$$("#problemList .problem-statement").length === 25);
     assert.equal(p.errors.length, 0);
   } finally { p.close(); }
 });
@@ -513,6 +595,7 @@ test("signed-in review bookmarks save and remove cloud rows without changing pro
   };
   const p = await page(true, client);
   try {
+    showPaper(p, 2016, "AMC 10A");
     await p.waitFor(() => p.$(`[data-review-key="${key}"]`).getAttribute("aria-pressed") === "true"
       && !p.$(`[data-review-key="${key}"]`).disabled);
     p.$(`[data-review-key="${key}"]`).click();
@@ -536,6 +619,7 @@ test("signed-in review bookmarks save and remove cloud rows without changing pro
 test("unconfigured cloud panel preserves guest progress and keeps login disabled", async () => {
   const p = await page(false);
   try {
+    showPaper(p, 2025, "AMC 10A");
     assert.equal(p.$("#accountForm").hidden, true);
     assert.equal(p.$("#accountPasswordForm").hidden, true);
     assert.match(p.$("#accountMessage").textContent, /not configured/);
@@ -655,6 +739,7 @@ test("email login, guest import, cloud save, localization, and logout work throu
   };
   const p = await page(true, client, "email");
   try {
+    showPaper(p, 2016, "AMC 10A");
     await p.waitFor(() => !p.$("#accountForm").hidden);
     const key = "2016-AMC10A-4";
     p.$(`#problemList [data-progress-key="${key}"] input[value="needUnderstanding"]`).click();
@@ -735,6 +820,7 @@ test("username password sign-in isolates both accounts and preserves guest progr
   };
   const p = await page(true, client);
   try {
+    showPaper(p, 2016, "AMC 10A");
     await p.waitFor(() => !p.$("#accountPasswordForm").hidden);
     const gate = () => p.window.document.body.dataset.authGate;
     assert.equal(gate(), "locked");
@@ -856,6 +942,7 @@ test("a restored username account uses the existing authenticated session", asyn
   };
   const p = await page(true, client);
   try {
+    showPaper(p, 2016, "AMC 10A");
     await p.waitFor(() => /Saved to your account/.test(p.$("#accountSyncStatus").textContent));
     assert.equal(p.$("#accountIdentity").textContent, "ethanzyj");
     assert.equal(p.window.document.body.dataset.authGate, "open");
@@ -903,7 +990,9 @@ test("study dashboard counts the whole collection once and scopes practice to th
     assert.match(p.$("#referenceCountHelp").textContent, /must not be added together/);
     assert.equal(p.$("#conceptProgress > progress").max, 211);
     const key = problemKey(related[0]);
+    showPaper(p, related[0].year, related[0].exam);
     p.$(`#problemList [data-progress-key="${key}"] input[value="haveApproach"]`).click();
+    showPaper(p, unrelated.year, unrelated.exam);
     p.$(`#problemList [data-progress-key="${problemKey(unrelated)}"] input[value="needUnderstanding"]`).click();
     assert.equal(metric("problems").value, 2);
     assert.equal(p.$("#conceptProgress > progress").value, 1);
@@ -911,7 +1000,9 @@ test("study dashboard counts the whole collection once and scopes practice to th
     assert.equal(p.$('[data-study-status="needUnderstanding"] dd').textContent, "0");
     p.$(`#problemList [data-review-key="${key}"]`).click();
     assert.equal(p.$("#conceptProgress .concept-progress-statuses > div:last-child dd").textContent, "1");
+    p.$("#studyTab").click();
     p.$("#masteryToggle").click();
+    p.$("#glossaryTab").click();
     assert.equal(metric("concepts").value, 1);
     p.$("[data-glossary-mastery]").click();
     assert.equal(metric("vocabulary").value, 1);
@@ -956,10 +1047,11 @@ test("study guide shows related problems as a year/exam table of links that open
     const key = link.dataset.openProblem;
     const [year, exam, number] = key.split("-");
     p.window.fetch = async (url) => {
-      assert.equal(url, `assets/exams/${year}${exam.slice(-1)}.json`);
+      assert.equal(url.split("?")[0], `assets/exams/${year}${exam.slice(-1)}.json`);
       const body = readFileSync(new URL(url, root), "utf8");
       return { ok: true, json: async () => JSON.parse(body) };
     };
+    showPaper(p, year, exam.replace("AMC", "AMC "));
     p.$(`#problemList [data-progress-key="${key}"] input[value="haveApproach"]`).click();
     assert.match(link.getAttribute("aria-label"), /have a solution approach/);
     assert.equal(link.dataset.progress, "haveApproach");
@@ -973,7 +1065,7 @@ test("study guide shows related problems as a year/exam table of links that open
     const label = link.getAttribute("aria-label");
     p.close();
     p = await page(false, undefined, "password", link.getAttribute("href"), async (url) => {
-      assert.equal(url, `assets/exams/${year}${exam.slice(-1)}.json`);
+      assert.equal(url.split("?")[0], `assets/exams/${year}${exam.slice(-1)}.json`);
       const body = readFileSync(new URL(url, root), "utf8");
       return { ok: true, json: async () => JSON.parse(body) };
     });

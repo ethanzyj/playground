@@ -69,6 +69,7 @@ const state = {
   year: "all",
   exam: "all",
   difficulty: "all",
+  problemPage: 0,
   reviewOnly: false,
   reviewCollection: loadReviewCollection(),
   glossarySearch: "",
@@ -366,6 +367,9 @@ const UI_TEXT = {
     zh: "按题库主题标签归类；可用于练习下方列出的相关概念。"
   },
   problems: { en: "problems", zh: "题" },
+  problemPages: { en: "Problem pages", zh: "题目分页" },
+  previousPage: { en: "Previous", zh: "上一页" },
+  nextPage: { en: "Next", zh: "下一页" },
   fullExamSummary: { en: "Original English statements and answer choices matching your filters. Answers and solutions are not shown.", zh: "阅读符合筛选条件的英文原题及选项，不显示答案或解析。" },
   examAttribution: { en: "AMC problems © Mathematical Association of America.", zh: "AMC 题目版权归美国数学协会（MAA）所有。" },
   practiceAttribution: { en: "2026 AMC 10A uses the user-supplied booklet. English questions, diagrams and choices are preserved; Chinese mode adds the supplied translations. Expand a problem's solution to see only its worked answer. Test mode hides solutions until submission. Progress stays per account in this browser.", zh: "2026 AMC 10A 来自用户提供的试卷。保留英文原题、图示及选项；中文模式加入用户提供的译题。展开解析仅显示当前题的答案与解题过程，测试中仅提交后可查看。进度按账户保存在当前浏览器。" },
@@ -611,6 +615,7 @@ function typesetMath(target) {
   if (!el) return;
   window.MathJax.startup.promise
     .then(() => {
+      if (el.closest(".view-panel")?.hidden) return;
       window.MathJax.typesetClear?.([el]);
       return window.MathJax.typesetPromise([el]);
     })
@@ -876,6 +881,7 @@ async function openProblemInExplorer(key) {
   state.exam = problem.exam;
   state.problemConcept = "all";
   state.difficulty = "all";
+  state.problemPage = 0;
   state.reviewOnly = false;
   $("#reviewOnly").value = "all";
   populateFilters();
@@ -1037,6 +1043,8 @@ function downloadProgress() {
 }
 
 let problemRenderVersion = 0;
+const PROBLEM_PAGE_SIZE = 25;
+let problemFilterKey = "";
 const examStatements = new Map();
 
 async function renderExamStatements(problems, version) {
@@ -1086,13 +1094,14 @@ async function renderExamStatements(problems, version) {
         <a href="${sourceUrl}" target="_blank" rel="noreferrer">${uiText("openExamSource")}</a>
       </div>
     `;
-    $("#retryExam").addEventListener("click", renderProblems);
+    $("#retryExam").addEventListener("click", () => renderProblems());
   } finally {
     if (version === problemRenderVersion) list.setAttribute("aria-busy", "false");
   }
 }
 
 function renderProblems() {
+  if (state.activeView !== "problems") return;
   renderProgressOverview();
   const version = ++problemRenderVersion;
   const isExam = state.year !== "all" && state.exam !== "all";
@@ -1101,6 +1110,10 @@ function renderProblems() {
   $("#problemList").setAttribute("aria-busy", "false");
   window.MathJax?.typesetClear?.([$("#problemList")]);
   const selectedConceptId = state.problemConcept === "current" ? state.activeConceptId : state.problemConcept;
+  const filterKey = JSON.stringify([selectedConceptId, state.year, state.exam, state.difficulty,
+    state.problemProgressFilter, state.reviewOnly]);
+  if (filterKey !== problemFilterKey) state.problemPage = 0;
+  problemFilterKey = filterKey;
   const problems = PROBLEM_REFERENCES.filter((problem) => {
     if (state.reviewOnly && !state.reviewCollection.has(problemKey(problem))) return false;
     const progress = state.problemProgress[problemKey(problem)];
@@ -1112,6 +1125,17 @@ function renderProblems() {
       && (state.difficulty === "all" || problem.difficulty === state.difficulty);
   });
   problems.sort((a, b) => b.year - a.year || a.exam.localeCompare(b.exam) || a.problemNumber - b.problemNumber);
+  const lastPage = Math.max(0, Math.ceil(problems.length / PROBLEM_PAGE_SIZE) - 1);
+  state.problemPage = Math.min(state.problemPage, lastPage);
+  const start = state.problemPage * PROBLEM_PAGE_SIZE;
+  const visibleProblems = problems.slice(start, start + PROBLEM_PAGE_SIZE);
+  $("#problemPagination").hidden = problems.length <= PROBLEM_PAGE_SIZE;
+  $("#previousProblemPage").disabled = state.problemPage === 0;
+  $("#nextProblemPage").disabled = state.problemPage === lastPage;
+  $("#problemPageRange").textContent = plainTextPair(
+    `第 ${problems.length ? start + 1 : 0}–${start + visibleProblems.length} 题，共 ${problems.length} 题`,
+    `${problems.length ? start + 1 : 0}–${start + visibleProblems.length} of ${problems.length} problems`
+  );
   testMode.update(problems);
   const exportButton = $("#exportProblemsPdf");
   exportButton.disabled = !problems.length;
@@ -1140,18 +1164,17 @@ function renderProblems() {
     ? `${state.year} ${state.exam} · ${problems.length} / 25 ${uiText("problems")}`
     : `${problems.length} / ${PROBLEM_REFERENCES.length}`;
   $("#examSummary").textContent = uiText("fullExamSummary");
-  $("#problemList").innerHTML = problems.length
-    ? problems.map((problem) => {
+  $("#problemList").innerHTML = visibleProblems.length
+    ? visibleProblems.map((problem) => {
       const data = examStatements.get(`${problem.year}${problem.exam.slice(-1)}`);
       return problemCard(problem, data?.problems[problem.problemNumber - 1]);
     }).join("")
     : `<p class="empty-state">${uiText("noProblems")}</p>`;
   wireProblemAndGlossaryLinks($("#problemList"));
-  typesetMath($("#problemList"));
-  if (state.activeView === "problems"
-    && problems.some((problem) => !problem.practice && !examStatements.has(`${problem.year}${problem.exam.slice(-1)}`))) {
-    return renderExamStatements(problems, version);
+  if (visibleProblems.some((problem) => !problem.practice && !examStatements.has(`${problem.year}${problem.exam.slice(-1)}`))) {
+    return renderExamStatements(visibleProblems, version);
   }
+  typesetMath($("#problemList"));
 }
 
 function deepLink(name, value) {
@@ -1229,6 +1252,7 @@ const MAP_ICONS = {
 };
 
 function renderTopicMap() {
+  if (state.activeView !== "map") return;
   const tree = $("#topicMapTree");
   if (!tree) return;
   const query = state.mapSearch.trim().toLowerCase();
@@ -1299,6 +1323,7 @@ function renderTopicMap() {
 }
 
 function renderGlossary() {
+  if (state.activeView !== "glossary") return;
   const query = state.glossarySearch.trim().toLowerCase();
   const terms = GLOSSARY.filter((term) => {
     const conceptNames = term.conceptIds.flatMap((id) => {
@@ -1429,8 +1454,8 @@ function wireProblemAndGlossaryLinks(container) {
   container.querySelectorAll("[data-concept]").forEach((button) => {
     button.addEventListener("click", () => {
       state.activeConceptId = button.dataset.concept;
+      state.activeView = "study";
       render();
-      setActiveView("study");
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
@@ -1465,8 +1490,8 @@ function refreshReviewCollection(rerender = true) {
 
 function showConceptGlossary(conceptId) {
   state.glossaryConcept = conceptId;
+  state.activeView = "glossary";
   render();
-  setActiveView("glossary");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -1475,8 +1500,8 @@ function showConceptProblems(conceptId) {
   state.year = "all";
   state.exam = "all";
   state.problemConcept = "current";
+  state.activeView = "problems";
   render();
-  setActiveView("problems");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -1498,8 +1523,8 @@ function applyDeepLink() {
   else if (glossaryConcept && conceptById.has(glossaryConcept)) showConceptGlossary(glossaryConcept);
   else if (concept && conceptById.has(concept)) {
     state.activeConceptId = concept;
+    state.activeView = "study";
     render();
-    setActiveView("study");
   }
   else return false;
   return true;
@@ -1533,8 +1558,8 @@ function jumpToGlossaryTerm(slug) {
   state.glossaryMastery = "all";
   const searchInput = $("#glossarySearch");
   if (searchInput) searchInput.value = "";
+  state.activeView = "glossary";
   render();
-  setActiveView("glossary");
   requestAnimationFrame(() => {
     const target = document.getElementById(`glossary-${slug}`);
     if (!target) return;
@@ -1545,6 +1570,7 @@ function jumpToGlossaryTerm(slug) {
 }
 
 function setActiveView(view) {
+  if (view !== "problems") ++problemRenderVersion;
   state.activeView = view;
   const isStudy = view === "study";
   $("#studySidebar").hidden = !isStudy;
@@ -1557,6 +1583,12 @@ function setActiveView(view) {
   });
   if (view === "problems") return renderProblems();
   if (view === "quests") questPanel.render();
+  if (view === "glossary") renderGlossary();
+  if (view === "map") renderTopicMap();
+  if (view === "study") {
+    renderTopicNav();
+    renderConcept();
+  }
 }
 
 const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
@@ -1574,6 +1606,13 @@ function renderThemeControl() {
 }
 
 function wireControls() {
+  for (const [id, delta] of [["previousProblemPage", -1], ["nextProblemPage", 1]]) {
+    $(`#${id}`).addEventListener("click", () => {
+      state.problemPage += delta;
+      renderProblems();
+      $("#problemPagination").scrollIntoView({ block: "start" });
+    });
+  }
   $("#reviewOnly").addEventListener("change", (event) => {
     state.reviewOnly = event.target.value === "saved";
     renderProblems();
@@ -1666,13 +1705,8 @@ function wireControls() {
 function render() {
   renderStaticInterface();
   renderProblemProgressError();
-  renderTopicNav();
-  renderConcept();
   populateFilters();
-  renderProblems();
-  renderGlossary();
-  renderTopicMap();
-  if (state.activeView === "quests") questPanel.render();
+  setActiveView(state.activeView);
   refreshReviewCollection(false);
   accountPanel?.render();
 }
@@ -1721,6 +1755,5 @@ accountPanel = new AccountPanel({
 });
 accountPanel.wire();
 render();
-setActiveView(state.activeView);
 accountPanel.start();
 applyDeepLinkWhenVisible();
