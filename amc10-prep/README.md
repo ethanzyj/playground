@@ -346,8 +346,11 @@ loads from its CDN.
 
 Run content checks with `npm test`.
 
-The public site is https://ethanzyj.github.io/playground/. GitHub Pages serves
-the root of the `gh-pages` branch, containing the contents of `amc10-prep`.
+The public AMC site is https://ethanzyj.github.io/playground/amc/. GitHub Pages
+serves the root of the `gh-pages` branch, with the contents of `amc10-prep`
+under `amc/`. The previous root site remains available for existing links.
+Future deployments should update `amc/` without replacing the rest of the
+`gh-pages` tree, so other sites such as a future `isee/` remain intact.
 
 ## Optional accounts and server-side progress
 
@@ -371,8 +374,9 @@ To enable:
    table definitions.
 2. Enable the Email provider under Authentication. Keep email confirmation
    enabled. Set the production Site URL to
-   `https://ethanzyj.github.io/playground/`. Add exact Redirect URLs for that
-   address and `http://127.0.0.1:8000/` if local testing is needed. Avoid broad
+   `https://ethanzyj.github.io/playground/amc/`. Add exact Redirect URLs for
+   that address, the legacy `https://ethanzyj.github.io/playground/`, and
+   `http://127.0.0.1:8000/` if local testing is needed. Avoid broad
    wildcard redirect rules. Use the standard magic-link template with
    `{{ .ConfirmationURL }}`. Configure a production SMTP provider and appropriate
    auth rate limits before public launch; the built-in mail service is limited.
