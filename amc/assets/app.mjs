@@ -1,0 +1,1759 @@
+import { TOPICS, PROBLEM_REFERENCES as COURSE_PROBLEMS, GLOSSARY, allConcepts } from "./data.mjs?v=20261026-6";
+import { ALL_PRACTICE_PROBLEMS, isPracticeKey, practiceStatement, practiceSolution } from "./practice-papers.mjs?v=20261113-2";
+import { PROBLEM_PROGRESS_OPTIONS, problemKey, progressScope, summarizeProgress, exportProgress } from "./progress.mjs?v=20261112-2";
+import { AccountPanel } from "./account.mjs?v=20261026-6";
+import { PROBLEM_VOCABULARY } from "./problem-vocab.mjs?v=20261026-6";
+import { QuestPanel } from "./quests.mjs?v=20261113-2";
+import { problemStatement, problemChoice } from "./problem-language.mjs?v=20261031-3";
+import { QUEST_COURSE } from "./quest-course.mjs?v=20261030-1";
+import { TestMode } from "./test-mode.mjs?v=20261113-2";
+
+let problemProgressStorageError = false;
+let reviewStorageError = false;
+const PROBLEM_REFERENCES = [...COURSE_PROBLEMS, ...ALL_PRACTICE_PROBLEMS];
+
+function loadPracticeProgress(userId) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(`amc10-practice-progress:${userId || "guest"}`) || "{}");
+    if (!saved || typeof saved !== "object" || Array.isArray(saved)
+      || !Object.entries(saved).every(([key, status]) => isPracticeKey(key) && PROBLEM_PROGRESS_OPTIONS.includes(status))) {
+      throw new Error("Invalid saved practice progress.");
+    }
+    return saved;
+  } catch (error) {
+    console.error("Unable to read practice progress.", error);
+    problemProgressStorageError = true;
+    return {};
+  }
+}
+
+function loadReviewCollection() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("amc10-review-collection") || "[]");
+    if (!Array.isArray(saved) || !saved.every((key) => typeof key === "string")) {
+      throw new Error("Invalid review collection in browser storage.");
+    }
+    return new Set(saved);
+  } catch (error) {
+    console.error("Unable to read the review collection.", error);
+    reviewStorageError = true;
+    return new Set();
+  }
+}
+
+function loadProblemProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("amc10-problem-progress") || "{}");
+    if (!saved || typeof saved !== "object" || Array.isArray(saved)
+      || !Object.entries(saved).every(([key, value]) =>
+        PROBLEM_REFERENCES.some((problem) => problemKey(problem) === key)
+        && PROBLEM_PROGRESS_OPTIONS.includes(value))) {
+      throw new Error("Invalid saved problem progress.");
+    }
+    return saved;
+  } catch (error) {
+    console.error("Unable to read saved problem progress.", error);
+    problemProgressStorageError = true;
+    return {};
+  }
+}
+
+const state = {
+  problemProgress: { ...loadProblemProgress(), ...loadPracticeProgress(null) },
+  problemProgressFilter: "all",
+  language: localStorage.getItem("amc10-language") || "both",
+  activeView: "study",
+  activeConceptId: allConcepts()[0].id,
+  search: "",
+  problemConcept: "all",
+  year: "all",
+  exam: "all",
+  difficulty: "all",
+  problemPage: 0,
+  reviewOnly: false,
+  reviewCollection: loadReviewCollection(),
+  glossarySearch: "",
+  glossaryConcept: "all",
+  conceptMastery: "all",
+  glossaryMastery: "all",
+  mapSearch: "",
+  mapCollapsed: new Set(),
+  mastered: new Set(JSON.parse(localStorage.getItem("amc10-mastered") || "[]")),
+  masteredGlossary: new Set(JSON.parse(localStorage.getItem("amc10-mastered-glossary") || "[]"))
+};
+
+const conceptById = new Map(allConcepts().map((concept) => [concept.id, concept]));
+
+const $ = (selector) => document.querySelector(selector);
+let accountPanel;
+const testMode = new TestMode({
+  mount: document.querySelector("#testModePanel"),
+  problems: PROBLEM_REFERENCES,
+  storage: localStorage,
+  getUserId: () => accountPanel?.controller?.user?.id,
+  getLanguage: () => state.language,
+  typeset: typesetMath
+});
+let questSolved = new Set();
+let achievementSync = Promise.resolve();
+const questPanel = new QuestPanel({
+  mount: document.querySelector("#questPanel"),
+  storage: localStorage,
+  getUserId: () => accountPanel?.controller?.user?.id,
+  getClient: () => accountPanel?.client,
+  getLanguage: () => state.language,
+  typeset: typesetMath,
+  onAchievements: syncQuestAchievements,
+  onIncorrectAnswer: async (key, userId) => {
+    if ((accountPanel?.controller?.user?.id || null) !== (userId || null)) return;
+    await setReviewCollection(key, true);
+  }
+});
+
+window.addEventListener("online", () => {
+  if (accountPanel?.signedIn && !questPanel.blocked) questPanel.cloud.retry(questPanel.data);
+});
+window.addEventListener("focus", () => {
+  if (accountPanel?.signedIn && !accountPanel.editingPaused && !questPanel.blocked) questPanel.cloud.retry(questPanel.data);
+});
+
+function syncQuestAchievements(data, userId) {
+  const solved = new Set();
+  const terms = new Set();
+  const mastered = new Set();
+  for (const mission of QUEST_COURSE.missions) {
+    const progress = data.quests[mission.concept.id];
+    for (const key of progress?.problems || []) solved.add(key);
+    for (const term of progress?.terms || []) terms.add(term);
+  }
+  for (const concept of allConcepts()) {
+    const sessions = QUEST_COURSE.missions.filter((mission) => mission.concept.studyConceptId === concept.id);
+    if (sessions.every((mission) => {
+      const progress = data.quests[mission.concept.id];
+      return progress?.learned && progress.formulas.length === mission.concept.formulas.length
+        && mission.problems.every((problem) => progress.problems.includes(problemKey(problem)))
+        && mission.terms.every((term) => progress.terms.includes(term.en));
+    })) mastered.add(concept.id);
+  }
+  questSolved = solved;
+  achievementSync = achievementSync.then(async () => {
+    if ((accountPanel?.controller?.user?.id || null) !== userId) return;
+    let changed = false;
+    for (const key of solved) {
+      if ((accountPanel?.controller?.user?.id || null) !== userId) return;
+      if (state.problemProgress[key] === "haveApproach") continue;
+      if (userId) await accountPanel.controller.mark(key, "haveApproach");
+      else {
+        const next = { ...state.problemProgress, [key]: "haveApproach" };
+        localStorage.setItem("amc10-problem-progress", JSON.stringify(next));
+        state.problemProgress = next;
+      }
+      changed = true;
+    }
+    for (const [kind, ids, existing] of [
+      ["glossary", terms, state.masteredGlossary],
+      ["concept", mastered, state.mastered]
+    ]) {
+      for (const id of ids) {
+        if ((accountPanel?.controller?.user?.id || null) !== userId) return;
+        if (existing.has(id)) continue;
+        if (userId) await accountPanel.setMastery(kind, id, true);
+        else {
+          existing.add(id);
+          saveLocalMastery();
+        }
+        changed = true;
+      }
+    }
+    if (changed || state.activeView === "problems") render();
+  }).catch((error) => {
+    console.error("Unable to update linked quest achievements.", error);
+    questPanel.syncError = uiText("questLinkedSyncError");
+    questPanel.render();
+  });
+}
+
+// --- Inline glossary term linking -------------------------------------------------
+// Wraps recognized English glossary terms (e.g. "quadratic", "difference of squares")
+// inside explanations, methods, and examples with hoverable spans that reveal a small
+// tooltip with the bilingual definition. TeX segments delimited by \( ... \) are left
+// untouched so MathJax rendering is never disturbed.
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+export function slugifyTerm(text) {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+const glossaryByLowerName = new Map(GLOSSARY.map((term) => [term.en.toLowerCase(), term]));
+const glossaryBySlug = new Map(GLOSSARY.map((term) => [slugifyTerm(term.en), term]));
+const glossaryByName = new Map(GLOSSARY.map((term) => [term.en, term]));
+const sortedGlossaryTerms = [...GLOSSARY].sort((a, b) => b.en.length - a.en.length);
+const glossaryTermPattern = sortedGlossaryTerms.length
+  ? new RegExp(`\\b(${sortedGlossaryTerms.map((term) => `${escapeRegExp(term.en)}(?:'s|s)?`).join("|")})\\b`, "gi")
+  : null;
+
+function resolveGlossaryTerm(matchText) {
+  const lower = matchText.toLowerCase();
+  if (glossaryByLowerName.has(lower)) return glossaryByLowerName.get(lower);
+  if (lower.endsWith("'s") && glossaryByLowerName.has(lower.slice(0, -2))) return glossaryByLowerName.get(lower.slice(0, -2));
+  if (lower.endsWith("s") && glossaryByLowerName.has(lower.slice(0, -1))) return glossaryByLowerName.get(lower.slice(0, -1));
+  return null;
+}
+
+export function linkGlossaryTerms(text) {
+  if (!text || !glossaryTermPattern) return text;
+  return text
+    .split(/(\\\([^]*?\\\))/g)
+    .map((segment, index) => {
+      if (index % 2 === 1) return segment; // Preserve raw TeX untouched.
+      return segment.replace(glossaryTermPattern, (match) => {
+        const term = resolveGlossaryTerm(match);
+        if (!term) return match;
+        const slug = slugifyTerm(term.en);
+        return `<span class="glossary-term-link" tabindex="0" role="button" aria-describedby="glossary-tooltip" data-glossary-term-slug="${slug}">${match}</span>`;
+      });
+    })
+    .join("");
+}
+
+function linkGlossaryList(items) {
+  return items.map(linkGlossaryTerms);
+}
+
+// --- Hover/focus tooltip for inline glossary terms --------------------------------
+// A single shared tooltip element is created once and repositioned/populated on
+// hover or keyboard focus of any .glossary-term-link span. It never navigates the
+// user away from where they are reading.
+
+let glossaryTooltipEl = null;
+let glossaryHideTimer = null;
+
+function ensureGlossaryTooltip() {
+  if (glossaryTooltipEl) return glossaryTooltipEl;
+  glossaryTooltipEl = document.createElement("div");
+  glossaryTooltipEl.id = "glossary-tooltip";
+  glossaryTooltipEl.className = "glossary-tooltip";
+  glossaryTooltipEl.setAttribute("role", "tooltip");
+  glossaryTooltipEl.hidden = true;
+  // Keep the tooltip open while the pointer travels from the term onto the
+  // tooltip itself (e.g. to click "Open in glossary"), and only schedule a
+  // hide once the pointer actually leaves the tooltip.
+  glossaryTooltipEl.addEventListener("mouseenter", cancelGlossaryTooltipHide);
+  glossaryTooltipEl.addEventListener("mouseleave", () => scheduleGlossaryTooltipHide());
+  document.body.appendChild(glossaryTooltipEl);
+  return glossaryTooltipEl;
+}
+
+function cancelGlossaryTooltipHide() {
+  if (glossaryHideTimer) {
+    clearTimeout(glossaryHideTimer);
+    glossaryHideTimer = null;
+  }
+}
+
+function scheduleGlossaryTooltipHide(delay = 180) {
+  cancelGlossaryTooltipHide();
+  glossaryHideTimer = setTimeout(() => {
+    if (glossaryTooltipEl) glossaryTooltipEl.hidden = true;
+    glossaryHideTimer = null;
+  }, delay);
+}
+
+function showGlossaryTooltip(anchorEl, term) {
+  cancelGlossaryTooltipHide();
+  const tooltip = ensureGlossaryTooltip();
+  tooltip.innerHTML = `
+    <p class="glossary-tooltip-category">${textPair(term.categoryZh, term.categoryEn)}</p>
+    <p class="glossary-tooltip-term">${textPair(term.zh, term.en)}</p>
+    <p class="glossary-tooltip-note">${textPair(term.noteZh, term.noteEn)}</p>
+    <a class="text-button glossary-tooltip-jump" href="${deepLink("term", slugifyTerm(term.en))}" target="_blank" rel="noopener">${uiText("openInGlossary")}</a>
+  `;
+  tooltip.hidden = false;
+  const anchorRect = anchorEl.getBoundingClientRect();
+  const tooltipRect = tooltip.getBoundingClientRect();
+  const margin = 10;
+  let left = anchorRect.left + window.scrollX;
+  let top = anchorRect.bottom + window.scrollY + margin;
+  const maxLeft = window.scrollX + document.documentElement.clientWidth - tooltipRect.width - margin;
+  left = Math.max(window.scrollX + margin, Math.min(left, maxLeft));
+  if (anchorRect.bottom + tooltipRect.height + margin > window.innerHeight) {
+    top = anchorRect.top + window.scrollY - tooltipRect.height - margin;
+  }
+  tooltip.style.left = `${left}px`;
+  tooltip.style.top = `${top}px`;
+  typesetMath(tooltip);
+  tooltip.querySelector(".glossary-tooltip-jump").addEventListener("click", () => hideGlossaryTooltip());
+}
+
+function hideGlossaryTooltip() {
+  cancelGlossaryTooltipHide();
+  if (glossaryTooltipEl) glossaryTooltipEl.hidden = true;
+}
+
+function wireGlossaryTooltips(container) {
+  container.querySelectorAll(".glossary-term-link").forEach((el) => {
+    const term = glossaryBySlug.get(el.dataset.glossaryTermSlug);
+    if (!term) return;
+    el.addEventListener("mouseenter", () => showGlossaryTooltip(el, term));
+    el.addEventListener("mouseleave", () => scheduleGlossaryTooltipHide());
+    el.addEventListener("focus", () => showGlossaryTooltip(el, term));
+    el.addEventListener("blur", () => scheduleGlossaryTooltipHide());
+    el.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (!glossaryTooltipEl || glossaryTooltipEl.hidden) showGlossaryTooltip(el, term);
+      else hideGlossaryTooltip();
+    });
+  });
+}
+
+document.addEventListener("scroll", hideGlossaryTooltip, true);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") hideGlossaryTooltip();
+});
+
+const UI_TEXT = {
+  languageLabel: { en: "Language", zh: "语言" },
+  darkTheme: { en: "Dark theme", zh: "深色主题" },
+  switchToLight: { en: "Switch to light theme", zh: "切换至浅色主题" },
+  switchToDark: { en: "Switch to dark theme", zh: "切换至深色主题" },
+  themeSaveError: { en: "Theme changed, but could not be saved in this browser.", zh: "主题已更改，但无法保存在此浏览器中。" },
+  heroEyebrow: { en: "AMC 10 prep", zh: "AMC 10 中英双语备考" },
+  heroTitle: { en: "AMC 10 Bilingual Prep Guide", zh: "AMC 10 中英双语备考指南" },
+  heroCopy: {
+    en: "A data-driven study guide based on the Chinese curriculum map, organized around core AMC 10 areas: algebra, geometry, number theory, counting, and probability.",
+    zh: "一份以中文课程知识图谱为基础的数据驱动学习指南，围绕 AMC 10 的核心领域组织：代数、几何、数论、计数与概率。"
+  },
+  examFacts: { en: "Exam facts", zh: "考试信息" },
+  questionCount: { en: "25 questions", zh: "25 题" },
+  timeLimit: { en: "75 minutes", zh: "75 分钟" },
+  calculatorRule: { en: "No calculator", zh: "不可使用计算器" },
+  guideSections: { en: "Guide sections", zh: "指南栏目" },
+  topicNavigation: { en: "Topic navigation", zh: "知识点导航" },
+  studyGuide: { en: "Study Guide", zh: "学习指南" },
+  studyProgress: { en: "Study progress", zh: "学习进度" },
+  wholeCollection: { en: "Whole collection · including practice papers", zh: "全部题库 · 含练习卷" },
+  conceptsMastered: { en: "Concepts mastered", zh: "已掌握知识点" },
+  vocabularyMastered: { en: "Vocabulary mastered", zh: "已掌握词汇" },
+  conceptProgress: { en: "Practice in this concept", zh: "本知识点练习进度" },
+  problemExplorer: { en: "Problem Explorer", zh: "真题索引" },
+  glossary: { en: "Glossary", zh: "词汇表" },
+  topicMap: { en: "Topic Map", zh: "知识图谱" },
+  quests: { en: "Quests", zh: "学习任务" },
+  questLinkedSyncError: { en: "Could not update linked Study Guide, Glossary, or Explorer progress. Your quest progress is retained; retry quest sync.", zh: "无法更新学习指南、词汇表或真题进度。任务进度已保留，请重试任务同步。" },
+  mapEyebrow: { en: "Topics & vocabulary", zh: "知识点与词汇" },
+  searchMap: { en: "Filter map", zh: "筛选图谱" },
+  mapSearchPlaceholder: { en: "topic or term...", zh: "知识点或词汇..." },
+  expandAll: { en: "Expand all", zh: "全部展开" },
+  collapseAll: { en: "Collapse all", zh: "全部收起" },
+  mapRoot: { en: "AMC 10 knowledge map", zh: "AMC 10 知识图谱" },
+  mapConcepts: { en: "concepts", zh: "个知识点" },
+  mapTerms: { en: "terms", zh: "个词汇" },
+  openConcept: { en: "Open in Study Guide", zh: "在学习指南中打开" },
+  openTerm: { en: "Open in Glossary", zh: "在词汇表中打开" },
+  noMapMatches: { en: "Nothing in the map matches your filter.", zh: "图谱中没有符合筛选条件的内容。" },
+  searchTopics: { en: "Search topics", zh: "搜索知识点" },
+  topicSearchPlaceholder: { en: "topic, formula, keyword...", zh: "知识点、公式、关键词..." },
+  copyrightHeading: { en: "Problem sources and attribution.", zh: "题目来源与署名。" },
+  copyrightCopy: {
+    en: "Full exam pages include original English AMC 10 statements and diagrams, with source attribution. Reference cards link to the source problems and related concepts.",
+    zh: "整卷阅读模式提供 AMC 10 英文原题与配图，并注明来源。题目索引卡片链接到原题与相关知识点。"
+  },
+  problemEyebrow: { en: "Past AMC 10 references", zh: "历年 AMC 10 真题索引" },
+  problemMetadataNote: {
+    en: "Classified from problem-bank topic metadata; practice the linked concepts below.",
+    zh: "按题库主题标签归类；可用于练习下方列出的相关概念。"
+  },
+  problems: { en: "problems", zh: "题" },
+  problemPages: { en: "Problem pages", zh: "题目分页" },
+  previousPage: { en: "Previous", zh: "上一页" },
+  nextPage: { en: "Next", zh: "下一页" },
+  fullExamSummary: { en: "Original English statements and answer choices matching your filters. Answers and solutions are not shown.", zh: "阅读符合筛选条件的英文原题及选项，不显示答案或解析。" },
+  examAttribution: { en: "AMC problems © Mathematical Association of America.", zh: "AMC 题目版权归美国数学协会（MAA）所有。" },
+  practiceAttribution: { en: "2026 AMC 10A uses the user-supplied booklet. English questions, diagrams and choices are preserved; Chinese mode adds the supplied translations. Expand a problem's solution to see only its worked answer. Test mode hides solutions until submission. Progress stays per account in this browser.", zh: "2026 AMC 10A 来自用户提供的试卷。保留英文原题、图示及选项；中文模式加入用户提供的译题。展开解析仅显示当前题的答案与解题过程，测试中仅提交后可查看。进度按账户保存在当前浏览器。" },
+  practice2Attribution: { en: "2026 AMC 10B uses the user-supplied English and Chinese booklets. Expand a problem's solution to see its supplied bilingual worked answer and diagrams, or open its individual PDF. Answers are independently derived in the supplied document, not official MAA solutions. Test mode hides solutions until submission. Progress stays per account in this browser.", zh: "2026 AMC 10B 来自用户提供的中英文试卷。展开解析可查看本题所提供的双语解答与图示，或打开本题单独的 PDF。答案为所提供文档独立推导，非官方 MAA 解析。测试中仅提交后可查看解析，进度按账户保存在当前浏览器。" },
+  openChineseReference: { en: "Open Chinese booklet at this problem", zh: "打开中文原卷中的本题" },
+  openProblemSolutionPdf: { en: "Open this problem's solution PDF (reveals answer)", zh: "打开本题解析 PDF（含答案）" },
+  exportProblemsPdf: { en: "Export problems PDF", zh: "导出题目 PDF" },
+  problemPdfError: { en: "Unable to open PDF export. Check your connection and retry.", zh: "无法打开 PDF 导出，请检查网络后重试。" },
+  loadingExam: { en: "Loading problem statements…", zh: "正在加载题目……" },
+  examLoadError: { en: "Unable to load problem statements. Please retry or open the source page.", zh: "无法加载题目，请重试或打开来源页面。" },
+  retry: { en: "Retry", zh: "重试" },
+  openExamSource: { en: "Open source exam", zh: "打开原始试卷" },
+  glossaryEyebrow: { en: "Vocabulary", zh: "词汇表" },
+  bilingualGlossary: { en: "Bilingual Glossary", zh: "双语词汇表" },
+  searchGlossary: { en: "Search glossary", zh: "搜索词汇" },
+  glossarySearchPlaceholder: { en: "term or definition...", zh: "词汇或释义..." },
+  conceptExplanation: { en: "Concept explanation", zh: "概念解释" },
+  coreFormulas: { en: "Core formulas & facts", zh: "核心公式与结论" },
+  workedExample: { en: "Example", zh: "示例" },
+  stepByStep: { en: "Step by step", zh: "分步讲解" },
+  methods: { en: "Methods", zh: "解题方法" },
+  miniExample: { en: "Original mini-example", zh: "原创例题" },
+  readinessChecklist: { en: "Readiness checklist", zh: "学习检查表" },
+  relatedReferences: { en: "Related AMC 10 problems", zh: "相关 AMC 10 真题" },
+  referenceCountHelp: {
+    en: "Distinct problems tagged to this concept / all problems in the collection. A problem can belong to several concepts, so concept counts must not be added together. Tags are study associations, not official AMC classifications.",
+    zh: "本知识点关联的不重复题目数 / 题库总题数。同一道题可能关联多个知识点，因此各知识点题数不能相加。标签用于辅助学习，并非 AMC 官方分类。"
+  },
+  relatedGlossary: { en: "Related vocabulary", zh: "相关词汇" },
+  relatedVocabulary: { en: "Related vocabulary", zh: "相关词汇" },
+  problemVocabulary: { en: "Vocabulary in this problem", zh: "本题词汇" },
+  relatedProblems: { en: "Related problems", zh: "相关真题" },
+  marked: { en: "Marked", zh: "已标记" },
+  terms: { en: "terms", zh: "个词汇" },
+  viewAllInGlossary: { en: "View all in Glossary →", zh: "在词汇表中查看全部 →" },
+  year: { en: "Year", zh: "年份" },
+  difficultyLegend: { en: "Difficulty legend", zh: "难度图例" },
+  viewAllInExplorer: { en: "View all in Problem Explorer →", zh: "在真题索引中查看全部 →" },
+  markMastered: { en: "Mark mastered", zh: "标记掌握" },
+  mastered: { en: "Mastered", zh: "已掌握" },
+  openReference: { en: "View problem reference", zh: "查看题目索引" },
+  openSolution: { en: "LIVE answer & solution (reveals answer)", zh: "LIVE 答案与解析（含答案）" },
+  allConcepts: { en: "All concepts", zh: "所有知识点" },
+  currentConcept: { en: "Current", zh: "当前知识点" },
+  allYears: { en: "All years", zh: "所有年份" },
+  allExams: { en: "All exams", zh: "所有试卷" },
+  allDifficulties: { en: "All difficulties", zh: "所有难度" },
+  filterByConcept: { en: "Filter by concept", zh: "按知识点筛选" },
+  filterConceptLabel: { en: "Concept", zh: "知识点" },
+  filterExamLabel: { en: "Exam", zh: "试卷" },
+  filterDifficultyLabel: { en: "Difficulty", zh: "难度" },
+  filterByYear: { en: "Filter by year", zh: "按年份筛选" },
+  filterByExam: { en: "Filter by exam", zh: "按试卷筛选" },
+  filterByDifficulty: { en: "Filter by difficulty", zh: "按难度筛选" },
+  filterGlossaryByConcept: { en: "Filter vocabulary by concept", zh: "按概念筛选词汇" },
+  filterMastery: { en: "Mastery", zh: "掌握状态" },
+  filterConceptMastery: { en: "Filter concepts by mastery", zh: "按知识点掌握状态筛选" },
+  filterGlossaryMastery: { en: "Filter vocabulary by mastery", zh: "按词汇掌握状态筛选" },
+  allMastery: { en: "All mastery states", zh: "全部掌握状态" },
+  masteredOnly: { en: "Mastered", zh: "已掌握" },
+  unmasteredOnly: { en: "Not mastered", zh: "未掌握" },
+  markGlossaryMastered: { en: "Mark vocabulary mastered", zh: "标记词汇已掌握" },
+  masteryStatus: { en: "Learning status", zh: "学习状态" },
+  problemProgress: { en: "My progress", zh: "我的进度" },
+  setProblemProgress: { en: "Set my progress", zh: "标记我的进度" },
+  allProgress: { en: "All statuses", zh: "全部进度" },
+  unmarkedProgress: { en: "Not marked yet", zh: "尚未标记" },
+  progressOverview: { en: "Progress overview", zh: "进度总览" },
+  progressDetails: { en: "About these counts & export", zh: "统计说明与导出" },
+  progressNeedUnderstanding: { en: "Need clarity", zh: "待理解题意" },
+  progressNeedStartingPoint: { en: "Need a starting point", zh: "待寻找思路" },
+  progressHaveApproach: { en: "Have an approach", zh: "已有解题思路" },
+  reviewCollection: { en: "Review collection", zh: "错题集" },
+  allCollectionProblems: { en: "All problems", zh: "全部题目" },
+  savedCollectionProblems: { en: "Saved only", zh: "仅错题集" },
+  saveToReview: { en: "Save to review collection", zh: "加入错题集" },
+  removeFromReview: { en: "Remove from review collection", zh: "移出错题集" },
+  reviewStorageError: { en: "Unable to read or save your review collection in this browser. Check your browser storage settings.", zh: "无法读取或保存本浏览器中的错题集，请检查浏览器存储设置。" },
+  markedProblems: { en: "Marked problems", zh: "已标记题目" },
+  progressOverviewHelp: { en: "Counts follow the selected year and exam, independent of concept, difficulty, and status filters. Expand a status to see problem numbers by paper.", zh: "统计随所选年份与试卷更新，不受知识点、难度或状态筛选影响。展开状态可查看各试卷的题号。" },
+  noMarkedStatus: { en: "No problems marked with this status yet.", zh: "尚无题目标记为此状态。" },
+  exportProgress: { en: "Export progress (JSON)", zh: "导出进度（JSON）" },
+  exportProgressHelp: { en: "Download all years and exams with your statuses and concept tags for later analysis. This does not include answers, problem text, or a history of changes.", zh: "下载全部年份与试卷的当前状态与知识点标签，以便日后分析。不包含答案、题干或变更历史。" },
+  exportProgressError: { en: "Unable to export progress. Please try again.", zh: "无法导出进度，请重试。" },
+  needUnderstanding: { en: "Need help understanding", zh: "需要帮助理解题意" },
+  needStartingPoint: { en: "Understand, but need a starting point", zh: "理解题意，但还没有解题思路" },
+  haveApproach: { en: "Understand and have a solution approach", zh: "理解题意，并有解题思路" },
+  problemProgressError: { en: "Problem progress could not be read or saved in this browser. New selections may not survive a reload. Check your browser's storage settings.", zh: "无法读取或保存本浏览器中的题目进度，新选择可能在刷新后丢失。请检查浏览器的存储设置。" },
+  relatedConcepts: { en: "Related concepts", zh: "相关知识点" },
+  openInGlossary: { en: "Open in glossary →", zh: "打开词汇表 →" },
+  noProblems: { en: "No problems match these filters.", zh: "没有符合筛选条件的题目。" },
+  noRelatedReferences: { en: "No verified reference is currently linked to this concept.", zh: "此知识点目前尚未关联已核验的真题索引。" },
+  noGlossaryTerms: { en: "No glossary terms match your search.", zh: "没有符合搜索条件的词汇。" }
+};
+
+function uiText(key) {
+  const text = UI_TEXT[key];
+  if (state.language === "zh") return text.zh;
+  if (state.language === "en") return text.en;
+  return `${text.en} / ${text.zh}`;
+}
+
+function difficultyText(difficulty) {
+  const labels = {
+    early: { en: "early", zh: "入门" },
+    medium: { en: "medium", zh: "中等" },
+    "medium-hard": { en: "medium-hard", zh: "中高" },
+    hard: { en: "hard", zh: "困难" },
+    challenge: { en: "challenge", zh: "挑战" }
+  };
+  const label = labels[difficulty] || { en: difficulty, zh: difficulty };
+  return plainTextPair(label.zh, label.en);
+}
+
+function plainTextPair(zh, en) {
+  if (state.language === "zh") return zh;
+  if (state.language === "en") return en;
+  return `${en} / ${zh}`;
+}
+
+function textPair(zh, en) {
+  if (state.language === "zh") return `<span lang="zh">${zh}</span>`;
+  if (state.language === "en") return `<span lang="en">${en}</span>`;
+  return `<span class="bilingual-pair"><span lang="en">${en}</span><span lang="zh">${zh}</span></span>`;
+}
+
+function escapeHtml(text) {
+  return text.replace(/[&<>"]/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;"
+  })[character]);
+}
+
+function renderLanguageControl() {
+  document.querySelectorAll("[data-language]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.language === state.language));
+  });
+}
+
+function renderStaticInterface() {
+  renderThemeControl();
+  renderLanguageControl();
+  accountPanel?.render();
+  document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
+  document.title = state.language === "zh"
+    ? "AMC 10 中英双语备考指南"
+    : state.language === "en"
+      ? "AMC 10 Bilingual Prep Guide"
+      : "AMC 10 Bilingual Prep Guide | AMC 10 中英双语备考指南";
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const text = UI_TEXT[element.dataset.i18n];
+    element.innerHTML = textPair(text.zh, text.en);
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    element.placeholder = uiText(element.dataset.i18nPlaceholder);
+  });
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+    element.setAttribute("aria-label", uiText(element.dataset.i18nAriaLabel));
+  });
+}
+
+function renderTopicNav() {
+  const query = state.search.trim().toLowerCase();
+  const nav = $("#topicNav");
+  nav.innerHTML = TOPICS.map((topic) => {
+    const concepts = topic.concepts.filter((concept) => {
+      const haystack = [topic.zh, topic.en, concept.zh, concept.en, concept.detailZh, concept.detailEn, concept.explanationZh, concept.explanationEn].join(" ").toLowerCase();
+      return (!query || haystack.includes(query))
+        && (state.conceptMastery === "all"
+          || (state.conceptMastery === "mastered" && state.mastered.has(concept.id))
+          || (state.conceptMastery === "unmastered" && !state.mastered.has(concept.id)));
+    });
+    if (!concepts.length) return "";
+    return `
+      <details open class="topic-group">
+        <summary>${textPair(topic.zh, topic.en)}<small>${textPair(topic.officialAlignmentZh, topic.officialAlignment)}</small></summary>
+        <div class="topic-links">
+          ${concepts.map((concept) => `
+            <button class="topic-button ${concept.id === state.activeConceptId ? "active" : ""}" data-concept="${concept.id}">
+              <span>${textPair(concept.zh, concept.en)}</span>
+              ${state.mastered.has(concept.id) ? `<span class="status-dot" title="${uiText("mastered")}">✓</span>` : ""}
+            </button>
+          `).join("")}
+        </div>
+      </details>
+    `;
+  }).join("");
+
+  nav.querySelectorAll("[data-concept]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeConceptId = button.dataset.concept;
+      render();
+    });
+  });
+}
+
+function listItems(items) {
+  return `<ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+}
+
+function bilingualListItems(itemsZh, itemsEn) {
+  const linkedEn = linkGlossaryList(itemsEn);
+  if (state.language === "zh") return listItems(itemsZh);
+  if (state.language === "en") return listItems(linkedEn);
+  return `<ul>${linkedEn.map((item, index) => `<li>${textPair(itemsZh[index], item)}</li>`).join("")}</ul>`;
+}
+
+function formulaItems(concept) {
+  return `<ol class="formula-list">${concept.formulas.map((formula, index) => {
+    const note = concept.formulaNotes[index];
+    return `
+      <li class="formula-item">
+        <div class="formula-expression"><span class="math-formula">\\(${escapeHtml(formula)}\\)</span></div>
+        <p class="formula-explanation">${textPair(note.explanationZh, linkGlossaryTerms(note.explanationEn))}</p>
+        <details class="formula-example">
+          <summary>
+            <strong>${uiText("workedExample")}</strong>
+            <svg class="example-chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="formula-example-content">${textPair(note.exampleZh, linkGlossaryTerms(note.exampleEn))}</div>
+        </details>
+        ${note.stepsEn ? `
+          <details class="formula-steps">
+            <summary>
+              <strong>${uiText("stepByStep")}</strong>
+              <svg class="steps-chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6" /></svg>
+            </summary>
+            <ol>
+              ${note.stepsEn.map((step, stepIndex) => `<li>${textPair(note.stepsZh[stepIndex], linkGlossaryTerms(step))}</li>`).join("")}
+            </ol>
+          </details>
+        ` : ""}
+      </li>
+    `;
+  }).join("")}</ol>`;
+}
+
+function typesetMath(target) {
+  if (!window.MathJax?.startup?.promise) return;
+  const el = target || $("#conceptView");
+  if (!el) return;
+  window.MathJax.startup.promise
+    .then(() => {
+      if (el.closest(".view-panel")?.hidden) return;
+      window.MathJax.typesetClear?.([el]);
+      return window.MathJax.typesetPromise([el]);
+    })
+    .catch((error) => {
+      console.error("Unable to render formulas with MathJax.", error);
+    });
+}
+
+function renderConcept() {
+  const concept = conceptById.get(state.activeConceptId) || allConcepts()[0];
+  const mission = QUEST_COURSE.missions.find((item) => item.concept.studyConceptId === concept.id);
+  const related = PROBLEM_REFERENCES.filter((problem) => problem.conceptIds.includes(concept.id));
+  const relatedTerms = GLOSSARY.filter((term) => term.conceptIds.includes(concept.id));
+  $("#conceptView").innerHTML = `
+    <div class="concept-header">
+      <div>
+        <p class="eyebrow">${textPair(concept.topicZh, concept.topicEn)}</p>
+        <h2>${textPair(concept.zh, concept.en)}</h2>
+        <p class="detail">${textPair(concept.detailZh, concept.detailEn)}</p>
+        ${mission ? `<a href="${deepLink("quest", mission.concept.id)}" target="_blank" rel="noopener">${textPair("学习此知识点的任务", "Study this concept in Quests")}</a>` : ""}
+      </div>
+      <button id="masteryToggle" class="mastery glossary-mastery ${state.mastered.has(concept.id) ? "complete" : ""}" aria-pressed="${state.mastered.has(concept.id)}" aria-label="${state.mastered.has(concept.id) ? uiText("mastered") : uiText("markMastered")}" title="${state.mastered.has(concept.id) ? uiText("mastered") : uiText("markMastered")}">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5"/><path d="m6.8 10.1 2.1 2.1 4.5-4.5"/></svg>
+      </button>
+    </div>
+    <div class="card-grid">
+      <section class="card wide">
+        <h3>${uiText("conceptExplanation")}</h3>
+        <p>${textPair(concept.explanationZh, linkGlossaryTerms(concept.explanationEn))}</p>
+      </section>
+      <section class="card wide formula-card">
+        <h3>${uiText("coreFormulas")}</h3>
+        ${formulaItems(concept)}
+      </section>
+      <section class="card">
+        <h3>${uiText("methods")}</h3>
+        ${bilingualListItems(concept.methodsZh, concept.methodsEn)}
+      </section>
+      <section class="card">
+        <h3>${uiText("readinessChecklist")}</h3>
+        ${bilingualListItems(concept.checklistZh, concept.checklistEn)}
+      </section>
+      <section class="card wide example">
+        <h3>${uiText("miniExample")}</h3>
+        <p>${textPair(concept.exampleZh, linkGlossaryTerms(concept.exampleEn))}</p>
+      </section>
+      <section class="card wide">
+        <section id="conceptProgress" class="concept-progress" aria-labelledby="conceptProgressHeading"></section>
+        <div class="study-section-heading">
+          <h3>${uiText("relatedReferences")}</h3>
+          <span class="result-count" id="relatedProblemCount" aria-describedby="referenceCountHelp">${related.length} / ${PROBLEM_REFERENCES.length}</span>
+        </div>
+        <p id="referenceCountHelp" class="muted reference-count-help">${uiText("referenceCountHelp")}</p>
+        ${related.length ? `
+          ${relatedProblemTable(related)}
+          <a class="text-button" href="${deepLink("problems-concept", concept.id)}" target="_blank" rel="noopener">${uiText("viewAllInExplorer")}</a>
+        ` : `<p class="empty-state">${uiText("noRelatedReferences")}</p>`}
+      </section>
+      <section class="card wide">
+        <div class="study-section-heading">
+          <h3>${uiText("relatedGlossary")}</h3>
+          <span class="result-count">${relatedTerms.length}</span>
+        </div>
+        ${relatedVocabularyList(relatedTerms, concept.id)}
+      </section>
+    </div>
+  `;
+  renderStudyProgress();
+  typesetMath();
+  $("#masteryToggle").addEventListener("click", () => {
+    const mastered = !state.mastered.has(concept.id);
+    if (mastered) state.mastered.add(concept.id);
+    else state.mastered.delete(concept.id);
+    saveLocalMastery();
+    render();
+    accountPanel?.setMastery("concept", concept.id, mastered);
+  });
+  wireProblemAndGlossaryLinks($("#conceptView"));
+}
+
+function renderStudyProgress() {
+  const concepts = allConcepts();
+  const summary = summarizeProgress(PROBLEM_REFERENCES, state.problemProgress);
+  const metrics = [
+    { key: "concepts", label: "conceptsMastered", value: concepts.filter((concept) => state.mastered.has(concept.id)).length, total: concepts.length },
+    { key: "vocabulary", label: "vocabularyMastered", value: GLOSSARY.filter((term) => state.masteredGlossary.has(term.en)).length, total: GLOSSARY.length },
+    { key: "problems", label: "markedProblems", value: summary.marked, total: summary.total }
+  ];
+  $("#studyProgress").innerHTML = `
+    <div class="progress-header">
+      <h2 id="studyProgressHeading">${uiText("studyProgress")}</h2>
+      <span class="muted">${uiText("wholeCollection")}</span>
+    </div>
+    <div class="study-metrics">
+      ${metrics.map((metric) => `
+        <div class="study-metric" data-study-metric="${metric.key}">
+          <span>${uiText(metric.label)}</span>
+          <strong>${metric.value}<small> / ${metric.total}</small></strong>
+          <progress value="${metric.value}" max="${metric.total}" aria-label="${uiText(metric.label)}"></progress>
+        </div>
+      `).join("")}
+    </div>
+  `;
+  const panel = $("#conceptProgress");
+  if (!panel) return;
+  const related = PROBLEM_REFERENCES.filter((problem) => problem.conceptIds.includes(state.activeConceptId));
+  const scoped = summarizeProgress(related, state.problemProgress);
+  const saved = related.filter((problem) => state.reviewCollection.has(problemKey(problem))).length;
+  panel.innerHTML = `
+    <div class="progress-header">
+      <h3 id="conceptProgressHeading">${uiText("conceptProgress")}</h3>
+      <span class="concept-progress-total"><strong>${scoped.marked} / ${scoped.total}</strong> ${uiText("marked")}</span>
+    </div>
+    <progress value="${scoped.marked}" max="${scoped.total || 1}" aria-label="${uiText("conceptProgress")}"></progress>
+    <dl class="concept-progress-statuses">
+      ${scoped.statuses.map((entry) => `
+        <div data-study-status="${entry.status}">
+          <dt>${uiText(PROGRESS_LABEL_KEYS[entry.status])}</dt><dd>${entry.count}</dd>
+        </div>
+      `).join("")}
+      <div><dt>${uiText("unmarkedProgress")}</dt><dd>${scoped.unmarked}</dd></div>
+      <div><dt>${uiText("reviewCollection")}</dt><dd>${saved}</dd></div>
+    </dl>
+  `;
+}
+
+let progressControlId = 0;
+
+const PROGRESS_LABEL_KEYS = {
+  needUnderstanding: "progressNeedUnderstanding",
+  needStartingPoint: "progressNeedStartingPoint",
+  haveApproach: "progressHaveApproach"
+};
+
+const PROGRESS_ICONS = {
+  needUnderstanding: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 .5c0 1.5-2.5 2-2.5 3.5M12 17h.01"/>',
+  needStartingPoint: '<path d="m13 2-9 12h7l-1 8 10-12h-7l1-8Z"/>',
+  haveApproach: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'
+};
+
+function progressSummaryText(status) {
+  return status
+    ? `${uiText("problemProgress")}: ${uiText(PROGRESS_LABEL_KEYS[status])}`
+    : uiText("problemProgress");
+}
+
+function updateProgressControl(control, selected) {
+  control.querySelector("summary").textContent = progressSummaryText(selected);
+  control.dataset.progressStatus = selected || "";
+  control.querySelectorAll("input").forEach((input) => {
+    input.checked = input.value === selected;
+  });
+}
+
+function problemProgressControl(key) {
+  const selected = state.problemProgress[key];
+  const groupName = `progress-${++progressControlId}`;
+  return `
+    <details class="problem-progress" data-progress-key="${key}" data-progress-status="${selected || ""}" open>
+      <summary>${progressSummaryText(selected)}</summary>
+      <div class="progress-picker-row">
+      <fieldset>
+        <legend>${uiText("problemProgress")}</legend>
+        ${PROBLEM_PROGRESS_OPTIONS.map((option) => `
+          <label class="progress-option" data-status="${option}">
+            <input type="radio" name="${groupName}" value="${option}" aria-label="${uiText(option)}" aria-describedby="${groupName}-${option}-tip" ${selected === option ? "checked" : ""}>
+            <span class="progress-option-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">${PROGRESS_ICONS[option]}</svg>
+            </span>
+            <span class="progress-option-tooltip" id="${groupName}-${option}-tip" role="tooltip">${textPair(UI_TEXT[option].zh, UI_TEXT[option].en)}</span>
+          </label>
+        `).join("")}
+      </fieldset>
+      <button type="button" class="progress-option review-bookmark" data-review-key="${key}" aria-pressed="${state.reviewCollection.has(key)}" aria-label="${uiText(state.reviewCollection.has(key) ? "removeFromReview" : "saveToReview")}">
+        <span class="progress-option-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M6 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17l-6-4-6 4Z"/></svg>
+        </span>
+        <span class="progress-option-tooltip" role="tooltip">${textPair(UI_TEXT[state.reviewCollection.has(key) ? "removeFromReview" : "saveToReview"].zh, UI_TEXT[state.reviewCollection.has(key) ? "removeFromReview" : "saveToReview"].en)}</span>
+      </button>
+      </div>
+    </details>
+  `;
+}
+
+function renderProblemProgressError() {
+  $("#problemProgressError").hidden = !problemProgressStorageError;
+  $("#problemProgressError").textContent = uiText("problemProgressError");
+  $("#reviewCollectionError").hidden = !reviewStorageError;
+  $("#reviewCollectionError").textContent = uiText("reviewStorageError");
+}
+
+const DIFFICULTY_ORDER = ["early", "medium", "medium-hard", "hard", "challenge"];
+
+function problemLinkLabel(problem) {
+  const progress = state.problemProgress[problemKey(problem)];
+  return [`${problem.year} ${problem.exam} #${problem.problemNumber}`, difficultyText(problem.difficulty),
+    progress ? uiText(progress) : ""].filter(Boolean).join(" · ");
+}
+
+function refreshProblemLinks() {
+  document.querySelectorAll("[data-open-problem]").forEach((button) => {
+    const problem = PROBLEM_REFERENCES.find((item) => problemKey(item) === button.dataset.openProblem);
+    if (!problem) return;
+    const label = problemLinkLabel(problem);
+    button.setAttribute("aria-label", label);
+    button.title = label;
+    const progress = state.problemProgress[problemKey(problem)];
+    if (progress) button.dataset.progress = progress;
+    else delete button.dataset.progress;
+  });
+  document.querySelectorAll("[data-related-marked]").forEach((count) => {
+    const keys = count.dataset.relatedMarked.split(" ");
+    count.textContent = keys.filter((key) => state.problemProgress[key]).length;
+  });
+}
+
+function problemLink(problem) {
+  const key = problemKey(problem);
+  const progress = state.problemProgress[key];
+  const label = problemLinkLabel(problem);
+  return `<a class="problem-chip" href="${deepLink("problem", key)}" target="_blank" rel="noopener" data-open-problem="${key}" data-difficulty="${problem.difficulty}"${progress ? ` data-progress="${progress}"` : ""} aria-label="${label}" title="${label}">${problem.problemNumber}</a>`;
+}
+
+function relatedProblemTable(problems) {
+  const exams = [...new Set(problems.map((problem) => problem.exam))].sort();
+  const years = [...new Set(problems.map((problem) => problem.year))].sort((a, b) => a - b);
+  const keys = problems.map(problemKey);
+  const difficulties = DIFFICULTY_ORDER.filter((level) => problems.some((problem) => problem.difficulty === level));
+  return `
+    <p class="related-summary">
+      ${problems.length} ${uiText("problems")} · ${uiText("marked")}: <span data-related-marked="${keys.join(" ")}">${keys.filter((key) => state.problemProgress[key]).length}</span>
+    </p>
+    <div class="related-table-wrap">
+      <table class="related-table">
+        <thead>
+          <tr><th scope="col">${uiText("year")}</th>${exams.map((exam) => `<th scope="col">${exam}</th>`).join("")}</tr>
+        </thead>
+        <tbody>
+          ${years.map((year) => `
+            <tr>
+              <th scope="row">${year}</th>
+              ${exams.map((exam) => {
+                const cell = problems.filter((problem) => problem.year === year && problem.exam === exam)
+                  .sort((a, b) => a.problemNumber - b.problemNumber);
+                return `<td>${cell.length ? cell.map(problemLink).join("") : `<span class="related-empty" aria-hidden="true">–</span>`}</td>`;
+              }).join("")}
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+    <ul class="difficulty-legend" aria-label="${uiText("difficultyLegend")}">
+      ${difficulties.map((level) => `<li><span class="legend-swatch" data-difficulty="${level}" aria-hidden="true"></span>${difficultyText(level)}</li>`).join("")}
+      <li><span class="legend-swatch legend-marked" aria-hidden="true"></span>${uiText("marked")}</li>
+    </ul>
+  `;
+}
+
+async function openProblemInExplorer(key) {
+  const problem = PROBLEM_REFERENCES.find((item) => problemKey(item) === key);
+  if (!problem) return;
+  state.year = String(problem.year);
+  state.exam = problem.exam;
+  state.problemConcept = "all";
+  state.difficulty = "all";
+  state.problemPage = 0;
+  state.reviewOnly = false;
+  $("#reviewOnly").value = "all";
+  populateFilters();
+  if (state.problemProgressFilter !== "all") {
+    state.problemProgressFilter = "all";
+    $("#problemProgressFilter").value = "all";
+  }
+  await setActiveView("problems");
+  const target = $(`#problemList [data-problem-key="${key}"]`);
+  if (!target) return;
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  target.classList.add("problem-highlight");
+  target.focus({ preventScroll: true });
+  setTimeout(() => target.classList.remove("problem-highlight"), 1600);
+}
+
+function problemCard(problem, statement = null) {
+  const tags = problem.conceptIds.map((id) => conceptById.get(id)).filter(Boolean);
+  const mission = QUEST_COURSE.missions.find((item) => item.problems.some((ref) => problemKey(ref) === problemKey(problem)));
+  return `
+    <article class="problem-card" data-problem-key="${problemKey(problem)}" tabindex="-1">
+      <h3 class="problem-topline">
+        <strong>${problem.paperId || `${problem.year} ${problem.exam}`} #${problem.problemNumber}</strong>
+        <span>${difficultyText(problem.difficulty)}</span>
+      </h3>
+      ${problemProgressControl(problemKey(problem))}
+      ${questSolved.has(problemKey(problem)) ? `<p class="quest-solved">${textPair("任务中已正确作答", "Answered correctly in Quests")}</p>` : ""}
+      ${mission ? `<a href="${deepLink("quest", mission.concept.id)}" target="_blank" rel="noopener">${textPair("进入对应任务", "Open this problem's mission")}</a>` : ""}
+      ${problem.practice ? `<div class="problem-statement">${practiceStatement(problem, state.language)}</div>` : statement ? `
+        <div class="problem-statement">${problemStatement(statement, state.language, problem)}</div>
+        <ol class="problem-choices" type="A">
+          ${statement.choices.map((_, index) => `<li>${problemChoice(statement, index, state.language)}</li>`).join("")}
+        </ol>
+      ` : problem.noteEn && problem.noteZh ? `<p>${textPair(problem.noteZh, linkGlossaryTerms(problem.noteEn))}</p>` : ""}
+      <div class="tags">${tags.map((tag) => `<a class="concept-tag" href="${deepLink("concept", tag.id)}" target="_blank" rel="noopener">${textPair(tag.zh, tag.en)}</a>`).join("")}</div>
+      ${problemVocabulary(problem)}
+      <div class="card-actions">
+        <a class="icon-action" href="${problem.sourceUrl}${problem.practice ? `#page=${problem.bookletPage}` : ""}" target="_blank" rel="noreferrer" aria-label="${uiText("openReference")}" title="${uiText("openReference")}">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5" />
+          </svg>
+        </a>
+        ${problem.chineseSourceUrl ? `<a class="icon-action" href="${problem.chineseSourceUrl}#page=${problem.chineseBookletPage}" target="_blank" rel="noopener" aria-label="${uiText("openChineseReference")}" title="${uiText("openChineseReference")}">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M2 5h12M7 2v3M4 5c0 5 4 8 8 10M11 5c0 5-4 8-8 10M13 21l4-10 4 10M15 17h4" />
+          </svg>
+        </a>` : ""}
+        ${problem.individualSolutionPdfUrl ? `<a class="icon-action" href="${problem.individualSolutionPdfUrl}" target="_blank" rel="noopener" aria-label="${uiText("openProblemSolutionPdf")}" title="${uiText("openProblemSolutionPdf")}">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
+          </svg>
+        </a>` : ""}
+        ${problem.practice ? "" : `<a class="icon-action" href="https://live.poshenloh.com/past-contests/amc10/${problem.year}${problem.exam.slice(-1)}/problem/${problem.problemNumber}" target="_blank" rel="noopener" aria-label="${uiText("openSolution")}" title="${uiText("openSolution")}">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
+          </svg>
+        </a>`}
+      </div>
+      ${problem.solutionImageUrl ? practiceSolution(problem, state.language) : ""}
+    </article>
+  `;
+}
+
+function populateFilters() {
+  const conceptFilter = $("#conceptFilter");
+  const yearFilter = $("#yearFilter");
+  const examFilter = $("#examFilter");
+  const difficultyFilter = $("#difficultyFilter");
+  const glossaryConceptFilter = $("#glossaryConceptFilter");
+  const conceptMasteryFilter = $("#conceptMasteryFilter");
+  const glossaryMasteryFilter = $("#glossaryMasteryFilter");
+  const years = [...new Set(PROBLEM_REFERENCES.map((problem) => problem.year))].sort((a, b) => b - a);
+  const exams = [...new Set(PROBLEM_REFERENCES.map((problem) => problem.exam))].sort();
+  const difficulties = [...new Set(PROBLEM_REFERENCES.map((problem) => problem.difficulty))].sort();
+  const activeConcept = conceptById.get(state.activeConceptId);
+  conceptFilter.innerHTML = `
+    <option value="all">${uiText("allConcepts")}</option>
+    <option value="current">${uiText("currentConcept")}: ${plainTextPair(activeConcept.zh, activeConcept.en)}</option>
+    ${allConcepts().map((concept) => `<option value="${concept.id}">${plainTextPair(concept.zh, concept.en)}</option>`).join("")}
+  `;
+  conceptFilter.value = state.problemConcept;
+  glossaryConceptFilter.innerHTML = `
+    <option value="all">${uiText("allConcepts")}</option>
+    ${allConcepts().map((concept) => `<option value="${concept.id}">${plainTextPair(concept.zh, concept.en)}</option>`).join("")}
+  `;
+  glossaryConceptFilter.value = state.glossaryConcept;
+  conceptMasteryFilter.innerHTML = `
+    <option value="all">${uiText("allMastery")}</option>
+    <option value="mastered">${uiText("masteredOnly")}</option>
+    <option value="unmastered">${uiText("unmasteredOnly")}</option>
+  `;
+  conceptMasteryFilter.value = state.conceptMastery;
+  glossaryMasteryFilter.innerHTML = `
+    <option value="all">${uiText("allMastery")}</option>
+    <option value="mastered">${uiText("masteredOnly")}</option>
+    <option value="unmastered">${uiText("unmasteredOnly")}</option>
+  `;
+  glossaryMasteryFilter.value = state.glossaryMastery;
+  yearFilter.innerHTML = `<option value="all">${uiText("allYears")}</option>${years.map((year) => `<option value="${year}">${year}</option>`).join("")}`;
+  examFilter.innerHTML = `<option value="all">${uiText("allExams")}</option>${exams.map((exam) => `<option value="${exam}">${exam}</option>`).join("")}`;
+  difficultyFilter.innerHTML = `<option value="all">${uiText("allDifficulties")}</option>${difficulties.map((difficulty) => `<option value="${difficulty}">${difficultyText(difficulty)}</option>`).join("")}`;
+  yearFilter.value = state.year;
+  examFilter.value = state.exam;
+  difficultyFilter.value = state.difficulty;
+}
+
+function renderProgressOverview() {
+  const { year, exam } = state;
+  const summary = summarizeProgress(progressScope(PROBLEM_REFERENCES, year, exam), state.problemProgress);
+  $("#progressOverviewHeading").textContent = uiText("progressOverview");
+  $("#progressScope").textContent = `${year === "all" ? uiText("allYears") : year} · ${exam === "all" ? uiText("allExams") : exam}`;
+  const openStatuses = new Set([...document.querySelectorAll("[data-summary-status][open]")]
+    .map((element) => element.dataset.summaryStatus));
+  $("#progressTotals").innerHTML = `
+    <span class="progress-marked"><strong>${summary.marked} / ${summary.total}</strong><span>${textPair(UI_TEXT.markedProblems.zh, UI_TEXT.markedProblems.en)}</span></span>
+    <span class="progress-unmarked">${summary.unmarked} ${uiText("unmarkedProgress")}</span>
+  `;
+  $("#progressMeter").max = summary.total || 1;
+  $("#progressMeter").value = summary.marked;
+  $("#progressBreakdown").innerHTML = summary.statuses.map((entry) => `
+    <details class="progress-status-card" data-summary-status="${entry.status}" ${openStatuses.has(entry.status) ? "open" : ""}>
+      <summary title="${uiText(entry.status)}">
+        <span class="progress-status-label">${textPair(UI_TEXT[PROGRESS_LABEL_KEYS[entry.status]].zh, UI_TEXT[PROGRESS_LABEL_KEYS[entry.status]].en)}</span>
+        <strong class="progress-status-count">${entry.count}</strong>
+        <svg class="steps-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6" /></svg>
+      </summary>
+      ${entry.count ? `<ul>${entry.papers.map((paper) => `
+        <li><strong>${paper.year} ${paper.exam}</strong>: ${paper.problemNumbers.map((number) => `#${number}`).join(", ")}</li>
+      `).join("")}</ul>` : `<p class="muted">${uiText("noMarkedStatus")}</p>`}
+    </details>
+  `).join("");
+  $("#problemProgressFilter").innerHTML = `
+    <option value="all">${uiText("allProgress")} (${summary.total})</option>
+    <option value="unmarked">${uiText("unmarkedProgress")} (${summary.unmarked})</option>
+    ${summary.statuses.map((entry) => `<option value="${entry.status}">${uiText(entry.status)} (${entry.count})</option>`).join("")}
+  `;
+  $("#problemProgressFilter").value = state.problemProgressFilter;
+}
+
+function downloadProgress() {
+  let url;
+  const link = document.createElement("a");
+  $("#progressExportError").hidden = true;
+  try {
+    const snapshot = exportProgress(PROBLEM_REFERENCES, state.problemProgress, allConcepts());
+    url = URL.createObjectURL(new Blob([JSON.stringify(snapshot, null, 2)], { type: "application/json" }));
+    link.href = url;
+    link.download = `amc10-progress-${snapshot.exportedAt.slice(0, 10)}.json`;
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    console.error("Unable to export problem progress.", error);
+    $("#progressExportError").textContent = uiText("exportProgressError");
+    $("#progressExportError").hidden = false;
+  } finally {
+    link.remove();
+    if (url) setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+}
+
+let problemRenderVersion = 0;
+const PROBLEM_PAGE_SIZE = 25;
+let problemFilterKey = "";
+const examStatements = new Map();
+
+async function renderExamStatements(problems, version) {
+  const list = $("#problemList");
+  list.setAttribute("aria-busy", "true");
+  list.insertAdjacentHTML("afterbegin", `<p class="empty-state" role="status">${uiText("loadingExam")}</p>`);
+  $("#examAttribution").textContent = [
+    problems.some((problem) => !problem.practice) ? uiText("examAttribution") : "",
+    problems.some((problem) => problem.id === "2026-practice-1") ? uiText("practiceAttribution") : "",
+    problems.some((problem) => problem.id === "2026-practice-2") ? uiText("practice2Attribution") : ""
+  ].filter(Boolean).join(" ");
+  let sourceUrl = "https://live.poshenloh.com/past-contests/amc10";
+  try {
+    const papers = new Map(problems.filter((problem) => !problem.practice).map((problem) => [`${problem.year}${problem.exam.slice(-1)}`, problem]));
+    await Promise.all([...papers].map(async ([paper, { year, exam }]) => {
+      if (!examStatements.has(paper)) {
+        const response = await fetch(`assets/exams/${paper}.json?v=20261031-zh`);
+        if (!response.ok) {
+          sourceUrl = `https://live.poshenloh.com/past-contests/amc10/${paper}`;
+          throw new Error(`Exam ${paper} request failed: HTTP ${response.status}`);
+        }
+        const data = await response.json();
+        if (data.year !== year || data.exam !== exam || data.problems?.length !== 25
+          || !data.problems.every((problem, index) =>
+            problem.problemNumber === index + 1 && typeof problem.statementHtml === "string"
+            && problem.choices?.length === 5 && problem.choices.every((choice) => typeof choice === "string"))) {
+          throw new Error(`Invalid exam statements for ${paper}`);
+        }
+        examStatements.set(paper, data);
+      }
+    }));
+    if (version !== problemRenderVersion) return;
+    window.MathJax?.typesetClear?.([list]);
+    list.innerHTML = problems.map((problem) => {
+      const data = examStatements.get(`${problem.year}${problem.exam.slice(-1)}`);
+      return problemCard(problem, data?.problems[problem.problemNumber - 1]);
+    }).join("");
+    wireProblemAndGlossaryLinks(list);
+    typesetMath(list);
+  } catch (error) {
+    console.error("Unable to load problem statements.", error);
+    if (version !== problemRenderVersion) return;
+    list.innerHTML = `
+      <div class="empty-state" role="alert">
+        <p>${uiText("examLoadError")}</p>
+        <button type="button" id="retryExam">${uiText("retry")}</button>
+        <a href="${sourceUrl}" target="_blank" rel="noreferrer">${uiText("openExamSource")}</a>
+      </div>
+    `;
+    $("#retryExam").addEventListener("click", () => renderProblems());
+  } finally {
+    if (version === problemRenderVersion) list.setAttribute("aria-busy", "false");
+  }
+}
+
+function renderProblems() {
+  if (state.activeView !== "problems") return;
+  renderProgressOverview();
+  const version = ++problemRenderVersion;
+  const isExam = state.year !== "all" && state.exam !== "all";
+  $("#examSummary").hidden = false;
+  $("#problemList").classList.add("full-exam");
+  $("#problemList").setAttribute("aria-busy", "false");
+  window.MathJax?.typesetClear?.([$("#problemList")]);
+  const selectedConceptId = state.problemConcept === "current" ? state.activeConceptId : state.problemConcept;
+  const filterKey = JSON.stringify([selectedConceptId, state.year, state.exam, state.difficulty,
+    state.problemProgressFilter, state.reviewOnly]);
+  if (filterKey !== problemFilterKey) state.problemPage = 0;
+  problemFilterKey = filterKey;
+  const problems = PROBLEM_REFERENCES.filter((problem) => {
+    if (state.reviewOnly && !state.reviewCollection.has(problemKey(problem))) return false;
+    const progress = state.problemProgress[problemKey(problem)];
+    if (state.problemProgressFilter !== "all"
+      && (state.problemProgressFilter === "unmarked" ? Boolean(progress) : progress !== state.problemProgressFilter)) return false;
+    return (selectedConceptId === "all" || problem.conceptIds.includes(selectedConceptId))
+      && (state.year === "all" || String(problem.year) === state.year)
+      && (state.exam === "all" || problem.exam === state.exam)
+      && (state.difficulty === "all" || problem.difficulty === state.difficulty);
+  });
+  problems.sort((a, b) => b.year - a.year || a.exam.localeCompare(b.exam) || a.problemNumber - b.problemNumber);
+  const lastPage = Math.max(0, Math.ceil(problems.length / PROBLEM_PAGE_SIZE) - 1);
+  state.problemPage = Math.min(state.problemPage, lastPage);
+  const start = state.problemPage * PROBLEM_PAGE_SIZE;
+  const visibleProblems = problems.slice(start, start + PROBLEM_PAGE_SIZE);
+  $("#problemPagination").hidden = problems.length <= PROBLEM_PAGE_SIZE;
+  $("#previousProblemPage").disabled = state.problemPage === 0;
+  $("#nextProblemPage").disabled = state.problemPage === lastPage;
+  $("#problemPageRange").textContent = plainTextPair(
+    `第 ${problems.length ? start + 1 : 0}–${start + visibleProblems.length} 题，共 ${problems.length} 题`,
+    `${problems.length ? start + 1 : 0}–${start + visibleProblems.length} of ${problems.length} problems`
+  );
+  testMode.update(problems);
+  const exportButton = $("#exportProblemsPdf");
+  exportButton.disabled = !problems.length;
+  exportButton.textContent = uiText("exportProblemsPdf");
+  exportButton.onclick = async () => {
+    const selected = [...problems];
+    const language = state.language;
+    exportButton.disabled = true;
+    $("#problemPdfError").hidden = true;
+    try {
+      const { openExplorerExport } = await import("./explorer-pdf.mjs?v=20261113-2");
+      openExplorerExport({ document, problems: selected, language });
+    } catch (error) {
+      console.error("Unable to open problem PDF export.", error);
+      $("#problemPdfError").textContent = uiText("problemPdfError");
+      $("#problemPdfError").hidden = false;
+    } finally { exportButton.disabled = !problems.length; }
+  };
+  $("#examAttribution").hidden = !problems.length;
+  $("#examAttribution").textContent = [
+    problems.some((problem) => !problem.practice) ? uiText("examAttribution") : "",
+    problems.some((problem) => problem.id === "2026-practice-1") ? uiText("practiceAttribution") : "",
+    problems.some((problem) => problem.id === "2026-practice-2") ? uiText("practice2Attribution") : ""
+  ].filter(Boolean).join(" ");
+  $("#problemCount").textContent = isExam
+    ? `${state.year} ${state.exam} · ${problems.length} / 25 ${uiText("problems")}`
+    : `${problems.length} / ${PROBLEM_REFERENCES.length}`;
+  $("#examSummary").textContent = uiText("fullExamSummary");
+  $("#problemList").innerHTML = visibleProblems.length
+    ? visibleProblems.map((problem) => {
+      const data = examStatements.get(`${problem.year}${problem.exam.slice(-1)}`);
+      return problemCard(problem, data?.problems[problem.problemNumber - 1]);
+    }).join("")
+    : `<p class="empty-state">${uiText("noProblems")}</p>`;
+  wireProblemAndGlossaryLinks($("#problemList"));
+  if (visibleProblems.some((problem) => !problem.practice && !examStatements.has(`${problem.year}${problem.exam.slice(-1)}`))) {
+    return renderExamStatements(visibleProblems, version);
+  }
+  typesetMath($("#problemList"));
+}
+
+function deepLink(name, value) {
+  return `?${new URLSearchParams({ [name]: value })}`;
+}
+
+function problemVocabulary(problem) {
+  const terms = (problem.vocabulary || PROBLEM_VOCABULARY[problemKey(problem)] || []).map((name) => glossaryByName.get(name)).filter(Boolean);
+  if (!terms.length) return "";
+  return `
+    <div class="problem-vocab">
+      <span class="problem-vocab-label">${uiText("problemVocabulary")}</span>
+      <ul class="vocab-chips compact" aria-label="${uiText("problemVocabulary")}">
+        ${terms.map((term) => {
+          const slug = slugifyTerm(term.en);
+          const isMastered = state.masteredGlossary.has(term.en);
+          return `<li><a class="vocab-chip${isMastered ? " mastered" : ""}" href="${deepLink("term", slug)}" target="_blank" rel="noopener" data-vocab-term="${slug}" aria-describedby="glossary-tooltip">${isMastered ? `<span class="vocab-check" aria-label="${uiText("mastered")}">✓</span>` : ""}${textPair(term.zh, term.en)}</a></li>`;
+        }).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+function relatedVocabularyList(terms, conceptId) {
+  if (!terms.length) return "";
+  const mastered = terms.filter((term) => state.masteredGlossary.has(term.en)).length;
+  return `
+    <p class="related-summary">${terms.length} ${uiText("terms")} · ${uiText("mastered")}: ${mastered}</p>
+    <ul class="vocab-chips">
+      ${terms.map((term) => {
+        const isMastered = state.masteredGlossary.has(term.en);
+        return `
+          <li>
+            <a class="vocab-chip${isMastered ? " mastered" : ""}" href="${deepLink("term", slugifyTerm(term.en))}" target="_blank" rel="noopener" data-vocab-term="${slugifyTerm(term.en)}" aria-describedby="glossary-tooltip">
+              ${isMastered ? `<span class="vocab-check" aria-label="${uiText("mastered")}">✓</span>` : ""}
+              ${textPair(term.zh, term.en)}
+            </a>
+          </li>
+        `;
+      }).join("")}
+    </ul>
+    <a class="text-button" href="${deepLink("glossary-concept", conceptId)}" target="_blank" rel="noopener">${uiText("viewAllInGlossary")}</a>
+  `;
+}
+
+function glossaryCard(term) {
+  const concepts = term.conceptIds.map((id) => conceptById.get(id)).filter(Boolean);
+  const mission = QUEST_COURSE.missions.find((item) => item.terms.some((entry) => entry.en === term.en));
+  const relatedProblemCount = PROBLEM_REFERENCES.filter((problem) =>
+    problem.conceptIds.some((id) => term.conceptIds.includes(id))
+  ).length;
+  return `
+    <article class="glossary-card" id="glossary-${slugifyTerm(term.en)}">
+      <p class="glossary-category">${textPair(term.categoryZh, term.categoryEn)}</p>
+      <h3>${textPair(term.zh, term.en)}</h3>
+      <p>${textPair(term.noteZh, linkGlossaryTerms(term.noteEn))}</p>
+      ${mission ? `<a href="${deepLink("quest", mission.concept.id)}" target="_blank" rel="noopener">${textPair("进入此词汇的任务", "Open this vocabulary mission")}</a>` : ""}
+      <div class="glossary-mastery-action">
+        <a class="text-button glossary-problem-count" aria-label="${uiText("relatedProblems")} (${relatedProblemCount})" href="${deepLink("problems-concept", term.conceptIds[0])}" target="_blank" rel="noopener">${textPair(`${relatedProblemCount} 道真题`, `${relatedProblemCount} problems`)}</a>
+        <button class="mastery glossary-mastery ${state.masteredGlossary.has(term.en) ? "complete" : ""}" data-glossary-mastery="${term.en}" aria-pressed="${state.masteredGlossary.has(term.en)}" aria-label="${state.masteredGlossary.has(term.en) ? uiText("mastered") : uiText("markGlossaryMastered")}" title="${state.masteredGlossary.has(term.en) ? uiText("mastered") : uiText("markGlossaryMastered")}">
+          <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5"/><path d="m6.8 10.1 2.1 2.1 4.5-4.5"/></svg>
+        </button>
+      </div>
+      <div class="glossary-related" role="group" aria-label="${uiText("relatedConcepts")}">
+        <div class="tags">${concepts.map((concept) => `<a class="concept-tag" href="${deepLink("concept", concept.id)}" target="_blank" rel="noopener">${textPair(concept.zh, concept.en)}</a>`).join("")}</div>
+      </div>
+    </article>
+  `;
+}
+
+const MAP_ICONS = {
+  topic: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" /></svg>',
+  concept: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" /></svg>',
+  open: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" /></svg>'
+};
+
+function renderTopicMap() {
+  if (state.activeView !== "map") return;
+  const tree = $("#topicMapTree");
+  if (!tree) return;
+  const query = state.mapSearch.trim().toLowerCase();
+  const matches = (...values) => !query || values.join(" ").toLowerCase().includes(query);
+  let conceptCount = 0;
+  const termSlugs = new Set();
+  const topicsHtml = TOPICS.map((topic) => {
+    const topicMatches = matches(topic.en, topic.zh);
+    const concepts = topic.concepts.map((concept) => {
+      const conceptMatches = topicMatches || matches(concept.en, concept.zh);
+      const terms = GLOSSARY.filter((term) => term.conceptIds.includes(concept.id)
+        && (conceptMatches || matches(term.en, term.zh)));
+      if (!conceptMatches && !terms.length) return "";
+      conceptCount += 1;
+      terms.forEach((term) => termSlugs.add(slugifyTerm(term.en)));
+      const nodeId = `concept:${concept.id}`;
+      const open = query || !state.mapCollapsed.has(nodeId);
+      const mastered = state.mastered.has(concept.id);
+      return `
+        <li>
+          <details class="map-node map-concept${mastered ? " mastered" : ""}"${open ? " open" : ""} data-map-node="${nodeId}">
+            <summary>
+              <span class="map-icon">${MAP_ICONS.concept}</span>
+              <span class="map-label">${textPair(concept.zh, concept.en)}</span>
+              ${mastered ? `<span class="status-dot" title="${uiText("mastered")}">✓</span>` : ""}
+              <span class="map-count">${terms.length}</span>
+              <a class="map-open" href="${deepLink("concept", concept.id)}" target="_blank" rel="noopener" data-map-concept="${concept.id}" title="${uiText("openConcept")}" aria-label="${uiText("openConcept")}: ${plainTextPair(concept.zh, concept.en)}">${MAP_ICONS.open}</a>
+            </summary>
+            <ul class="map-terms">
+              ${terms.map((term) => {
+                const slug = slugifyTerm(term.en);
+                return `<li><a class="map-term${state.masteredGlossary.has(term.en) ? " mastered" : ""}" href="${deepLink("term", slug)}" target="_blank" rel="noopener" data-map-term="${slug}" data-vocab-term="${slug}">${textPair(term.zh, term.en)}</a></li>`;
+              }).join("")}
+            </ul>
+          </details>
+        </li>`;
+    }).join("");
+    if (!concepts.trim()) return "";
+    const nodeId = `topic:${topic.id}`;
+    const open = query || !state.mapCollapsed.has(nodeId);
+    return `
+      <li>
+        <details class="map-node map-topic"${open ? " open" : ""} data-map-node="${nodeId}">
+          <summary>
+            <span class="map-icon">${MAP_ICONS.topic}</span>
+            <span class="map-label">${textPair(topic.zh, topic.en)}</span>
+            <span class="map-count">${topic.concepts.length}</span>
+          </summary>
+          <ul class="map-branch">${concepts}</ul>
+        </details>
+      </li>`;
+  }).join("");
+  $("#mapCount").textContent = plainTextPair(
+    `${conceptCount} ${UI_TEXT.mapConcepts.zh} · ${termSlugs.size} ${UI_TEXT.mapTerms.zh}`,
+    `${conceptCount} ${UI_TEXT.mapConcepts.en} · ${termSlugs.size} ${UI_TEXT.mapTerms.en}`
+  );
+  tree.innerHTML = topicsHtml.trim()
+    ? `<div class="map-root">${textPair(UI_TEXT.mapRoot.zh, UI_TEXT.mapRoot.en)}</div><ul class="map-branch map-top">${topicsHtml}</ul>`
+    : `<p class="empty-state">${uiText("noMapMatches")}</p>`;
+  tree.querySelectorAll("[data-map-node]").forEach((node) => {
+    node.addEventListener("toggle", () => {
+      if (query) return;
+      if (node.open) state.mapCollapsed.delete(node.dataset.mapNode);
+      else state.mapCollapsed.add(node.dataset.mapNode);
+    });
+  });
+  wireProblemAndGlossaryLinks(tree);
+}
+
+function renderGlossary() {
+  if (state.activeView !== "glossary") return;
+  const query = state.glossarySearch.trim().toLowerCase();
+  const terms = GLOSSARY.filter((term) => {
+    const conceptNames = term.conceptIds.flatMap((id) => {
+      const concept = conceptById.get(id);
+      return concept ? [concept.zh, concept.en] : [];
+    });
+    const haystack = [term.categoryZh, term.categoryEn, term.zh, term.en, term.noteZh, term.noteEn, ...conceptNames].join(" ").toLowerCase();
+    return (!query || haystack.includes(query))
+      && (state.glossaryConcept === "all" || term.conceptIds.includes(state.glossaryConcept))
+      && (state.glossaryMastery === "all"
+        || (state.glossaryMastery === "mastered" && state.masteredGlossary.has(term.en))
+        || (state.glossaryMastery === "unmastered" && !state.masteredGlossary.has(term.en)));
+  });
+  $("#glossaryList").innerHTML = terms.length
+    ? terms.map(glossaryCard).join("")
+    : `<p class="empty-state">${uiText("noGlossaryTerms")}</p>`;
+  $("#glossaryCount").textContent = `${terms.length} / ${GLOSSARY.length}`;
+  wireProblemAndGlossaryLinks($("#glossaryList"));
+  typesetMath($("#glossaryList"));
+}
+
+async function setReviewCollection(key, saved) {
+  if (state.reviewCollection.has(key) === saved) return;
+  if (accountPanel?.signedIn) {
+    if (accountPanel.editingPaused) throw new Error("Review collection editing is paused.");
+    await accountPanel.setMastery("review", key, saved);
+    return;
+  }
+  const updated = new Set(state.reviewCollection);
+  if (saved) updated.add(key);
+  else updated.delete(key);
+  try {
+    if (reviewStorageError) throw new Error("Review collection storage is unavailable.");
+    localStorage.setItem("amc10-review-collection", JSON.stringify([...updated]));
+  } catch (error) {
+    console.error("Unable to save the review collection.", error);
+    reviewStorageError = true;
+    renderProblemProgressError();
+    throw error;
+  }
+  state.reviewCollection = updated;
+  refreshReviewCollection();
+}
+
+function wireProblemAndGlossaryLinks(container) {
+  container.querySelectorAll("[data-review-key]").forEach((button) => {
+    button.disabled = accountPanel?.editingPaused || reviewStorageError;
+    button.addEventListener("click", async () => {
+      const key = button.dataset.reviewKey;
+      const saved = !state.reviewCollection.has(key);
+      try {
+        await setReviewCollection(key, saved);
+      } catch (error) {
+        console.error("Unable to update the review collection.", error);
+        renderProblemProgressError();
+      }
+    });
+  });
+  container.querySelectorAll(".progress-option").forEach((option) => {
+    option.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") option.dataset.tooltipDismissed = "true";
+    });
+    const resetTooltip = () => delete option.dataset.tooltipDismissed;
+    option.addEventListener("mouseenter", resetTooltip);
+    option.addEventListener("focusin", resetTooltip);
+  });
+  container.querySelectorAll(".problem-progress input").forEach((input) => {
+    input.disabled = accountPanel?.editingPaused || false;
+    input.addEventListener("change", () => {
+      const control = input.closest("[data-progress-key]");
+      const key = control.dataset.progressKey;
+      if (accountPanel?.signedIn && !isPracticeKey(key)) {
+        accountPanel.mark(key, input.value);
+        return;
+      }
+      const updated = { ...state.problemProgress, [key]: input.value };
+      try {
+        if (isPracticeKey(key)) {
+          const userId = accountPanel?.controller?.user?.id;
+          const practice = { ...loadPracticeProgress(userId), [key]: input.value };
+          if (problemProgressStorageError) throw new Error("Practice progress storage is unavailable.");
+          localStorage.setItem(`amc10-practice-progress:${userId || "guest"}`, JSON.stringify(practice));
+        } else {
+          localStorage.setItem("amc10-problem-progress", JSON.stringify(Object.fromEntries(
+            Object.entries(updated).filter(([item]) => !isPracticeKey(item))
+          )));
+        }
+        problemProgressStorageError = false;
+      } catch (error) {
+        console.error("Unable to save problem progress.", error);
+        problemProgressStorageError = true;
+        if (isPracticeKey(key)) {
+          updateProgressControl(control, state.problemProgress[key]);
+          renderProblemProgressError();
+          return;
+        }
+      }
+      state.problemProgress = updated;
+      document.querySelectorAll("[data-progress-key]").forEach((instance) => {
+        if (instance.dataset.progressKey !== key) return;
+        updateProgressControl(instance, input.value);
+      });
+      renderProblemProgressError();
+      renderStudyProgress();
+      renderProgressOverview();
+      refreshProblemLinks();
+      if (state.problemProgressFilter !== "all") {
+        renderProblems();
+        $("#problemProgressFilter").focus();
+      }
+    });
+  });
+  container.querySelectorAll("[data-glossary-concept]").forEach((button) => {
+    button.addEventListener("click", () => showConceptGlossary(button.dataset.glossaryConcept));
+  });
+  container.querySelectorAll("[data-problems-concept]").forEach((button) => {
+    button.addEventListener("click", () => showConceptProblems(button.dataset.problemsConcept));
+  });
+  container.querySelectorAll("[data-vocab-term]").forEach((button) => {
+    const term = glossaryBySlug.get(button.dataset.vocabTerm);
+    if (!term) return;
+    button.addEventListener("mouseenter", () => showGlossaryTooltip(button, term));
+    button.addEventListener("mouseleave", () => scheduleGlossaryTooltipHide());
+    button.addEventListener("focus", () => showGlossaryTooltip(button, term));
+    button.addEventListener("blur", () => scheduleGlossaryTooltipHide());
+    button.addEventListener("click", () => hideGlossaryTooltip());
+  });
+  container.querySelectorAll("[data-concept]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeConceptId = button.dataset.concept;
+      state.activeView = "study";
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+  container.querySelectorAll("[data-glossary-mastery]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const termId = button.dataset.glossaryMastery;
+      const mastered = !state.masteredGlossary.has(termId);
+      if (mastered) state.masteredGlossary.add(termId);
+      else state.masteredGlossary.delete(termId);
+      saveLocalMastery();
+      render();
+      accountPanel?.setMastery("glossary", termId, mastered);
+    });
+  });
+  wireGlossaryTooltips(container);
+}
+
+function refreshReviewCollection(rerender = true) {
+  renderStudyProgress();
+  $("#reviewCollectionCount").textContent = String(state.reviewCollection.size);
+  $("#reviewOnly option[value=all]").textContent = uiText("allCollectionProblems");
+  $("#reviewOnly option[value=saved]").textContent = uiText("savedCollectionProblems");
+  document.querySelectorAll("[data-review-key]").forEach((button) => {
+    const saved = state.reviewCollection.has(button.dataset.reviewKey);
+    const label = saved ? "removeFromReview" : "saveToReview";
+    button.setAttribute("aria-pressed", String(saved));
+    button.setAttribute("aria-label", uiText(label));
+    button.querySelector("[role=tooltip]").innerHTML = textPair(UI_TEXT[label].zh, UI_TEXT[label].en);
+  });
+  if (rerender && state.reviewOnly) renderProblems();
+}
+
+function showConceptGlossary(conceptId) {
+  state.glossaryConcept = conceptId;
+  state.activeView = "glossary";
+  render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showConceptProblems(conceptId) {
+  state.activeConceptId = conceptId;
+  state.year = "all";
+  state.exam = "all";
+  state.problemConcept = "current";
+  state.activeView = "problems";
+  render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function applyDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const problem = params.get("problem");
+  const term = params.get("term");
+  const problemsConcept = params.get("problems-concept");
+  const glossaryConcept = params.get("glossary-concept");
+  const concept = params.get("concept");
+  const quest = params.get("quest");
+  if (quest && QUEST_COURSE.missions.some((mission) => mission.concept.id === quest)) {
+    questPanel.selectMission(quest);
+    setActiveView("quests");
+  }
+  else if (problem && PROBLEM_REFERENCES.some((item) => problemKey(item) === problem)) openProblemInExplorer(problem);
+  else if (term && glossaryBySlug.has(term)) jumpToGlossaryTerm(term);
+  else if (problemsConcept && conceptById.has(problemsConcept)) showConceptProblems(problemsConcept);
+  else if (glossaryConcept && conceptById.has(glossaryConcept)) showConceptGlossary(glossaryConcept);
+  else if (concept && conceptById.has(concept)) {
+    state.activeConceptId = concept;
+    state.activeView = "study";
+    render();
+  }
+  else return false;
+  return true;
+}
+
+function applyDeepLinkWhenVisible() {
+  if (document.body.dataset.authGate !== "locked") {
+    applyDeepLink();
+    return;
+  }
+  const observer = new MutationObserver(() => {
+    if (document.body.dataset.authGate === "locked") return;
+    observer.disconnect();
+    applyDeepLink();
+  });
+  observer.observe(document.body, { attributes: true, attributeFilter: ["data-auth-gate"] });
+}
+
+function saveLocalMastery() {
+  try {
+    localStorage.setItem("amc10-mastered", JSON.stringify([...state.mastered]));
+    localStorage.setItem("amc10-mastered-glossary", JSON.stringify([...state.masteredGlossary]));
+  } catch (error) {
+    console.error("Unable to save mastery in this browser.", error);
+  }
+}
+
+function jumpToGlossaryTerm(slug) {
+  state.glossarySearch = "";
+  state.glossaryConcept = "all";
+  state.glossaryMastery = "all";
+  const searchInput = $("#glossarySearch");
+  if (searchInput) searchInput.value = "";
+  state.activeView = "glossary";
+  render();
+  requestAnimationFrame(() => {
+    const target = document.getElementById(`glossary-${slug}`);
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    target.classList.add("glossary-highlight");
+    setTimeout(() => target.classList.remove("glossary-highlight"), 1600);
+  });
+}
+
+function setActiveView(view) {
+  if (view !== "problems") ++problemRenderVersion;
+  state.activeView = view;
+  const isStudy = view === "study";
+  $("#studySidebar").hidden = !isStudy;
+  $(".app-shell").classList.toggle("full-width", !isStudy);
+  document.querySelectorAll("[data-view]").forEach((tab) => {
+    const isActive = tab.dataset.view === view;
+    tab.classList.toggle("active", isActive);
+    tab.setAttribute("aria-selected", String(isActive));
+    $(`#${tab.getAttribute("aria-controls")}`).hidden = !isActive;
+  });
+  if (view === "problems") return renderProblems();
+  if (view === "quests") questPanel.render();
+  if (view === "glossary") renderGlossary();
+  if (view === "map") renderTopicMap();
+  if (view === "study") {
+    renderTopicNav();
+    renderConcept();
+  }
+}
+
+const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+let themeSaveError = false;
+
+function renderThemeControl() {
+  const dark = document.documentElement.dataset.theme
+    ? document.documentElement.dataset.theme === "dark"
+    : systemTheme.matches;
+  $("#themeToggle").setAttribute("aria-label", uiText("darkTheme"));
+  $("#themeToggle").title = uiText(dark ? "switchToLight" : "switchToDark");
+  $("#themeToggle").setAttribute("aria-pressed", String(dark));
+  $("#themeError").hidden = !themeSaveError;
+  $("#themeError").textContent = uiText("themeSaveError");
+}
+
+function wireControls() {
+  for (const [id, delta] of [["previousProblemPage", -1], ["nextProblemPage", 1]]) {
+    $(`#${id}`).addEventListener("click", () => {
+      state.problemPage += delta;
+      renderProblems();
+      $("#problemPagination").scrollIntoView({ block: "start" });
+    });
+  }
+  $("#reviewOnly").addEventListener("change", (event) => {
+    state.reviewOnly = event.target.value === "saved";
+    renderProblems();
+  });
+  $("#exportProgress").addEventListener("click", downloadProgress);
+  systemTheme.addEventListener("change", renderThemeControl);
+  $("#themeToggle").addEventListener("click", () => {
+    const theme = $("#themeToggle").getAttribute("aria-pressed") === "true" ? "light" : "dark";
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem("amc10-theme", theme);
+      themeSaveError = false;
+    } catch (error) {
+      console.error("Unable to save the selected theme.", error);
+      themeSaveError = true;
+    }
+    renderThemeControl();
+  });
+  $("#problemProgressFilter").addEventListener("change", (event) => {
+    state.problemProgressFilter = event.target.value;
+    renderProblems();
+  });
+  document.querySelectorAll("[data-view]").forEach((tab) => {
+    tab.addEventListener("click", () => setActiveView(tab.dataset.view));
+  });
+  document.querySelectorAll("[data-language]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.language = button.dataset.language;
+      try {
+        localStorage.setItem("amc10-language", state.language);
+      } catch (error) {
+        console.error("Unable to save the selected language.", error);
+      }
+      render();
+    });
+  });
+  $("#mapSearch").addEventListener("input", (event) => {
+    state.mapSearch = event.target.value;
+    renderTopicMap();
+  });
+  $("#mapExpandAll").addEventListener("click", () => {
+    state.mapCollapsed.clear();
+    renderTopicMap();
+  });
+  $("#mapCollapseAll").addEventListener("click", () => {
+    TOPICS.forEach((topic) => {
+      state.mapCollapsed.add(`topic:${topic.id}`);
+      topic.concepts.forEach((concept) => state.mapCollapsed.add(`concept:${concept.id}`));
+    });
+    renderTopicMap();
+  });
+  $("#searchInput").addEventListener("input", (event) => {
+    state.search = event.target.value;
+    renderTopicNav();
+  });
+  $("#conceptMasteryFilter").addEventListener("change", (event) => {
+    state.conceptMastery = event.target.value;
+    renderTopicNav();
+  });
+  $("#conceptFilter").addEventListener("change", (event) => {
+    state.problemConcept = event.target.value;
+    renderProblems();
+  });
+  $("#yearFilter").addEventListener("change", (event) => {
+    state.year = event.target.value;
+    renderProblems();
+  });
+  $("#examFilter").addEventListener("change", (event) => {
+    state.exam = event.target.value;
+    renderProblems();
+  });
+  $("#difficultyFilter").addEventListener("change", (event) => {
+    state.difficulty = event.target.value;
+    renderProblems();
+  });
+  $("#glossarySearch").addEventListener("input", (event) => {
+    state.glossarySearch = event.target.value;
+    renderGlossary();
+  });
+  $("#glossaryConceptFilter").addEventListener("change", (event) => {
+    state.glossaryConcept = event.target.value;
+    renderGlossary();
+  });
+  $("#glossaryMasteryFilter").addEventListener("change", (event) => {
+    state.glossaryMastery = event.target.value;
+    renderGlossary();
+  });
+}
+
+function render() {
+  renderStaticInterface();
+  renderProblemProgressError();
+  populateFilters();
+  setActiveView(state.activeView);
+  refreshReviewCollection(false);
+  accountPanel?.render();
+}
+
+wireControls();
+accountPanel = new AccountPanel({
+  getLanguage: () => state.language,
+  validKeys: COURSE_PROBLEMS.map(problemKey),
+  readMastery: () => ({ concept: [...state.mastered], glossary: [...state.masteredGlossary], review: [...loadReviewCollection()] }),
+  onMastery: (sets) => {
+    const same = (a, b) => a.size === b.size && [...a].every((item) => b.has(item));
+    if (!accountPanel.signedIn) {
+      state.reviewCollection = loadReviewCollection();
+      refreshReviewCollection();
+      return;
+    }
+    const review = sets.review;
+    const masteryChanged = !same(sets.concept, state.mastered) || !same(sets.glossary, state.masteredGlossary);
+    const reviewChanged = !same(review, state.reviewCollection);
+    if (!masteryChanged && !reviewChanged) return;
+    state.mastered = sets.concept;
+    state.masteredGlossary = sets.glossary;
+    state.reviewCollection = review;
+    if (masteryChanged) {
+      saveLocalMastery();
+      render();
+    } else refreshReviewCollection();
+  },
+  onProgress: (selections) => {
+    if (testMode.syncIdentity()) testMode.render();
+    selections = { ...selections, ...loadPracticeProgress(accountPanel?.controller?.user?.id) };
+    if (questPanel.identity !== (accountPanel?.controller?.user?.id || "guest")) questPanel.load();
+    const changed = Object.keys(state.problemProgress).length !== Object.keys(selections).length
+      || Object.entries(selections).some(([key, value]) => state.problemProgress[key] !== value);
+    state.problemProgress = selections;
+    if (!changed) return;
+    document.querySelectorAll("[data-progress-key]").forEach((control) => {
+      const selected = selections[control.dataset.progressKey];
+      updateProgressControl(control, selected);
+    });
+    renderProgressOverview();
+    renderStudyProgress();
+    refreshProblemLinks();
+    if (state.problemProgressFilter !== "all") renderProblems();
+  }
+});
+accountPanel.wire();
+render();
+accountPanel.start();
+applyDeepLinkWhenVisible();

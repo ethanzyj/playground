@@ -1,0 +1,489 @@
+# AMC 10 Prep
+
+Run from this folder with `python3 -m http.server 8000 --bind 127.0.0.1`,
+then open http://127.0.0.1:8000. The checked-in browser bundle runs without
+installing dependencies. Development and tests require Node.js 20 or later:
+run `npm ci`, then `npm run build` after SDK dependency changes.
+Math rendering uses MathJax from a CDN and requires internet access.
+
+## Problem Explorer PDF export
+
+Problem Explorer has **Export problems PDF** for the current filtered results
+(including Review and progress filters). Choose English, Chinese or both and
+optionally include answers and available solutions at the end. Exports contain
+questions, diagrams, choices and working space, not quest lessons or personal
+progress. Practice problems include the supplied worked solutions; official
+archive problems include verified answers and links to their source solutions,
+not copied solution text. Empty results cannot be exported. The selection is
+snapshotted when the dialog opens. Download or share the generated PDF.
+
+## Test mode
+
+In Problem Explorer, choose **Test mode → Choose test paper**, select a **year**
+and **A or B**, then **Start
+75-minute test**. All 25 questions from that paper are included in question-number
+order, regardless of other Explorer filters; there is no per-question selection.
+The question set is frozen
+for that attempt, with a sticky 75:00 countdown and A–E answer choices for both
+official and uploaded practice papers. There is no pause: the saved deadline is
+based on wall-clock time, so refreshes, background tabs, and closing the browser
+do not reset it. At zero, the test **submits automatically**, locks answers, and
+displays the results without requiring a click. **Finish & submit** ends
+early. Submission or expiration calculates the AMC 10 score (6 points correct,
+1.5 blank, 0 wrong), correct/wrong/blank totals, and each question's correct answer.
+Answer keys are loaded only after the test ends. All 2016–2025 A/B papers have
+verified keys. **2026 AMC 10A** uses the 25 answers from the separately supplied
+`AMC10A_2026_高质量.pdf`, matched to the imported English questions. These answers
+are independently derived in the supplied document, not an official MAA key.
+**2026 AMC 10B** uses the 25 answers from the supplied
+`10B_Bilingual_Illustrated_Solutions.pdf`, whose index agrees with every
+individual solution page. These are also independently derived, unofficial answers.
+Failed key loads can be retried without losing saved answers. The completed attempt
+keeps choices and results for review until you return to the Explorer/new test.
+Tests do not alter quest badges, mastery, progress marks, or Review collection.
+
+The current attempt is saved per account (or guest) in this browser only, including
+answers and deadline. It is not uploaded or synchronized across devices. A missing
+question or storage failure is reported with a retry option; neither pauses the
+timer. Avoid clearing browser storage during a test. Test mode is a study aid,
+not a proctored exam or tamper-resistant timing system.
+
+## Uploaded 2026 papers
+
+Problem Explorer includes **2026 AMC 10B**, imported from the user-supplied
+`2026 AMC 10B Booklet.pdf`. Select year **2026** and paper **AMC 10B**,
+or open `?problem=2026-practice-2-1`. Its 25 original questions, diagrams and
+choices are preserved as images, with links to the source booklet. Chinese and
+bilingual modes include all 25 questions from the supplied
+`2026 AMC 10B Booklet Chinese.pdf`, including its diagrams and choices.
+Click a Chinese question to open its page in the Chinese booklet. Chinese mode
+also retains the English original below the translation. Timed tests and PDF
+exports use the same language modes. Each question also has a collapsed bilingual
+solution from `10B_Bilingual_Illustrated_Solutions.pdf`, retaining its worked
+reasoning and diagrams. Expanding it displays only that question; a link opens
+its individual one-page PDF, not the complete answer booklet. Tests hide these
+solutions until submission. Exports include them only when answers are selected.
+Each problem's action row also links to its English booklet page, Chinese
+booklet page, and individual solution PDF, with localized icon tooltips.
+
+Problem Explorer also includes **2026 AMC 10A**, imported from the user-supplied
+`2026 AMC 10A Booklet.pdf`. Select year **2026** and paper **AMC 10A**,
+or open `?problem=2026-practice-1-1`. The 25 problems preserve the exact English
+questions, choices and diagrams as images; click a question to open the original
+PDF with selectable text. Question 17 combines its two-page original. Test scoring
+uses the separately supplied answer-key PDF; its filename, checksum and source
+notes are preserved in `assets/practice/2026-practice-1/answer-key.json`. The
+English question images remain unchanged. Topic tags and difficulty bands are
+study aids; no unrelated official paper is used as a source.
+
+Chinese and bilingual modes include all 25 Chinese statements from the supplied
+`AMC10A_2026_高质量.pdf`. Faithful images retain the document's mathematical notation;
+Chinese mode also keeps the original diagrams and A–E choices below the translation.
+Translation images exclude answers and solutions. Each Explorer problem has a
+**Show this problem's Chinese solution (reveals answer)** expandable section.
+It shows only that problem's cropped answer and worked solution inline, without
+opening the complete PDF or displaying other problems' solutions. Sections are
+collapsed by default. Timed tests reveal these sections only after submission.
+PDF packets containing practice problems include the supplied worked
+solutions in the optional answer section, never in worksheet-only exports.
+
+To reproduce the translations and solution images on macOS, run
+`swift scripts/import-practice-translations.swift /path/to/AMC10A_2026.pdf assets/practice/2026-practice-1`.
+The importer checks each answer against the saved key and is specific to the
+supplied 26-page document. It preserves the complete source as `solutions.pdf`.
+
+The uploaded papers retain their legacy `2026-practice-1` (A) and
+`2026-practice-2` (B) storage keys, asset directories and problem links for
+compatibility with saved progress, Review bookmarks and test attempts. Only
+AMC 10A and AMC 10B appear as paper names in the interface and exported PDFs.
+These papers are separate from the 500 official archived problems and
+do not change the 153-mission course or badge requirements. Practice status is
+saved per account in this browser (guest status has its own local store), not
+sent to the official-exam progress RPC. Review bookmarks use the existing Review
+collection. Progress exports and Explorer totals include supplemental problems.
+
+To reproduce the question images on macOS, run
+`swift scripts/import-practice.swift /path/to/booklet.pdf assets/practice/2026-practice-1`.
+The importer is specific to this six-page booklet and preserves the original
+source PDF alongside its question images.
+For the second booklet use `swift scripts/import-practice.swift /path/to/10B-booklet.pdf assets/practice/2026-practice-2 practice-2`, then copy the supplied PDF to `assets/practice/2026-practice-2/booklet.pdf`.
+For its seven-page Chinese booklet use
+`swift scripts/import-practice.swift /path/to/10B-Chinese.pdf assets/practice/2026-practice-2 practice-2-chinese`.
+This creates `chinese-1.png` through `chinese-25.png` and preserves the complete
+source as `chinese-booklet.pdf`, without changing the English question images.
+To split the supplied 26-page bilingual solutions document, run
+`swift scripts/import-practice-bilingual-solutions.swift /path/to/10B_Bilingual_Illustrated_Solutions.pdf assets/practice/2026-practice-2`.
+The importer checks page numbers and answer badges against the answer index,
+creates 25 solution images and individual PDFs, and retains `solutions.pdf`
+alongside `answer-key.json` with source provenance and checksum.
+
+## Learning quests
+
+Each quest has a **Share quest PDF** action. Choose English, Chinese, or bilingual
+content and whether to include the answer key at the end, then create the PDF.
+The pack includes the full lesson and examples, every checkpoint, all assigned AMC
+problems and diagrams, vocabulary definitions and checks, and a review worksheet.
+Available checkpoint explanations and source links accompany the optional answer
+key; official worked solutions are not copied. No account data or personal progress
+is exported. PDF generation runs locally in the browser, with MathJax and image
+loading required. Pages are rendered as images to preserve Chinese and typeset math;
+the resulting PDF text is not selectable.
+
+Use **Share file** on browsers supporting Web Share file attachments to send it to
+available mail, messaging, or other apps. Otherwise download the PDF and attach it
+manually. **Open email** creates a draft but cannot automatically attach files:
+the downloaded PDF must be attached by the user. Nothing is sent automatically.
+PDF libraries are checked in; after changing their dependencies run
+`npm run build:pdf` to rebuild `assets/vendor/quest-pdf.mjs` and its license notices.
+
+The **Quests / 学习任务** tab organizes the entire collection into **153 course
+sessions**, each with an estimated **45–60 minute** lesson/checkpoint/practice/
+vocabulary/review budget. Difficulty estimates are 6, 10, 14, 18, or 24 minutes
+per AMC problem, plus 8 minutes for the lesson, 2 per formula checkpoint, and
+1 per vocabulary check. Shorter sessions include a review allowance.
+These are planning estimates, not measured or guaranteed completion times:
+retries and hard problems can take longer. There is no timer, waiting requirement,
+or interruption penalty.
+
+| World | Course badges |
+| --- | ---: |
+| Algebra | 49 |
+| Geometry | 45 |
+| Solid Geometry | 10 |
+| Number Theory | 26 |
+| Counting and Probability | 23 |
+
+`assets/quest-course.mjs` deterministically assigns every one of the **500**
+problems to a tagged concept, balancing estimated workload across overlapping
+tags; it assigns each of the **144** glossary entries to one linked concept.
+Sessions split that workload into hour-sized chunks and cover all **18** current
+Study Guide concepts. Tags remain editorial study associations, not an official
+curriculum or a mathematical source audit. Badges require passing every assigned
+checkpoint, problem, and vocabulary check. The full course completion message
+requires all badges and exact coverage of all concepts, problems, and vocabulary.
+The page shows collected badges and unique coverage counts as work is completed.
+
+Quest progress resumes from `amc10-quests:<user id>` and is synced through
+`user_quest_progress` and the `save_quest_progress` RPC. Run
+**`supabase/add-quest-progress.sql`** in Supabase's SQL Editor to enable this
+additional feature. Pending updates are cached per account; failures are visible
+and retryable. Server saves merge completed tasks rather than overwriting another
+device's work. Guest progress stays local. Invalid caches/remote progress pause
+or report errors instead of silently discarding work.
+
+Correct course answers update Explorer's existing `haveApproach` status and
+also display **Answered correctly in Quests**. Manually marking `haveApproach`
+does not count as a graded answer. Passed course glossary checks set the same
+mastery marks used in the Glossary and map. Completing **every course session
+for a concept** sets its Study Guide/map mastery mark. These are learning
+completion indicators, not a certification. Achievements are replayed from
+synced quest evidence on another device; sync failures remain visible.
+Problem cards link to their assigned mission, and missions link back to the
+Explorer and Study Guide.
+
+The 25 earlier broad/focused quests remain under **Review quests · No badges**.
+Their progress IDs and saved work are preserved, but they do not inflate the
+course badge count. Previous/Next follows the grouped dropdown order and stops
+at either end. The mission selector is directly above the current mission title.
+Circular chevron buttons flank the title, with localized accessible names/tooltips.
+The workflow icons let you revisit unlocked steps; completed checkpoints, problems,
+and vocabulary remain available for review without resetting badge evidence.
+An incorrect AMC practice answer automatically adds the problem to Review collection.
+Correcting it on a retry does not remove that bookmark; remove it manually when ready.
+Correct answers show one checkmark overlay for three seconds, then advance to the next
+unanswered item (or the next step when all items are complete). Wrong answers stay
+for retry. Previous/Next arrows and workflow steps still support manual review;
+previously completed items show a saved checkmark.
+All 500 problem statements and 2,500 answer choices include Chinese versions from
+LIVE by Po-Shen Loh, imported with user-confirmed permission. Quests and Problem
+Explorer share language-aware rendering; identical math-only choices appear once.
+Run `npm run import:chinese` to refresh translations. The importer verifies each
+source problem against the unchanged local English statement and choices, sanitizes
+HTML, reuses local diagrams, and writes only after the whole collection validates.
+It does not import hints or solutions. Each exam records its Chinese source URL.
+If you rerun the English statement importer, run `npm run import:chinese` afterward
+to restore the translated fields.
+LIVE's catalog informed
+the pilot categories; explanations and
+mini-challenges are authored for this app, not copied source solutions.
+
+Signed-in practice is graded by the Supabase `check_quiz_answer` RPC using the
+administrator-managed `quiz_answers` table. Run `supabase/add-quest-answers.sql`
+in the linked project's SQL Editor to create the table, seed all 500 entries,
+and grant authenticated users access to the grading RPC only. Browser accounts
+cannot read or edit the table directly. The RPC returns correctness, not the
+answer letter; missing setup or network errors are visible and never award
+credit. Guest mode (when cloud login is disabled) uses the local key instead.
+The separate progress migration above is also needed for cloud quest persistence.
+
+Answer letters are also in `assets/answer-key.json`, separate from the explorer's
+statement files. `npm run import:answers` retrieves them from the authorized
+LIVE by Po-Shen Loh archive and matches every statement and all five choices
+against the local paper before writing the 500-entry key.
+`npm run build:answer-migration` regenerates the rerunnable seeded SQL migration.
+No solutions are copied into the app. Problem Explorer still does not display answers.
+The theme toggle at the top shows a moon to switch to dark appearance and a sun
+to switch to light appearance, with a tooltip describing the action.
+It follows your device preference until you choose a theme, then saves that choice
+in this browser.
+
+**Problem Explorer** has one view with concept, year, exam, difficulty, and progress
+filters—no mode buttons or duplicate selectors. Matching problems show their
+original English statements, A-E choices, and local diagrams, including with
+**All years / All exams** selected. Problems are grouped by year (newest first)
+and paper, then ordered numerically, with 25 problems per page. Previous/Next
+loads only the current page's exam statements, which are cached for subsequent
+filtering. Changing a filter returns to the first page. Result counts, PDF
+exports, and test-paper selection still use all matching problems, not just the
+visible page. Direct problem links open the complete 25-question paper.
+Hidden tabs are not rendered at startup; their content is built when selected.
+Answers and solutions are not imported or displayed.
+The Study Guide dashboard shows whole-collection concept mastery, vocabulary
+mastery, and marked-problem counts, plus the selected concept's progress and
+review bookmarks. A marked problem is not necessarily solved. Related-problem
+badges show distinct problems tagged to that concept out of the 500-problem
+collection. Concept tags overlap and are study associations, not official AMC
+classifications; never sum concept counts to calculate the collection size.
+Concept tags open the Study Guide; vocabulary links open the Glossary.
+Problem cards use an external-link icon for the AoPS source problem and a
+lightbulb icon for the LIVE answer/solution page; the latter explicitly warns
+that it reveals the answer. Both open in a new tab. Under the
+concept tags, **Vocabulary in this problem** lists the glossary terms that
+problem actually uses (from `assets/problem-vocab.mjs`, reviewed per problem);
+hover a term for its definition or select it to open it in the Glossary in a new
+tab. Pure-computation problems with no glossary terms omit the row.
+Shared topic-classification guidance appears once in the explorer header;
+cards only show notes specific to that problem.
+The explorer header keeps the result count beside the title and puts labeled
+filters in a responsive row. The progress overview uses a marked/total meter and
+three expandable status tiles; counting guidance and JSON export are tucked into
+**About these counts & export** below the tiles.
+Each problem's progress picker uses three icon choices: a question mark (need
+clarity), a lightning bolt (need a starting point), and a check (have an approach).
+Hover or focus a choice to read its full description. Choices remain native radio
+buttons for keyboard and screen-reader access; the selected icon is highlighted.
+The fourth, bookmark-shaped icon independently adds/removes the problem from
+**Review collection / 错题集** without changing its progress status. Use the
+collection dropdown beside the progress filter (**Saved only**) to see saved problems; it combines
+with the other filters. Guest bookmarks persist in this browser; signed-in
+bookmarks use the existing per-user queued sync.
+
+To enable cloud bookmarks on an existing Supabase database, rerun
+`supabase/add-user-mastery.sql`. It safely extends the allowed kinds to include
+`review`, preserving existing mastery records and owner-only access. Until that
+update, bookmark changes stay queued locally and the account panel shows a sync
+error; use **Sync now / retry** after applying the SQL.
+
+Every link — problem chips, concept tags, vocabulary chips, Topic Map entries,
+glossary tooltips, and source links — opens in a new tab by default. Concept links
+use `?concept=<id>` to open that concept in the Study Guide.
+
+The top bar has an icon language switch (bilingual / 中 / EN) next to the theme
+toggle and account menu. The **Topic Map / 知识图谱** tab shows every content area,
+concept, and glossary term as a collapsible tree: the arrow next to a concept opens
+it in the Study Guide, and selecting a term jumps to it in the Glossary. Use the
+filter box or **Expand all / Collapse all** to navigate large branches.
+
+In the Study Guide, formula cards keep their **Step by step** explanations
+collapsed by default; select the heading or chevron icon to expand them.
+
+In the Study Guide, each concept's **Related AMC 10 references** appear as a
+compact year × exam table of problem-number chips, color-coded by difficulty,
+with a green dot on problems you have marked. Selecting a chip opens that
+problem in its full paper in the Problem Explorer; **View all in Problem
+Explorer** shows the concept's full reference list there. **Related vocabulary**
+appears as compact bilingual term chips (✓ marks mastered terms); hover a chip
+for its definition, or select it to open that term in the Glossary. These Study
+Guide links open in a new tab using deep links: `?problem=2024-AMC10A-7`,
+`?problems-concept=<concept id>`, `?term=<term slug>`, and
+`?glossary-concept=<concept id>`. Deep links apply after sign-in.
+
+Concept tags and glossary vocabulary were reviewed problem by problem for all
+500 AMC 10A/10B problems from 2016-2025. Every problem links to at least one
+concept with glossary terms; the review corrected 154 problem tags and added 57
+common terms (for example Median, Units Digit, Lattice Point, Hypotenuse,
+Sector, and Surface Area). Very problem-specific phrases are intentionally not
+glossary entries.
+
+Each problem has a **My progress** panel, expanded by default and kept open
+after selecting an option: **Need help understanding**,
+**Understand, but need a starting point**, or **Understand and have a solution
+approach**. Selections are saved in this browser, independently for each year,
+exam, and problem number, and shared across reference cards and full exam pages.
+Guest selections are not synced to other browsers or devices. Optional cloud
+accounts can sync problem selections once configured below. Storage errors
+display a warning.
+Use the **My progress** filter in any Problem Explorer mode to show one status,
+**Not marked yet**, or **All statuses**. It combines with existing filters; year
+and exam modes restrict results to the selected paper. To review a status across
+all years and papers, use **By concept & filters** with its other filters set to
+**All**. Changing a problem's status immediately updates the filtered list.
+
+The **Progress overview** counts marked and unmarked problems within the selected
+year and exam (all 500 references when both are set to All). Year/exam and full
+exam modes use the selected paper. Concept, difficulty, and status filters do not
+change these totals. Expand each status to see problem numbers grouped by year
+and exam. The status filter shows counts for the same scope.
+**Export progress (JSON)** downloads a snapshot with each problem's status
+(`null` for unmarked), difficulty, and bilingual concept metadata for later
+analysis across all years and exams, regardless of current filters. Exporting
+does not upload anything. Keep periodic exports to compare changes over
+time: the app stores current selections, not historical status changes.
+Concept tags are reference metadata; self-reported readiness is not a correctness
+score or proof of mastery.
+
+Statements and diagrams are sourced from [LIVE by Po-Shen Loh](https://live.poshenloh.com/past-contests).
+AMC problems are copyright Mathematical Association of America. Importing and
+redistributing this material requires permission from the relevant rights holders;
+public availability alone is not a license. The user confirmed permission for
+public redistribution and that on-page source credit is not required. The
+on-page notice retains the MAA copyright; provenance remains in the imported data.
+Run `npm run import:statements` to refresh the 2016-2025 AMC 10A/10B data using
+Python 3 and internet access. The importer preserves the archive's displayed
+paper order, strips non-content attributes, and downloads diagrams locally.
+Reading imported statements does not contact the source site; MathJax still
+loads from its CDN.
+
+Run content checks with `npm test`.
+
+The public AMC site is https://ethanzyj.github.io/playground/amc/. GitHub Pages
+serves the root of the `gh-pages` branch, with the contents of `amc10-prep`
+under `amc/`. The previous root site remains available for existing links.
+Future deployments should update `amc/` without replacing the rest of the
+`gh-pages` tree, so other sites such as a future `isee/` remain intact.
+
+## Optional accounts and server-side progress
+
+`assets/cloud-config.mjs` now points to the user-provided Supabase project
+`gballcikrgzqbshwzizn`, using its public publishable key. Email authentication is
+enabled. The remote `public.problem_progress` table and `save_problem_progress`
+function are present and reject anonymous access. The public connection
+configuration is enabled for publication; real email delivery, auth redirect
+settings, and authenticated cross-device syncing still need an account check.
+Guest mode and existing `amc10-problem-progress` selections remain available.
+To disable accounts, leave both connection settings empty.
+
+To enable:
+
+1. Create a Supabase project in your own organization. Choose the appropriate
+   region and plan; review costs and data retention. In its SQL Editor, run
+   `supabase/schema.sql` as the database administrator. It creates the progress
+   table, owner-only SELECT policy, and authenticated, version-checked save RPC.
+   The script is rerunnable for this initial schema; future schema changes
+   should use explicit migrations rather than assuming `IF NOT EXISTS` updates
+   table definitions.
+2. Enable the Email provider under Authentication. Keep email confirmation
+   enabled. Set the production Site URL to
+   `https://ethanzyj.github.io/playground/amc/`. Add exact Redirect URLs for
+   that address, the legacy `https://ethanzyj.github.io/playground/`, and
+   `http://127.0.0.1:8000/` if local testing is needed. Avoid broad
+   wildcard redirect rules. Use the standard magic-link template with
+   `{{ .ConfirmationURL }}`. Configure a production SMTP provider and appropriate
+   auth rate limits before public launch; the built-in mail service is limited.
+3. Set `url` to your Supabase HTTPS project origin and `publishableKey` to its
+   **publishable** key (or legacy **anon** key) in `assets/cloud-config.mjs`.
+   These browser settings are public. **Never use service-role, secret,
+   database-password, or SMTP credentials in source code or the frontend.**
+   The app rejects secret/service-role keys, but database policies—not hiding
+   a public key—protect user data.
+4. Run `npm ci && npm run build && npm test`. Publish the static folder as
+   before. If changing configuration on an already deployed site, update the
+   config import version in `assets/account.mjs` and the account/app import
+   versions so browsers do not reuse cached configuration.
+5. Verify with two real email accounts: sign in, import guest progress,
+   mark a problem, reload, and check it on a second browser/device. Verify that
+   the second account cannot read the first account's rows. Test logout,
+   offline edits and retry, and simultaneous conflicting edits on two devices.
+   Local tests exercise PostgreSQL policies and mocked auth flows; they do not
+   establish that your deployed project's email and auth settings work.
+
+### Account behavior
+
+When cloud login is configured, the site opens on a **Sign in to continue**
+landing page; the study guide, problem explorer, and glossary are hidden and
+inert until an account is signed in. If the sign-in service cannot be checked,
+the page stays locked. Signing out returns to the landing page. Leaving both
+connection settings empty disables the gate and restores browser-only guest use.
+After sign-in, the account appears as a username chip in the top-right corner;
+hover over it (or tap/click it) to see sync status, **Sync now**, and **Sign out**.
+**Username & password** is the default sign-in method. Usernames are case-insensitive, with 3–32 letters,
+numbers, or underscores. Supabase validates the password; the frontend contains
+no account passwords and does not store them in its progress cache. The SDK
+persists the authenticated session, not the password. Guest use remains
+available only when cloud login is not configured.
+
+Supabase email/password authentication requires an email-shaped identifier
+internally. A username maps to `<username>@users.amc10-prep.invalid`; these
+reserved `.invalid` addresses are identifiers only, not real mailboxes. To
+provision the requested accounts, a project administrator must open Supabase
+**Authentication → Users → Add user → Create new user** and create
+`ethanzyj@users.amc10-prep.invalid` and `evanz@users.amc10-prep.invalid`, set each
+password privately, and enable **Auto Confirm User**. Do not use **Invite user**:
+no email should be sent. Keep the Email auth provider enabled for password
+authentication. There is no public username-registration form. Do not disable
+email confirmation project-wide just to provision these accounts. No progress
+schema change is needed.
+
+Confirmed username accounts cannot receive email password-reset links.
+An administrator must reset a forgotten password through Supabase. Use unique,
+strong passwords for production, and never commit passwords or admin keys.
+Username accounts have distinct Supabase user IDs from previously created real
+email accounts; existing cloud progress is not automatically transferred.
+
+**Email link** remains available for existing email accounts. Open its link in
+the **same browser/profile and site** that requested it (PKCE). The Supabase SDK
+stores the session locally, refreshes tokens, and returns to the page.
+
+The email sign-in form works for both new and existing email accounts; there is
+no separate registration step. Failed account actions display the service's
+error as plain text, with localized guidance for email limits, unauthorized
+recipients, invalid addresses, and disabled signups. Repeated link requests can
+hit recipient cooldowns or project-wide mail limits. Check Supabase Auth logs
+and email/SMTP settings rather than changing the progress SQL or repeatedly
+requesting links. A public publishable key cannot change those admin settings.
+
+Each account has a separate browser cache and pending-write queue
+(`amc10-account-progress:<user id>`). Signed-in changes are saved locally, then
+synced to the account's server rows. The panel shows syncing, saved, errors,
+pending counts, or conflicts. It refreshes on login, browser focus, connectivity
+return, and **Sync now / retry**. This is not real-time push synchronization.
+Offline pending changes survive reloads on the same browser. Do not clear
+browser storage before they are synced or exported.
+
+The browser never silently copies guest work to the account. **Import unmarked
+problems** adds only guest selections absent from the account; existing account
+selections win. **Keep separate** skips the prompt for that account on this
+browser. Original guest selections are retained. Remote changes that conflict
+with pending edits require choosing **Use this browser's choice** or **Use cloud
+choice**. The save RPC checks server versions and the expected authenticated
+user; it does not trust a client-supplied user ID for ownership.
+
+Signing out restores the separate guest selections, never the last account's
+statuses. If pending writes remain, a second explicit sign-out confirmation is
+required. Pending account data remains in that account's local cache for its
+next login. **Signing out does not erase cached account data from this browser**;
+people sharing a browser profile should use separate profiles or a private
+session, and ensure changes are synced before clearing site data.
+
+Problem readiness statuses and Study Guide/Glossary **mastery** marks sync.
+Mastery is stored in the `user_mastery` table (owner-only row-level security),
+with the same local-first queue (`amc10-mastery-cache:<user id>`), retry on
+focus, connectivity return, and **Sync now**. On an account's first sync with
+no server mastery, this browser's mastery marks are uploaded. Existing projects
+must run `supabase/add-user-mastery.sql` once in the SQL Editor; until then,
+mastery stays browser-local. Language and theme remain browser-local. The database keeps
+the latest status, a server timestamp, and a version, not a complete event
+history. JSON exports reflect the currently visible guest/account data across
+all papers. Change-history analysis and Google login are not included yet.
+
+### SDK and tests
+
+The Supabase SDK is pinned in `package-lock.json` and bundled locally into
+`assets/vendor/supabase.mjs`; login does not load an auth SDK from a third-party
+CDN. `npm run build` also writes third-party license notices. The vendored
+Supabase MIT notice comes from the matching v2.80.0 monorepo LICENSE because
+published packages omit that file.
+
+`npm test` includes isolated account/offline/conflict tests, DOM tests for guest
+mode and account controls, and PostgreSQL schema/RLS tests using PGlite. No real
+accounts, external database, or email service is used by those tests.

@@ -1,0 +1,132 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { readFileSync, existsSync } from "node:fs";
+import { PRACTICE_PAPER, PRACTICE_PROBLEMS, PRACTICE_2_PROBLEMS, ALL_PRACTICE_PROBLEMS, practiceStatement, practiceSolution, isPracticeKey } from "../assets/practice-papers.mjs";
+import { GLOSSARY, PROBLEM_REFERENCES, allConcepts } from "../assets/data.mjs";
+import { QUEST_COURSE } from "../assets/quest-course.mjs";
+import { problemKey, exportProgress, progressScope } from "../assets/progress.mjs";
+
+const root = new URL("../", import.meta.url);
+test("2026 AMC 10B supplies 25 matched bilingual questions and individual solutions", () => {
+  assert.equal(PRACTICE_2_PROBLEMS.length, 25);
+  assert.equal(new Set([...PROBLEM_REFERENCES, ...ALL_PRACTICE_PROBLEMS].map(problemKey)).size, 550);
+  for (const [i, p] of PRACTICE_2_PROBLEMS.entries()) {
+    assert.equal(problemKey(p), `2026-practice-2-${i + 1}`);
+    assert.ok(isPracticeKey(problemKey(p)));
+    assert.ok(p.conceptIds.every((id) => allConcepts().some((c) => c.id === id)));
+    assert.equal(p.bookletPage, i < 5 ? 2 : i < 12 ? 3 : i < 20 ? 4 : i < 23 ? 5 : 6);
+    assert.equal(readFileSync(new URL(p.imageUrl, root)).subarray(1, 4).toString(), "PNG");
+    assert.equal(readFileSync(new URL(p.chineseImageUrl, root)).subarray(1, 4).toString(), "PNG");
+    assert.equal(p.chineseBookletPage, i < 5 ? 2 : i < 11 ? 3 : i < 18 ? 4 : i < 21 ? 5 : i < 24 ? 6 : 7);
+    assert.equal(readFileSync(new URL(p.solutionImageUrl, root)).subarray(1, 4).toString(), "PNG");
+    assert.equal(readFileSync(new URL(p.individualSolutionPdfUrl, root)).subarray(0, 5).toString(), "%PDF-");
+    const solution = practiceSolution(p, "both");
+    assert.ok(solution.includes(p.solutionImageUrl));
+    assert.ok(solution.includes(p.individualSolutionPdfUrl));
+    assert.equal(solution.includes(" open"), false);
+    assert.equal(solution.includes('href="assets/practice/2026-practice-2/solutions.pdf"'), false);
+    for (const other of PRACTICE_2_PROBLEMS) {
+      if (other !== p) assert.equal(solution.includes(`src="${other.solutionImageUrl}"`), false);
+    }
+    for (const language of ["en", "zh", "both"]) {
+      const html = practiceStatement(p, language);
+      assert.ok(html.includes(p.imageUrl));
+      assert.equal(html.includes("undefined"), false);
+      assert.equal(html.includes(p.chineseImageUrl), language !== "en");
+      assert.equal(html.includes("此题暂未提供中文翻译"), false);
+      assert.equal(html.includes("solution-"), false);
+      if (language !== "en") assert.ok(html.includes(`${p.chineseSourceUrl}#page=${p.chineseBookletPage}`));
+      if (language === "zh") assert.ok(html.indexOf(p.chineseImageUrl) < html.indexOf(p.imageUrl));
+    }
+  }
+  assert.equal(readFileSync(new URL(PRACTICE_2_PROBLEMS[0].sourceUrl, root)).subarray(0, 5).toString(), "%PDF-");
+  assert.equal(readFileSync(new URL(PRACTICE_2_PROBLEMS[0].chineseSourceUrl, root)).subarray(0, 5).toString(), "%PDF-");
+  assert.equal(isPracticeKey("2026-practice-2-26"), false);
+  assert.equal(progressScope([...PROBLEM_REFERENCES, ...ALL_PRACTICE_PROBLEMS], 2026, "AMC 10B").length, 25);
+  const key = JSON.parse(readFileSync(new URL(PRACTICE_2_PROBLEMS[0].answerKeyUrl, root)));
+  assert.equal(Object.keys(key.answers).length, 25);
+  assert.equal(PRACTICE_2_PROBLEMS.map((p) => key.answers[problemKey(p)]).join(""), "DDCDBCADDEBDEEDEBCDECCDCA");
+  assert.match(key.sourceNote, /not an official MAA answer key/);
+});
+test("2026-practice-1 supplies 25 independent problems with intact original assets", () => {
+  assert.equal(PRACTICE_PAPER.id, "2026-practice-1");
+  assert.equal(PRACTICE_PROBLEMS.length, 25);
+  assert.equal(new Set([...PROBLEM_REFERENCES, ...PRACTICE_PROBLEMS].map(problemKey)).size, 525);
+  for (const [i, problem] of PRACTICE_PROBLEMS.entries()) {
+    assert.equal(problemKey(problem), `2026-practice-1-${i + 1}`);
+    assert.ok(isPracticeKey(problemKey(problem)));
+    assert.equal(problem.bookletPage >= 2 && problem.bookletPage <= 6, true);
+    assert.ok(problem.conceptIds.every((id) => allConcepts().some((c) => c.id === id)));
+    assert.ok(problem.vocabulary.every((name) => GLOSSARY.some((term) => term.en === name)));
+    const bytes = readFileSync(new URL(problem.imageUrl, root));
+    assert.equal(bytes.subarray(1, 4).toString(), "PNG");
+    assert.ok(bytes.length > 1000);
+    assert.ok(existsSync(new URL(problem.sourceUrl, root)));
+  }
+  assert.equal(readFileSync(new URL(PRACTICE_PAPER.sourceUrl, root)).subarray(0, 5).toString(), "%PDF-");
+  assert.equal(QUEST_COURSE.missions.length, 153);
+  assert.equal(QUEST_COURSE.missions.flatMap((m) => m.problems).some((p) => p.practice), false);
+  assert.equal(PROBLEM_REFERENCES.length, 500);
+});
+
+test("practice statements preserve the English original without fabricated solutions or translations", () => {
+  for (const language of ["en", "zh", "both"]) {
+    const html = practiceStatement(PRACTICE_PROBLEMS[16], language);
+    assert.match(html, /problem-17\.png/);
+    assert.match(html, /booklet\.pdf#page=4/);
+    assert.equal(html.includes("live.poshenloh.com"), false);
+    assert.match(html, /practice-image-link/);
+  }
+  assert.equal(isPracticeKey("2026-practice-1-26"), false);
+  assert.equal(isPracticeKey("2025-AMC10A-1"), false);
+});
+
+test("practice filtering and progress exports distinguish supplemental papers", () => {
+  const problems = [...PROBLEM_REFERENCES, ...PRACTICE_PROBLEMS];
+  assert.equal(progressScope(problems, 2026, "AMC 10A").length, 25);
+  assert.equal(progressScope(problems, 2026, "AMC 10B").length, 0);
+  const exported = exportProgress(problems, { "2026-practice-1-17": "haveApproach" }, allConcepts());
+  assert.match(exported.scope, /supplemental practice/);
+  assert.equal(exported.summary.total, 525);
+  assert.equal(exported.summary.marked, 1);
+});
+
+test("practice answer key preserves the supplied PDF's 25 matched answers and provenance", () => {
+  const key = JSON.parse(readFileSync(new URL(PRACTICE_PAPER.answerKeyUrl, root)));
+  assert.equal(key.paperId, "2026-practice-1");
+  assert.equal(Object.keys(key.answers).length, 25);
+  assert.equal(PRACTICE_PROBLEMS.map((p) => key.answers[problemKey(p)]).join(""), "BADACAACDCDDCBBDCDCCCADDB");
+  assert.match(key.sourceName, /AMC10A_2026_/);
+  assert.equal(key.sourceSha256, "469c4675bc2f68ba6ec55a8019fcdd9c656a9042c7563c9d23d80261f0d3748a");
+});
+
+test("all Chinese statements and solutions exist; language modes never leak solutions in statements", () => {
+  for (const p of PRACTICE_PROBLEMS) {
+    for (const path of [p.chineseImageUrl, p.solutionImageUrl]) {
+      const bytes = readFileSync(new URL(path, root));
+      assert.equal(bytes.subarray(1, 4).toString(), "PNG");
+      assert.ok(bytes.length > 1000);
+    }
+    const english = practiceStatement(p, "en");
+    const chinese = practiceStatement(p, "zh");
+    const both = practiceStatement(p, "both");
+    assert.equal(english.includes("chinese-"), false);
+    assert.match(chinese, /lang="zh"/);
+    assert.ok(chinese.includes(p.chineseImageUrl));
+    assert.ok(both.includes(p.imageUrl) && both.includes(p.chineseImageUrl));
+    assert.ok(chinese.indexOf(p.chineseImageUrl) < chinese.indexOf(p.imageUrl));
+    for (const html of [english, chinese, both]) {
+      assert.equal(html.includes("solution-"), false);
+      assert.equal(html.includes("solutions.pdf"), false);
+    }
+    const solution = practiceSolution(p, "both");
+    assert.ok(solution.includes(p.solutionImageUrl));
+    assert.match(solution, /<details class="practice-solution">/);
+    assert.equal(solution.includes("solutions.pdf"), false);
+    assert.equal(solution.includes(" open"), false);
+    for (const other of PRACTICE_PROBLEMS) {
+      if (other !== p) assert.equal(solution.includes(`src="${other.solutionImageUrl}"`), false);
+    }
+  }
+  assert.equal(readFileSync(new URL(PRACTICE_PAPER.solutionPdfUrl, root)).subarray(0, 5).toString(), "%PDF-");
+});
