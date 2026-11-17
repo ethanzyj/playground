@@ -1,7 +1,7 @@
 // Timed practice panel: setup, running test (wall-clock deadline), results.
 
-import { escapeHtml } from "./rich-text.mjs?v=20261116-2";
-import { recordAttempt } from "./progress.mjs?v=20261116-2";
+import { escapeHtml } from "./rich-text.mjs?v=20261116-3";
+import { recordAttempt } from "./progress.mjs?v=20261116-3";
 import {
   TEST_PACE_SECONDS,
   TEST_COUNTS,
@@ -13,7 +13,7 @@ import {
   remainingMs,
   scoreSession,
   formatClock
-} from "./test-mode.mjs?v=20261116-2";
+} from "./test-mode.mjs?v=20261116-3";
 
 const SECTIONS = ["verbal", "quantitative", "reading", "mathematics", "mixed"];
 

@@ -1,7 +1,7 @@
 // Reading Comprehension study-guide topic, assembled from two concept files.
 
-import { CONCEPTS as CORE_CONCEPTS } from "./concepts-reading-a.mjs?v=20261116-2";
-import { CONCEPTS as CRAFT_CONCEPTS } from "./concepts-reading-b.mjs?v=20261116-2";
+import { CONCEPTS as CORE_CONCEPTS } from "./concepts-reading-a.mjs?v=20261116-3";
+import { CONCEPTS as CRAFT_CONCEPTS } from "./concepts-reading-b.mjs?v=20261116-3";
 
 export const TOPIC = {
   id: "reading-comprehension",

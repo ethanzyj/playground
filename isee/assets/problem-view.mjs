@@ -1,9 +1,9 @@
 // Shared problem rendering (statement, choices, passage, explanation, word check).
 // Every function returns an HTML string; all content text is escaped first.
 
-import { escapeHtml, withBlanks, slugifyTerm } from "./rich-text.mjs?v=20261116-2";
-import { renderFigure } from "./figures.mjs?v=20261116-2";
-import { SECTION_BY_ID } from "./taxonomy.mjs?v=20261116-2";
+import { escapeHtml, withBlanks, slugifyTerm } from "./rich-text.mjs?v=20261116-3";
+import { renderFigure } from "./figures.mjs?v=20261116-3";
+import { SECTION_BY_ID } from "./taxonomy.mjs?v=20261116-3";
 
 const INSTRUCTIONS = {
   synonym: "synonymInstruction",

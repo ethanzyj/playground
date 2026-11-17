@@ -1,8 +1,8 @@
 // Essay practice: original ISEE-style prompts, a 30-minute timer, an autosaving
 // writing area with a word count, and a self-check list. Essays are not scored.
 
-import { escapeHtml } from "./rich-text.mjs?v=20261116-2";
-import { formatClock } from "./test-mode.mjs?v=20261116-2";
+import { escapeHtml } from "./rich-text.mjs?v=20261116-3";
+import { formatClock } from "./test-mode.mjs?v=20261116-3";
 
 const ESSAY_MINUTES = 30;
 const CHECKLIST = ["essayCheck1", "essayCheck2", "essayCheck3", "essayCheck4", "essayCheck5"];

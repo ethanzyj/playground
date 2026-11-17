@@ -1,7 +1,7 @@
 // Verbal Reasoning study-guide topic, assembled from two concept files.
 
-import { CONCEPTS as SYNONYM_AND_SENTENCE_CONCEPTS } from "./concepts-verbal-a.mjs?v=20261116-2";
-import { CONCEPTS as WORD_CONCEPTS } from "./concepts-verbal-b.mjs?v=20261116-2";
+import { CONCEPTS as SYNONYM_AND_SENTENCE_CONCEPTS } from "./concepts-verbal-a.mjs?v=20261116-3";
+import { CONCEPTS as WORD_CONCEPTS } from "./concepts-verbal-b.mjs?v=20261116-3";
 
 export const TOPIC = {
   id: "verbal-reasoning",
