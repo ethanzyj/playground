@@ -56,9 +56,10 @@ last ten years do not exist publicly and are not included here. Instead:
 
 ## What is included
 
-At a glance: **306 practice problems** (Lower 84, Middle 111, Upper 111, with 11
-reading passages), **38 study concepts**, **846 glossary entries** (459
-vocabulary words) and **15 essay prompts**.
+At a glance: **417 practice problems** (Lower 84, **Middle 222**, Upper 111,
+with 15 reading passages), **38 study concepts**, **846 glossary entries** (459
+vocabulary words) and **15 essay prompts**. Middle Level has the deepest bank:
+222 problems, more than the 160 questions of one real test.
 
 | Area | Content |
 | --- | --- |

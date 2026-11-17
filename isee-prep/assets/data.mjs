@@ -7,39 +7,47 @@ import {
   PROBLEM_SECTIONS,
   QC_CHOICES,
   QC_CHOICES_ZH
-} from "./taxonomy.mjs?v=20261116-2";
+} from "./taxonomy.mjs?v=20261116-3";
 
-import { TOPIC as OVERVIEW_TOPIC } from "./content/topics-overview.mjs?v=20261116-2";
-import { TOPIC as VERBAL_TOPIC } from "./content/topics-verbal.mjs?v=20261116-2";
-import { TOPIC as READING_TOPIC } from "./content/topics-reading.mjs?v=20261116-2";
-import { TOPIC as QUANTITATIVE_TOPIC } from "./content/topics-quantitative.mjs?v=20261116-2";
-import { TOPIC as NUMBERS_TOPIC } from "./content/topics-numbers.mjs?v=20261116-2";
-import { TOPIC as ALGEBRA_TOPIC } from "./content/topics-algebra.mjs?v=20261116-2";
-import { TOPIC as GEOMETRY_TOPIC } from "./content/topics-geometry.mjs?v=20261116-2";
-import { TOPIC as MEASUREMENT_TOPIC } from "./content/topics-measurement.mjs?v=20261116-2";
-import { TOPIC as DATA_TOPIC } from "./content/topics-data.mjs?v=20261116-2";
-import { TOPIC as ESSAY_TOPIC } from "./content/topics-essay.mjs?v=20261116-2";
+import { TOPIC as OVERVIEW_TOPIC } from "./content/topics-overview.mjs?v=20261116-3";
+import { TOPIC as VERBAL_TOPIC } from "./content/topics-verbal.mjs?v=20261116-3";
+import { TOPIC as READING_TOPIC } from "./content/topics-reading.mjs?v=20261116-3";
+import { TOPIC as QUANTITATIVE_TOPIC } from "./content/topics-quantitative.mjs?v=20261116-3";
+import { TOPIC as NUMBERS_TOPIC } from "./content/topics-numbers.mjs?v=20261116-3";
+import { TOPIC as ALGEBRA_TOPIC } from "./content/topics-algebra.mjs?v=20261116-3";
+import { TOPIC as GEOMETRY_TOPIC } from "./content/topics-geometry.mjs?v=20261116-3";
+import { TOPIC as MEASUREMENT_TOPIC } from "./content/topics-measurement.mjs?v=20261116-3";
+import { TOPIC as DATA_TOPIC } from "./content/topics-data.mjs?v=20261116-3";
+import { TOPIC as ESSAY_TOPIC } from "./content/topics-essay.mjs?v=20261116-3";
 
-import { GLOSSARY_ENTRIES as MATH_TERMS } from "./content/glossary-math.mjs?v=20261116-2";
-import { GLOSSARY_ENTRIES as LITERARY_TERMS } from "./content/glossary-literary.mjs?v=20261116-2";
-import { GLOSSARY_ENTRIES as LOWER_VOCABULARY } from "./content/glossary-vocab-lower.mjs?v=20261116-2";
-import { GLOSSARY_ENTRIES as MIDDLE_VOCABULARY } from "./content/glossary-vocab-middle.mjs?v=20261116-2";
-import { GLOSSARY_ENTRIES as UPPER_VOCABULARY } from "./content/glossary-vocab-upper.mjs?v=20261116-2";
+import { GLOSSARY_ENTRIES as MATH_TERMS } from "./content/glossary-math.mjs?v=20261116-3";
+import { GLOSSARY_ENTRIES as LITERARY_TERMS } from "./content/glossary-literary.mjs?v=20261116-3";
+import { GLOSSARY_ENTRIES as LOWER_VOCABULARY } from "./content/glossary-vocab-lower.mjs?v=20261116-3";
+import { GLOSSARY_ENTRIES as MIDDLE_VOCABULARY } from "./content/glossary-vocab-middle.mjs?v=20261116-3";
+import { GLOSSARY_ENTRIES as UPPER_VOCABULARY } from "./content/glossary-vocab-upper.mjs?v=20261116-3";
 
-import { ESSAY_PROMPTS as ESSAY_PROMPT_LIST } from "./content/essay-prompts.mjs?v=20261116-2";
+import { ESSAY_PROMPTS as ESSAY_PROMPT_LIST } from "./content/essay-prompts.mjs?v=20261116-3";
 
-import { PROBLEMS as SYNONYM_LOWER_PROBLEMS } from "./content/problems-verbal-synonyms-lower.mjs?v=20261116-2";
-import { PROBLEMS as SYNONYM_MIDDLE_PROBLEMS } from "./content/problems-verbal-synonyms-middle.mjs?v=20261116-2";
-import { PROBLEMS as SYNONYM_UPPER_PROBLEMS } from "./content/problems-verbal-synonyms-upper.mjs?v=20261116-2";
-import { PROBLEMS as SENTENCE_PROBLEMS } from "./content/problems-verbal-sentence.mjs?v=20261116-2";
-import { PROBLEMS as WORD_PROBLEMS } from "./content/problems-quantitative-word.mjs?v=20261116-2";
-import { PROBLEMS as COMPARISON_PROBLEMS } from "./content/problems-quantitative-comparison.mjs?v=20261116-2";
-import { PROBLEMS as NUMBERS_ALGEBRA_PROBLEMS } from "./content/problems-mathematics-numbers-algebra.mjs?v=20261116-2";
-import { PROBLEMS as GEOMETRY_DATA_LOWER_PROBLEMS } from "./content/problems-mathematics-geometry-data-lower.mjs?v=20261116-2";
-import { PROBLEMS as GEOMETRY_DATA_MIDDLE_PROBLEMS } from "./content/problems-mathematics-geometry-data-middle.mjs?v=20261116-2";
-import { PROBLEMS as GEOMETRY_DATA_UPPER_PROBLEMS } from "./content/problems-mathematics-geometry-data-upper.mjs?v=20261116-2";
-import { PASSAGES as READING_PASSAGES_1, PROBLEMS as READING_PROBLEMS_1 } from "./content/problems-reading-1.mjs?v=20261116-2";
-import { PASSAGES as READING_PASSAGES_2, PROBLEMS as READING_PROBLEMS_2 } from "./content/problems-reading-2.mjs?v=20261116-2";
+import { PROBLEMS as SYNONYM_LOWER_PROBLEMS } from "./content/problems-verbal-synonyms-lower.mjs?v=20261116-3";
+import { PROBLEMS as SYNONYM_MIDDLE_PROBLEMS } from "./content/problems-verbal-synonyms-middle.mjs?v=20261116-3";
+import { PROBLEMS as SYNONYM_UPPER_PROBLEMS } from "./content/problems-verbal-synonyms-upper.mjs?v=20261116-3";
+import { PROBLEMS as SENTENCE_PROBLEMS } from "./content/problems-verbal-sentence.mjs?v=20261116-3";
+import { PROBLEMS as WORD_PROBLEMS } from "./content/problems-quantitative-word.mjs?v=20261116-3";
+import { PROBLEMS as COMPARISON_PROBLEMS } from "./content/problems-quantitative-comparison.mjs?v=20261116-3";
+import { PROBLEMS as NUMBERS_ALGEBRA_PROBLEMS } from "./content/problems-mathematics-numbers-algebra.mjs?v=20261116-3";
+import { PROBLEMS as GEOMETRY_DATA_LOWER_PROBLEMS } from "./content/problems-mathematics-geometry-data-lower.mjs?v=20261116-3";
+import { PROBLEMS as GEOMETRY_DATA_MIDDLE_PROBLEMS } from "./content/problems-mathematics-geometry-data-middle.mjs?v=20261116-3";
+import { PROBLEMS as GEOMETRY_DATA_UPPER_PROBLEMS } from "./content/problems-mathematics-geometry-data-upper.mjs?v=20261116-3";
+import { PASSAGES as READING_PASSAGES_1, PROBLEMS as READING_PROBLEMS_1 } from "./content/problems-reading-1.mjs?v=20261116-3";
+import { PASSAGES as READING_PASSAGES_2, PROBLEMS as READING_PROBLEMS_2 } from "./content/problems-reading-2.mjs?v=20261116-3";
+import { PROBLEMS as SYNONYM_MIDDLE_2_PROBLEMS } from "./content/problems-verbal-synonyms-middle-2.mjs?v=20261116-3";
+import { PROBLEMS as SENTENCE_MIDDLE_2_PROBLEMS } from "./content/problems-verbal-sentence-middle-2.mjs?v=20261116-3";
+import { PROBLEMS as WORD_MIDDLE_2_PROBLEMS } from "./content/problems-quantitative-word-middle-2.mjs?v=20261116-3";
+import { PROBLEMS as COMPARISON_MIDDLE_2_PROBLEMS } from "./content/problems-quantitative-comparison-middle-2.mjs?v=20261116-3";
+import { PROBLEMS as NUMBERS_ALGEBRA_MIDDLE_2_PROBLEMS } from "./content/problems-mathematics-numbers-algebra-middle-2.mjs?v=20261116-3";
+import { PROBLEMS as GEOMETRY_DATA_MIDDLE_2_PROBLEMS } from "./content/problems-mathematics-geometry-data-middle-2.mjs?v=20261116-3";
+import { PASSAGES as READING_PASSAGES_3, PROBLEMS as READING_PROBLEMS_3 } from "./content/problems-reading-middle-3.mjs?v=20261116-3";
+import { PASSAGES as READING_PASSAGES_4, PROBLEMS as READING_PROBLEMS_4 } from "./content/problems-reading-middle-4.mjs?v=20261116-3";
 
 export { LEVELS };
 
@@ -73,7 +81,7 @@ export function allConcepts() {
   return TOPICS.flatMap((topic) => topic.concepts.map((concept) => ({ ...concept, topicId: topic.id, topicZh: topic.zh, topicEn: topic.en })));
 }
 
-export const PASSAGES = [...READING_PASSAGES_1, ...READING_PASSAGES_2];
+export const PASSAGES = [...READING_PASSAGES_1, ...READING_PASSAGES_2, ...READING_PASSAGES_3, ...READING_PASSAGES_4];
 
 export const ESSAY_PROMPTS = [...ESSAY_PROMPT_LIST];
 
@@ -93,7 +101,15 @@ const RAW_PROBLEMS = [
   ...GEOMETRY_DATA_MIDDLE_PROBLEMS,
   ...GEOMETRY_DATA_UPPER_PROBLEMS,
   ...READING_PROBLEMS_1,
-  ...READING_PROBLEMS_2
+  ...READING_PROBLEMS_2,
+  ...SYNONYM_MIDDLE_2_PROBLEMS,
+  ...SENTENCE_MIDDLE_2_PROBLEMS,
+  ...WORD_MIDDLE_2_PROBLEMS,
+  ...COMPARISON_MIDDLE_2_PROBLEMS,
+  ...NUMBERS_ALGEBRA_MIDDLE_2_PROBLEMS,
+  ...GEOMETRY_DATA_MIDDLE_2_PROBLEMS,
+  ...READING_PROBLEMS_3,
+  ...READING_PROBLEMS_4
 ];
 
 // Sorted by level, section, type, then id; `number` counts within level + section.

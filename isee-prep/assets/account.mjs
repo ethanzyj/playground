@@ -1,6 +1,6 @@
-import { CLOUD_CONFIG } from "./cloud-config.mjs?v=20261116-2";
-import { CloudProgress } from "./cloud-progress.mjs?v=20261116-2";
-import { CloudMastery, isSetupError } from "./cloud-mastery.mjs?v=20261116-2";
+import { CLOUD_CONFIG } from "./cloud-config.mjs?v=20261116-3";
+import { CloudProgress } from "./cloud-progress.mjs?v=20261116-3";
+import { CloudMastery, isSetupError } from "./cloud-mastery.mjs?v=20261116-3";
 
 const TEXT = {
   heading: ["Account & cloud sync", "账户与云端同步"],
@@ -115,7 +115,7 @@ export class AccountPanel {
       this.cloudEnabled = true;
       this.restoring = true;
       this.render();
-      const { createClient } = await import("./vendor/supabase.mjs?v=20261116-2");
+      const { createClient } = await import("./vendor/supabase.mjs?v=20261116-3");
       this.client = createClient(CLOUD_CONFIG.url, CLOUD_CONFIG.publishableKey, {
         auth: { flowType: "pkce", persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
       });

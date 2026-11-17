@@ -1,7 +1,7 @@
 // Timed practice logic (pure, DOM-free). The deadline is a wall-clock time, so
 // refreshing the page or switching tabs never resets or pauses the clock.
 
-import { LEVELS } from "./taxonomy.mjs?v=20261116-2";
+import { LEVELS } from "./taxonomy.mjs?v=20261116-3";
 
 // Seconds per question implied by the official section timings
 // (Lower: 20/34, 35/38, 25/25, 30/30 min; Middle & Upper: 20/40, 35/37, 35/36, 40/47 min).

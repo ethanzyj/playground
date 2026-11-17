@@ -1,7 +1,7 @@
 // Language-aware text helpers. `getLanguage()` returns "both", "zh" or "en".
 
-import { UI_TEXT } from "./ui-text.mjs?v=20261116-2";
-import { escapeHtml } from "./rich-text.mjs?v=20261116-2";
+import { UI_TEXT } from "./ui-text.mjs?v=20261116-3";
+import { escapeHtml } from "./rich-text.mjs?v=20261116-3";
 import {
   LEVEL_BY_ID,
   SECTION_BY_ID,
@@ -10,7 +10,7 @@ import {
   STRAND_BY_ID,
   GENRE_BY_ID,
   GLOSSARY_KINDS
-} from "./taxonomy.mjs?v=20261116-2";
+} from "./taxonomy.mjs?v=20261116-3";
 
 export function createI18n(getLanguage) {
   // Plain text (attributes, textContent). "both" joins with " / ".

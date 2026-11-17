@@ -1,6 +1,6 @@
 // Problem Explorer: filters, progress overview, paginated cards, answer checking.
 
-import { escapeHtml } from "./rich-text.mjs?v=20261116-2";
+import { escapeHtml } from "./rich-text.mjs?v=20261116-3";
 import {
   PROBLEM_PROGRESS_OPTIONS,
   summarizeProgress,
@@ -8,8 +8,8 @@ import {
   recordAttempt,
   clearAttempt,
   exportProgress
-} from "./progress.mjs?v=20261116-2";
-import { PROBLEM_TYPES, DIFFICULTIES, PROBLEM_SECTIONS, SECTION_BY_ID } from "./taxonomy.mjs?v=20261116-2";
+} from "./progress.mjs?v=20261116-3";
+import { PROBLEM_TYPES, DIFFICULTIES, PROBLEM_SECTIONS, SECTION_BY_ID } from "./taxonomy.mjs?v=20261116-3";
 
 export const PAGE_SIZE = 12;
 

@@ -2,7 +2,7 @@
 // which concepts, problems and glossary terms belong to a level and which level a link
 // should switch to, so every tab applies the same rule.
 
-import { LEVELS, DEFAULT_LEVEL } from "./taxonomy.mjs?v=20261116-2";
+import { LEVELS, DEFAULT_LEVEL } from "./taxonomy.mjs?v=20261116-3";
 
 export { DEFAULT_LEVEL };
 

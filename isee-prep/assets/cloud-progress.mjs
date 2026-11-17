@@ -1,4 +1,4 @@
-import { PROBLEM_PROGRESS_OPTIONS } from "./progress.mjs?v=20261116-2";
+import { PROBLEM_PROGRESS_OPTIONS } from "./progress.mjs?v=20261116-3";
 
 export const GUEST_PROGRESS_KEY = "isee-problem-progress";
 const accountKey = (userId) => `isee-account-progress:${userId}`;
